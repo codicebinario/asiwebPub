@@ -1,0 +1,224 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="AsiMasterPageAlbo.Master.vb" Inherits="ASIWeb.AsiMasterPageAlbo" %>
+
+<!DOCTYPE html>
+
+<html lang="it" class="h-100">
+<head runat="server">
+    <title></title> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+   <!-- Bootstrap CSS -->
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Css/customAlbo.css" rel="stylesheet" />
+ <!-- font awesome -->
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto"  rel="stylesheet"/>
+    <link href="Css/sticky-footer-navbar.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+    <script src="Scripts/popper-utils.min.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+      <style>
+        
+
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+     
+    </style>
+          
+    </asp:ContentPlaceHolder>
+     <style>
+        /* Modify the background color */
+         
+        .navbar-custom  {
+            background-color: #005a7c;
+         
+        }
+        /* Modify brand and text color */
+         
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-text {
+            color:white;
+        }
+          /* Modify the background color */
+         .jumbotron { 
+                     margin-top: -50px;
+                      padding-top:10px; 
+                      padding-bottom: 10px;
+                       background-color: #005a7c;
+         }
+         .display-5 {
+
+               color: #fff;
+
+         }
+         .jumbotron h1{
+             color: #fff;
+            }
+
+            .jumbotron p{
+            color: #fff;
+        }
+    
+
+    </style>
+   
+</head>
+<body class="d-flex flex-column h-100"> 
+    <form id="form1" runat="server">
+          <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true"  runat="server">
+     </asp:ScriptManager>
+     <header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-custom navbar-dark  navbar-expand-md fixed-to">
+    <a class="navbar-brand" href="#">
+        <img src="../img/asilogo2.png" width="33" height="40" alt="logo ASI">
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+       
+        <li class="nav-item text-white">
+         <asp:LinkButton class="nav-link" ID="lnkHome" CausesValidation="false" runat="server">HOME</asp:LinkButton>
+         
+            
+         
+        </li>
+  
+         <li class="nav-item">
+             <span class="nav-link">
+           
+             
+             <asp:Literal ID="litDenominazione" runat="server"></asp:Literal>
+                  </span>
+         
+        </li>
+
+
+           </ul>
+         <ul class="navbar-nav ml-auto">
+
+           <li class="nav-item">
+         
+     <span class="nav-link"> Utenti online: <%=Application("ActiveUsers").ToString()%></span>
+        </li>
+      </ul>
+        <ul class="navbar-nav ml-auto">
+
+           <li class="nav-item">
+                  <asp:LinkButton class="nav-link" ID="lnkOut" CausesValidation="false" runat="server">Esci</asp:LinkButton>
+         
+        </li>
+      </ul>
+     
+       
+
+
+    <%--  <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>--%>
+    </div>
+  </nav>
+
+<nav class="navbar navbar-custom navbar-dark  navbar-expand-md fixed-to">
+  <%--  <a class="navbar-brand disabled" href="#">TESSERE</a> --%>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse1" aria-controls="navbarCollapse1" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse1">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="DashboardB.aspx" >Corsi Attivi</a>
+        </li>
+           <li class="nav-item">
+  <asp:LinkButton ID="LinkSettore"  cssclass="nav-link" Visible="false" CausesValidation="false" runat="server">Corsi da Valutare</asp:LinkButton>
+
+               </li>
+       
+           <li class="nav-item">
+      
+          
+      <asp:LinkButton ID="LinkArchivio"  cssclass="nav-link" CausesValidation="false" runat="server">Corsi Evasi</asp:LinkButton>
+      </li>
+          <li class="nav-item">       
+               <asp:LinkButton ID="lnkNuovoCorso"  cssclass="nav-link" CausesValidation="false" runat="server">Nuovo Corso</asp:LinkButton>
+        
+     
+      
+      </li>
+        
+
+          
+      </ul>
+ 
+    </div>
+  </nav>
+
+
+
+</header>
+
+
+
+    
+   
+        <main role="main" class="flex-shrink-0">
+         <div class="container">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+          
+
+            </asp:ContentPlaceHolder>
+        </div>
+            </main>
+    </form>
+    <footer class="footer mt-auto py-3">
+  <div class="container">
+    <div class="row">
+    <div class="col-sm">
+      <span class="text-muted">ASI - Associazioni Sportive e Sociali Italiane</span>
+    </div>
+    <div class="col-sm">
+    <span class="text-muted text-right">powered by MAMMUTMEDIA SOCIETA' COOPERATIVA</span>
+    </div>
+       </div>
+  </div>
+</footer>
+  <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+     
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <script>
+       // Add the following code if you want the name of the file appear on select
+       $(".custom-file-input").on("change", function () {
+           var fileName = $(this).val().split("\\").pop();
+           $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+       });
+      </script>
+</body>
+</html>
+

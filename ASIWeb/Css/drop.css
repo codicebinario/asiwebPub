@@ -1,0 +1,197 @@
+﻿body {
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+
+/* Modify the background color */
+.navbar-custom {
+    background-color: #005a7c;
+}
+/* Modify brand and text color */
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: aliceblue;
+}
+/* Modify the background color */
+.jumbotron {
+    margin-top: -50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #005a7c;
+}
+
+.display-5 {
+    color: #fff;
+}
+
+.jumbotron h1 {
+    color: #fff;
+}
+
+.jumbotron p {
+    color: #fff;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    /*height: 60px;
+  line-height: 60px;*/ /* Vertically center the text there */
+    background-color: #f5f5f5;
+}
+
+
+
+
+
+/* #dropSection
+        {
+            height: 300px;
+            width: 400px;
+            background-color: #005a7c;
+        }*/
+
+
+#dropSection:before {
+    display: block;
+    content: '';
+    height: 4px;
+    width: 90%;
+    background: url('../img/blue_line.jpg');
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.4);
+}
+
+#dropSection {
+  background: url('../img/background_tile_3.jpg');
+    background-color: #005a7c;
+    border-radius: 3px;
+    position: relative;
+    margin:50px auto 40px;
+    min-height: 180px;
+    overflow: hidden;
+    padding-bottom: 40px;
+    width: 90%;
+    box-shadow: 0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);
+}
+
+    #dropSection .message {
+        font-size: 14px;
+        text-align: center;
+        padding-top: 80px;
+        display: block;
+        color: #fff;
+    }
+
+        #dropSection .message i {
+            color: #fff;
+            font-size: 12px;
+        }
+
+    /*-------------------------
+	Image Previews
+--------------------------*/
+
+
+
+    #dropSection .preview {
+        width: 185px;
+        height: 155px;
+        float: left;
+        margin: 15px 0 0 10px;
+        position: relative;
+        text-align: center;
+    }
+
+        #dropSection .preview img {
+            max-width: 170px;
+            max-height: 110px;
+            border: 3px solid #fff;
+            display: block;
+            box-shadow: 0 0 2px #000;
+        }
+
+    #dropSection .imageHolder {
+        display: inline-block;
+        position: relative;
+    }
+
+    #dropSection .uploaded {
+        position: absolute;
+      
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: url('../img/done.png') no-repeat center center rgba(255,255,255,0.5);
+        display: none; 
+        }
+
+    #dropSection .preview.done .uploaded
+        {
+        display: block;
+        }
+
+    /*-------------------------
+	Progress Bars
+--------------------------*/
+
+
+
+    #dropSection .progressHolder {
+        position: absolute;
+        background-color: #252f38;
+        height: 12px;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        box-shadow: 0 0 2px #000;
+    }
+
+    #dropSection .progress {
+        background-color: #2586d0;
+        position: absolute;
+        height: 100%;
+        left: 0;
+        width: 0;
+        box-shadow: 0 0 1px rgba(255, 255, 255, 0.4) inset;
+        -moz-transition: 0.25s;
+        -webkit-transition: 0.25s;
+        -o-transition: 0.25s;
+        transition: 0.25s;
+    }
+
+/*    #dropSection .preview.done .progress {
+        width: 100% !important;
+    }
+
+*/
+
+#btnUpload {
+    display: none;
+}
+
+.active {
+    background-color: yellow !important;
+}

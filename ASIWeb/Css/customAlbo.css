@@ -1,0 +1,156 @@
+﻿
+
+.bg-uno {
+    background-color: #47ccfc;
+}
+.text-uno {
+    color: #47ccfc;
+}
+.btn-uno {
+    background-color: #47ccfc;
+    border-color: #47ccfc;
+    color:black;
+}
+.btn-annulla {
+    background-color:darkgrey;
+    border-color: #47ccfc;
+   
+}
+.bg-annulla {
+    background-color:grey;
+}
+
+.bg-due {
+    background-color: #e6df15;
+}
+
+.text-due {
+    color: #e6df15;
+}
+
+.btn-due {
+    background-color: #e6df15;
+    border-color: #e6df15;
+}
+.bg-tre {
+    background-color: #ff5308;
+}
+
+.text-tre {
+    color: #ff5308;
+}
+
+.btn-tre {
+    background-color: #ff5308;
+    border-color: #ff5308;
+
+}
+
+.bg-quattro {
+    background-color: darkred;
+}
+
+.text-quattro {
+    color: #fffa83;
+}
+
+.btn-quattro {
+    background-color: darkred;
+    border-color: #aa32c8;
+}
+
+.bg-cinque {
+    background-color: #ff5308;
+}
+
+.text-cinque {
+    color: #ff5308;
+}
+
+.btn-cinque {
+    background-color: #ff5308;
+    border-color: #ff5308;
+   
+}
+
+.bg-sei {
+    background-color: #febb64;
+}
+
+.text-sei {
+    color: #febb64;
+}
+
+.btn-sei {
+    background-color: #febb64;
+    border-color: #febb64;
+}
+
+.bg-sette {
+    background-color: #febb64;
+}
+
+.text-sette {
+    color: #febb64;
+}
+
+.btn-sette {
+    background-color: #febb64;
+    border-color: #febb64;
+}
+
+
+.bg-otto {
+    background-color: #a3d979;
+}
+
+.text-otto {
+    color: #a3d979;
+}
+
+.btn-otto {
+    background-color: #a3d979;
+    border-color: #a3d979;
+}
+
+.bg-nove {
+    background-color: #000000;
+}
+
+.text-nove {
+    color: #a3d979;
+}
+
+.btn-nove {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+.bg-dieci {
+    background-color: #000000;
+}
+
+.text-dieci {
+    color: #a3d979;
+}
+
+.btn-dieci {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+
+.bg-undici {
+    background-color: #000000;
+}
+
+.text-undici {
+    color: #a3d979;
+}
+
+.btn-undici {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+

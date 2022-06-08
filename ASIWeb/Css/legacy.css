@@ -1,0 +1,17 @@
+﻿body {
+}
+
+.legacy:hover {
+    color: white;
+   
+}
+
+.legacy {
+    color: white;
+}
+
+.badge {
+    background-color: #ff5308;
+    color: white;
+}
+

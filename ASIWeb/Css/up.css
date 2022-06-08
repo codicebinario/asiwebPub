@@ -1,0 +1,22 @@
+﻿body {
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+/*#dropSection {
+    height: 300px;
+    width: 600px;
+    background-color: skyblue;
+}
+*/
+#btnUpload {
+    display: none;
+}
+
+.active {
+    background-color: yellow !important;
+}
+.legacy{
+    color:white;
+}
+
