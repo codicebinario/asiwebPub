@@ -152,16 +152,25 @@
         <li class="nav-item">
           <a class="nav-link" href="DashboardB.aspx" >Corsi Attivi</a>
         </li>
-           <li class="nav-item">
-  <asp:LinkButton ID="LinkSettore"  cssclass="nav-link" Visible="false" CausesValidation="false" runat="server">Corsi da Valutare</asp:LinkButton>
-
-               </li>
+          
        
            <li class="nav-item">
       
           
       <asp:LinkButton ID="LinkArchivio"  cssclass="nav-link" CausesValidation="false" runat="server">Corsi Evasi</asp:LinkButton>
       </li>
+
+ <li class="nav-item">
+  <asp:LinkButton ID="LinkSettore"  cssclass="nav-link" Visible="false" CausesValidation="false" runat="server">Corsi da Valutare</asp:LinkButton>
+
+               </li>
+
+           <li class="nav-item">
+  <asp:LinkButton ID="LinkSettoreValutati"  cssclass="nav-link" Visible="false" CausesValidation="false" runat="server">Corsi Valutati</asp:LinkButton>
+
+               </li>
+
+
           <li class="nav-item">       
                <asp:LinkButton ID="lnkNuovoCorso"  cssclass="nav-link" CausesValidation="false" runat="server">Nuovo Corso</asp:LinkButton>
         

@@ -19,6 +19,13 @@ Public Class AsiMasterPageAlbo
                 LinkSettore.Visible = False
             End If
 
+            If quantiValutati(Session("codice")) = True Then
+                LinkSettoreValutati.Visible = True
+            Else
+                LinkSettoreValutati.Visible = False
+            End If
+
+
 
             If Not IsNothing(Session("denominazione")) Then
 
@@ -56,6 +63,56 @@ Public Class AsiMasterPageAlbo
         Else
 
             ritorno = False
+
+        End If
+
+
+        Return ritorno
+
+    End Function
+
+    Function quantiValutati(codice As String) As Boolean
+        Dim ritorno As Boolean = False
+
+        Dim ds As DataSet
+
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        fmsP.SetLayout("webCorsiRichiesta")
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
+        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+        RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+
+
+
+        ds = RequestP.Execute()
+
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+            Dim counter1 As Integer = 0
+            For Each dr In ds.Tables("main").Rows
+
+
+
+                If Data.FixNull(dr("Codice_Status")) = "64" Or Data.FixNull(dr("Codice_Status")) = "65" Then
+                    counter1 += 1
+
+
+                End If
+
+            Next
+            If counter1 >= 1 Then
+                ritorno = True
+            Else
+                ritorno = False
+            End If
+
+        Else
+
+            ' non si sono records
+            ritorno = False
+
 
         End If
 
@@ -145,5 +202,9 @@ Public Class AsiMasterPageAlbo
 
     Protected Sub LinkSettore_Click(sender As Object, e As EventArgs) Handles LinkSettore.Click
         Response.Redirect("dashboardV.aspx")
+    End Sub
+
+    Protected Sub LinkSettoreValutati_Click(sender As Object, e As EventArgs) Handles LinkSettoreValutati.Click
+        Response.Redirect("archivioAlboValutati.aspx")
     End Sub
 End Class

@@ -96,7 +96,7 @@ Public Class dashboardB
                 Or Data.FixNull(dr("Codice_Status")) = "63" Or Data.FixNull(dr("Codice_Status")) = "64" _
                 Or Data.FixNull(dr("Codice_Status")) = "65" Or Data.FixNull(dr("Codice_Status")) = "66" _
                 Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "68" _
-                Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
+                Or Data.FixNull(dr("Codice_Status")) = "69" _
                 Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78" _
                 Or Data.FixNull(dr("Codice_Status")) = "82" Then
 
@@ -177,7 +177,7 @@ Public Class dashboardB
                     Ann.ID = "ann_" & counter1
                     Ann.Attributes.Add("runat", "server")
                     Ann.Text = "Annulla Corso"
-                    Ann.PostBackUrl = "annullaCorsoA.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    Ann.PostBackUrl = "annullaCorsoMotivo.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
                     Ann.CssClass = "btn btn-success btn-sm btn-quattro btn-custom"
                     '  Ann.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
                     If ((Data.FixNull(dr("Codice_Status")) >= "54") And Data.FixNull(dr("Codice_Status")) <= "82" And Data.FixNull(dr("corsoAnnullabile")) = "s") Then

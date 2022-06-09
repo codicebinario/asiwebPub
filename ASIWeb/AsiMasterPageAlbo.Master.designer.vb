@@ -68,6 +68,15 @@ Partial Public Class AsiMasterPageAlbo
     Protected WithEvents lnkOut As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''LinkArchivio control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkArchivio As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''LinkSettore control.
     '''</summary>
     '''<remarks>
@@ -77,13 +86,13 @@ Partial Public Class AsiMasterPageAlbo
     Protected WithEvents LinkSettore As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''LinkArchivio control.
+    '''LinkSettoreValutati control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkArchivio As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents LinkSettoreValutati As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''lnkNuovoCorso control.

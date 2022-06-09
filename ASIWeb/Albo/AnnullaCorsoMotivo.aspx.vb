@@ -20,8 +20,7 @@ Imports RestSharp
 Imports System.Collections.Generic
 Imports System.Net.Security
 Imports System.Net
-Public Class valutaCorso
-
+Public Class AnnullaCorsoMotivo
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
     Dim utente As String = ConfigurationManager.AppSettings("utente")
@@ -101,8 +100,6 @@ Public Class valutaCorso
 
         End If
 
-
-
     End Sub
 
     Protected Sub btnValuta_Click(sender As Object, e As EventArgs) Handles btnValuta.Click
@@ -114,25 +111,21 @@ Public Class valutaCorso
             fmsP.SetLayout("webCorsiRichiesta")
             Dim Request = fmsP.CreateEditRequest(Session("id_record"))
 
-            Dim valutazione As String = ddlValutazione.SelectedItem.Value
 
-            If valutazione = "S" Then
-                Request.AddField("Codice_Status", "64")
-            ElseIf valutazione = "N" Then
-                Request.AddField("Codice_Status", "65")
 
-            End If
 
-            Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
-            Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", IDCorso)
-            'script per gestione caratteri speciali da inserire.
+            Request.AddField("Codice_Status", "101")
+
+
+            Request.AddField("NoteAnnullamentoCorso", Data.PrendiStringaT(Server.HtmlEncode(txtNoteAnnullamento.Text)))
+            Request.AddScript("SistemaEncodingNoteAnnullamento_Corso", IDCorso)
+            'script per gestione caratteri speciali da inserire
 
             risposta = Request.Execute()
 
-            Response.Redirect("dashboardV.aspx")
+            Response.Redirect("dashboardB.aspx")
 
         End If
-
 
 
     End Sub

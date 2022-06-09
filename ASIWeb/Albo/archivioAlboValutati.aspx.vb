@@ -1,7 +1,7 @@
 ﻿Imports fmDotNet
 Imports ASIWeb.AsiModel
 Imports ASIWeb.Ed
-Public Class archivioAlbo
+Public Class archivioAlboValutati
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -69,9 +69,10 @@ Public Class archivioAlbo
         fmsP.SetLayout("webCorsiRichiesta")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
         RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+
 
 
 
@@ -88,8 +89,8 @@ Public Class archivioAlbo
             'Dim totale As Decimal = 0
             For Each dr In ds.Tables("main").Rows
 
-                If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "101" _
-                    Or Data.FixNull(dr("Codice_Status")) = "60" Or Data.FixNull(dr("Codice_Status")) = "72" Then
+                If Data.FixNull(dr("Codice_Status")) = "64" Or Data.FixNull(dr("Codice_Status")) = "65" _
+                  Then
 
 
                     counter1 += 1

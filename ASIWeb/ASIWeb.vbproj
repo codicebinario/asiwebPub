@@ -180,7 +180,9 @@
   <ItemGroup>
     <Content Include="Albo\annullaCorso.aspx" />
     <Content Include="Albo\AnnullaCorsoA.aspx" />
+    <Content Include="Albo\AnnullaCorsoMotivo.aspx" />
     <Content Include="Albo\archivioAlbo.aspx" />
+    <Content Include="Albo\archivioAlboValutati.aspx" />
     <Content Include="Albo\corsisti.aspx" />
     <Content Include="Albo\dashboardB.aspx" />
     <Content Include="Albo\dashboardV.aspx" />
@@ -441,11 +443,25 @@
       <DependentUpon>AnnullaCorsoA.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Albo\AnnullaCorsoMotivo.aspx.designer.vb">
+      <DependentUpon>AnnullaCorsoMotivo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\AnnullaCorsoMotivo.aspx.vb">
+      <DependentUpon>AnnullaCorsoMotivo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Albo\archivioAlbo.aspx.designer.vb">
       <DependentUpon>archivioAlbo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Albo\archivioAlbo.aspx.vb">
       <DependentUpon>archivioAlbo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Albo\archivioAlboValutati.aspx.designer.vb">
+      <DependentUpon>archivioAlboValutati.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\archivioAlboValutati.aspx.vb">
+      <DependentUpon>archivioAlboValutati.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Albo\corsisti.aspx.designer.vb">
