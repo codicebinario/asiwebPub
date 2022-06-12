@@ -124,7 +124,7 @@ Public Class valutaCorso
             End If
 
             Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
-            Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", IDCorso)
+            Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
             'script per gestione caratteri speciali da inserire.
 
             risposta = Request.Execute()

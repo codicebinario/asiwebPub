@@ -111,6 +111,7 @@ Public Class dashboardB
 
                     'caricato solo il documento corso
 
+                    'colore assegnato
                     Dim btnFase2 As New Button
 
                     btnFase2.ID = "btnFase2_" & counter1
@@ -128,14 +129,14 @@ Public Class dashboardB
                         btnFase2.Visible = False
                     End If
 
-
+                    'colore assegnato
                     Dim btnFase3 As New Button
 
                     btnFase3.ID = "btnFase3_" & counter1
                     btnFase3.Attributes.Add("runat", "server")
                     btnFase3.Text = "Completa la Richiesta Corso"
                     btnFase3.PostBackUrl = "richiestaCorsoF3.aspx?fase=" & deEnco.QueryStringEncode("3") & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    btnFase3.CssClass = "btn btn-success btn-sm btn-uno btn-custom"
+                    btnFase3.CssClass = "btn btn-success btn-sm btn-due btn-custom"
 
                     If (Data.FixNull(dr("Codice_Status")) = "51" And Data.FixNull(dr("fase")) = "2") Then
                         btnFase3.Visible = True
@@ -143,35 +144,22 @@ Public Class dashboardB
                         btnFase3.Visible = False
                     End If
 
+                    'colore assegnato
+                    Dim AnnPrimaFase As New Button
 
-
-                    Dim hpUP As New Button
-
-                    hpUP.ID = "hp_" & counter1
-                    hpUP.Attributes.Add("runat", "server")
-                    hpUP.Text = "Invia Lista Partecipanti"
-                    hpUP.PostBackUrl = "upPartecipanti.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    hpUP.CssClass = "btn btn-success btn-sm btn-quattro btn-custom"
-                    If ((Data.FixNull(dr("Codice_Status")) = "66" Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "57") And Data.FixNull(dr("CheckVerbale")) = "1" And Data.FixNull(dr("fase")) = "3") Then
-                        hpUP.Visible = True
+                    AnnPrimaFase.ID = "annPF_" & counter1
+                    AnnPrimaFase.Attributes.Add("runat", "server")
+                    AnnPrimaFase.Text = "Annulla Corso -"
+                    AnnPrimaFase.PostBackUrl = "annullaCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    AnnPrimaFase.CssClass = "btn btn-success btn-sm btn-tre btn-custom"
+                    AnnPrimaFase.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
+                    If Data.FixNull(dr("Codice_Status")) <= "51" Then
+                        AnnPrimaFase.Visible = True
                     Else
-                        hpUP.Visible = False
+                        AnnPrimaFase.Visible = False
                     End If
 
-                    Dim Verb As New Button
-
-                    Verb.ID = "verb_" & counter1
-                    Verb.Attributes.Add("runat", "server")
-                    Verb.Text = "Invia Verbale"
-                    Verb.PostBackUrl = "upVerbale.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    Verb.CssClass = "btn btn-success btn-sm btn-quattro btn-custom"
-                    If ((Data.FixNull(dr("Codice_Status")) = "63") And Data.FixNull(dr("CheckVerbale")) = "0" And Data.FixNull(dr("fase")) = "3") Then
-                        Verb.Visible = True
-                    Else
-                        Verb.Visible = False
-                    End If
-
-
+                    'colore assegnato
                     Dim Ann As New Button
 
                     Ann.ID = "ann_" & counter1
@@ -186,19 +174,38 @@ Public Class dashboardB
                         Ann.Visible = False
                     End If
 
-                    Dim AnnPrimaFase As New Button
 
-                    AnnPrimaFase.ID = "annPF_" & counter1
-                    AnnPrimaFase.Attributes.Add("runat", "server")
-                    AnnPrimaFase.Text = "Annulla Corso -"
-                    AnnPrimaFase.PostBackUrl = "annullaCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    AnnPrimaFase.CssClass = "btn btn-success btn-sm btn-cinque btn-custom"
-                    AnnPrimaFase.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
-                    If Data.FixNull(dr("Codice_Status")) <= "51" Then
-                        AnnPrimaFase.Visible = True
+
+
+                    Dim hpUP As New Button
+
+                    hpUP.ID = "hp_" & counter1
+                    hpUP.Attributes.Add("runat", "server")
+                    hpUP.Text = "Invia Lista Partecipanti"
+                    hpUP.PostBackUrl = "upPartecipanti.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    hpUP.CssClass = "btn btn-success btn-sm btn-cinque btn-custom"
+                    If ((Data.FixNull(dr("Codice_Status")) = "66" Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "57") And Data.FixNull(dr("CheckVerbale")) = "1" And Data.FixNull(dr("fase")) = "3") Then
+                        hpUP.Visible = True
                     Else
-                        AnnPrimaFase.Visible = False
+                        hpUP.Visible = False
                     End If
+
+                    Dim Verb As New Button
+
+                    Verb.ID = "verb_" & counter1
+                    Verb.Attributes.Add("runat", "server")
+                    Verb.Text = "Invia Verbale"
+                    Verb.PostBackUrl = "upVerbale.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    Verb.CssClass = "btn btn-success btn-sm btn-sei btn-custom"
+                    If ((Data.FixNull(dr("Codice_Status")) = "63") And Data.FixNull(dr("CheckVerbale")) = "0" And Data.FixNull(dr("fase")) = "3") Then
+                        Verb.Visible = True
+                    Else
+                        Verb.Visible = False
+                    End If
+
+
+
+
 
 
                     Dim hpUPPag As New Button
@@ -207,7 +214,7 @@ Public Class dashboardB
                     hpUPPag.Attributes.Add("runat", "server")
                     hpUPPag.Text = "Invia Pagamento"
                     hpUPPag.PostBackUrl = "upLegCorsi.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    hpUPPag.CssClass = "btn btn-success btn-sm btn-cinque btn-custom"
+                    hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom"
                     If (Data.FixNull(dr("Codice_Status")) = "75" And Data.FixNull(dr("fase")) = "3") Then
                         hpUPPag.Visible = True
                     Else
@@ -221,7 +228,7 @@ Public Class dashboardB
                     fotoCorsisti.Attributes.Add("runat", "server")
                     fotoCorsisti.Text = "Foto Corsisti"
                     fotoCorsisti.PostBackUrl = "corsisti.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    fotoCorsisti.CssClass = "btn btn-success btn-sm btn-sei btn-custom"
+                    fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
                     If (Data.FixNull(dr("Codice_Status")) = "69" And Data.FixNull(dr("fase")) = "3") Then
                         fotoCorsisti.Visible = True
                     Else
@@ -234,7 +241,7 @@ Public Class dashboardB
                     StopFoto.Attributes.Add("runat", "server")
                     StopFoto.Text = "Termina Caricamento"
                     StopFoto.PostBackUrl = "stopFoto.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    StopFoto.CssClass = "btn btn-success btn-sm btn-sette btn-custom"
+                    StopFoto.CssClass = "btn btn-success btn-sm btn-nove btn-custom"
                     '  Annulla.OnClientClick = "return confirm(""ciappa"");"
                     StopFoto.Attributes.Add("OnClick", "if(!myConfirm())return false;")
                     '   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")

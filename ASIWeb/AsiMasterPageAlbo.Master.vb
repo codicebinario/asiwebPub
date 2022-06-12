@@ -58,15 +58,28 @@ Public Class AsiMasterPageAlbo
         ds = RequestP.Execute()
 
         If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+            Dim counter1 As Integer = 0
+            For Each dr In ds.Tables("main").Rows
 
-            ritorno = True
+
+
+                If Data.FixNull(dr("Codice_Status")) = "63" Then
+                    counter1 += 1
+
+
+                End If
+
+            Next
+            If counter1 >= 1 Then
+                ritorno = True
+            Else
+                ritorno = False
+            End If
+
         Else
-
             ritorno = False
 
         End If
-
-
         Return ritorno
 
     End Function

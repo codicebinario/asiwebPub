@@ -69,8 +69,7 @@ Public Class dashboardV
             For Each dr In ds.Tables("main").Rows
 
 
-                If Data.FixNull(dr("Codice_Status")) = "63" Or Data.FixNull(dr("Codice_Status")) = "64" _
-                Or Data.FixNull(dr("Codice_Status")) = "65" Then
+                If Data.FixNull(dr("Codice_Status")) = "63" Then
 
 
                     counter1 += 1
@@ -101,7 +100,7 @@ Public Class dashboardV
                     Ann.Attributes.Add("runat", "server")
                     Ann.Text = "Valuta Corso"
                     Ann.PostBackUrl = "valutaCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    Ann.CssClass = "btn btn-success btn-sm btn-quattro btn-custom"
+                    Ann.CssClass = "btn btn-success btn-sm btn-uno btn-custom"
                     '    Ann.Attributes.Add("OnClick", "if(!myValuta())return false;")
 
 
@@ -114,7 +113,7 @@ Public Class dashboardV
                     '  PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("NomeFileOnFS"))
                     PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(nomeFile)
 
-                    PianoCorso.CssClass = "btn btn-success btn-sm btn-quattro btn-custom"
+                    PianoCorso.CssClass = "btn btn-success btn-sm btn-due btn-custom"
                     ' PianoCorso.Attributes.Add("OnClick", "if(!myValuta())return false;")
 
 

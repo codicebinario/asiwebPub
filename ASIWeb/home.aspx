@@ -14,31 +14,94 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-       <div class="container">
+<div class="container">
+  
   <div class="row">
+     
     <div class="col">
-    <div class="jumbotron jumbotron-fluid">
+        <div class="jumbotron jumbotron-fluid">
   <div class="container text-center">
- 
-    <a class="btn btn-lg btn-custom " href="dashboard.aspx" role="button">Tesseramento</a>
-
-
-  </div></div>
    
-
+   
+       <a class="btn btn-lg btn-custom " href="dashboard.aspx" role="button">Tesseramento</a>
+  
+</div> 
     </div>
-    <div class="col">
-     <div class="jumbotron jumbotron-fluid">
+      </div>
+  <div class="col">
+           <div class="jumbotron jumbotron-fluid">
   <div class="container text-center">
- <%--   <a class="btn btn-lg btn-custom" href="#" role="button">Albo</a>--%>
-   <a class="btn btn-lg btn-custom" href="Albo/dashboardB.aspx" role="button">Albo</a>
- </div>   <div class="container">
- </div>
+    
+  
+      <a class="btn btn-lg btn-custom" href="Albo/dashboardB.aspx" role="button">Albo</a>
+  </div>
 </div>
-        
-    </div>
+
   </div>
  
+ </div>     
 
+
+
+
+
+     <div class="row">
+     
+    <div class="col">
+        <div class="jumbotron jumbotron-fluid">
+  <div class="container text-center">
+  
+ 
+       <a class="btn btn-lg btn-custom " href="#" role="button">xxxx</a>
+  </div>
+</div> 
+    </div>
+
+  <div class="col">
+           <div class="jumbotron jumbotron-fluid">
+  <div class="container text-center">
+    
+    
+      <a class="btn btn-lg btn-custom" href="#" role="button">xxxx</a>
+  </div>
 </div>
+
+  </div>
+ 
+ </div>     
+
+
+
+
+
+      <div class="row">
+     
+    <div class="col">
+        <div class="jumbotron jumbotron-fluid">
+  <div class="container text-center">
+  
+ 
+       <a class="btn btn-lg btn-custom " href="#" role="button">xxxx</a>
+  </div>
+</div> 
+    </div>
+
+  <div class="col">
+        
+
+  </div>
+ 
+ </div>     
+
+
+
+
+
+  </div>
+
+ 
+
+      
+
+
 </asp:Content>

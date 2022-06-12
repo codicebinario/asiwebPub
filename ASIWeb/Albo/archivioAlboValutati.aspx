@@ -34,7 +34,7 @@
  <div class="col-sm-12 mb-3 mb-md-0">
        <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Corsi Evasi</h3>
+    <h3 class="display-5">Corsi Valutati</h3>
     <p class="lead">
   <asp:Literal ID="litDenominazioneJumboDash" runat="server"></asp:Literal>
                
