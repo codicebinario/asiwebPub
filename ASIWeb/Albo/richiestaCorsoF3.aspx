@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageAlbo.Master" CodeBehind="richiestaCorsoF3.aspx.vb" Inherits="ASIWeb.richiestaCorsoF3" %>
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <style>
     .custom-file-input.selected:lang(en)::after {
@@ -305,10 +306,15 @@ $(document).ready(function(){
 								 
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label for="txtCognome">Elenco Docenti </label>
-								<asp:textbox id="txtDocenteNome"  runat="server" Cssclass="form-control" placeholder="nome" maxlength="100"></asp:textbox>
+									<label for="txtCognome">Elenco Docenti (max 4 caratteri del cognome) </label>
+									   <asp:TextBox ID="txtDocenteCognome" Cssclass="form-control" placeholder="cognome" maxlength="100" runat="server"></asp:TextBox>
+            <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" ServiceMethod="SearchCustomers"
+                MinimumPrefixLength="2" CompletionInterval="100" EnableCaching="false" CompletionSetCount="100"
+                TargetControlID="txtDocenteCognome" FirstRowSelected="false" >
+            </ajaxToolkit:AutoCompleteExtender>
+							<%--	<asp:textbox id="txtDocenteNome"  runat="server" Cssclass="form-control" placeholder="nome" maxlength="100"></asp:textbox>
 								<asp:textbox id="txtDocenteCognome"  runat="server" Cssclass="form-control" placeholder="cognome" maxlength="100"></asp:textbox>
-							</div>
+						--%>	</div>
 								</div>
 							
 							<div class="col-sm-2 text-center">

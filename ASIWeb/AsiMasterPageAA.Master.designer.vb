@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class AsiMasterPageAlbo
+Partial Public Class AsiMasterPageAA
 
     '''<summary>
     '''head control.
@@ -75,42 +75,6 @@ Partial Public Class AsiMasterPageAlbo
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lnkOut As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''LinkArchivio control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents LinkArchivio As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''LinkSettore control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents LinkSettore As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''LinkSettoreValutati control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents LinkSettoreValutati As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''lnkNuovoCorso control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lnkNuovoCorso As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''ContentPlaceHolder1 control.

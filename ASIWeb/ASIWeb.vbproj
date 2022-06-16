@@ -184,8 +184,10 @@
     <Content Include="Albo\archivioAlbo.aspx" />
     <Content Include="Albo\archivioAlboValutati.aspx" />
     <Content Include="Albo\corsisti.aspx" />
+    <Content Include="Albo\corsistiKO.aspx" />
     <Content Include="Albo\dashboardB.aspx" />
     <Content Include="Albo\dashboardV.aspx" />
+    <Content Include="Albo\homeA.aspx" />
     <Content Include="Albo\richiestaCorso.aspx" />
     <Content Include="Albo\richiestaCorsoF2.aspx" />
     <Content Include="Albo\richiestaCorsoF3.aspx" />
@@ -201,6 +203,7 @@
     <Content Include="annulla.aspx" />
     <Content Include="Archivio.aspx" />
     <Content Include="AsiMasterPage.Master" />
+    <Content Include="AsiMasterPageAlbo.Master" />
     <Content Include="bin\AjaxControlToolkit.dll" />
     <Content Include="bin\ASIWeb.dll" />
     <Content Include="bin\fmDotNet.dll" />
@@ -406,12 +409,12 @@
     <Content Include="uptest.aspx" />
     <Content Include="Models\HandlerVB.ashx" />
     <Content Include="AsiMasterPageMain.Master" />
-    <Content Include="AsiMasterPageAlbo.Master" />
     <Content Include="calendar\styles\Thumbs.db" />
     <Content Include="WebForm1.aspx" />
     <Content Include="WebForm2.aspx" />
     <Content Include="WebForm3.aspx" />
     <Content Include="WebForm4.aspx" />
+    <Content Include="AsiMasterPageAA.Master" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -471,6 +474,13 @@
       <DependentUpon>corsisti.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Albo\corsistiKO.aspx.designer.vb">
+      <DependentUpon>corsistiKO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\corsistiKO.aspx.vb">
+      <DependentUpon>corsistiKO.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Albo\dashboardB.aspx.designer.vb">
       <DependentUpon>dashboardB.aspx</DependentUpon>
     </Compile>
@@ -483,6 +493,13 @@
     </Compile>
     <Compile Include="Albo\dashboardV.aspx.vb">
       <DependentUpon>dashboardV.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Albo\homeA.aspx.designer.vb">
+      <DependentUpon>homeA.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\homeA.aspx.vb">
+      <DependentUpon>homeA.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Albo\richiestaCorsoF2.aspx.designer.vb">
@@ -562,11 +579,11 @@
       <DependentUpon>valutaCorso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AsiMasterPageAlbo.Master.designer.vb">
-      <DependentUpon>AsiMasterPageAlbo.Master</DependentUpon>
+    <Compile Include="AsiMasterPageAA.Master.designer.vb">
+      <DependentUpon>AsiMasterPageAA.Master</DependentUpon>
     </Compile>
-    <Compile Include="AsiMasterPageAlbo.Master.vb">
-      <DependentUpon>AsiMasterPageAlbo.Master</DependentUpon>
+    <Compile Include="AsiMasterPageAA.Master.vb">
+      <DependentUpon>AsiMasterPageAA.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Albo\richiestaCorso.aspx.designer.vb">
@@ -595,6 +612,13 @@
     </Compile>
     <Compile Include="AsiMasterPage.Master.vb">
       <DependentUpon>AsiMasterPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AsiMasterPageAlbo.Master.designer.vb">
+      <DependentUpon>AsiMasterPageAlbo.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AsiMasterPageAlbo.Master.vb">
+      <DependentUpon>AsiMasterPageAlbo.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AsiMasterPageMain.Master.designer.vb">
@@ -831,6 +855,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="corsisti\" />
+    <Folder Include="elencoPartecipantiCorsi\" />
     <Folder Include="file_storage\" />
   </ItemGroup>
   <ItemGroup>

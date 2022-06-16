@@ -227,7 +227,7 @@ function ServerException(mess) {
           <fup:Format Ext="pdf" MaxByteSize="5240000"/>
           <fup:Format Ext="png" MaxByteSize="5240000"/>
             <fup:Format Ext="jpg" MaxByteSize="5240000"/>
-            <fup:Format Ext="png" MaxByteSize="5240000"/>
+           
                  
        
      </AllowedFileFormats>

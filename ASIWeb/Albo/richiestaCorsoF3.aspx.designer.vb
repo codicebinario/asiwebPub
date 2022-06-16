@@ -176,15 +176,6 @@ Partial Public Class richiestaCorsoF3
     Protected WithEvents Updatepanel2 As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
-    '''txtDocenteNome control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtDocenteNome As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''txtDocenteCognome control.
     '''</summary>
     '''<remarks>
@@ -192,6 +183,15 @@ Partial Public Class richiestaCorsoF3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtDocenteCognome As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''AutoCompleteExtender1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents AutoCompleteExtender1 As Global.AjaxControlToolkit.AutoCompleteExtender
 
     '''<summary>
     '''btnAggiungiDocenti control.

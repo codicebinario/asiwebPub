@@ -49,7 +49,7 @@ Public Class richiestaCorsoF3
 
 
         If Session("fase") <> "3" Then
-            Response.Redirect("../home.aspx")
+            Response.Redirect("homeA.aspx")
         End If
 
         If IsNothing(Session("tipoEnte")) Then
@@ -202,7 +202,38 @@ Public Class richiestaCorsoF3
             End If
 
     End Sub
+    <WebMethod()>
+    Public Shared Function SearchCustomers(ByVal prefixText As String, ByVal count As Integer) As List(Of String)
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        Dim ds As DataSet
 
+        fmsP.SetLayout("webFormatori")
+
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        RequestP.AddSearchField("Prime4Lettere", prefixText, Enumerations.SearchOption.beginsWith)
+
+        ds = RequestP.Execute()
+
+        Dim customers As List(Of String) = New List(Of String)()
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+            For Each dr In ds.Tables("main").Rows
+
+                customers.Add(dr("Cognome").ToString() & ", " & dr("nome").ToString())
+
+            Next
+
+
+
+
+        End If
+
+
+
+        Return customers
+
+
+
+    End Function
     Sub LivelliCorsi()
 
         Dim ds As DataSet
@@ -292,12 +323,12 @@ Public Class richiestaCorsoF3
         '  System.Threading.Thread.Sleep(3000)
         Dim Users As ListItemCollection = New ListItemCollection
         Dim User As ListItem
-        If Len(txtDocenteNome.Text) > 0 And Len(txtDocenteCognome.Text) > 0 And txtDocenteNome.Text <> "nome" And txtDocenteCognome.Text <> "cognome" Then
-            Users.Add(txtDocenteNome.Text & " " & txtDocenteCognome.Text)
+        If Len(txtDocenteCognome.Text) > 0 And txtDocenteCognome.Text <> "cognome" Then
+            Users.Add(txtDocenteCognome.Text)
             SetFocusControl("txtDocenteNome")
         End If
         For Each User In Users
-            txtDocenteNome.Text = ""
+            '    txtDocenteNome.Text = ""
             txtDocenteCognome.Text = ""
             lstDocenti.Items.Add(User)
         Next

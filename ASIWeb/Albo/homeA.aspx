@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageMain.Master" CodeBehind="home.aspx.vb" Inherits="ASIWeb.home" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageAA.Master" CodeBehind="homeA.aspx.vb" Inherits="ASIWeb.home" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
 
@@ -23,7 +23,7 @@
   <div class="container text-center">
    
    
-       <a class="btn btn-lg btn-custom " href="dashboard.aspx" role="button">Tesseramento</a>
+       <a class="btn btn-lg btn-custom" href="dashboardB.aspx" role="button">Corsi</a>
   
 </div> 
     </div>
@@ -32,8 +32,8 @@
            <div class="jumbotron jumbotron-fluid">
   <div class="container text-center">
     
-  
-      <a class="btn btn-lg btn-custom" href="Albo/HomeA.aspx" role="button">Albo</a>
+    <a class="btn btn-lg btn-custom" href="#" role="button">Equiparazioni</a>
+    
   </div>
 </div>
 
@@ -42,7 +42,31 @@
  </div>     
 
 
+         <div class="row">
+     
+    <div class="col">
+        <div class="jumbotron jumbotron-fluid">
+  <div class="container text-center">
+  
+ 
+       <a class="btn btn-lg btn-custom " href="#" role="button">Rinnovi</a>
+  </div>
+</div> 
+    </div>
 
+  <div class="col">
+        
+         <div class="jumbotron jumbotron-fluid">
+  <div class="container text-center">
+  
+ 
+       <a class="btn btn-lg btn-custom " href="#" role="button">Ristampa</a>
+  </div>
+</div> 
+
+  </div>
+ 
+ </div>     
 
 
 

@@ -1,4 +1,4 @@
-﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="AsiMasterPageAlbo.Master.vb" Inherits="ASIWeb.AsiMasterPageAlbo" %>
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="AsiMasterPageAA.Master.vb" Inherits="ASIWeb.AsiMasterPageAA" %>
 
 <!DOCTYPE html>
 
@@ -150,9 +150,9 @@
     </div>
   </nav>
 
-<nav class="navbar navbar-custom navbar-dark  navbar-expand-md fixed-to">
+<%--<nav class="navbar navbar-custom navbar-dark  navbar-expand-md fixed-to">
   <%--  <a class="navbar-brand disabled" href="#">TESSERE</a> --%>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse1" aria-controls="navbarCollapse1" aria-expanded="false" aria-label="Toggle navigation">
+   <%--   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse1" aria-controls="navbarCollapse1" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse1">
@@ -191,7 +191,7 @@
       </ul>
  
     </div>
-  </nav>
+  </nav>--%>
 
 
 

@@ -11,59 +11,50 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class WebForm1
+Partial Public Class corsistiKO
 
     '''<summary>
-    '''form1 control.
+    '''lblIntestazioneCorso control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
+    Protected WithEvents lblIntestazioneCorso As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtValore control.
+    '''HiddenIdRecord control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtValore As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents HiddenIdRecord As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''Button1 control.
+    '''HiddenIDCorso control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents HiddenIDCorso As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''ScriptManager1 control.
+    '''UpdatePanel1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ScriptManager1 As Global.System.Web.UI.ScriptManager
+    Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
-    '''txtContactsSearch control.
+    '''plTabellaCorsisti control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtContactsSearch As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''AutoCompleteExtender1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents AutoCompleteExtender1 As Global.AjaxControlToolkit.AutoCompleteExtender
+    Protected WithEvents plTabellaCorsisti As Global.System.Web.UI.WebControls.PlaceHolder
 End Class

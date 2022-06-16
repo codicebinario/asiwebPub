@@ -446,6 +446,27 @@ Public Class archivioAlboValutati
 
                     'fine ottava riga sottosezione
 
+                    ' inizio ottava riga 
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Motivazione Parere: <span>"))
+                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneSettore"))))
+
+                    phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+                    'fine ottava riga sottosezione
 
 
 

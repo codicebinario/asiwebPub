@@ -89,7 +89,8 @@ Public Class archivioAlbo
             For Each dr In ds.Tables("main").Rows
 
                 If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "101" _
-                    Or Data.FixNull(dr("Codice_Status")) = "60" Or Data.FixNull(dr("Codice_Status")) = "72" Then
+                    Or Data.FixNull(dr("Codice_Status")) = "60" Or Data.FixNull(dr("Codice_Status")) = "72" _
+                     Then
 
 
                     counter1 += 1
@@ -99,6 +100,18 @@ Public Class archivioAlbo
 
                     Dim deEnco As New Ed()
 
+                    Dim fotoCorsisti As New Button
+
+                    fotoCorsisti.ID = "Fot_" & counter1
+                    fotoCorsisti.Attributes.Add("runat", "server")
+                    fotoCorsisti.Text = "Corsisti KO"
+                    fotoCorsisti.PostBackUrl = "corsistiKO.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
+                    If (Data.FixNull(dr("Codice_Status")) = "72" And Data.FixNull(dr("fase")) = "3") Then
+                        fotoCorsisti.Visible = True
+                    Else
+                        fotoCorsisti.Visible = False
+                    End If
 
 
 
@@ -135,14 +148,20 @@ Public Class archivioAlbo
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
 
 
 
 
 
 
+                    phDash.Controls.Add(fotoCorsisti)
+                    phDash.Controls.Add(New LiteralControl("<br />"))
 
+                    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo text-left""><br />Note Corsisti KO: <span><br />"))
+                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Motivo_Corsisti_KO"))))
+
+                    phDash.Controls.Add(New LiteralControl("</small></h6></span>"))
 
 
 
@@ -444,6 +463,25 @@ Public Class archivioAlbo
 
 
                     'fine ottava riga sottosezione
+                    ' inizio ottava riga 
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Valutazione DT: <span>"))
+                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneDT"))))
+
+                    phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
 
 
 

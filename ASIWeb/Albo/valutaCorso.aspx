@@ -117,8 +117,8 @@ $(document).ready(function(){
                                 
 					 <asp:dropdownlist id="ddlValutazione" runat="server" Cssclass="form-control input-sm">
                           <asp:ListItem Value="##">##</asp:ListItem>
-                         <asp:ListItem Value="S">giudizio positivo</asp:ListItem>
-                        <asp:ListItem Value="N">giudizio negativo</asp:ListItem>
+                         <asp:ListItem Value="S">positivo</asp:ListItem>
+                        <asp:ListItem Value="N">negativo</asp:ListItem>
 					 </asp:dropdownlist>
 								
 								</div>
