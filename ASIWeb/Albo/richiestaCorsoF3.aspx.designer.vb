@@ -194,6 +194,15 @@ Partial Public Class richiestaCorsoF3
     Protected WithEvents AutoCompleteExtender1 As Global.AjaxControlToolkit.AutoCompleteExtender
 
     '''<summary>
+    '''lblAvviso control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblAvviso As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''btnAggiungiDocenti control.
     '''</summary>
     '''<remarks>
@@ -309,6 +318,15 @@ Partial Public Class richiestaCorsoF3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
+
+    '''<summary>
+    '''RequiredFieldValidator5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator5 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
     '''btnFase3 control.

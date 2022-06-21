@@ -1,6 +1,6 @@
 ﻿Imports fmDotNet
 Imports ASIWeb.Ed
-Public Class AsiMasterPageAlbo
+Public Class AsiMasterPageEqui
     Inherits System.Web.UI.MasterPage
     Dim deEnco As New Ed
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -12,20 +12,20 @@ Public Class AsiMasterPageAlbo
         End If
 
         If Not Page.IsPostBack Then
-            Dim quantiVal As Integer = quantiDaValutare(Session("codice"))
+            'Dim quantiVal As Integer = quantiDaValutare(Session("codice"))
 
-            If quantiDaValutare(Session("codice")) >= 1 Then
-                LinkSettore.Visible = True
-                LinkSettore.Text = "Corsi da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
-            Else
-                LinkSettore.Visible = False
-            End If
+            'If quantiDaValutare(Session("codice")) >= 1 Then
+            '    LinkSettore.Visible = True
+            '    LinkSettore.Text = "Corsi da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
+            'Else
+            '    LinkSettore.Visible = False
+            'End If
 
-            If quantiValutati(Session("codice")) = True Then
-                LinkSettoreValutati.Visible = True
-            Else
-                LinkSettoreValutati.Visible = False
-            End If
+            'If quantiValutati(Session("codice")) = True Then
+            '    LinkSettoreValutati.Visible = True
+            'Else
+            '    LinkSettoreValutati.Visible = False
+            'End If
 
 
 
@@ -147,24 +147,24 @@ Public Class AsiMasterPageAlbo
 
         Response.Redirect("../home.aspx")
     End Sub
-    Protected Sub lnkNuovoCorso_Click(sender As Object, e As EventArgs) Handles lnkNuovoCorso.Click
+    Protected Sub lnkNuovaEquiparazione_Click(sender As Object, e As EventArgs) Handles lnkNuovaEquiparazione.Click
         NuovoCorso()
         '     ?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("Codice_Richiesta"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("Record_ID"))
 
-        Response.Redirect("richiestaCorso.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+        Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
     End Sub
 
 
-    Protected Sub lnkAlbo_Click(sender As Object, e As EventArgs) Handles lnkAlbo.Click
+    Protected Sub lnkEqui_Click(sender As Object, e As EventArgs) Handles lnkEqui.Click
         '    NuovaRichiesta()
 
         Response.Redirect("HomeA.aspx")
     End Sub
 
-    Protected Sub LinkArchivio_Click(sender As Object, e As EventArgs) Handles LinkArchivio.Click
+    Protected Sub LinkArchivioEqui_Click(sender As Object, e As EventArgs) Handles LinkArchivioEqui.Click
         '    NuovaRichiesta()
 
-        Response.Redirect("archivioAlbo.aspx")
+        Response.Redirect("archivioEqui.aspx")
     End Sub
 
 
@@ -221,11 +221,7 @@ Public Class AsiMasterPageAlbo
 
     End Sub
 
-    Protected Sub LinkSettore_Click(sender As Object, e As EventArgs) Handles LinkSettore.Click
-        Response.Redirect("dashboardV.aspx")
-    End Sub
 
-    Protected Sub LinkSettoreValutati_Click(sender As Object, e As EventArgs) Handles LinkSettoreValutati.Click
-        Response.Redirect("archivioAlboValutati.aspx")
-    End Sub
+
+
 End Class

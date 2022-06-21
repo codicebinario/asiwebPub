@@ -1,4 +1,4 @@
-﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="AsiMasterPageAlbo.Master.vb" Inherits="ASIWeb.AsiMasterPageAlbo" %>
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="AsiMasterPageEqui.Master.vb" Inherits="ASIWeb.AsiMasterPageEqui" %>
 
 <!DOCTYPE html>
 
@@ -107,7 +107,7 @@
         </li>
 
              <li class="nav-item text-white">
-         <asp:LinkButton class="nav-link" ID="lnkAlbo" CausesValidation="false" runat="server">ALBO</asp:LinkButton>
+         <asp:LinkButton class="nav-link" ID="lnkEqui" CausesValidation="false" runat="server">Equiparazioni</asp:LinkButton>
          
             
          
@@ -158,34 +158,23 @@
     <div class="collapse navbar-collapse" id="navbarCollapse1">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="DashboardB.aspx" >Corsi Attivi</a>
+          <a class="nav-link" href="DashboardEqui.aspx" >Richieste Equiparazioni Attive</a>
         </li>
           
        
            <li class="nav-item">
       
           
-      <asp:LinkButton ID="LinkArchivio"  cssclass="nav-link" CausesValidation="false" runat="server">Corsi Evasi</asp:LinkButton>
+      <asp:LinkButton ID="LinkArchivioEqui"  cssclass="nav-link" CausesValidation="false" runat="server">Richieste Evase</asp:LinkButton>
       </li>
 
- <li class="nav-item">
-  
  
 
-
-
-  <asp:LinkButton ID="LinkSettore"  cssclass="nav-link" Visible="false" CausesValidation="false" runat="server"></asp:LinkButton>
-
-               </li>
-
-           <li class="nav-item">
-  <asp:LinkButton ID="LinkSettoreValutati"  cssclass="nav-link" Visible="false" CausesValidation="false" runat="server">Corsi Valutati</asp:LinkButton>
-
-               </li>
+         
 
 
           <li class="nav-item">       
-               <asp:LinkButton ID="lnkNuovoCorso"  cssclass="nav-link" CausesValidation="false" runat="server">Nuovo Corso</asp:LinkButton>
+               <asp:LinkButton ID="lnkNuovaEquiparazione"  cssclass="nav-link" CausesValidation="false" runat="server">Nuova Equiparazione</asp:LinkButton>
         
      
       

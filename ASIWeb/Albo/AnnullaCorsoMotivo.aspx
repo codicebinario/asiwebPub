@@ -67,6 +67,7 @@ $(document).ready(function(){
        <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
     <h3 class="display-5">Annullamento Corso</h3>
+    <%--  <p> <input type="button" value="Go back!" onclick="history.back()"></p>--%>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
                

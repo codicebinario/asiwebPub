@@ -20,6 +20,8 @@ Imports RestSharp
 Imports System.Collections.Generic
 Imports System.Net.Security
 Imports System.Net
+Imports System.Threading
+
 Public Class richiestaCorsoF3
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
@@ -46,6 +48,9 @@ Public Class richiestaCorsoF3
             fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
             Session("fase") = fase
         End If
+
+
+
 
 
         If Session("fase") <> "3" Then
@@ -197,13 +202,16 @@ Public Class richiestaCorsoF3
 
 
             QualificheCorsi()
-                LivelliCorsi()
+            LivelliCorsi()
 
-            End If
+        End If
 
     End Sub
     <WebMethod()>
     Public Shared Function SearchCustomers(ByVal prefixText As String, ByVal count As Integer) As List(Of String)
+
+
+
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
         Dim ds As DataSet
 
@@ -234,6 +242,51 @@ Public Class richiestaCorsoF3
 
 
     End Function
+    Function verificaCognome(valore As String) As Boolean
+        Dim ritorno As Boolean = False
+
+
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        Dim ds As DataSet
+
+        fmsP.SetLayout("webFormatori")
+
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        RequestP.AddSearchField("NominativoControllo", valore, Enumerations.SearchOption.equals)
+
+        ds = RequestP.Execute()
+
+
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+            For Each dr In ds.Tables("main").Rows
+                If dr("NominativoControllo") = valore Then
+                    ritorno = True
+                Else
+                    ritorno = False
+
+
+                End If
+
+
+
+            Next
+
+
+
+
+        End If
+
+        Return ritorno
+
+
+
+
+
+
+
+    End Function
+
+
     Sub LivelliCorsi()
 
         Dim ds As DataSet
@@ -321,17 +374,35 @@ Public Class richiestaCorsoF3
     End Sub
     Sub AddButton_Click1(ByVal sender As Object, ByVal e As EventArgs) Handles btnAggiungiDocenti.Click
         '  System.Threading.Thread.Sleep(3000)
-        Dim Users As ListItemCollection = New ListItemCollection
-        Dim User As ListItem
-        If Len(txtDocenteCognome.Text) > 0 And txtDocenteCognome.Text <> "cognome" Then
-            Users.Add(txtDocenteCognome.Text)
-            SetFocusControl("txtDocenteNome")
+        Dim vero As Boolean = False
+        vero = verificaCognome(txtDocenteCognome.Text)
+        If vero = True Then
+            lblAvviso.Text = ""
+
+
+
+
+            Dim Users As ListItemCollection = New ListItemCollection
+            Dim User As ListItem
+            If Len(txtDocenteCognome.Text) > 0 And txtDocenteCognome.Text <> "cognome" Then
+                Users.Add(txtDocenteCognome.Text)
+                SetFocusControl("txtDocenteNome")
+            End If
+            For Each User In Users
+                '    txtDocenteNome.Text = ""
+                txtDocenteCognome.Text = ""
+                lstDocenti.Items.Add(User)
+            Next
+        Else
+            Thread.Sleep(4000)
+
+            '   lblAvviso.Text = "Nominativo non abilitato"
+
+            '    lblAvviso.Text = ""
+
+
+
         End If
-        For Each User In Users
-            '    txtDocenteNome.Text = ""
-            txtDocenteCognome.Text = ""
-            lstDocenti.Items.Add(User)
-        Next
     End Sub
     Sub AddButton_Click2(ByVal sender As Object, ByVal e As EventArgs) Handles btnAggiungiComponente.Click
         '  System.Threading.Thread.Sleep(3000)
@@ -480,7 +551,7 @@ Public Class richiestaCorsoF3
                 ddlSpecialita.Enabled = False
             End If
 
-
+            CustomValidator1.Enabled = True
 
 
 
@@ -532,7 +603,7 @@ Public Class richiestaCorsoF3
                 Request.AddField("Elenco_Docenti", "nd")
             Else
                 For Each ItemDocente In lstDocenti.Items
-                    valDocenti &= ItemDocente.Text.ToString & ","
+                    valDocenti &= ItemDocente.Text.ToString & " - "
                 Next
                 Request.AddField("Elenco_Docenti", Data.PrendiStringaT(Server.HtmlEncode(valDocenti)))
             End If
@@ -542,7 +613,7 @@ Public Class richiestaCorsoF3
                 Request.AddField("Elenco_Componenti_Commissione", "nd")
             Else
                 For Each ItemCommissione In lstComponenti.Items
-                    valCommissione &= ItemCommissione.Text.ToString & ","
+                    valCommissione &= ItemCommissione.Text.ToString & " - "
                 Next
                 Request.AddField("Elenco_Componenti_Commissione", Data.PrendiStringaT(Server.HtmlEncode(valCommissione)))
             End If
@@ -566,7 +637,7 @@ Public Class richiestaCorsoF3
 
             Request.Execute()
 
-
+            Session("corsoaggiunto") = "OK"
             Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ok"))
 
             '   Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ko"))
@@ -602,7 +673,7 @@ Public Class richiestaCorsoF3
     End Sub
 
     Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
-        If ddlSpecialita.SelectedItem.Text = "ND" Or Not String.IsNullOrEmpty(ddlSpecialita.SelectedItem.Text) Then
+        If ddlSpecialita.SelectedItem.Text = "ND" Or Not String.IsNullOrEmpty(ddlSpecialita.SelectedItem.Text) Or Not String.IsNullOrWhiteSpace(ddlSpecialita.SelectedItem.Text) Then
             args.IsValid = True
         Else
 
@@ -612,4 +683,8 @@ Public Class richiestaCorsoF3
 
         End If
     End Sub
+
+
+
+
 End Class

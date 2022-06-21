@@ -415,6 +415,7 @@
     <Content Include="WebForm3.aspx" />
     <Content Include="WebForm4.aspx" />
     <Content Include="AsiMasterPageAA.Master" />
+    <Content Include="AsiMasterPageEqui.Master" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -619,6 +620,13 @@
     </Compile>
     <Compile Include="AsiMasterPageAlbo.Master.vb">
       <DependentUpon>AsiMasterPageAlbo.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AsiMasterPageEqui.Master.designer.vb">
+      <DependentUpon>AsiMasterPageEqui.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AsiMasterPageEqui.Master.vb">
+      <DependentUpon>AsiMasterPageEqui.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AsiMasterPageMain.Master.designer.vb">
@@ -857,6 +865,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="corsisti\" />
     <Folder Include="elencoPartecipantiCorsi\" />
+    <Folder Include="Equiparazioni\" />
     <Folder Include="file_storage\" />
   </ItemGroup>
   <ItemGroup>

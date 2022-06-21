@@ -67,11 +67,11 @@ $(document).ready(function(){
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-	   <asp:UpdateProgress ID="UpdateProgress1" runat="server"
+	   <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="Updatepanel2"
 					 DynamicLayout="false">
 	<ProgressTemplate>
 	  <div class="Progress">
-		 <div class="btn">loading...</div>
+		 <div class="btn">Nominativo non valido</div>
 		
 		</div>
 		
@@ -147,7 +147,7 @@ $(document).ready(function(){
 							</div>
 						<div class="col-sm-4">
 								<div class="form-group">
-									<label for="txtCognome">Specialità </label>
+									<label for="txtCognome">Specialità <span>[Inserire un valore oppure ND]</span></label>
                             <asp:dropdownlist id="ddlSpecialita" runat="server" Cssclass="form-control input-sm"></asp:dropdownlist>
 	
 								
@@ -186,7 +186,7 @@ $(document).ready(function(){
 								<div class="form-group">
 					  
 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlSpecialita"  ErrorMessage="Specialità" InitialValue="##" Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
-<asp:CustomValidator ID="CustomValidator1" Display="Dynamic" runat="server" ErrorMessage="Inserire un valore oppure ND" CssClass="errore"></asp:CustomValidator>
+<asp:CustomValidator ID="CustomValidator1" Enabled="false" Display="Dynamic" runat="server" ErrorMessage="Inserire un valore oppure ND" CssClass="errore"></asp:CustomValidator>
 
 
 
@@ -309,9 +309,10 @@ $(document).ready(function(){
 									<label for="txtCognome">Elenco Docenti (max 4 caratteri del cognome) </label>
 									   <asp:TextBox ID="txtDocenteCognome" Cssclass="form-control" placeholder="cognome" maxlength="100" runat="server"></asp:TextBox>
             <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" ServiceMethod="SearchCustomers"
-                MinimumPrefixLength="2" CompletionInterval="100" EnableCaching="false" CompletionSetCount="100"
+                MinimumPrefixLength="2" CompletionInterval="100"      EnableCaching="false" CompletionSetCount="100"
                 TargetControlID="txtDocenteCognome" FirstRowSelected="false" >
             </ajaxToolkit:AutoCompleteExtender>
+									<asp:Label ID="lblAvviso" runat="server" Text=""></asp:Label>
 							<%--	<asp:textbox id="txtDocenteNome"  runat="server" Cssclass="form-control" placeholder="nome" maxlength="100"></asp:textbox>
 								<asp:textbox id="txtDocenteCognome"  runat="server" Cssclass="form-control" placeholder="cognome" maxlength="100"></asp:textbox>
 						--%>	</div>
@@ -446,7 +447,9 @@ ClientValidationFunction = "ValidateListBoxComponenti"></asp:CustomValidator>
 								<div class="form-group">
 								 <label for="txtNome">Quota di partecipazione </label>
                                     <asp:textbox id="txtQuota" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
-									<asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtQuota" EnableClientScript="true" ValidationExpression="^\d{0,9}(?:[,]\d{1,2})?$" CssClass="errore" runat="server"  ErrorMessage="Solo valuta"></asp:RegularExpressionValidator>
+									<asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtQuota" EnableClientScript="true" Display="Dynamic" ValidationExpression="^\d{0,9}(?:[,]\d{1,2})?$" CssClass="errore" runat="server"  ErrorMessage="Solo valuta"></asp:RegularExpressionValidator>
+							<asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtQuota"  ErrorMessage="Quota di partecipazione"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
+									
 								</div>
 							</div>
 							

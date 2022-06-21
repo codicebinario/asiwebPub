@@ -32,11 +32,13 @@ Public Class dashboardB
                     ris = deEnco.QueryStringDecode(ris)
 
                     If ris = "ok" Then
-                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Corso caricata nel sistema! ' ).set('resizable', true).resizeTo('20%', 200);", True)
-
+                        If Session("corsoaggiunto") = "OK" Then
+                            Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Corso caricata nel sistema! ' ).set('resizable', true).resizeTo('20%', 200);", True)
+                            Session("corsoaggiunto") = Nothing
+                        End If
                     ElseIf ris = "ko" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Corso non caricata nel sistema ' ).set('resizable', true).resizeTo('20%', 200);", True)
-
+                        Session("corsoaggiunto") = Nothing
                     End If
                     Session("visto") = Nothing
                 End If

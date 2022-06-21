@@ -482,6 +482,24 @@ Public Class archivioAlbo
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
 
+                    ' inizio ottava riga 
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Annullamento: <span>"))
+                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteAnnullamentoCorso"))))
+
+                    phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
 
 
 

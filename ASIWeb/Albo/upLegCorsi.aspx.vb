@@ -232,7 +232,9 @@ Public Class upLegCorsi
 
         Request.AddField("Codice_Corso", codR)
         Request.AddField("NomeFileOnFS", nomecaricato)
-        Request.AddField("Ricevuta_Pagamento_Descrizione", txtNote.Text)
+        Request.AddField("Ricevuta_Pagamento_Descrizione", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+
+
 
         'Request.AddField("Codice_Articolo", AsiModel.CodiceArticolo)
         'Request.AddField("Nome_Articolo", AsiModel.NomeArticolo)
@@ -240,6 +242,16 @@ Public Class upLegCorsi
 
 
         Dim IdAllegato As String = Request.Execute() 'per upload
+
+        Dim fmsP11 As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        '  Dim ds As DataSet
+
+        fmsP11.SetLayout("webCorsiAllegatiPagamento")
+        Dim Request11 = fmsP11.CreateEditRequest(IdAllegato)
+        Request.AddScript("SistemaEncodingNoteUpload_Pagamento", IdAllegato)
+
+        Request11.Execute()
+
 
         Dim record_id As String = ASIWeb.AsiModel.GetRecord_IDbyCodRCorsi.GetRecord_ID(codR) ' per aggiornare status
 

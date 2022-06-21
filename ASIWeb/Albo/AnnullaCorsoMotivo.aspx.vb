@@ -118,7 +118,7 @@ Public Class AnnullaCorsoMotivo
 
 
             Request.AddField("NoteAnnullamentoCorso", Data.PrendiStringaT(Server.HtmlEncode(txtNoteAnnullamento.Text)))
-            Request.AddScript("SistemaEncodingNoteAnnullamento_Corso", IDCorso)
+            Request.AddScript("SistemaEncodingNoteAnnullamento_Corso", Session("id_record"))
             'script per gestione caratteri speciali da inserire
 
             risposta = Request.Execute()
