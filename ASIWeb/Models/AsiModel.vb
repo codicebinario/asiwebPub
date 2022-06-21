@@ -736,6 +736,20 @@ Public Class AsiModel
 
     End Class
 
+    Public Class DatiNuovaEquiparazione
+        Public IdRecord As String
+        Public IDCorso As String
+        Public CodiceEnteRichiedente As String
+        Public DescrizioneStatus As String
+        Public CodiceStatus As String
+        Public DescrizioneEnteRichiedente As String
+        Public TipoEnte As String
+
+
+
+
+    End Class
+
     Public Shared Function GetPaging() As String
         Dim fms As FMSAxml = Nothing
         Dim ds As DataSet = Nothing

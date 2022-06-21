@@ -311,6 +311,7 @@
     <Content Include="Css\themes\semantic.rtl.min.css" />
     <Content Include="Css\up.css" />
     <Content Include="Dashboard.aspx" />
+    <Content Include="Equiparazioni\DashboardEqui.aspx" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -650,6 +651,13 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Equiparazioni\DashboardEqui.aspx.designer.vb">
+      <DependentUpon>DashboardEqui.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\DashboardEqui.aspx.vb">
+      <DependentUpon>DashboardEqui.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="ErrorPage.aspx.designer.vb">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
@@ -865,7 +873,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="corsisti\" />
     <Folder Include="elencoPartecipantiCorsi\" />
-    <Folder Include="Equiparazioni\" />
     <Folder Include="file_storage\" />
   </ItemGroup>
   <ItemGroup>

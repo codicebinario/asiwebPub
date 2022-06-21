@@ -32,7 +32,7 @@
            <div class="jumbotron jumbotron-fluid">
   <div class="container text-center">
     
-    <a class="btn btn-lg btn-custom" href="#" role="button">Equiparazioni</a>
+    <a class="btn btn-lg btn-custom" href="../Equiparazioni/DashboardEqui.aspx" role="button">Equiparazioni</a>
     
   </div>
 </div>

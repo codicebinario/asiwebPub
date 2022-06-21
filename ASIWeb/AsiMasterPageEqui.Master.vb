@@ -148,7 +148,7 @@ Public Class AsiMasterPageEqui
         Response.Redirect("../home.aspx")
     End Sub
     Protected Sub lnkNuovaEquiparazione_Click(sender As Object, e As EventArgs) Handles lnkNuovaEquiparazione.Click
-        NuovoCorso()
+        NuovaEquiparazione()
         '     ?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("Codice_Richiesta"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("Record_ID"))
 
         Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
@@ -170,14 +170,14 @@ Public Class AsiMasterPageEqui
 
 
 
-    Sub NuovoCorso()
+    Sub NuovaEquiparazione()
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
         Dim ds As DataSet
 
 
-        fmsP.SetLayout("webCorsiRichiesta")
+        fmsP.SetLayout("webEquiparazioniRichiesta")
         Dim Request = fmsP.CreateNewRecordRequest()
 
         Request.AddField("Codice_Ente_Richiedente", Session("codice"))
@@ -205,15 +205,15 @@ Public Class AsiMasterPageEqui
         If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
             For Each dr In ds.Tables("main").Rows
 
-                AsiModel.IDCorso = Data.FixNull(dr("IDCorso"))
+                '  AsiModel.DatiNuovoCorso. = Data.FixNull(dr("IDCorso"))
 
                 '    Session("record_ID") = Data.FixNull(dr("Record_ID"))
-                Session("IDCorso") = Data.FixNull(dr("IDCorso"))
+                Session("IDEquiparazione") = Data.FixNull(dr("IDEquiparazione"))
 
             Next
 
 
-            AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "0", Session("WebUserEnte"))
+            AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "0", Session("WebUserEnte"))
 
         End If
 
