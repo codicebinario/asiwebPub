@@ -34,7 +34,7 @@ Public Class UpPartecipanti
     ' in pixel
     Const massimaaltezza As Integer = 140
     Const massinalarghezza As Integer = 100
-
+    Dim statusPrimaCaricamentoXL As String
     Dim ext As String = " "
     Dim nomefileReale As String = " "
     Dim qualeStatus As String = ""
@@ -90,6 +90,7 @@ Public Class UpPartecipanti
             Dim CodiceStatus As String = DettaglioCorso.CodiceStatus
             Dim DescrizioneStatus As String = DettaglioCorso.DescrizioneStatus
             Dim TitoloCorso As String = DettaglioCorso.TitoloCorso
+            statusPrimaCaricamentoXL = DettaglioCorso.CodiceStatus
             HiddenIdRecord.Value = DettaglioCorso.IdRecord
             HiddenIDCorso.Value = DettaglioCorso.IDCorso
             lblIntestazioneCorso.Text = "<strong>ID Corso: </strong>" & IDCorso & " - " & TitoloCorso & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
@@ -169,20 +170,21 @@ Public Class UpPartecipanti
                 tokenx = arrKeywords(1)
                 id_att = arrKeywords(0)
                 CaricaSuFM(tokenx, id_att, nomecaricato)
-                '   pnlFase1.Visible = False
-                ' btnFase2.Visible = True
-                'deleteFile(nomecaricato)
-                '  Session("fase") = "2"
-                Response.Redirect("dashboardB.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+            '   pnlFase1.Visible = False
+            ' btnFase2.Visible = True
+            'deleteFile(nomecaricato)
+            '  Session("fase") = "2"
+            '   Response.Redirect("dashboardB.aspx#" & Session("IDCorso") & "?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+            Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
 
-                '   Catch ex As Exception
+            '   Catch ex As Exception
 
-                '      uploadedFiles.Text = "<b>Elenco partecipanti non caricato: </b><br/>"
+            '      uploadedFiles.Text = "<b>Elenco partecipanti non caricato: </b><br/>"
 
 
-                '  End Try
+            '  End Try
 
-                Else
+        Else
             uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
         End If
 
@@ -253,6 +255,7 @@ Public Class UpPartecipanti
         Dim Request = fmsP.CreateEditRequest(codR)
         Request.AddField("NomeFileElencoPartecipanti", nomecaricato)
         Request.AddField("NoteUploadElencoCorso", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+        Request.AddField("StatusPrimaCaricamentoXL", statusPrimaCaricamentoXL)
 
         '  Request.AddField("Fase", "1")
         Request.AddField("Codice_Status", "68")

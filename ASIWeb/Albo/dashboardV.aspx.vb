@@ -137,9 +137,15 @@ Public Class dashboardV
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
 
+
                     phDash.Controls.Add(New LiteralControl("Corso:  "))
-                    phDash.Controls.Add(New LiteralControl("<span " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
-                    phDash.Controls.Add(New LiteralControl(Data.FixNull(dr("IDCorso"))))
+                    phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
+                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDCorso")) & ">" & Data.FixNull(dr("IDCorso")) & "</a>"))
+                    phDash.Controls.Add(New LiteralControl())
+
+                    'phDash.Controls.Add(New LiteralControl("Corso:  "))
+                    'phDash.Controls.Add(New LiteralControl("<span " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
+                    'phDash.Controls.Add(New LiteralControl(Data.FixNull(dr("IDCorso"))))
 
                     phDash.Controls.Add(New LiteralControl("</span></div>"))
 

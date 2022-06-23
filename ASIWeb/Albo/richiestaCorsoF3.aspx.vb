@@ -226,7 +226,7 @@ Public Class richiestaCorsoF3
         If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
             For Each dr In ds.Tables("main").Rows
 
-                customers.Add(dr("Cognome").ToString() & ", " & dr("nome").ToString())
+                customers.Add(dr("Cognome").ToString() & " " & dr("nome").ToString())
 
             Next
 
@@ -385,7 +385,7 @@ Public Class richiestaCorsoF3
             Dim Users As ListItemCollection = New ListItemCollection
             Dim User As ListItem
             If Len(txtDocenteCognome.Text) > 0 And txtDocenteCognome.Text <> "cognome" Then
-                Users.Add(txtDocenteCognome.Text)
+                Users.Add(Trim(txtDocenteCognome.Text))
                 SetFocusControl("txtDocenteNome")
             End If
             For Each User In Users
@@ -603,7 +603,7 @@ Public Class richiestaCorsoF3
                 Request.AddField("Elenco_Docenti", "nd")
             Else
                 For Each ItemDocente In lstDocenti.Items
-                    valDocenti &= ItemDocente.Text.ToString & " - "
+                    valDocenti &= ItemDocente.Text.ToString & ", "
                 Next
                 Request.AddField("Elenco_Docenti", Data.PrendiStringaT(Server.HtmlEncode(valDocenti)))
             End If
@@ -613,7 +613,7 @@ Public Class richiestaCorsoF3
                 Request.AddField("Elenco_Componenti_Commissione", "nd")
             Else
                 For Each ItemCommissione In lstComponenti.Items
-                    valCommissione &= ItemCommissione.Text.ToString & " - "
+                    valCommissione &= ItemCommissione.Text.ToString & ","
                 Next
                 Request.AddField("Elenco_Componenti_Commissione", Data.PrendiStringaT(Server.HtmlEncode(valCommissione)))
             End If

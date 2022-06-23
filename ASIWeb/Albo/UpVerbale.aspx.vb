@@ -173,8 +173,8 @@ Public Class Upverbale
             ' btnFase2.Visible = True
             'deleteFile(nomecaricato)
             '  Session("fase") = "2"
-            Response.Redirect("dashboardB.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
-
+            '  Response.Redirect("dashboardB.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+            Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
             '   Catch ex As Exception
 
             '      uploadedFiles.Text = "<b>Documento non caricato: </b><br/>"

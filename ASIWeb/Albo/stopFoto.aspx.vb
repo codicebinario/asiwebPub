@@ -36,7 +36,7 @@ Public Class stopFoto
 
 
 
-        Response.Redirect("dashboardB.aspx")
+        Response.Redirect("dashboardB.aspx#" & codiceCorso)
 
     End Sub
 

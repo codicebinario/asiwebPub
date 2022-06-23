@@ -77,6 +77,8 @@ Public Class corsistiKO
 
         Dim record_ID As String = ""
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
+        Dim oldStatus As String
+        oldStatus = deEnco.QueryStringDecode(Request.QueryString("oldStatus"))
         Dim skip As Integer = 0
         skip = Request.QueryString("skip")
         If Not String.IsNullOrEmpty(record_ID) Then
@@ -84,6 +86,15 @@ Public Class corsistiKO
             Session("id_record") = record_ID
 
         End If
+
+        If Not String.IsNullOrEmpty(oldStatus) Then
+
+            Session("oldStatus") = oldStatus
+
+        End If
+
+
+
         'pagg = Request.QueryString("pag")
         Dim pag = Request.QueryString("pag")
 
@@ -302,4 +313,26 @@ Public Class corsistiKO
 
     End Function
 
+    Protected Sub lnkNuovoExcel_Click(sender As Object, e As EventArgs) Handles lnkNuovoExcel.Click
+        If Session("auth") = "0" Or IsNothing(Session("auth")) Then
+            Response.Redirect("../login.aspx")
+        End If
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+
+        fmsP.SetLayout("webCorsiRichiesta")
+
+        Dim RequestP = fmsP.CreateEditRequest(Session("IDCorso"))
+        RequestP.AddField("Codice_Status", Session("oldStatus"))
+
+        Try
+            RequestP.Execute()
+
+            '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
+            '  Session("annullaCorso") = "ok"
+
+        Catch ex As Exception
+
+        End Try
+        Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
+    End Sub
 End Class

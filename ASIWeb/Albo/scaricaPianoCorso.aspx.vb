@@ -26,15 +26,16 @@ Imports System.Net
 Imports Image = System.Drawing.Image
 Imports RestSharp.Authenticators
 Public Class scaricaPianoCorso
-    Inherits System.Web.UI.Page
 
+    Inherits System.Web.UI.Page
+    Dim codiceCorso As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
         Dim deEnco As New Ed
         Dim pdf As String
-        Dim codiceCorso As String = deEnco.QueryStringDecode(Request.QueryString("codR"))
+        codiceCorso = deEnco.QueryStringDecode(Request.QueryString("codR"))
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
 
@@ -65,7 +66,7 @@ Public Class scaricaPianoCorso
 
 
 
-        Response.Redirect("dashboardB.aspx")
+        Response.Redirect("dashboardV.aspx#" & codiceCorso)
     End Sub
 
     Public Function FotoS(urlFoto As String)

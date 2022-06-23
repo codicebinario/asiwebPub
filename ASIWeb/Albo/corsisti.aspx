@@ -12,7 +12,8 @@
     <h3 class="display-5">Lista Partecipanti al Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-               
+ <asp:LinkButton class="nav-link text-white" ID="lnkTornaDashboard" CausesValidation="false" runat="server">Corsi Attivi</asp:LinkButton>
+        
     </p>
     
   </div></div>

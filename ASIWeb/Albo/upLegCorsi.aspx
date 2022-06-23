@@ -69,8 +69,9 @@ function ServerException(mess) {
       
          <div class="col-6 pb-0">
         <p>
-            <a class="btn btn-lg btn-custom" href="dashboardB.aspx" role="button">Torna ai Corsi</a>
-           
+            
+              <asp:LinkButton class="nav-link text-white" ID="lnkDashboard" CausesValidation="false" runat="server">Corsi Attivi</asp:LinkButton>
+    
 
         </p>
        

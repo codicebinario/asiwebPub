@@ -81,6 +81,7 @@ Public Class AnnullaCorsoMotivo
             Dim DescrizioneEnteRichiedente As String = DettaglioCorso.DescrizioneEnteRichiedente
             Dim TipoEnte As String = DettaglioCorso.TipoEnte
             Dim CodiceStatus As String = DettaglioCorso.CodiceStatus
+            '    Session("codiceStatus") = DettaglioCorso.CodiceStatus
             Dim DescrizioneStatus As String = DettaglioCorso.DescrizioneStatus
             Dim indirizzoSvolgimento As String = DettaglioCorso.IndirizzoSvolgimento & " - " & DettaglioCorso.LocalitaSvolgimento _
                 & DettaglioCorso.CapSvolgimento & " - " & DettaglioCorso.PRSvolgimento & " - " & DettaglioCorso.RegioneSvolgimento
@@ -123,7 +124,7 @@ Public Class AnnullaCorsoMotivo
 
             risposta = Request.Execute()
 
-            Response.Redirect("dashboardB.aspx")
+            Response.Redirect("archivioAlbo.aspx#" & Session("IDCorso"))
 
         End If
 

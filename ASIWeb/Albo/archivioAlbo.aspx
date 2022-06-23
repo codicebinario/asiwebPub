@@ -22,7 +22,12 @@
 
  font-size: small;
         }
- 
+       a:target {
+
+           
+    font-size: x-large;
+      background: yellow;
+    }
     </style>
     
     <link rel="stylesheet" href="../css/alertify.min.css" />

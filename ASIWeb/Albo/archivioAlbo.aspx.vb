@@ -87,7 +87,7 @@ Public Class archivioAlbo
             Dim counter1 As Integer = 0
             'Dim totale As Decimal = 0
             For Each dr In ds.Tables("main").Rows
-
+                Dim oldStatus As String = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
                 If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "101" _
                     Or Data.FixNull(dr("Codice_Status")) = "60" Or Data.FixNull(dr("Codice_Status")) = "72" _
                      Then
@@ -105,7 +105,7 @@ Public Class archivioAlbo
                     fotoCorsisti.ID = "Fot_" & counter1
                     fotoCorsisti.Attributes.Add("runat", "server")
                     fotoCorsisti.Text = "Corsisti KO"
-                    fotoCorsisti.PostBackUrl = "corsistiKO.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    fotoCorsisti.PostBackUrl = "corsistiKO.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&oldStatus=" & deEnco.QueryStringEncode(oldStatus)
                     fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
                     If (Data.FixNull(dr("Codice_Status")) = "72" And Data.FixNull(dr("fase")) = "3") Then
                         fotoCorsisti.Visible = True
@@ -136,8 +136,10 @@ Public Class archivioAlbo
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
 
                     phDash.Controls.Add(New LiteralControl("Corso:  "))
-                    phDash.Controls.Add(New LiteralControl("<span " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
-                    phDash.Controls.Add(New LiteralControl(Data.FixNull(dr("IDCorso"))))
+                    phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
+                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDCorso")) & ">" & Data.FixNull(dr("IDCorso")) & "</a>"))
+                    phDash.Controls.Add(New LiteralControl())
+
 
                     phDash.Controls.Add(New LiteralControl("</span></div>"))
 

@@ -38,6 +38,7 @@ Public Class upLegCorsi
     Dim porta As String = ConfigurationManager.AppSettings("porta")
     Dim pass As String = ConfigurationManager.AppSettings("pass")
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
+    Dim codR As String = ""
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
 
 
@@ -77,7 +78,7 @@ Public Class upLegCorsi
         If IsNothing(Session("id_record")) Then
             Response.Redirect("../login.aspx")
         End If
-        Dim codR As String = ""
+
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
 
 
@@ -463,4 +464,8 @@ Public Class upLegCorsi
         'End Try
         Return ritorno
     End Function
+
+    Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
+        Response.Redirect("dashboardB.aspx#" & codR)
+    End Sub
 End Class

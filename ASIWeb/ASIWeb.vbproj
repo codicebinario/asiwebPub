@@ -523,7 +523,7 @@
     </Compile>
     <Compile Include="Albo\scaricaPianoCorso.aspx.vb">
       <DependentUpon>scaricaPianoCorso.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Albo\stopFoto.aspx.designer.vb">
       <DependentUpon>stopFoto.aspx</DependentUpon>

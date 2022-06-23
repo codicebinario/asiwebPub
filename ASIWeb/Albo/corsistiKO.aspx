@@ -12,7 +12,13 @@
     <h3 class="display-5">Lista Partecipanti al Corso KO</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-               
+       
+         <asp:LinkButton class="nav-link text-white" ID="lnkNuovoExcel" CausesValidation="false" runat="server">Carica l'elenco corretto</asp:LinkButton>
+    
+            
+         
+      
+            
     </p>
     
   </div></div>

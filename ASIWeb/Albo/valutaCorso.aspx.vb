@@ -129,7 +129,7 @@ Public Class valutaCorso
 
             risposta = Request.Execute()
 
-            Response.Redirect("dashboardV.aspx")
+            Response.Redirect("dashboardAlboValutati.aspx#" & Session("IDCorso"))
 
         End If
 

@@ -301,4 +301,7 @@ Public Class corsisti
 
     End Function
 
+    Protected Sub lnkTornaDashboard_Click(sender As Object, e As EventArgs) Handles lnkTornaDashboard.Click
+        Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
+    End Sub
 End Class

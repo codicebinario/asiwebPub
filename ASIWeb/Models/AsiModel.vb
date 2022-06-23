@@ -731,7 +731,7 @@ Public Class AsiModel
         Public OraSvolgimentoA As String
         Public TitoloCorso As String
         Public TotaleOre As String
-
+        Public StatusPrimaCaricamentoXL As String
 
 
     End Class
@@ -744,6 +744,7 @@ Public Class AsiModel
         Public CodiceStatus As String
         Public DescrizioneEnteRichiedente As String
         Public TipoEnte As String
+
 
 
 
@@ -825,6 +826,7 @@ Public Class AsiModel
                         DatiCorso.OraSvolgimentoA = Data.FixNull(dr("Ora_Svolgimento_Fine"))
                         DatiCorso.TitoloCorso = Data.FixNull(dr("Titolo_Corso"))
                         DatiCorso.TotaleOre = Data.FixNull(dr("oreCorso"))
+                        '  DatiCorso.StatusPrimaCaricamentoXL = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
 
 
                     Next
