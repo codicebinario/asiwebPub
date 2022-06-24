@@ -184,6 +184,7 @@
     <Content Include="Albo\archivioAlbo.aspx" />
     <Content Include="Albo\archivioAlboValutati.aspx" />
     <Content Include="Albo\corsisti.aspx" />
+    <Content Include="Albo\corsistiDoc.aspx" />
     <Content Include="Albo\corsistiKO.aspx" />
     <Content Include="Albo\dashboardB.aspx" />
     <Content Include="Albo\dashboardV.aspx" />
@@ -192,6 +193,7 @@
     <Content Include="Albo\richiestaCorsoF2.aspx" />
     <Content Include="Albo\richiestaCorsoF3.aspx" />
     <Content Include="Albo\scaricaPianoCorso.aspx" />
+    <Content Include="Albo\scaricaTessera.aspx" />
     <Content Include="Albo\stopFoto.aspx" />
     <Content Include="Albo\test.aspx" />
     <Content Include="Albo\UpCorsista.aspx" />
@@ -476,6 +478,13 @@
       <DependentUpon>corsisti.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Albo\corsistiDoc.aspx.designer.vb">
+      <DependentUpon>corsistiDoc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\corsistiDoc.aspx.vb">
+      <DependentUpon>corsistiDoc.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Albo\corsistiKO.aspx.designer.vb">
       <DependentUpon>corsistiKO.aspx</DependentUpon>
     </Compile>
@@ -523,6 +532,13 @@
     </Compile>
     <Compile Include="Albo\scaricaPianoCorso.aspx.vb">
       <DependentUpon>scaricaPianoCorso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Albo\scaricaTessera.aspx.designer.vb">
+      <DependentUpon>scaricaTessera.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\scaricaTessera.aspx.vb">
+      <DependentUpon>scaricaTessera.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Albo\stopFoto.aspx.designer.vb">

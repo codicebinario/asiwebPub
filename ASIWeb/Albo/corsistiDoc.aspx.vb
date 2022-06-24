@@ -25,7 +25,7 @@ Imports System.Net.Security
 Imports System.Net
 Imports Image = System.Drawing.Image
 
-Public Class corsisti
+Public Class corsistiDoc
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
     Dim utente As String = ConfigurationManager.AppSettings("utente")
@@ -77,6 +77,8 @@ Public Class corsisti
 
         Dim record_ID As String = ""
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
+        Dim oldStatus As String
+        oldStatus = deEnco.QueryStringDecode(Request.QueryString("oldStatus"))
         Dim skip As Integer = 0
         skip = Request.QueryString("skip")
         If Not String.IsNullOrEmpty(record_ID) Then
@@ -84,6 +86,15 @@ Public Class corsisti
             Session("id_record") = record_ID
 
         End If
+
+        If Not String.IsNullOrEmpty(oldStatus) Then
+
+            Session("oldStatus") = oldStatus
+
+        End If
+
+
+
         'pagg = Request.QueryString("pag")
         Dim pag = Request.QueryString("pag")
 
@@ -147,6 +158,7 @@ Public Class corsisti
         Dim nome As String
         Dim cognome As String
         Dim foto As String
+        Dim tessera As String
         Dim email As String
         Dim codiceFiscale As String
         Dim NumeroTesseraAsi As String
@@ -162,7 +174,7 @@ Public Class corsisti
 
         Dim RequestPTot = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestPTot.AddSearchField("IDCorso", Session("IDCorso"), Enumerations.SearchOption.equals)
-
+        RequestPTot.AddSearchField("Corsista_OK_KO", "KO", Enumerations.SearchOption.equals)
         dsTot = RequestPTot.Execute()
 
         If Not IsNothing(dsTot) AndAlso dsTot.Tables("main").Rows.Count > 0 Then
@@ -181,6 +193,7 @@ Public Class corsisti
 
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestP.AddSearchField("IDCorso", Session("IDCorso"), Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Corsista_OK_KO", "KO", Enumerations.SearchOption.equals)
         'fmsP.GetPictureReference("", ""
         ds = RequestP.Execute()
 
@@ -196,17 +209,30 @@ Public Class corsisti
             For Each dr In MyDataPage
                 counter += 1
 
+                Dim ScaricaTessera As New Button
+
+                ScaricaTessera.ID = "scaricaTessera_" & counter
+                ScaricaTessera.Attributes.Add("runat", "server")
+                ScaricaTessera.Text = "Scarica Tessera"
+                '  PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("NomeFileOnFS"))
+                ScaricaTessera.PostBackUrl = "scaricaTessera.aspx?codR="
+                ' ScaricaTessera.PostBackUrl = "scaricaTessera.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("TesseraNomeFile"))
+
+                ScaricaTessera.CssClass = "btn btn-success btn-sm btn-due btn-custom"
+                ' PianoCorso.Attributes.Add("OnClick", "if(!myValuta())return false;")
+
+
 
                 nome = Data.FixNull(dr("Nome"))
                 cognome = Data.FixNull(dr("Cognome"))
                 email = Data.FixNull(dr("email"))
                 codiceFiscale = Data.FixNull(dr("CodiceFiscale"))
+                id = dr("idcorsista")
                 IndirizzoSpedizione = Data.FixNull(dr("IndirizzoSpedizione"))
                 CapSpedizione = Data.FixNull(dr("CapSpedizione"))
                 ComuneSpedizione = Data.FixNull(dr("ComuneSpedizione"))
                 ProvinciaSpedizione = Data.FixNull(dr("ProvinciaSpedizione"))
                 NumeroTesseraAsi = Data.FixNull(dr("NumeroTesseraASI"))
-                id = dr("idcorsista")
 
                 If String.IsNullOrWhiteSpace(Data.FixNull(dr("foto"))) Then
                     foto = "..\img\noimg.jpg"
@@ -214,6 +240,11 @@ Public Class corsisti
                     foto = "https://93.63.195.98" & Data.FixNull(dr("foto"))
                 End If
 
+                If String.IsNullOrWhiteSpace(Data.FixNull(dr("tessera"))) Then
+                    tessera = "..\img\noimg.jpg"
+                Else
+                    tessera = "https://93.63.195.98" & Data.FixNull(dr("tessera"))
+                End If
 
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<tr>"))
                 'plTabellaCorsisti.Controls.Add(New LiteralControl("<th scope=""row"">" & counter & "</td>"))
@@ -226,8 +257,6 @@ Public Class corsisti
                                                                   "<br /> " & ComuneSpedizione & " " & ProvinciaSpedizione & "</td>"))
 
 
-
-
                 If foto = "..\img\noimg.jpg" Then
                     plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
 
@@ -238,7 +267,25 @@ Public Class corsisti
                     plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
 
                 End If
-                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a href='upCorsista.aspx?skip=" & skip & "&pag=" & pag & "&codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&id=" & deEnco.QueryStringEncode(id) & "'>Carica Foto</a></td>"))
+
+                If tessera = "..\img\noimg.jpg" Then
+                    '  plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+
+
+                Else
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td>"))
+                    plTabellaCorsisti.Controls.Add(ScaricaTessera)
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("</td>"))
+                    'Dim myImage As Image = FotoS(foto)
+                    'Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
+                    ''  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
+                    'plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+
+                End If
+
+
+                'plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a href='upCorsistaKO.aspx?skip=" & skip & "&pag=" & pag & "&codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&id=" & deEnco.QueryStringEncode(id) & "'>Carica Foto</a></td>"))
 
 
                 plTabellaCorsisti.Controls.Add(New LiteralControl("</tr>"))
@@ -268,12 +315,12 @@ Public Class corsisti
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>---</td>"))
             Else
 
-                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""link-primary"" href='corsisti.aspx?pag=" & pag - 1 & "&codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&skip=" & skip - pagine & "'>indietro</a></td>"))
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""link-primary"" href='corsistiKO.aspx?pag=" & pag - 1 & "&codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&skip=" & skip - pagine & "'>indietro</a></td>"))
             End If
             If pagiAvanti(skip + pagine, quantiTot) = False Then
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>---</td>"))
             Else
-                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""link-primary"" href='corsisti.aspx?pag=" & pag + 1 & "&codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&skip=" & skip + pagine & "'>avanti</a></td>"))
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""link-primary"" href='corsistiKO.aspx?pag=" & pag + 1 & "&codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&skip=" & skip + pagine & "'>avanti</a></td>"))
 
             End If
             plTabellaCorsisti.Controls.Add(New LiteralControl("<td></td>"))
@@ -318,7 +365,26 @@ Public Class corsisti
 
     End Function
 
-    Protected Sub lnkTornaDashboard_Click(sender As Object, e As EventArgs) Handles lnkTornaDashboard.Click
-        Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
-    End Sub
+    'Protected Sub lnkNuovoExcel_Click(sender As Object, e As EventArgs) Handles lnkNuovoExcel.Click
+    '    If Session("auth") = "0" Or IsNothing(Session("auth")) Then
+    '        Response.Redirect("../login.aspx")
+    '    End If
+    '    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+
+    '    fmsP.SetLayout("webCorsiRichiesta")
+
+    '    Dim RequestP = fmsP.CreateEditRequest(Session("IDCorso"))
+    '    RequestP.AddField("Codice_Status", Session("oldStatus"))
+
+    '    Try
+    '        RequestP.Execute()
+
+    '        '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
+    '        '  Session("annullaCorso") = "ok"
+
+    '    Catch ex As Exception
+
+    '    End Try
+    '    Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
+    'End Sub
 End Class

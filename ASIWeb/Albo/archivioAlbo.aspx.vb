@@ -114,6 +114,19 @@ Public Class archivioAlbo
                     End If
 
 
+                    Dim CorsistiDoc As New Button
+
+                    CorsistiDoc.ID = "CorsistiDoc_" & counter1
+                    CorsistiDoc.Attributes.Add("runat", "server")
+                    CorsistiDoc.Text = "Corsisti Documenti"
+                    CorsistiDoc.PostBackUrl = "corsistiDoc.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&oldStatus=" & deEnco.QueryStringEncode(oldStatus)
+                    CorsistiDoc.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
+                    If (Data.FixNull(dr("Codice_Status")) = "84" And Data.FixNull(dr("fase")) = "3") Then
+                        CorsistiDoc.Visible = True
+                    Else
+                        CorsistiDoc.Visible = False
+                    End If
+
 
 
 
@@ -155,7 +168,7 @@ Public Class archivioAlbo
 
 
 
-
+                    phDash.Controls.Add(CorsistiDoc)
 
                     phDash.Controls.Add(fotoCorsisti)
                     phDash.Controls.Add(New LiteralControl("<br />"))

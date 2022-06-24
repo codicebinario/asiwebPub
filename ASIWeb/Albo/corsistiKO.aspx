@@ -3,6 +3,13 @@
         <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
+ <style>
+     .colorerosso 
+{
+    color:red;
+
+}
+ </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -47,7 +54,9 @@
       <th scope="col">Cognome</th>
       <th scope="col">Email</th>
      <th scope="col">C.F.</th>
-   
+   <th scope="col">N.Tessera ASI</th>
+      <th scope="col">Indirizzo Spedizione</th>
+    <th scope="col">Motivo</th>
        
     </tr>
   </thead>

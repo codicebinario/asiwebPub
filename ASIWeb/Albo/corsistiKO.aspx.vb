@@ -160,6 +160,12 @@ Public Class corsistiKO
         Dim foto As String
         Dim email As String
         Dim codiceFiscale As String
+        Dim NumeroTesseraAsi As String
+        Dim IndirizzoSpedizione As String
+        Dim ProvinciaSpedizione As String
+        Dim ComuneSpedizione As String
+        Dim CapSpedizione As String
+        Dim MotivoKO As String
         Dim id As Integer
         Dim quantiTot As Integer = 0
         Dim quantePagine As Decimal = 0
@@ -208,6 +214,12 @@ Public Class corsistiKO
                 cognome = Data.FixNull(dr("Cognome"))
                 email = Data.FixNull(dr("email"))
                 codiceFiscale = Data.FixNull(dr("CodiceFiscale"))
+                IndirizzoSpedizione = Data.FixNull(dr("IndirizzoSpedizione"))
+                CapSpedizione = Data.FixNull(dr("CapSpedizione"))
+                ComuneSpedizione = Data.FixNull(dr("ComuneSpedizione"))
+                ProvinciaSpedizione = Data.FixNull(dr("ProvinciaSpedizione"))
+                NumeroTesseraAsi = Data.FixNull(dr("NumeroTesseraASI"))
+                MotivoKO = Data.FixNull(dr("MotivazioneKO"))
                 id = dr("idcorsista")
 
                 'If String.IsNullOrWhiteSpace(Data.FixNull(dr("foto"))) Then
@@ -223,6 +235,16 @@ Public Class corsistiKO
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & cognome & "</td>"))
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & email & "</td>"))
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & codiceFiscale & "</td>"))
+
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & NumeroTesseraAsi & "</td>"))
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & IndirizzoSpedizione & " " & CapSpedizione &
+                                                                    "<br /> " & ComuneSpedizione & " " & ProvinciaSpedizione & "</td>"))
+
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><span class=""colorerosso"">" & MotivoKO & "</span></td>"))
+
+
+
+
                 'If foto = "..\img\noimg.jpg" Then
                 '    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
 
