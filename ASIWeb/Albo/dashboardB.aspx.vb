@@ -528,13 +528,69 @@ Public Class dashboardB
 
 
 
-                                'fine quinta riga
+                            'fine quinta riga
 
 
-                                ' inizio sesta riga 
+                            ' inizio sesta riga 
 
 
-                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Docenti: <span>"))
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Elenco_Docenti"))))
+
+                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+                            'fine sesta riga sottosezione
+
+                            ' inizio sesta riga 
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Commissione: <span>"))
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Elenco_Componenti_Commissione"))))
+
+                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            'intermezzo
+                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<hr>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            'fine sesta riga sottosezione
+
+
+                            ' inizio sesta riga 
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
                                 phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
@@ -621,13 +677,54 @@ Public Class dashboardB
 
 
 
-                                'fine ottava riga sottosezione
+                            'fine ottava riga sottosezione
+                            'fine ottava riga sottosezione
+                            ' inizio ottava riga 
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Valutazione DT: <span>"))
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneDT"))))
+
+                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                            ' inizio ottava riga 
+
+
+                            'phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                            'phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                            'phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Annullamento: <span>"))
+                            'phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteAnnullamentoCorso"))))
+
+                            'phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                            'phDash.Controls.Add(New LiteralControl("</div>"))
 
 
 
 
 
-                            End If
+
+
+
+
+                        End If
 
                         End If
 

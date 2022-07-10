@@ -71,7 +71,7 @@ $(document).ready(function(){
 					 DynamicLayout="false">
 	<ProgressTemplate>
 	  <div class="Progress">
-		 <div class="btn">Nominativo non valido</div>
+		 <div class="btn">loading</div>
 		
 		</div>
 		

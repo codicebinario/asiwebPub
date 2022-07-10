@@ -19,7 +19,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>   <asp:LinkButton ID="lnkPdf" runat="server">LinkButton</asp:LinkButton>
+        <div>   <asp:LinkButton ID="lnkPdf" runat="server" OnClientClick="poop();">LinkButton</asp:LinkButton>
             <asp:HyperLink ID="HyperLink1" runat="server">HyperLink</asp:HyperLink>
             <asp:Image ID="Image1" runat="server" /><asp:PlaceHolder ID="plPdf" runat="server"></asp:PlaceHolder>
         </div>

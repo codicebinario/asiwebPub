@@ -31,7 +31,9 @@ Public Class AsiMasterPage
         Session("auth") = Nothing
         Session.Clear()
         Session.Abandon()
+
         Response.Redirect("login.aspx")
+
     End Sub
     Protected Sub lnkHome_Click(sender As Object, e As EventArgs) Handles lnkHome.Click
 

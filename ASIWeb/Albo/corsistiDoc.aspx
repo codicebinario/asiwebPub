@@ -3,6 +3,20 @@
         <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
+ 
+    <script>
+        function getPage(url) {
+
+
+            // this will make a child page popup 
+
+
+            window.open(url, "MyWindow", "height=375,width=350");
+            return false;
+
+        }
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

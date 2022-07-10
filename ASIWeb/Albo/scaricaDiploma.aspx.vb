@@ -25,7 +25,7 @@ Imports System.Net.Security
 Imports System.Net
 Imports Image = System.Drawing.Image
 Imports RestSharp.Authenticators
-Public Class scaricaPianoCorso
+Public Class scaricaDiploma
 
     Inherits System.Web.UI.Page
     Dim codiceCorso As String
@@ -33,15 +33,34 @@ Public Class scaricaPianoCorso
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
+
+        'If Not Page.IsPostBack Then
+
+
+        '    If Session("ScaricaTessera") = "ok" Then
+        '        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Tessera download effettuato! ' ).set('resizable', true).resizeTo('20%', 200);", True)
+        '        Session("ScaricaTessera") = Nothing
+        '    End If
+        'End If
+
+
+
         Dim deEnco As New Ed
         Dim pdf As String
         codiceCorso = deEnco.QueryStringDecode(Request.QueryString("codR"))
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
 
-        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico(1)")
+        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsisti&-recid=" & record_ID & "&-field=Diploma(1)")
 
 
+
+
+
+
+
+
+        '  Response.Redirect("corsistiDoc.aspx")
 
         '  Dim IDRecord As String = deEnco.QueryStringDecode(Request.QueryString("id"))
         'Dim risposta As Integer = 0
@@ -56,7 +75,7 @@ Public Class scaricaPianoCorso
         '    risposta = RequestP.Execute()
 
         '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
-        Session("ScaricaCorso") = "ok"
+        '  Session("ScaricaTessera") = "ok"
 
         'Catch ex As Exception
 
@@ -66,7 +85,6 @@ Public Class scaricaPianoCorso
 
 
 
-        'Response.Redirect("dashboardV.aspx#" & codiceCorso)
     End Sub
 
     Public Function FotoS(urlFoto As String)
@@ -87,6 +105,8 @@ Public Class scaricaPianoCorso
             Response.BinaryWrite(bytes)
             Response.Flush()
             Response.End()
+
+
         End Using
 
 

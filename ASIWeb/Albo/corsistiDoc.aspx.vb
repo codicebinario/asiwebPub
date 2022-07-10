@@ -55,6 +55,7 @@ Public Class corsistiDoc
             Response.Redirect("../login.aspx")
         End If
 
+
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
         cultureFormat.NumberFormat.CurrencyDecimalDigits = 2
@@ -77,8 +78,8 @@ Public Class corsistiDoc
 
         Dim record_ID As String = ""
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        Dim oldStatus As String
-        oldStatus = deEnco.QueryStringDecode(Request.QueryString("oldStatus"))
+        'Dim oldStatus As String
+        'oldStatus = deEnco.QueryStringDecode(Request.QueryString("oldStatus"))
         Dim skip As Integer = 0
         skip = Request.QueryString("skip")
         If Not String.IsNullOrEmpty(record_ID) Then
@@ -87,11 +88,11 @@ Public Class corsistiDoc
 
         End If
 
-        If Not String.IsNullOrEmpty(oldStatus) Then
+        'If Not String.IsNullOrEmpty(oldStatus) Then
 
-            Session("oldStatus") = oldStatus
+        '    Session("oldStatus") = oldStatus
 
-        End If
+        'End If
 
 
 
@@ -159,6 +160,7 @@ Public Class corsistiDoc
         Dim cognome As String
         Dim foto As String
         Dim tessera As String
+        Dim diploma As String
         Dim email As String
         Dim codiceFiscale As String
         Dim NumeroTesseraAsi As String
@@ -167,6 +169,7 @@ Public Class corsistiDoc
         Dim ComuneSpedizione As String
         Dim CapSpedizione As String
         Dim id As Integer
+        Dim recordId As Integer
         Dim quantiTot As Integer = 0
         Dim quantePagine As Decimal = 0
         Dim pagina As Integer = 0
@@ -193,7 +196,7 @@ Public Class corsistiDoc
 
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestP.AddSearchField("IDCorso", Session("IDCorso"), Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("Corsista_OK_KO", "KO", Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Corsista_OK_KO", "OK", Enumerations.SearchOption.equals)
         'fmsP.GetPictureReference("", ""
         ds = RequestP.Execute()
 
@@ -208,21 +211,6 @@ Public Class corsistiDoc
 
             For Each dr In MyDataPage
                 counter += 1
-
-                Dim ScaricaTessera As New Button
-
-                ScaricaTessera.ID = "scaricaTessera_" & counter
-                ScaricaTessera.Attributes.Add("runat", "server")
-                ScaricaTessera.Text = "Scarica Tessera"
-                '  PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("NomeFileOnFS"))
-                ScaricaTessera.PostBackUrl = "scaricaTessera.aspx?codR="
-                ' ScaricaTessera.PostBackUrl = "scaricaTessera.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("TesseraNomeFile"))
-
-                ScaricaTessera.CssClass = "btn btn-success btn-sm btn-due btn-custom"
-                ' PianoCorso.Attributes.Add("OnClick", "if(!myValuta())return false;")
-
-
-
                 nome = Data.FixNull(dr("Nome"))
                 cognome = Data.FixNull(dr("Cognome"))
                 email = Data.FixNull(dr("email"))
@@ -233,6 +221,42 @@ Public Class corsistiDoc
                 ComuneSpedizione = Data.FixNull(dr("ComuneSpedizione"))
                 ProvinciaSpedizione = Data.FixNull(dr("ProvinciaSpedizione"))
                 NumeroTesseraAsi = Data.FixNull(dr("NumeroTesseraASI"))
+                recordId = Data.FixNull(dr("idCorsista"))
+
+
+
+                'Dim ScaricaTessera As New Button
+
+                'ScaricaTessera.ID = "scaricaTessera_" & counter
+                'ScaricaTessera.Attributes.Add("runat", "server")
+                'ScaricaTessera.Text = "Scarica Tessera"
+                ''      ScaricaTessera.OnClientClick = "window.open('ciao.aspx')"
+                ''     ScaricaTessera.Attributes.Add("onclick", "getPage('scaricaTessera.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "')")
+                ''    ScaricaTessera.PostBackUrl = "corsistiDoc.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&oldStatus=" & deEnco.QueryStringEncode("pippp")
+                'ScaricaTessera.OnClientClick = "if(!getPage('scaricaTessera.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "')"
+
+                'ScaricaTessera.CausesValidation = False
+
+
+                'ScaricaTessera.CssClass = "btn btn-success btn-sm btn-due btn-custom"
+                '' PianoCorso.Attributes.Add("OnClick", "If(!myValuta())Return False;")
+
+
+
+
+
+                'Dim ScaricaDiploma As New Button
+
+                'ScaricaDiploma.ID = "scaricaDiploma_" & counter
+                'ScaricaDiploma.Attributes.Add("runat", "server")
+                'ScaricaDiploma.Text = "Scarica Diploma"
+                'ScaricaDiploma.PostBackUrl = "scaricaDiploma.aspx?codR= " & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaNomeFile")))
+
+                'ScaricaDiploma.CssClass = "btn btn-success btn-sm btn-due btn-custom"
+                '' PianoCorso.Attributes.Add("OnClick", "If(!myValuta())Return False;")
+
+
+
 
                 If String.IsNullOrWhiteSpace(Data.FixNull(dr("foto"))) Then
                     foto = "..\img\noimg.jpg"
@@ -241,10 +265,17 @@ Public Class corsistiDoc
                 End If
 
                 If String.IsNullOrWhiteSpace(Data.FixNull(dr("tessera"))) Then
-                    tessera = "..\img\noimg.jpg"
+                    tessera = "..\img\noPdf.jpg"
                 Else
                     tessera = "https://93.63.195.98" & Data.FixNull(dr("tessera"))
                 End If
+
+                If String.IsNullOrWhiteSpace(Data.FixNull(dr("diploma"))) Then
+                    diploma = "..\img\noPdf.jpg"
+                Else
+                    diploma = "https://93.63.195.98" & Data.FixNull(dr("diploma"))
+                End If
+
 
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<tr>"))
                 'plTabellaCorsisti.Controls.Add(New LiteralControl("<th scope=""row"">" & counter & "</td>"))
@@ -268,14 +299,34 @@ Public Class corsistiDoc
 
                 End If
 
-                If tessera = "..\img\noimg.jpg" Then
+                If tessera = "..\img\noPdf.jpg" Then
                     '  plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & nome & " " & cognome & "'></td>"))
 
 
                 Else
                     plTabellaCorsisti.Controls.Add(New LiteralControl("<td>"))
-                    plTabellaCorsisti.Controls.Add(ScaricaTessera)
+                    '   plTabellaCorsisti.Controls.Add(ScaricaTessera)
+
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" href='scaricaTessera.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "'>Tessera</a>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("</td>"))
+                    'Dim myImage As Image = FotoS(foto)
+                    'Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
+                    ''  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
+                    'plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+
+                End If
+
+                If diploma = "..\img\noPdf.jpg" Then
+                    '  plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & diploma & "' height='70' width='70' alt='" & nome & " " & cognome & "'></td>"))
+
+
+                Else
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td>"))
+                    'plTabellaCorsisti.Controls.Add(ScaricaDiploma)
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" href='scaricaDiploma.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaNomeFile"))) & "'>Diploma</a>"))
+
                     plTabellaCorsisti.Controls.Add(New LiteralControl("</td>"))
                     'Dim myImage As Image = FotoS(foto)
                     'Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)

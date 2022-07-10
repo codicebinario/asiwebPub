@@ -29,44 +29,32 @@ Public Class scaricaTessera
 
     Inherits System.Web.UI.Page
     Dim codiceCorso As String
+    Dim deEnco As New Ed
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
-        Dim deEnco As New Ed
+        ' ScriptManager.RegisterStartupScript(Me, Me.GetType(), "redirectScript", "window.location.href='whateverurlhere.aspx';", True)
+
+
+
         Dim pdf As String
         codiceCorso = deEnco.QueryStringDecode(Request.QueryString("codR"))
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
 
-        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico(1)")
+        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsisti&-recid=" & record_ID & "&-field=Tessera(1)")
 
 
-
-        '  Dim IDRecord As String = deEnco.QueryStringDecode(Request.QueryString("id"))
-        'Dim risposta As Integer = 0
-        'Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-
-        'fmsP.SetLayout("webCorsiRichiesta")
-
-        'Dim RequestP = fmsP.CreateEditRequest(record_ID)
-        'RequestP.AddField("Codice_Status", "101")
-
-        'Try
-        '    risposta = RequestP.Execute()
-
-        '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
-        Session("ScaricaCorso") = "ok"
-
-        'Catch ex As Exception
-
-        'End Try
+        ' Response.Redirect("corsistiDoc.apsx?codR=" & deEnco.QueryStringEncode(codiceCorso) & "&record_ID=" & deEnco.QueryStringEncode(record_ID))
+        ' Session("ScaricaDiploma") = "ok"
 
 
 
 
 
-        Response.Redirect("dashboardV.aspx#" & codiceCorso)
+
+
     End Sub
 
     Public Function FotoS(urlFoto As String)
@@ -86,9 +74,11 @@ Public Class scaricaTessera
             Response.AddHeader("content-disposition", "attachment;filename=Example.pdf")
             Response.BinaryWrite(bytes)
             Response.Flush()
-            Response.End()
-        End Using
 
+            Response.End()
+
+
+        End Using
 
 
 
@@ -106,5 +96,6 @@ Public Class scaricaTessera
             output.Write(buffer, 0, read)
         End While
     End Sub
+
 
 End Class

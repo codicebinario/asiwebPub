@@ -192,6 +192,7 @@
     <Content Include="Albo\richiestaCorso.aspx" />
     <Content Include="Albo\richiestaCorsoF2.aspx" />
     <Content Include="Albo\richiestaCorsoF3.aspx" />
+    <Content Include="Albo\scaricaDiploma.aspx" />
     <Content Include="Albo\scaricaPianoCorso.aspx" />
     <Content Include="Albo\scaricaTessera.aspx" />
     <Content Include="Albo\stopFoto.aspx" />
@@ -526,6 +527,13 @@
     <Compile Include="Albo\richiestaCorsoF3.aspx.vb">
       <DependentUpon>richiestaCorsoF3.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Albo\scaricaDiploma.aspx.designer.vb">
+      <DependentUpon>scaricaDiploma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\scaricaDiploma.aspx.vb">
+      <DependentUpon>scaricaDiploma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Albo\scaricaPianoCorso.aspx.designer.vb">
       <DependentUpon>scaricaPianoCorso.aspx</DependentUpon>

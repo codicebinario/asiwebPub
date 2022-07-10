@@ -394,7 +394,10 @@ Public Class richiestaCorsoF3
                 lstDocenti.Items.Add(User)
             Next
         Else
-            Thread.Sleep(4000)
+
+            lblAvviso.Text = "Nominativo non valido!!"
+            '  Thread.Sleep(4000)
+
 
             '   lblAvviso.Text = "Nominativo non abilitato"
 

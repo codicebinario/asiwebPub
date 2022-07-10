@@ -160,7 +160,13 @@ Public Class dashboardV
 
 
                     phDash.Controls.Add(Ann)
-                    phDash.Controls.Add(PianoCorso)
+
+                    '     "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(nomeFile)
+
+
+                    phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" href='scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(nomeFile)) & "'>Piano Corso</a>"))
+
+                    'phDash.Controls.Add(PianoCorso)
 
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
@@ -369,6 +375,57 @@ Public Class dashboardV
 
                             'fine quinta riga
 
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Docenti: <span>"))
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Elenco_Docenti"))))
+
+                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+                            'fine sesta riga sottosezione
+
+                            ' inizio sesta riga 
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Commissione: <span>"))
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Elenco_Componenti_Commissione"))))
+
+                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            'intermezzo
+                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<hr>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            'fine sesta riga sottosezione
 
                             ' inizio sesta riga 
 
@@ -464,15 +521,14 @@ Public Class dashboardV
 
                             ' inizio ottava riga 
 
-
                             phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
                             phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
 
 
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Piano Corso: <span>"))
-                            phDash.Controls.Add(New LiteralControl("<small>"))
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Valutazione DT: <span>"))
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneDT"))))
 
                             phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
 
