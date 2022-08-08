@@ -149,7 +149,7 @@ function ServerException(mess) {
           <div class="row">
               <div class="col-sm-12">
                   <div class="form-group">
-                      <label for="z" class="titoletto">Caricamento Documento Corso [formato PDF]</label>
+                      <label for="z" class="titoletto">Caricare Programma Corso [formato PDF]</label>
                     
                   </div>
               </div>

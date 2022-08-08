@@ -259,8 +259,8 @@ Public Class UpPartecipanti
 
         '  Request.AddField("Fase", "1")
         Request.AddField("Codice_Status", "68")
-        Request.AddScript("SistemaEncodingNotePartecipanti", IDCorso)
-
+        ' Request.AddScript("SistemaEncodingNotePartecipanti", IDCorso)
+        Request.AddScript("ImportaCorsistiWebRun", IDCorso)
         'If qualeStatus = "3" Then
         '    Request1.AddField("Status_ID", "4")
         'Else
@@ -277,7 +277,6 @@ Public Class UpPartecipanti
 
 
         Catch ex As Exception
-
         End Try
 
         Dim token = PrendiToken()
