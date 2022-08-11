@@ -398,6 +398,34 @@ Public Class AsiModel
 
         End Function
 
+        Public Shared Function LogCambioStatus(CodiceRichiesta As String, Status_ID As String, User As String, tipo As String) As Boolean
+            '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
+            Dim ritorno As Boolean = False
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            ' Dim ds As DataSet
+
+
+            fmsP.SetLayout("Log_Status_Richiesta")
+            Dim Request = fmsP.CreateNewRecordRequest()
+            Request.AddField("Codice_Richiesta", CodiceRichiesta)
+            Request.AddField("User_Cambio_Status", User)
+
+            Request.AddField("Status_ID", Status_ID)
+
+            Request.AddField("tipo", tipo)
+
+
+            Try
+                Request.Execute()
+                ritorno = True
+            Catch ex As Exception
+                ritorno = False
+            End Try
+
+            Return ritorno
+
+        End Function
+
         Public Shared Function LogAccessi(CodiceEnte As String, User As String) As Boolean
             '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
             Dim ritorno As Boolean = False

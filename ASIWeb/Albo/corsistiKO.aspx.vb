@@ -348,7 +348,7 @@ Public Class corsistiKO
 
         Try
             RequestP.Execute()
-
+            AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), Session("oldStatus"), Session("WebUserEnte"), "albo")
             '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
             '  Session("annullaCorso") = "ok"
 

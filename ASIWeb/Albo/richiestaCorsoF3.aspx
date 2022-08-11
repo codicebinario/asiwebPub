@@ -260,7 +260,7 @@ $(document).ready(function(){
 						
                          <div class="col-sm-4">
 								<div class="form-group">
-									<label for="txtCognome">Livello [*]</label>
+									<label for="txtCognome">Livello</label>
                                     	 <asp:dropdownlist id="ddlLivello" runat="server" Cssclass="form-control input-sm"></asp:dropdownlist>
 								
 								</div>
@@ -284,10 +284,10 @@ $(document).ready(function(){
 						
                          <div class="col-sm-4">
 								<div class="form-group">
-								  <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" inizialValue="##"
+								<%--  <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" inizialValue="##"
 										CssClass="errore" ErrorMessage="Livello" ControlToValidate="ddlLivello" 
 										EnableClientScript="true"></asp:RequiredFieldValidator>
-								
+								--%>
 								</div>
 							</div>
                         

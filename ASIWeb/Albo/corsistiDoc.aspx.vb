@@ -308,7 +308,7 @@ Public Class corsistiDoc
                     plTabellaCorsisti.Controls.Add(New LiteralControl("<td>"))
                     '   plTabellaCorsisti.Controls.Add(ScaricaTessera)
 
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" href='scaricaTessera.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "'>Tessera</a>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaTessera.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "'>Tessera</a>"))
                     plTabellaCorsisti.Controls.Add(New LiteralControl("</td>"))
                     'Dim myImage As Image = FotoS(foto)
                     'Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
@@ -325,7 +325,7 @@ Public Class corsistiDoc
                 Else
                     plTabellaCorsisti.Controls.Add(New LiteralControl("<td>"))
                     'plTabellaCorsisti.Controls.Add(ScaricaDiploma)
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" href='scaricaDiploma.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaNomeFile"))) & "'>Diploma</a>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaDiploma.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaNomeFile"))) & "'>Diploma</a>"))
 
                     plTabellaCorsisti.Controls.Add(New LiteralControl("</td>"))
                     'Dim myImage As Image = FotoS(foto)

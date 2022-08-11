@@ -121,8 +121,13 @@ Public Class AnnullaCorsoMotivo
             Request.AddField("NoteAnnullamentoCorso", Data.PrendiStringaT(Server.HtmlEncode(txtNoteAnnullamento.Text)))
             Request.AddScript("SistemaEncodingNoteAnnullamento_Corso", Session("id_record"))
             'script per gestione caratteri speciali da inserire
+            Try
+                risposta = Request.Execute()
+                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "101", Session("WebUserEnte"), "albo")
+            Catch ex As Exception
 
-            risposta = Request.Execute()
+            End Try
+
 
             Response.Redirect("archivioAlbo.aspx#" & Session("IDCorso"))
 

@@ -636,20 +636,20 @@ Public Class richiestaCorsoF3
             Request.AddField("Codice_status", "54")
             Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
             Session("visto") = "ok"
-            '     Try
+            Try
 
-            Request.Execute()
+                Request.Execute()
+                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "54", Session("WebUserEnte"), "albo")
+                Session("corsoaggiunto") = "OK"
+                Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ok"))
 
-            Session("corsoaggiunto") = "OK"
-            Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ok"))
-
-            '   Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+                '   Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ko"))
 
 
 
-            '   Catch ex As Exception
+            Catch ex As Exception
 
-            '    End Try
+            End Try
 
 
 

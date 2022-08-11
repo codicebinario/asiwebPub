@@ -263,6 +263,7 @@ Public Class UpGiustificativo
         'End If
         Try
             risposta = Request.Execute()
+            AsiModel.LogIn.LogCambioStatus(IDCorso, "78", Session("WebUserEnte"), "albo")
             'If qualeStatus = "3" Then
             '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
             'Else

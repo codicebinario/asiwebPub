@@ -213,7 +213,7 @@ Public Class AsiMasterPageAlbo
             Next
 
 
-            AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "0", Session("WebUserEnte"))
+            AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "0", Session("WebUserEnte"), "albo")
 
         End If
 

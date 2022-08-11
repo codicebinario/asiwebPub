@@ -267,19 +267,20 @@ Public Class upLegCorsi
         'Else
         '    Request1.AddField("Status_ID", "12")
         'End If
-        '   Try
-        risposta = Request1.Execute()
-        'If qualeStatus = "3" Then
-        '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
-        'Else
-        '    AsiModel.LogIn.LogCambioStatus(codR, "12", Session("WebUserEnte"))
-        'End If
+        Try
+            risposta = Request1.Execute()
+            AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "78", Session("WebUserEnte"), "albo")
+            'If qualeStatus = "3" Then
+            '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
+            'Else
+            '    AsiModel.LogIn.LogCambioStatus(codR, "12", Session("WebUserEnte"))
+            'End If
 
 
 
-        '    Catch ex As Exception
+        Catch ex As Exception
 
-        '  End Try
+        End Try
 
         Dim token = PrendiToken()
 

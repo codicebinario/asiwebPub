@@ -71,7 +71,7 @@ Public Class scaricaTessera
             Dim bytes As Byte() = stream.ToArray()
             Response.Cache.SetCacheability(HttpCacheability.NoCache)
             Response.ContentType = "application/pdf"
-            Response.AddHeader("content-disposition", "attachment;filename=Example.pdf")
+            Response.AddHeader("content-disposition", "inline;filename=Example.pdf")
             Response.BinaryWrite(bytes)
             Response.Flush()
 

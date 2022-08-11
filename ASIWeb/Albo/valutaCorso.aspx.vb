@@ -126,9 +126,19 @@ Public Class valutaCorso
             Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
             Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
             'script per gestione caratteri speciali da inserire.
+            Try
 
-            risposta = Request.Execute()
 
+                risposta = Request.Execute()
+                If valutazione = "S" Then
+                    AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "64", Session("WebUserEnte"), "albo")
+                ElseIf valutazione = "N" Then
+                    AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "65", Session("WebUserEnte"), "albo")
+
+                End If
+            Catch ex As Exception
+
+            End Try
             Response.Redirect("dashboardAlboValutati.aspx#" & Session("IDCorso"))
 
         End If

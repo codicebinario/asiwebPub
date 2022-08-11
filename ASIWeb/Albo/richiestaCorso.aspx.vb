@@ -266,6 +266,7 @@ Public Class richiestaCorso
         'End If
         Try
             risposta = Request.Execute()
+            AsiModel.LogIn.LogCambioStatus(IDCorso, "51", Session("WebUserEnte"), "albo")
             'If qualeStatus = "3" Then
             '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
             'Else
