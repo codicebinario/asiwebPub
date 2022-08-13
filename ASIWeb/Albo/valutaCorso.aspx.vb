@@ -131,9 +131,9 @@ Public Class valutaCorso
 
                 risposta = Request.Execute()
                 If valutazione = "S" Then
-                    AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "64", Session("WebUserEnte"), "albo")
+                    AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "64", Session("WebUserEnte"), "corso")
                 ElseIf valutazione = "N" Then
-                    AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "65", Session("WebUserEnte"), "albo")
+                    AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "65", Session("WebUserEnte"), "corso")
 
                 End If
             Catch ex As Exception

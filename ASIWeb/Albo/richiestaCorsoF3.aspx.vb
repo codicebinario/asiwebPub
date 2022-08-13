@@ -639,7 +639,7 @@ Public Class richiestaCorsoF3
             Try
 
                 Request.Execute()
-                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "54", Session("WebUserEnte"), "albo")
+                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "54", Session("WebUserEnte"), "corso")
                 Session("corsoaggiunto") = "OK"
                 Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ok"))
 

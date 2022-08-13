@@ -268,7 +268,7 @@ Public Class UpPartecipanti
         'End If
         Try
             risposta = Request.Execute()
-            AsiModel.LogIn.LogCambioStatus(IDCorso, "68", Session("WebUserEnte"), "albo")
+            AsiModel.LogIn.LogCambioStatus(IDCorso, "68", Session("WebUserEnte"), "corso")
             'If qualeStatus = "3" Then
             '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
             'Else

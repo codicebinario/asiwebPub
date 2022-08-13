@@ -24,7 +24,7 @@ Public Class annullaCorso
 
         Try
             risposta = RequestP.Execute()
-            AsiModel.LogIn.LogCambioStatus(codiceCorso, "101", Session("WebUserEnte"), "albo")
+            AsiModel.LogIn.LogCambioStatus(codiceCorso, "101", Session("WebUserEnte"), "corso")
             '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
             Session("annullaCorso") = "ok"
 

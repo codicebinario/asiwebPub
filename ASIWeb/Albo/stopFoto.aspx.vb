@@ -24,7 +24,7 @@ Public Class stopFoto
 
         Try
             risposta = RequestP.Execute()
-            AsiModel.LogIn.LogCambioStatus(codiceCorso, "75", Session("WebUserEnte"), "albo")
+            AsiModel.LogIn.LogCambioStatus(codiceCorso, "75", Session("WebUserEnte"), "corso")
             '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
             Session("stoCorsi") = "ok"
 

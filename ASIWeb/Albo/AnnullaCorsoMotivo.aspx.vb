@@ -123,7 +123,7 @@ Public Class AnnullaCorsoMotivo
             'script per gestione caratteri speciali da inserire
             Try
                 risposta = Request.Execute()
-                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "101", Session("WebUserEnte"), "albo")
+                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "101", Session("WebUserEnte"), "corso")
             Catch ex As Exception
 
             End Try

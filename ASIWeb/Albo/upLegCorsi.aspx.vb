@@ -269,7 +269,7 @@ Public Class upLegCorsi
         'End If
         Try
             risposta = Request1.Execute()
-            AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "78", Session("WebUserEnte"), "albo")
+            AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "78", Session("WebUserEnte"), "corso")
             'If qualeStatus = "3" Then
             '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
             'Else
