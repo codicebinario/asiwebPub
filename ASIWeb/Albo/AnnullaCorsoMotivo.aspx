@@ -70,7 +70,7 @@ $(document).ready(function(){
     <%--  <p> <input type="button" value="Go back!" onclick="history.back()"></p>--%>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-               
+                <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
     </p>
   </div></div>
       <div class="col-sm-12">

@@ -20,6 +20,9 @@ Imports RestSharp
 Imports System.Collections.Generic
 Imports System.Net.Security
 Imports System.Net
+Imports System.Web.Services.Description
+Imports System.EnterpriseServices.CompensatingResourceManager
+
 Public Class richiestaCorso
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
@@ -117,61 +120,62 @@ Public Class richiestaCorso
 
             '****************************************************
             Dim files As OboutFileCollection = uploadProgress.Files
-                Dim i As Integer
+            Dim i As Integer
 
-                uploadedFiles.Text = ""
-                Try
+            uploadedFiles.Text = ""
+            Try
 
-                    For i = 0 To files.Count - 1 Step 1
-                        Dim file As OboutPostedFile = files(i)
+                For i = 0 To files.Count - 1 Step 1
+                    Dim file As OboutPostedFile = files(i)
 
 
 
                     Dim whereToSave As String = "../file_storage/"
 
-                        tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                        ext = Path.GetExtension((file.FileName))
-                        nomefileReale = Path.GetFileName(file.FileName)
-                        nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+                    tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                    ext = Path.GetExtension((file.FileName))
+                    nomefileReale = Path.GetFileName(file.FileName)
+                    nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
 
 
 
 
 
-                        '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
+                    '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
 
-                        file.SaveAs(MapPath(whereToSave + nomecaricato))
-
-
-
-
-                        If uploadedFiles.Text.Length = 0 Then
-
-
-                            Button1.Enabled = False
-                            uploadedFiles.Text = ""
-
-                            uploadedFiles.Text = "<b>Documento corso caricato con successo: " & nomecaricato & "</b><br/>"
+                    file.SaveAs(MapPath(whereToSave + nomecaricato))
 
 
 
 
-                        End If
+                    If uploadedFiles.Text.Length = 0 Then
+
+
+                        Button1.Enabled = False
+                        uploadedFiles.Text = ""
+
+                        uploadedFiles.Text = "<b>Documento corso caricato con successo: " & nomecaricato & "</b><br/>"
 
 
 
-                    Next
 
-                    Dim tokenx As String = ""
-                    Dim id_att As String = ""
-                    Dim tuttoRitorno As String = ""
+                    End If
 
-                    tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato)
-                    txtNote.Text = ""
-                    Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-                    tokenx = arrKeywords(1)
-                    id_att = arrKeywords(0)
-                    CaricaSuFM(tokenx, id_att, nomecaricato)
+
+
+                Next
+
+                Dim tokenx As String = ""
+                Dim id_att As String = ""
+                Dim tuttoRitorno As String = ""
+
+                tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato)
+                txtNote.Text = ""
+                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                tokenx = arrKeywords(1)
+                id_att = arrKeywords(0)
+
+                CaricaSuFM(tokenx, id_att, nomecaricato)
                 '   pnlFase1.Visible = False
                 ' btnFase2.Visible = True
                 'deleteFile(nomecaricato)
@@ -180,18 +184,21 @@ Public Class richiestaCorso
 
             Catch ex As Exception
 
-                    uploadedFiles.Text = "<b>Documento corso non caricato: </b><br/>"
+                uploadedFiles.Text = "<b>Documento corso non caricato: </b><br/>"
 
 
-                End Try
+            End Try
 
-            Else
+        Else
             uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
         End If
 
 
     End Sub
+
     Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String) As Boolean
+
+
 
         Dim host As String = HttpContext.Current.Request.Url.Host.ToLower()
 

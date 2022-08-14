@@ -20,11 +20,11 @@ Public Class AnnullaCorsoA
         fmsP.SetLayout("webCorsiRichiesta")
 
         Dim RequestP = fmsP.CreateEditRequest(record_ID)
-        RequestP.AddField("Codice_Status", "101")
+        RequestP.AddField("Codice_Status", "99")
 
         Try
             risposta = RequestP.Execute()
-            AsiModel.LogIn.LogCambioStatus(codiceCorso, "101", Session("WebUserEnte"), "corso")
+            AsiModel.LogIn.LogCambioStatus(codiceCorso, "99", Session("WebUserEnte"), "corso")
             '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
             Session("annullaCorso") = "ok"
 

@@ -84,7 +84,7 @@ $(document).ready(function(){
     <h3 class="display-5">Nuovo Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-               
+             <a href="dashboardB.aspx" class="btn btn-success btn-sm btn-due">Interrompi il caricamento corso.</a>     
     </p>
   </div></div>
       <div class="col-sm-12">

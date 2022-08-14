@@ -72,7 +72,7 @@ function ServerException(mess) {
             
               <asp:LinkButton class="nav-link text-white" ID="lnkDashboard" CausesValidation="false" runat="server">Corsi Attivi</asp:LinkButton>
     
-
+                 <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
         </p>
        
              </div>

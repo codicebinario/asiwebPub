@@ -88,7 +88,7 @@ Public Class archivioAlbo
             'Dim totale As Decimal = 0
             For Each dr In ds.Tables("main").Rows
                 Dim oldStatus As String = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
-                If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "101" _
+                If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "99" _
                     Or Data.FixNull(dr("Codice_Status")) = "60" Or Data.FixNull(dr("Codice_Status")) = "72" _
                      Then
 

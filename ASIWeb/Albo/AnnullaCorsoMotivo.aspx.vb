@@ -115,7 +115,7 @@ Public Class AnnullaCorsoMotivo
 
 
 
-            Request.AddField("Codice_Status", "101")
+            Request.AddField("Codice_Status", "99")
 
 
             Request.AddField("NoteAnnullamentoCorso", Data.PrendiStringaT(Server.HtmlEncode(txtNoteAnnullamento.Text)))
@@ -123,7 +123,7 @@ Public Class AnnullaCorsoMotivo
             'script per gestione caratteri speciali da inserire
             Try
                 risposta = Request.Execute()
-                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "101", Session("WebUserEnte"), "corso")
+                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "99", Session("WebUserEnte"), "corso")
             Catch ex As Exception
 
             End Try

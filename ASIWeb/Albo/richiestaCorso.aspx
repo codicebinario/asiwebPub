@@ -20,6 +20,9 @@
     .legacy{
     color:white;
 }
+      .avviso{
+    color:darkred;
+}
     a:hover {
  color:white;
     }
@@ -38,6 +41,25 @@
 
 
     }
+     .Progress
+ {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  background:red;
+  border-color:brown;
+  border-style:solid;
+  border-width:thin;
+   height: 100px;
+	width: 200px;
+   color:white;
+   z-index:1;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+ }
   </style>
      <script type="text/JavaScript">
 
@@ -103,13 +125,14 @@ function ServerException(mess) {
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+       
   
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
     <h3 class="display-5">Nuovo Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-               
+            <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>     
     </p>
     
   </div></div>
@@ -133,7 +156,11 @@ function ServerException(mess) {
                   <div class="form-group">
                       <h5>Fase 1: Caricamento Documento Corso</h5>
                       <hr />
-                  </div>
+<div class="alert alert-danger" role="alert">
+ Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
+</div>
+                
+                </div>
               </div>
 
           </div>
@@ -141,8 +168,7 @@ function ServerException(mess) {
 
 
 
-
-
+   
     <asp:Panel ID="pnlFase1" runat="server">
     
        <div class="col-sm-12">
@@ -186,7 +212,9 @@ function ServerException(mess) {
     <br />
               
       <%--   <ASP:LinkButton ID="LinkButton1" runat="server" text="Cancella il caricamento" onClientClick="Cancel();" /><br/>--%>
-  <br/>    <div><div>  <fup:FileUploadProgress
+  <br/>
+    <div><div>
+  <fup:FileUploadProgress
     ID="uploadProgress"
       ShowUploadedFiles="true"
       InnerFiles="true"
@@ -228,6 +256,7 @@ function ServerException(mess) {
    
    
     <br /><br />
+
   <div class="col-sm-12">
 						<div class="row">
 							<div class="col-sm-12">
@@ -243,7 +272,7 @@ function ServerException(mess) {
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
     <script>
-     
+      
 
          $('#customFileInput').on('change', function () {
              var numb = $(this)[0].files[0].size / 1024 / 1024;
