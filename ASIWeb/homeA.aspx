@@ -23,7 +23,7 @@
   <div class="container text-center">
    
    
-       <a class="btn btn-lg btn-custom" href="dashboardB.aspx" role="button">Corsi</a>
+       <a class="btn btn-lg btn-custom" href="albo/dashboardB.aspx" role="button">Corsi</a>
   
 </div> 
     </div>
@@ -32,7 +32,7 @@
            <div class="jumbotron jumbotron-fluid">
   <div class="container text-center">
     
-    <a class="btn btn-lg btn-custom" href="../Equiparazioni/DashboardEqui.aspx" role="button">Equiparazioni</a>
+    <a class="btn btn-lg btn-custom" href="Equiparazioni/DashboardEqui.aspx" role="button">Equiparazioni</a>
     
   </div>
 </div>

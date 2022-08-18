@@ -188,7 +188,8 @@
     <Content Include="Albo\corsistiKO.aspx" />
     <Content Include="Albo\dashboardB.aspx" />
     <Content Include="Albo\dashboardV.aspx" />
-    <Content Include="Albo\homeA.aspx" />
+    <Content Include="Equiparazioni\richiestaEquiparazioneFoto.aspx" />
+    <Content Include="homeA.aspx" />
     <Content Include="Albo\richiestaCorso.aspx" />
     <Content Include="Albo\richiestaCorsoF2.aspx" />
     <Content Include="Albo\richiestaCorsoF3.aspx" />
@@ -315,6 +316,7 @@
     <Content Include="Css\up.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Equiparazioni\DashboardEqui.aspx" />
+    <Content Include="Equiparazioni\richiestaEquiparazione.aspx" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -339,6 +341,7 @@
     <Content Include="img\icon2.gif" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\noimg.jpg" />
+    <Content Include="img\noPdf.jpg" />
     <Content Include="img\tzine.png" />
     <Content Include="InternalErrorPage.aspx" />
     <Content Include="login.aspx" />
@@ -507,10 +510,17 @@
       <DependentUpon>dashboardV.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Albo\homeA.aspx.designer.vb">
+    <Compile Include="Equiparazioni\richiestaEquiparazioneFoto.aspx.designer.vb">
+      <DependentUpon>richiestaEquiparazioneFoto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\richiestaEquiparazioneFoto.aspx.vb">
+      <DependentUpon>richiestaEquiparazioneFoto.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="homeA.aspx.designer.vb">
       <DependentUpon>homeA.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Albo\homeA.aspx.vb">
+    <Compile Include="homeA.aspx.vb">
       <DependentUpon>homeA.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
@@ -680,6 +690,13 @@
     </Compile>
     <Compile Include="Equiparazioni\DashboardEqui.aspx.vb">
       <DependentUpon>DashboardEqui.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\richiestaEquiparazione.aspx.designer.vb">
+      <DependentUpon>richiestaEquiparazione.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\richiestaEquiparazione.aspx.vb">
+      <DependentUpon>richiestaEquiparazione.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="ErrorPage.aspx.designer.vb">
@@ -898,6 +915,8 @@
     <Folder Include="corsisti\" />
     <Folder Include="elencoPartecipantiCorsi\" />
     <Folder Include="file_storage\" />
+    <Folder Include="file_storage_equi\" />
+    <Folder Include="fotoEquiparazioni\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

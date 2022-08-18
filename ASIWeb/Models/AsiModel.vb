@@ -764,9 +764,22 @@ Public Class AsiModel
 
     End Class
 
+    Public Class DatiNuovEquiparazione
+
+        Public IdRecord As String
+        Public IDEquiparazione As String
+        Public CodiceEnteRichiedente As String
+        Public DescrizioneStatus As String
+        Public CodiceStatus As String
+        Public DescrizioneEnteRichiedente As String
+        Public TipoEnte As String
+
+
+    End Class
+
     Public Class DatiNuovaEquiparazione
         Public IdRecord As String
-        Public IDCorso As String
+        Public IDEquiparazione As String
         Public CodiceEnteRichiedente As String
         Public DescrizioneStatus As String
         Public CodiceStatus As String
@@ -812,6 +825,54 @@ Public Class AsiModel
         Return numero
 
     End Function
+    Public Class Equiparazione
+        Public Shared Function PrendiValoriNuovaEquiparazione(IDEquiparazione As String) As DatiNuovaEquiparazione
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiEquiparazione As New DatiNuovaEquiparazione
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDEquiparazione", IDEquiparazione, Enumerations.SearchOption.equals)
+
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                        DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                        DatiEquiparazione.IDEquiparazione = Data.FixNull(dr("IDEquiparazione"))
+                        DatiEquiparazione.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
+                        DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                        DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                        DatiEquiparazione.IdRecord = Data.FixNull(dr("Id_record"))
+
+                    Next
+
+
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return DatiEquiparazione
+
+        End Function
+
+    End Class
+
     Public Class Corso
 
 

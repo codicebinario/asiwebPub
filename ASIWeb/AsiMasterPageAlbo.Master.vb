@@ -158,7 +158,7 @@ Public Class AsiMasterPageAlbo
     Protected Sub lnkAlbo_Click(sender As Object, e As EventArgs) Handles lnkAlbo.Click
         '    NuovaRichiesta()
 
-        Response.Redirect("HomeA.aspx")
+        Response.Redirect("../HomeA.aspx")
     End Sub
 
     Protected Sub LinkArchivio_Click(sender As Object, e As EventArgs) Handles LinkArchivio.Click

@@ -33,7 +33,7 @@
   <div class="container text-center">
     
   
-      <a class="btn btn-lg btn-custom" href="Albo/HomeA.aspx" role="button">Albo</a>
+      <a class="btn btn-lg btn-custom" href="HomeA.aspx" role="button">Albo</a>
   </div>
 </div>
 

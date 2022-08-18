@@ -1,5 +1,9 @@
 ﻿Imports fmDotNet
 Imports ASIWeb.Ed
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
+Imports System.Net
+
 Public Class AsiMasterPageEqui
     Inherits System.Web.UI.MasterPage
     Dim deEnco As New Ed
@@ -42,100 +46,6 @@ Public Class AsiMasterPageEqui
 
     End Sub
 
-    Function quantiDaValutare(codice As String) As Integer
-        Dim ritorno As Integer = 0
-
-        Dim ds As DataSet
-
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webCorsiRichiesta")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
-
-
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-            Dim counter1 As Integer = 0
-            For Each dr In ds.Tables("main").Rows
-
-
-
-                If Data.FixNull(dr("Codice_Status")) = "63" Then
-                    counter1 += 1
-
-
-                End If
-
-            Next
-            If counter1 >= 1 Then
-                ritorno = counter1
-            Else
-                ritorno = 0
-            End If
-
-        Else
-            '  ritorno = counter1
-
-        End If
-        Return ritorno
-
-    End Function
-
-    Function quantiValutati(codice As String) As Boolean
-        Dim ritorno As Boolean = False
-
-        Dim ds As DataSet
-
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webCorsiRichiesta")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
-
-
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-            Dim counter1 As Integer = 0
-            For Each dr In ds.Tables("main").Rows
-
-
-
-                If Data.FixNull(dr("Codice_Status")) = "64" Or Data.FixNull(dr("Codice_Status")) = "65" Then
-                    counter1 += 1
-
-
-                End If
-
-            Next
-            If counter1 >= 1 Then
-                ritorno = True
-            Else
-                ritorno = False
-            End If
-
-        Else
-
-            ' non si sono records
-            ritorno = False
-
-
-        End If
-
-
-        Return ritorno
-
-    End Function
-
     Protected Sub lnkOut_Click(sender As Object, e As EventArgs) Handles lnkOut.Click
         Session("auth") = "0"
         Session("auth") = Nothing
@@ -151,14 +61,14 @@ Public Class AsiMasterPageEqui
         NuovaEquiparazione()
         '     ?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("Codice_Richiesta"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("Record_ID"))
 
-        Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+        Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
     End Sub
 
 
     Protected Sub lnkEqui_Click(sender As Object, e As EventArgs) Handles lnkEqui.Click
         '    NuovaRichiesta()
 
-        Response.Redirect("HomeA.aspx")
+        Response.Redirect("../HomeA.aspx")
     End Sub
 
     Protected Sub LinkArchivioEqui_Click(sender As Object, e As EventArgs) Handles LinkArchivioEqui.Click
@@ -213,7 +123,7 @@ Public Class AsiMasterPageEqui
             Next
 
 
-            AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "0", Session("WebUserEnte"))
+            AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "0", Session("WebUserEnte"), "equiparazione")
 
         End If
 
@@ -221,7 +131,37 @@ Public Class AsiMasterPageEqui
 
     End Sub
 
+    Public Function PrendiToken() As String
+        Dim urlsign As String = "https://93.63.195.98/fmi/data/vLatest/databases/Asi/sessions"
+        Dim auth As String = ""
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+        Using client1 = New WebClient()
+            client1.Encoding = System.Text.Encoding.UTF8
 
+            client1.Headers.Add(HttpRequestHeader.ContentType, "application/json")
+            client1.UseDefaultCredentials = True
+            client1.Headers.Add("Authorization", "Basic " +
+           Convert.ToBase64String(Encoding.UTF8.GetBytes("enteweb:web01")))
+
+            '   Try
+            Dim reply1 As String = client1.UploadString(New Uri(urlsign), "POST", "")
+            Dim risposta1 = JsonConvert.DeserializeObject(reply1)
+
+            Dim bearer = JObject.Parse(risposta1.ToString)
+            Dim token = bearer.SelectToken("response.token").ToString()
+            auth = "Bearer " + token
+            auth = token
+            ' Response.Write(auth)
+            '   Catch ex As Exception
+
+            '   Response.Redirect("errore.aspx?esito=errore&tipo=" & " token non ricevuto")
+
+            ' End Try
+            '    Response.Write(Server.MapPath("\img\2.jpg"))
+        End Using
+        Return auth
+
+    End Function
 
 
 End Class
