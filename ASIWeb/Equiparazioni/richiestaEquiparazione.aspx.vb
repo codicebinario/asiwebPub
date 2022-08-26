@@ -50,6 +50,13 @@ Public Class richiestaEquiparazione
             Response.Redirect("../login.aspx")
         End If
 
+
+        If Session("procedi") <> "OK" Then
+
+            Response.Redirect("checkTesseramento.aspx")
+
+        End If
+
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
         cultureFormat.NumberFormat.CurrencyDecimalDigits = 2
@@ -80,7 +87,7 @@ Public Class richiestaEquiparazione
         If Not String.IsNullOrEmpty(codR) Then
 
 
-            Session("IDCorso") = codR
+            Session("IDEquiparazione") = codR
             Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
             DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
             Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
@@ -91,7 +98,7 @@ Public Class richiestaEquiparazione
             Dim DescrizioneStatus As String = DettaglioEquiparazione.DescrizioneStatus
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDCorso & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
         End If
 
         If Page.IsPostBack Then
@@ -173,7 +180,7 @@ Public Class richiestaEquiparazione
                 ' btnFase2.Visible = True
                 'deleteFile(nomecaricato)
                 Session("fase") = "2"
-                Response.Redirect("richiestaEquiparazioneFoto.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+                Response.Redirect("richiestaEquiparazioneFoto.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=2")
 
             Catch ex As Exception
 
@@ -201,7 +208,7 @@ Public Class richiestaEquiparazione
         Dim Request = fmsP.CreateEditRequest(codR)
         Request.AddField("NomeFileDiplomaFS", nomecaricato)
         Request.AddField("NoteUploadDiploma", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
-        Request.AddField("Fase", "1")
+        Request.AddField("Equi_Fase", "1")
         Request.AddField("Codice_Status", "101")
         Request.AddScript("SistemaEncodingNoteUpload_DiplomaEqui", IDEquiparazione)
         'If qualeStatus = "3" Then

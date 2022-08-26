@@ -61,7 +61,7 @@ Public Class AsiMasterPageEqui
         NuovaEquiparazione()
         '     ?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("Codice_Richiesta"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("Record_ID"))
 
-        Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+        Response.Redirect("checkTesseramento.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
     End Sub
 
 

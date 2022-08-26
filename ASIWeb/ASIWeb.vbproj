@@ -188,6 +188,9 @@
     <Content Include="Albo\corsistiKO.aspx" />
     <Content Include="Albo\dashboardB.aspx" />
     <Content Include="Albo\dashboardV.aspx" />
+    <Content Include="Equiparazioni\checkTesseramento.aspx" />
+    <Content Include="Equiparazioni\richiestaEquiparazioneDati1.aspx" />
+    <Content Include="Equiparazioni\richiestaEquiparazioneDati2.aspx" />
     <Content Include="Equiparazioni\richiestaEquiparazioneFoto.aspx" />
     <Content Include="homeA.aspx" />
     <Content Include="Albo\richiestaCorso.aspx" />
@@ -508,6 +511,27 @@
     </Compile>
     <Compile Include="Albo\dashboardV.aspx.vb">
       <DependentUpon>dashboardV.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\checkTesseramento.aspx.designer.vb">
+      <DependentUpon>checkTesseramento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\checkTesseramento.aspx.vb">
+      <DependentUpon>checkTesseramento.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\richiestaEquiparazioneDati1.aspx.designer.vb">
+      <DependentUpon>richiestaEquiparazioneDati1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\richiestaEquiparazioneDati1.aspx.vb">
+      <DependentUpon>richiestaEquiparazioneDati1.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\richiestaEquiparazioneDati2.aspx.designer.vb">
+      <DependentUpon>richiestaEquiparazioneDati2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\richiestaEquiparazioneDati2.aspx.vb">
+      <DependentUpon>richiestaEquiparazioneDati2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni\richiestaEquiparazioneFoto.aspx.designer.vb">

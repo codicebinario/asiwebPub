@@ -45,11 +45,23 @@ Public Class richiestaEquiparazioneFoto
     Dim pag As Integer = 0
     Dim skip As Integer = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Dim fase As String = Request.QueryString("fase")
+        If Not String.IsNullOrEmpty(fase) Then
+            ' fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
+            Session("fase") = fase
+        End If
+
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
         If IsNothing(Session("codice")) Then
             Response.Redirect("../login.aspx")
+        End If
+
+        If Session("procedi") <> "OK" Then
+
+            Response.Redirect("checkTesseramento.aspx")
+
         End If
 
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
@@ -97,7 +109,11 @@ Public Class richiestaEquiparazioneFoto
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
             lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione & " - " & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
         End If
+        If fase = 2 Then
+            lblnomef.Text = "Diploma correttamente caricato"
 
+
+        End If
         If Page.IsPostBack Then
 
             '  pnlFase1.Visible = False
@@ -163,7 +179,7 @@ Public Class richiestaEquiparazioneFoto
             id_att = arrKeywords(0)
             CaricaSuFM(tokenx, id_att, nomecaricato)
 
-            Response.Redirect("richiestaEquiparazioneDati1.aspx.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+            Response.Redirect("richiestaEquiparazioneDati1.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=3")
 
 
 
@@ -234,7 +250,7 @@ Public Class richiestaEquiparazioneFoto
         fmsP.SetLayout("webEquiparazioniRichiesta")
         Dim Request = fmsP.CreateEditRequest(id)
         Request.AddField("NomeFileFotoFS", nomecaricato)
-
+        Request.AddField("Equi_Fase", "2")
         Try
             risposta = Request.Execute()
 

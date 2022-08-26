@@ -139,7 +139,7 @@ Public Class valutaCorso
             Catch ex As Exception
 
             End Try
-            Response.Redirect("dashboardAlboValutati.aspx#" & Session("IDCorso"))
+            Response.Redirect("archivioAlboValutati.aspx#" & Session("IDCorso"))
 
         End If
 

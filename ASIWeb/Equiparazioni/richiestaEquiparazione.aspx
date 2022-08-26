@@ -145,7 +145,18 @@ function ServerException(mess) {
 							</div>
 							
 				</div></div>	
-     
+       <div class="col-sm-12">
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="form-group">
+                       <h5>Fase 1: <asp:Label ID="lblnomef" runat="server" Text=""></asp:Label></h5>
+                      <hr />
+                  </div>
+              </div>
+
+          </div>
+      </div>
+    <br /><br />
   
 
       <div class="col-sm-12">
