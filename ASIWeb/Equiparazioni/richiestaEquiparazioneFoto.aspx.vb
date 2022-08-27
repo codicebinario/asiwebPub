@@ -107,7 +107,14 @@ Public Class richiestaEquiparazioneFoto
             '  Dim TitoloCorso As String = DettaglioEquiparazione.TitoloCorso
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione & " - " & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+            Dim datiCF = AsiModel.getDatiCodiceFiscale(Session("codiceFiscale"))
+
+            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
+                "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
+                "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
+                "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
+                "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+
         End If
         If fase = 2 Then
             lblnomef.Text = "Diploma correttamente caricato"

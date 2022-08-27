@@ -96,9 +96,17 @@ Public Class richiestaEquiparazione
             Dim TipoEnte As String = DettaglioEquiparazione.TipoEnte
             Dim CodiceStatus As String = DettaglioEquiparazione.CodiceStatus
             Dim DescrizioneStatus As String = DettaglioEquiparazione.DescrizioneStatus
+            '      leggiDatiEsistenti(Session("codiceFiscale"))
+
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+            Dim datiCF = AsiModel.getDatiCodiceFiscale(Session("codiceFiscale"))
+
+            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
+                "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
+                "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
+                "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
+                "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
         End If
 
         If Page.IsPostBack Then
@@ -108,6 +116,28 @@ Public Class richiestaEquiparazione
 
         End If
     End Sub
+    Function leggiDatiEsistenti(cf As String) As DatiCodiceFiscale
+
+        Dim datiCodiceFiscale As New DatiCodiceFiscale
+
+        datiCodiceFiscale = getDatiCodiceFiscale(cf)
+
+        'txtCognome.Text = datiCodiceFiscale.Cognome
+        'txtNome.Text = datiCodiceFiscale.Nome
+        'txtCodiceFiscale.Text = datiCodiceFiscale.CodiceFiscale
+        'txtDataNascita.Text = datiCodiceFiscale.DataNascita.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+        'txtComuneNascita.Text = datiCodiceFiscale.LuogoNascita
+        'txtCodiceTessera.Text = datiCodiceFiscale.CodiceTessera
+        'txtDataScadenza.Text = datiCodiceFiscale.DataScadenza.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+
+
+
+
+        Return datiCodiceFiscale
+
+
+    End Function
+
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If uploadProgress.Files.Count > 0 Then

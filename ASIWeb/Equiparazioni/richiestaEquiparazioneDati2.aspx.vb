@@ -111,7 +111,14 @@ Public Class richiestaEquiparazioneDati2
             '  Dim TitoloCorso As String = DettaglioEquiparazione.TitoloCorso
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione & " - " & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+            Dim datiCF = AsiModel.getDatiCodiceFiscale(Session("codiceFiscale"))
+
+            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
+                "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
+                "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
+                "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
+                "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+
         End If
         If fase = 4 Then
             lblnomef.Text = "Dati Anagrafici 3 caricati"
@@ -448,14 +455,14 @@ Public Class richiestaEquiparazioneDati2
         Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
 
 
-        Request.AddField("Sport_Interessato", ddlSport.SelectedItem.Text)
-        Request.AddField("Sport_Interessato_ID", ddlSport.SelectedItem.Value)
-        Request.AddField("Disciplina_Interessata", ddlDisciplina.SelectedItem.Text)
-        Request.AddField("Disciplina_Interessata_ID", ddlDisciplina.SelectedItem.Value)
-        Request.AddField("Specialita", ddlSpecialita.SelectedItem.Text)
-        Request.AddField("Specialita_ID", ddlSpecialita.SelectedItem.Value)
-        Request.AddField("Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
-        Request.AddField("Livello", ddlLivello.SelectedItem.Text)
+        Request.AddField("Equi_Sport_Interessato", ddlSport.SelectedItem.Text)
+        Request.AddField("Equi_Sport_Interessato_ID", ddlSport.SelectedItem.Value)
+        Request.AddField("Equi_Disciplina_Interessata", ddlDisciplina.SelectedItem.Text)
+        Request.AddField("Equi_Disciplina_Interessata_ID", ddlDisciplina.SelectedItem.Value)
+        Request.AddField("Equi_Specialita", ddlSpecialita.SelectedItem.Text)
+        Request.AddField("Equi_Specialita_ID", ddlSpecialita.SelectedItem.Value)
+        Request.AddField("Equi_Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
+        Request.AddField("Equi_Livello", ddlLivello.SelectedItem.Text)
         Request.AddField("Codice_status", "102")
         'Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
         Session("visto") = "ok"
@@ -469,6 +476,7 @@ Public Class richiestaEquiparazioneDati2
 
 
         AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "102", Session("WebUserEnte"), "equiparazioni")
+        Response.Redirect("dashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("ok"))
         'Catch ex As Exception
 
         'End Try

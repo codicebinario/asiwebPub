@@ -126,6 +126,7 @@
        <asp:FileUpload ID="inputfile" class="custom-file-input" runat="server" name="filename"/>
       <label class="custom-file-label" for="inputfile">Scegli la foto</label>
     </div>
+
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" 
                             ErrorMessage="carica la foto" 
                             ControlToValidate="inputfile" CssClass="errore"></asp:RequiredFieldValidator>
