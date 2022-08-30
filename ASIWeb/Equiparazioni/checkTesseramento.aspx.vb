@@ -112,17 +112,25 @@ Public Class checkTesseramento
             Dim dataOggi As Date = Today.Date
             Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
 
-
+            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
 
 
             risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
+            DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
             Session("visto") = "ok"
             If risultatoCheck = True Then
 
                 '   Response.Write("ok")
                 Session("procedi") = "OK"
                 Session("codiceFiscale") = Trim(txtCodiceFiscale.Text)
-                CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
+
+
+
+                CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"), Trim(txtCodiceFiscale.Text),
+DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazione.CodiceTessera, DettaglioEquiparazione.DataScadenza)
+
+
+
                 Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
 
 
@@ -137,65 +145,14 @@ Public Class checkTesseramento
 
             End If
 
-            'Dim fms As FMSAxml = Nothing
-            'Dim ds As DataSet = Nothing
-            'Dim ritorno As Boolean = False
-            'Dim dataScadenza As Date
-            'fms = Conn.Connect()
-            'Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
-            ''     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
-            ''     fmsB.SetDatabase(Database)
-            'fms.SetLayout("webCheckCF")
-            'Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
-            'RequestA.AddSearchField("CodiceFiscale", txtCodiceFiscale.Text, Enumerations.SearchOption.equals)
-            ''  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
 
 
-            'Try
-
-            '    ds = RequestA.Execute()
-
-
-            '    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-            '        For Each dr In ds.Tables("main").Rows
-
-
-
-
-            '            If CDate(it) <= CDate(dr("DataScadenza")) Then
-            '                '   ritorno = True
-            '                Response.Write(CDate(dr("DataScadenza")) & "ok<br />")
-            '            Else
-            '                Response.Write(CDate(dr("DataScadenza")) & "ko<br />")
-
-            '            End If
-
-
-
-            '        Next
-
-            '    Else
-            '        '    ritorno = False
-            '    End If
-
-            '    'If Today.Date <= dataScadenza Then
-
-            '    '    ritorno = "tessera valida"
-            '    'Else
-            '    '    ritorno = "tessera scaduta"
-
-            '    'End If
-
-
-            'Catch ex As Exception
-            '    '      ritorno = False
-            'End Try
-            ''  Return ritorno
 
         End If
     End Sub
 
-    Public Function CaricaDatiDocumentoCorso(codR As String, IDEquiparazione As String) As Boolean
+    Public Function CaricaDatiDocumentoCorso(codR As String, IDEquiparazione As String, codiceFiscale As String,
+                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
 
@@ -211,22 +168,25 @@ Public Class checkTesseramento
 
         Request.AddField("Equi_CFVerificatoTessera", "1")
 
-
-
+        Request.AddField("Equi_CodiceFiscale", codiceFiscale)
+        Request.AddField("Equi_NumeroTessera", codiceTessera)
+        Request.AddField("Equi_Nome", nome)
+        Request.AddField("Equi_Cognome", cognome)
+        Request.AddField("Equi_DataScadenza", Data.SistemaData(dataScadenza))
 
 
 
         Request.AddField("Equi_Fase", "0")
         '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
-        Try
-            risposta = Request.Execute()
+        '  Try
+        risposta = Request.Execute()
 
 
 
-        Catch ex As Exception
+        '  Catch ex As Exception
 
-        End Try
+        '  End Try
 
 
 

@@ -556,6 +556,10 @@ Public Class AsiModel
                 For Each dr In ds.Tables("main").Rows
 
                     If CDate(it) <= CDate(dr("DataScadenza")) Then
+
+
+
+
                         ritorno = True
 
                     End If
@@ -710,6 +714,61 @@ Public Class AsiModel
             fms.SetLayout("webCorsiRichiesta")
             Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("IdCorso", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        Record_Id = Data.FixNull(dr("Id_record"))
+
+
+                    Next
+
+
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return Record_Id
+
+
+        End Function
+
+
+
+
+
+
+    End Class
+    Public Class GetRecord_IDbyCodREquiparazione
+
+        'Public Shared Property Denominazione As String
+        'Public Shared Property Codice As String
+        'Public Shared Property TipoEnte As String
+
+        Public Shared Property Record_Id As String
+
+
+        Public Shared Function GetRecord_ID(codR As String) As String
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IdEquiparazione", codR, Enumerations.SearchOption.equals)
 
             Try
                 ds = RequestA.Execute()
@@ -921,7 +980,12 @@ Public Class AsiModel
         Public CodiceStatus As String
         Public DescrizioneEnteRichiedente As String
         Public TipoEnte As String
-
+        Public EquiCF As String
+        Public CodiceFiscale As String
+        Public CodiceTessera As String
+        Public Nome As String
+        Public Cognome As String
+        Public DataScadenza As String
 
     End Class
 
@@ -989,7 +1053,12 @@ Public Class AsiModel
                         DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
                         DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
                         DatiEquiparazione.IdRecord = Data.FixNull(dr("Id_record"))
-
+                        DatiEquiparazione.EquiCF = Data.FixNull(dr("Equi_CFVerificatoTessera"))
+                        DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
+                        DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
+                        DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
+                        DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
+                        DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
                     Next
 
 
@@ -1005,6 +1074,68 @@ Public Class AsiModel
             Return DatiEquiparazione
 
         End Function
+        Public Shared Function CaricaDatiTesseramento(codiceFiscale As String) As DatiNuovaEquiparazione
+            '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
+
+
+            Dim ds As DataSet
+
+            Dim dataOggi As Date = Today.Date
+            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fmsP.SetLayout("webCheckCF")
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
+            '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
+
+
+
+            ds = RequestA.Execute()
+
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    If CDate(it) <= CDate(dr("DataScadenza")) Then
+
+
+                        DettaglioEquiparazione.Cognome = Data.FixNull(dr("Cognome"))
+                        DettaglioEquiparazione.Nome = Data.FixNull(dr("Nome"))
+                        DettaglioEquiparazione.DataScadenza = Data.FixNull(dr("DataScadenza"))
+                        DettaglioEquiparazione.CodiceTessera = Data.FixNull(dr("Codice tessera"))
+
+
+                    End If
+
+
+
+                Next
+
+            Else
+
+            End If
+
+
+
+
+
+            '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+
+
+
+
+
+            Return DettaglioEquiparazione
+        End Function
+
+
+
 
     End Class
 

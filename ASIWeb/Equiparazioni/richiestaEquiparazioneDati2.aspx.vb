@@ -45,9 +45,15 @@ Public Class richiestaEquiparazioneDati2
     Dim tokenZ As String = ""
     Dim record_ID As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim fase As String = Request.QueryString("fase")
+
+
+
+
+
+        ' Dim fase As String = Request.QueryString("fase")
+        Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
         If Not String.IsNullOrEmpty(fase) Then
-            '   fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
+
             Session("fase") = fase
         End If
 
@@ -62,11 +68,11 @@ Public Class richiestaEquiparazioneDati2
         If IsNothing(Session("codiceFiscale")) Then
             Response.Redirect("../login.aspx")
         End If
-        If Session("procedi") <> "OK" Then
+        'If Session("procedi") <> "OK" Then
 
-            Response.Redirect("checkTesseramento.aspx")
+        '    Response.Redirect("checkTesseramento.aspx")
 
-        End If
+        'End If
 
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
@@ -99,9 +105,20 @@ Public Class richiestaEquiparazioneDati2
 
 
             Session("IDEquiparazione") = codR
-            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+            '    Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
 
+
+
+
+
+            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
             DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
+            Dim verificato As String = DettaglioEquiparazione.EquiCF
+
+            If verificato = "0" Then
+                Response.Redirect("DashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("no"))
+
+            End If
             Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
             Dim CodiceEnteRichiedente As String = DettaglioEquiparazione.CodiceEnteRichiedente
             Dim DescrizioneEnteRichiedente As String = DettaglioEquiparazione.DescrizioneEnteRichiedente
@@ -111,7 +128,8 @@ Public Class richiestaEquiparazioneDati2
             '  Dim TitoloCorso As String = DettaglioEquiparazione.TitoloCorso
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            Dim datiCF = AsiModel.getDatiCodiceFiscale(Session("codiceFiscale"))
+            Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
+            Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
             lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
@@ -475,7 +493,7 @@ Public Class richiestaEquiparazioneDati2
         risposta = Request.Execute()
 
 
-        AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "102", Session("WebUserEnte"), "equiparazioni")
+        AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "102", Session("WebUserEnte"), "equiparazione")
         Response.Redirect("dashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("ok"))
         'Catch ex As Exception
 

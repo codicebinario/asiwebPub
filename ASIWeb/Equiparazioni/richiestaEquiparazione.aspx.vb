@@ -51,11 +51,11 @@ Public Class richiestaEquiparazione
         End If
 
 
-        If Session("procedi") <> "OK" Then
+        'If Session("procedi") <> "OK" Then
 
-            Response.Redirect("checkTesseramento.aspx")
+        '    Response.Redirect("checkTesseramento.aspx")
 
-        End If
+        'End If
 
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
@@ -89,7 +89,17 @@ Public Class richiestaEquiparazione
 
             Session("IDEquiparazione") = codR
             Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+
+
+
+
+
             DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
+            Dim verificato As String = DettaglioEquiparazione.EquiCF
+            If verificato = "0" Then
+                Response.Redirect("DashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("no"))
+
+            End If
             Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
             Dim CodiceEnteRichiedente As String = DettaglioEquiparazione.CodiceEnteRichiedente
             Dim DescrizioneEnteRichiedente As String = DettaglioEquiparazione.DescrizioneEnteRichiedente
@@ -100,7 +110,8 @@ Public Class richiestaEquiparazione
 
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            Dim datiCF = AsiModel.getDatiCodiceFiscale(Session("codiceFiscale"))
+            Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
+            Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
             lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
@@ -210,7 +221,7 @@ Public Class richiestaEquiparazione
                 ' btnFase2.Visible = True
                 'deleteFile(nomecaricato)
                 Session("fase") = "2"
-                Response.Redirect("richiestaEquiparazioneFoto.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=2")
+                Response.Redirect("richiestaEquiparazioneFoto.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(2))
 
             Catch ex As Exception
 

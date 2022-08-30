@@ -47,6 +47,23 @@
             Return data
         End If
     End Function
+    Public Shared Function SistemaData(valore As String) As String
+
+        Dim oDateDa As DateTime
+        Dim giorno
+        Dim anno
+        Dim mese
+
+        Dim miaData = valore
+        oDateDa = DateTime.Parse(miaData)
+        giorno = oDateDa.Day
+        anno = oDateDa.Year
+        mese = oDateDa.Month
+
+        Return mese & "/" & giorno & "/" & anno
+
+
+    End Function
     Public Shared Function RemoveCharacter(ByVal stringToCleanUp)
         Dim characterToRemove As String = ""
         characterToRemove = Chr(34) + "#$%&'()<>*+,-./\~"

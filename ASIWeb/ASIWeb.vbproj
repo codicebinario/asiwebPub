@@ -188,10 +188,16 @@
     <Content Include="Albo\corsistiKO.aspx" />
     <Content Include="Albo\dashboardB.aspx" />
     <Content Include="Albo\dashboardV.aspx" />
+    <Content Include="Css\customEquiparazione.css" />
+    <Content Include="Equiparazioni\annullaEquiparazione.aspx" />
+    <Content Include="Equiparazioni\annullaEquiparazioneMotivo.aspx" />
     <Content Include="Equiparazioni\checkTesseramento.aspx" />
     <Content Include="Equiparazioni\richiestaEquiparazioneDati1.aspx" />
     <Content Include="Equiparazioni\richiestaEquiparazioneDati2.aspx" />
     <Content Include="Equiparazioni\richiestaEquiparazioneFoto.aspx" />
+    <Content Include="Equiparazioni\scaricaDiplomaEqui.aspx" />
+    <Content Include="Equiparazioni\upLegEquiparazioni.aspx" />
+    <Content Include="Equiparazioni\vediDocumentazione.aspx" />
     <Content Include="homeA.aspx" />
     <Content Include="Albo\richiestaCorso.aspx" />
     <Content Include="Albo\richiestaCorsoF2.aspx" />
@@ -297,7 +303,6 @@
     <Content Include="Css\alertify.rtl.css" />
     <Content Include="Css\alertify.rtl.min.css" />
     <Content Include="Css\custom.css" />
-    <Content Include="Css\customAlbo.css" />
     <Content Include="Css\drop.css" />
     <Content Include="Css\legacy.css" />
     <Content Include="Css\signin.css" />
@@ -513,6 +518,20 @@
       <DependentUpon>dashboardV.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Equiparazioni\annullaEquiparazione.aspx.designer.vb">
+      <DependentUpon>annullaEquiparazione.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\annullaEquiparazione.aspx.vb">
+      <DependentUpon>annullaEquiparazione.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\annullaEquiparazioneMotivo.aspx.designer.vb">
+      <DependentUpon>annullaEquiparazioneMotivo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\annullaEquiparazioneMotivo.aspx.vb">
+      <DependentUpon>annullaEquiparazioneMotivo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Equiparazioni\checkTesseramento.aspx.designer.vb">
       <DependentUpon>checkTesseramento.aspx</DependentUpon>
     </Compile>
@@ -539,6 +558,27 @@
     </Compile>
     <Compile Include="Equiparazioni\richiestaEquiparazioneFoto.aspx.vb">
       <DependentUpon>richiestaEquiparazioneFoto.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\scaricaDiplomaEqui.aspx.designer.vb">
+      <DependentUpon>scaricaDiplomaEqui.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\scaricaDiplomaEqui.aspx.vb">
+      <DependentUpon>scaricaDiplomaEqui.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\upLegEquiparazioni.aspx.designer.vb">
+      <DependentUpon>upLegEquiparazioni.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\upLegEquiparazioni.aspx.vb">
+      <DependentUpon>upLegEquiparazioni.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\vediDocumentazione.aspx.designer.vb">
+      <DependentUpon>vediDocumentazione.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\vediDocumentazione.aspx.vb">
+      <DependentUpon>vediDocumentazione.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="homeA.aspx.designer.vb">
@@ -939,6 +979,7 @@
     <Folder Include="corsisti\" />
     <Folder Include="elencoPartecipantiCorsi\" />
     <Folder Include="file_storage\" />
+    <Folder Include="file_storage_equiPag\" />
     <Folder Include="file_storage_equi\" />
     <Folder Include="fotoEquiparazioni\" />
   </ItemGroup>

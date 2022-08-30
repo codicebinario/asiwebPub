@@ -47,7 +47,7 @@
     <h3 class="display-5">Nuova Equiparazione</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-          <a href="dashboardE.aspx" class="btn btn-success btn-sm btn-due">Interrompi Equiparazione.</a>        
+          <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due">Interrompi Equiparazione.</a>        
     </p>
   </div></div>
       <div class="col-sm-12">

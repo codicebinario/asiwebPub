@@ -45,12 +45,15 @@ Public Class richiestaEquiparazioneDati1
     Dim tokenZ As String = ""
     Dim record_ID As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim fase As String = Request.QueryString("fase")
+
+
+
+        '      Dim fase As String = Request.QueryString("fase")
+        Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
         If Not String.IsNullOrEmpty(fase) Then
-            '     fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
+
             Session("fase") = fase
         End If
-
 
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -62,11 +65,11 @@ Public Class richiestaEquiparazioneDati1
         If IsNothing(Session("codiceFiscale")) Then
             Response.Redirect("../login.aspx")
         End If
-        If Session("procedi") <> "OK" Then
+        'If Session("procedi") <> "OK" Then
 
-            Response.Redirect("checkTesseramento.aspx")
+        '    Response.Redirect("checkTesseramento.aspx")
 
-        End If
+        'End If
 
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
@@ -99,19 +102,31 @@ Public Class richiestaEquiparazioneDati1
 
 
             Session("IDEquiparazione") = codR
-            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+            '  Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
 
+
+            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
             DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
+
+
+            Dim verificato As String = DettaglioEquiparazione.EquiCF
+
+            If verificato = "0" Then
+                Response.Redirect("DashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("no"))
+
+            End If
             Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
             Dim CodiceEnteRichiedente As String = DettaglioEquiparazione.CodiceEnteRichiedente
             Dim DescrizioneEnteRichiedente As String = DettaglioEquiparazione.DescrizioneEnteRichiedente
             Dim TipoEnte As String = DettaglioEquiparazione.TipoEnte
             Dim CodiceStatus As String = DettaglioEquiparazione.CodiceStatus
             Dim DescrizioneStatus As String = DettaglioEquiparazione.DescrizioneStatus
+
             '  Dim TitoloCorso As String = DettaglioEquiparazione.TitoloCorso
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            Dim datiCF = AsiModel.getDatiCodiceFiscale(Session("codiceFiscale"))
+            Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
+            Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
             lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
@@ -286,7 +301,7 @@ Public Class richiestaEquiparazioneDati1
             CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
 
             Session("fase") = "3"
-            Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&fase=4")
+            Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&fase=" & deEnco.QueryStringEncode(3))
 
         End If
     End Sub
@@ -311,8 +326,8 @@ Public Class richiestaEquiparazioneDati1
         Request.AddField("Equi_CodiceFiscale", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceFiscale.Text)))
         Request.AddField("Equi_ComuneNascita", Data.PrendiStringaT(Server.HtmlEncode(txtComuneNascita.Text)))
 
-        Request.AddField("Equi_DataScadenza", SistemaData(txtDataScadenza.Text))
-        Request.AddField("Equi_DataNascita", SistemaData(txtDataNascita.Text))
+        Request.AddField("Equi_DataScadenza", Data.SistemaData(txtDataScadenza.Text))
+        Request.AddField("Equi_DataNascita", Data.SistemaData(txtDataNascita.Text))
 
         Request.AddField("Equi_IndirizzoEmail", Data.PrendiStringaT(Server.HtmlEncode(txtEmail.Text)))
         Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefonoCellulare.Text)))
@@ -351,21 +366,5 @@ Public Class richiestaEquiparazioneDati1
         Return True
     End Function
 
-    Function SistemaData(valore As String) As String
 
-        Dim oDateDa As DateTime
-        Dim giorno
-        Dim anno
-        Dim mese
-
-        Dim miaData = valore
-        oDateDa = DateTime.Parse(miaData)
-        giorno = oDateDa.Day
-        anno = oDateDa.Year
-        mese = oDateDa.Month
-
-        Return mese & "/" & giorno & "/" & anno
-
-
-    End Function
 End Class

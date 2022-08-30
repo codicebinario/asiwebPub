@@ -46,7 +46,7 @@
 
         function myAnnulla() {
 
-            let text = "Sei sicuro di voler annullare questo corso?";
+            let text = "Sei sicuro di voler annullare questa Equiparazione?";
             if (confirm(text) == true) {
                 return true;
                 //  text = "You pressed OK!";
