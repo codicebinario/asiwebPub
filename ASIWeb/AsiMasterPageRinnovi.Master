@@ -1,4 +1,4 @@
-﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="AsiMasterPageEqui.Master.vb" Inherits="ASIWeb.AsiMasterPageEqui" %>
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="AsiMasterPageRinnovi.Master.vb" Inherits="ASIWeb.AsiMasterPageRinnovi" %>
 
 <!DOCTYPE html>
 
@@ -107,7 +107,7 @@
         </li>
 
              <li class="nav-item text-white">
-         <asp:LinkButton class="nav-link" ID="lnkEqui" CausesValidation="false" runat="server">Equiparazioni</asp:LinkButton>
+         <asp:LinkButton class="nav-link" ID="lnkRinnovi" CausesValidation="false" runat="server">Rinnovi</asp:LinkButton>
          
             
          
@@ -158,17 +158,17 @@
     <div class="collapse navbar-collapse" id="navbarCollapse1">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="DashboardEqui.aspx" >Richieste Equiparazioni Attive</a>
+          <a class="nav-link" href="DashboardRinnovi.aspx" >Richieste Rinnovi Attivi</a>
         </li>
           
        
            <li class="nav-item">
       
           
-      <asp:LinkButton ID="LinkArchivioEqui"  cssclass="nav-link" CausesValidation="false" runat="server">Richieste Evase</asp:LinkButton>
+      <asp:LinkButton ID="LinkArchivioRinnovi"  cssclass="nav-link" CausesValidation="false" runat="server">Rinnovi Evasi</asp:LinkButton>
       </li>
 
- <li class="nav-item">
+ <%--<li class="nav-item">
   
  
 
@@ -179,15 +179,15 @@
                </li>
 
            <li class="nav-item">
-  <asp:LinkButton ID="LinkSettoreValutati"  cssclass="nav-link" Visible="false" CausesValidation="false" runat="server">Equiparazioni Valutate</asp:LinkButton>
+  <asp:LinkButton ID="LinkSettoreValutati"  cssclass="nav-link" Visible="false" CausesValidation="false" runat="server">Rinnovi Valutati</asp:LinkButton>
 
                </li>
 
-         
+         --%>
 
 
           <li class="nav-item">       
-               <asp:LinkButton ID="lnkNuovaEquiparazione"  cssclass="nav-link" CausesValidation="false" runat="server">Nuova Equiparazione</asp:LinkButton>
+               <asp:LinkButton ID="lnkNuovoRinnovo"  cssclass="nav-link" CausesValidation="false" runat="server">Nuovo Rinnovo</asp:LinkButton>
         
      
       

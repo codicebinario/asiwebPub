@@ -188,10 +188,14 @@
     <Content Include="Albo\corsistiKO.aspx" />
     <Content Include="Albo\dashboardB.aspx" />
     <Content Include="Albo\dashboardV.aspx" />
+    <Content Include="AsiMasterPageEqui.Master" />
     <Content Include="Css\customEquiparazione.css" />
     <Content Include="Equiparazioni\annullaEquiparazione.aspx" />
     <Content Include="Equiparazioni\annullaEquiparazioneMotivo.aspx" />
+    <Content Include="Equiparazioni\archivioEquiValutati.aspx" />
     <Content Include="Equiparazioni\checkTesseramento.aspx" />
+    <Content Include="Equiparazioni\DashboardEquiEvasi.aspx" />
+    <Content Include="Equiparazioni\dashboardV.aspx" />
     <Content Include="Equiparazioni\richiestaEquiparazioneDati1.aspx" />
     <Content Include="Equiparazioni\richiestaEquiparazioneDati2.aspx" />
     <Content Include="Equiparazioni\richiestaEquiparazioneFoto.aspx" />
@@ -356,6 +360,9 @@
     <Content Include="PageNotFound.aspx" />
     <Content Include="passM.aspx" />
     <Content Include="richiestaTessere.aspx" />
+    <Content Include="Rinnovi\checkTesseramentoRinnovi.aspx" />
+    <Content Include="Rinnovi\DashboardRinnovi.aspx" />
+    <Content Include="Rinnovi\RichiestaRinnovo.aspx" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -430,7 +437,7 @@
     <Content Include="WebForm3.aspx" />
     <Content Include="WebForm4.aspx" />
     <Content Include="AsiMasterPageAA.Master" />
-    <Content Include="AsiMasterPageEqui.Master" />
+    <Content Include="AsiMasterPageRinnovi.Master" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -518,6 +525,20 @@
       <DependentUpon>dashboardV.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="AsiMasterPageEqui.Master.designer.vb">
+      <DependentUpon>AsiMasterPageEqui.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AsiMasterPageEqui.Master.vb">
+      <DependentUpon>AsiMasterPageEqui.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AsiMasterPageRinnovi.Master.designer.vb">
+      <DependentUpon>AsiMasterPageRinnovi.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AsiMasterPageRinnovi.Master.vb">
+      <DependentUpon>AsiMasterPageRinnovi.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Equiparazioni\annullaEquiparazione.aspx.designer.vb">
       <DependentUpon>annullaEquiparazione.aspx</DependentUpon>
     </Compile>
@@ -532,11 +553,32 @@
       <DependentUpon>annullaEquiparazioneMotivo.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Equiparazioni\archivioEquiValutati.aspx.designer.vb">
+      <DependentUpon>archivioEquiValutati.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\archivioEquiValutati.aspx.vb">
+      <DependentUpon>archivioEquiValutati.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Equiparazioni\checkTesseramento.aspx.designer.vb">
       <DependentUpon>checkTesseramento.aspx</DependentUpon>
     </Compile>
     <Compile Include="Equiparazioni\checkTesseramento.aspx.vb">
       <DependentUpon>checkTesseramento.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\DashboardEquiEvasi.aspx.designer.vb">
+      <DependentUpon>DashboardEquiEvasi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\DashboardEquiEvasi.aspx.vb">
+      <DependentUpon>DashboardEquiEvasi.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\dashboardV.aspx.designer.vb">
+      <DependentUpon>dashboardV.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\dashboardV.aspx.vb">
+      <DependentUpon>dashboardV.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni\richiestaEquiparazioneDati1.aspx.designer.vb">
@@ -721,13 +763,6 @@
       <DependentUpon>AsiMasterPageAlbo.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AsiMasterPageEqui.Master.designer.vb">
-      <DependentUpon>AsiMasterPageEqui.Master</DependentUpon>
-    </Compile>
-    <Compile Include="AsiMasterPageEqui.Master.vb">
-      <DependentUpon>AsiMasterPageEqui.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="AsiMasterPageMain.Master.designer.vb">
       <DependentUpon>AsiMasterPageMain.Master</DependentUpon>
     </Compile>
@@ -847,6 +882,27 @@
     <Compile Include="richiestaTessere.aspx.vb">
       <DependentUpon>richiestaTessere.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi\checkTesseramentoRinnovi.aspx.designer.vb">
+      <DependentUpon>checkTesseramentoRinnovi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\checkTesseramentoRinnovi.aspx.vb">
+      <DependentUpon>checkTesseramentoRinnovi.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi\DashboardRinnovi.aspx.designer.vb">
+      <DependentUpon>DashboardRinnovi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\DashboardRinnovi.aspx.vb">
+      <DependentUpon>DashboardRinnovi.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi\RichiestaRinnovo.aspx.designer.vb">
+      <DependentUpon>RichiestaRinnovo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\RichiestaRinnovo.aspx.vb">
+      <DependentUpon>RichiestaRinnovo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="sendFirstEmail.aspx.designer.vb">
       <DependentUpon>sendFirstEmail.aspx</DependentUpon>

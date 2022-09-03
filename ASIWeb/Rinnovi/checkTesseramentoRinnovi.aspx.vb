@@ -24,7 +24,7 @@ Imports System.Web.Services.Description
 Imports System.EnterpriseServices.CompensatingResourceManager
 Imports System.Globalization
 
-Public Class checkTesseramento
+Public Class checkTesseramentoRinnovi
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
     Dim utente As String = ConfigurationManager.AppSettings("utente")
@@ -82,18 +82,18 @@ Public Class checkTesseramento
         If Not String.IsNullOrEmpty(codR) Then
 
 
-            Session("IDEquiparazione") = codR
-            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
-            Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
-            Dim CodiceEnteRichiedente As String = DettaglioEquiparazione.CodiceEnteRichiedente
-            Dim DescrizioneEnteRichiedente As String = DettaglioEquiparazione.DescrizioneEnteRichiedente
-            Dim TipoEnte As String = DettaglioEquiparazione.TipoEnte
-            Dim CodiceStatus As String = DettaglioEquiparazione.CodiceStatus
-            Dim DescrizioneStatus As String = DettaglioEquiparazione.DescrizioneStatus
-            HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
-            HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+            Session("IDRinnovo") = codR
+            Dim DettaglioRinnovo As New DatiNuovoRinnovo
+            DettaglioRinnovo = Rinnovi.PrendiValoriNuovoRinnovo(Session("IDRinnovo"))
+            Dim IDRinnovo As String = DettaglioRinnovo.IDRinnovo
+            Dim CodiceEnteRichiedente As String = DettaglioRinnovo.CodiceEnteRichiedente
+            Dim DescrizioneEnteRichiedente As String = DettaglioRinnovo.DescrizioneEnteRichiedente
+            Dim TipoEnte As String = DettaglioRinnovo.TipoEnte
+            Dim CodiceStatus As String = DettaglioRinnovo.CodiceStatus
+            Dim DescrizioneStatus As String = DettaglioRinnovo.DescrizioneStatus
+            HiddenIdRecord.Value = DettaglioRinnovo.IdRecord
+            HiddenIDRinnovo.Value = DettaglioRinnovo.IDRinnovo
+            lblIntestazioneRinnovo.Text = "<strong>ID Rinnovo: </strong>" & IDRinnovo & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
         End If
 
         If Page.IsPostBack Then
@@ -112,11 +112,11 @@ Public Class checkTesseramento
             Dim dataOggi As Date = Today.Date
             Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
 
-            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+            Dim DettaglioRinnovo As New DatiNuovoRinnovo
 
 
             risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
-            DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
+            DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(txtCodiceFiscale.Text)
             Session("visto") = "ok"
             If risultatoCheck = True Then
 
@@ -126,12 +126,12 @@ Public Class checkTesseramento
 
 
 
-                CaricaDatiDocumentoEquiparazione(Session("IDEquiparazione"), Session("id_record"), Trim(txtCodiceFiscale.Text),
-DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazione.CodiceTessera, DettaglioEquiparazione.DataScadenza)
+                CaricaDatiDocumentoRinnovo(Session("IDRinnovo"), Session("id_record"), Trim(txtCodiceFiscale.Text),
+DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza)
 
 
 
-                Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+                Response.Redirect("richiestaRinnovo.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
 
 
 
@@ -140,7 +140,7 @@ DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazi
                 'Response.Write("ko")
 
                 Session("procedi") = "KO"
-                Response.Redirect("DashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+                Response.Redirect("DashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
 
 
             End If
@@ -151,7 +151,7 @@ DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazi
         End If
     End Sub
 
-    Public Function CaricaDatiDocumentoEquiparazione(codR As String, IDEquiparazione As String, codiceFiscale As String,
+    Public Function CaricaDatiDocumentoRinnovo(codR As String, IDRinnovo As String, codiceFiscale As String,
                                              nome As String, cognome As String, codiceTessera As String, dataScadenza As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
@@ -162,21 +162,21 @@ DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazi
         Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         '  Dim ds As DataSet
         Dim risposta As String = ""
-        fmsP.SetLayout("webEquiparazioniRichiesta")
-        Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
+        fmsP.SetLayout("webRinnoviRichiesta")
+        Dim Request = fmsP.CreateEditRequest(IDRinnovo)
 
 
-        Request.AddField("Equi_CFVerificatoTessera", "1")
+        Request.AddField("Rin_CFVerificatoTessera", "1")
 
-        Request.AddField("Equi_CodiceFiscale", codiceFiscale)
-        Request.AddField("Equi_NumeroTessera", codiceTessera)
-        Request.AddField("Equi_Nome", nome)
-        Request.AddField("Equi_Cognome", cognome)
-        Request.AddField("Equi_DataScadenza", Data.SistemaData(dataScadenza))
+        Request.AddField("Rin_CodiceFiscale", codiceFiscale)
+        Request.AddField("Rin_NumeroTessera", codiceTessera)
+        Request.AddField("Rin_Nome", nome)
+        Request.AddField("Rin_Cognome", cognome)
+        Request.AddField("Rin_DataScadenza", Data.SistemaData(dataScadenza))
 
 
 
-        Request.AddField("Equi_Fase", "0")
+        Request.AddField("Rin_Fase", "0")
         '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
         '  Try

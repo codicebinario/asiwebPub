@@ -47,6 +47,9 @@
             Return data
         End If
     End Function
+
+
+
     Public Shared Function SistemaData(valore As String) As String
 
         Dim oDateDa As DateTime
@@ -179,5 +182,32 @@
 
             Return data
         End If
+    End Function
+
+    Public Shared Function SonoDieci(valore As String) As String
+        Dim risultato As String = ""
+
+        If Len(valore) >= 10 Then
+
+
+            risultato = Left(valore, 10)
+
+
+            risultato = Left(valore, 10)
+
+
+
+        Else
+
+            risultato = ""
+
+        End If
+
+
+
+
+        Return risultato
+
+
     End Function
 End Class

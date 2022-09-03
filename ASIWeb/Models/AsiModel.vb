@@ -986,11 +986,196 @@ Public Class AsiModel
         Public Nome As String
         Public Cognome As String
         Public DataScadenza As String
+        Public trovato As Boolean
 
     End Class
 
+    Public Class DatiNuovoRinnovo
+
+        Public IdRecord As String
+        Public IDRinnovo As String
+        Public CodiceEnteRichiedente As String
+        Public DescrizioneStatus As String
+        Public CodiceStatus As String
+        Public DescrizioneEnteRichiedente As String
+        Public TipoEnte As String
+        Public RinnovoCF As String
+        Public CodiceFiscale As String
+        Public CodiceTessera As String
+        Public Nome As String
+        Public Cognome As String
+        Public DataScadenza As String
+        Public trovato As Boolean
+
+    End Class
+    Public Class Rinnovi
+
+        Public Shared Function PrendiValoriNuovoRinnovoByCF(codiceFiscale As String, codiceEnte As String) As DatiNuovoRinnovo
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiRinnovo As New DatiNuovoRinnovo
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("Riv_CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice_Ente_Richiedente", codiceEnte, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
 
 
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        DatiRinnovo.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                        DatiRinnovo.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                        DatiRinnovo.IDRinnovo = Data.FixNull(dr("IDRinnovo"))
+                        DatiRinnovo.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
+                        DatiRinnovo.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                        DatiRinnovo.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                        DatiRinnovo.IdRecord = Data.FixNull(dr("Id_record"))
+                        DatiRinnovo.RinnovoCF = Data.FixNull(dr("Rin_CFVerificatoTessera"))
+                        DatiRinnovo.CodiceFiscale = Data.FixNull(dr("Rin_CodiceFiscale"))
+                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_NumeroTessera"))
+                        DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
+                        DatiRinnovo.Cognome = Data.FixNull(dr("Rin_Cognome"))
+                        DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
+                        DatiRinnovo.trovato = True
+                    Next
+
+
+                Else
+                    DatiRinnovo.trovato = False
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return DatiRinnovo
+
+        End Function
+
+        Public Shared Function PrendiValoriNuovoRinnovo(IDRinnovo As String) As DatiNuovoRinnovo
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiRinnovo As New DatiNuovoRinnovo
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDRinnovo", IDRinnovo, Enumerations.SearchOption.equals)
+
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        DatiRinnovo.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                        DatiRinnovo.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                        DatiRinnovo.IDRinnovo = Data.FixNull(dr("IDRinnovo"))
+                        DatiRinnovo.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
+                        DatiRinnovo.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                        DatiRinnovo.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                        DatiRinnovo.IdRecord = Data.FixNull(dr("Id_record"))
+                        DatiRinnovo.RinnovoCF = Data.FixNull(dr("Rin_CFVerificatoTessera"))
+                        DatiRinnovo.CodiceFiscale = Data.FixNull(dr("Rin_CodiceFiscale"))
+                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_NumeroTessera"))
+                        DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
+                        DatiRinnovo.Cognome = Data.FixNull(dr("Rin_Cognome"))
+                        DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
+                    Next
+
+
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return DatiRinnovo
+
+        End Function
+
+        Public Shared Function CaricaDatiTesseramento(codiceFiscale As String) As DatiNuovoRinnovo
+            '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
+
+
+            Dim ds As DataSet
+
+            Dim dataOggi As Date = Today.Date
+            Dim DatiRinnovo As New DatiNuovoRinnovo
+
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fmsP.SetLayout("webCheckCF")
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
+            '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
+
+
+
+            ds = RequestA.Execute()
+
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    If CDate(it) <= CDate(dr("DataScadenza")) Then
+
+
+                        DatiRinnovo.Cognome = Data.FixNull(dr("Cognome"))
+                        DatiRinnovo.Nome = Data.FixNull(dr("Nome"))
+                        DatiRinnovo.DataScadenza = Data.FixNull(dr("DataScadenza"))
+                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Codice tessera"))
+
+
+                    End If
+
+
+
+                Next
+
+            Else
+
+            End If
+
+
+
+
+
+            '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+
+
+
+
+
+            Return DatiRinnovo
+        End Function
+
+
+
+
+    End Class
     Public Shared Function GetPaging() As String
         Dim fms As FMSAxml = Nothing
         Dim ds As DataSet = Nothing
@@ -1025,6 +1210,57 @@ Public Class AsiModel
 
     End Function
     Public Class Equiparazione
+        Public Shared Function PrendiValoriNuovaEquiparazioneByCF(codiceFiscale As String, codiceEnte As String) As DatiNuovaEquiparazione
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiEquiparazione As New DatiNuovaEquiparazione
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("Equi_CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice_Ente_Richiedente", codiceEnte, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                        DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                        DatiEquiparazione.IDEquiparazione = Data.FixNull(dr("IDEquiparazione"))
+                        DatiEquiparazione.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
+                        DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                        DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                        DatiEquiparazione.IdRecord = Data.FixNull(dr("Id_record"))
+                        DatiEquiparazione.EquiCF = Data.FixNull(dr("Equi_CFVerificatoTessera"))
+                        DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
+                        DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
+                        DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
+                        DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
+                        DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
+                        DatiEquiparazione.trovato = True
+                    Next
+
+
+                Else
+                    DatiEquiparazione.trovato = False
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return DatiEquiparazione
+
+        End Function
         Public Shared Function PrendiValoriNuovaEquiparazione(IDEquiparazione As String) As DatiNuovaEquiparazione
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing

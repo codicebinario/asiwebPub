@@ -4,7 +4,7 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports System.Net
 
-Public Class AsiMasterPageEqui
+Public Class AsiMasterPageRinnovi
     Inherits System.Web.UI.MasterPage
     Dim deEnco As New Ed
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -16,20 +16,20 @@ Public Class AsiMasterPageEqui
         End If
 
         If Not Page.IsPostBack Then
-            Dim quantiVal As Integer = quantiDaValutare(Session("codice"))
+            'Dim quantiVal As Integer = quantiDaValutare(Session("codice"))
 
-            If quantiDaValutare(Session("codice")) >= 1 Then
-                LinkSettore.Visible = True
-                LinkSettore.Text = "Equiparazioni da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
-            Else
-                LinkSettore.Visible = False
-            End If
+            'If quantiDaValutare(Session("codice")) >= 1 Then
+            '    LinkSettore.Visible = True
+            '    LinkSettore.Text = "Equiparazioni da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
+            'Else
+            '    LinkSettore.Visible = False
+            'End If
 
-            If quantiValutati(Session("codice")) = True Then
-                LinkSettoreValutati.Visible = True
-            Else
-                LinkSettoreValutati.Visible = False
-            End If
+            'If quantiValutati(Session("codice")) = True Then
+            '    LinkSettoreValutati.Visible = True
+            'Else
+            '    LinkSettoreValutati.Visible = False
+            'End If
 
 
 
@@ -57,37 +57,37 @@ Public Class AsiMasterPageEqui
 
         Response.Redirect("../home.aspx")
     End Sub
-    Protected Sub lnkNuovaEquiparazione_Click(sender As Object, e As EventArgs) Handles lnkNuovaEquiparazione.Click
-        NuovaEquiparazione()
+    Protected Sub lnkNuovoRinnovo_Click(sender As Object, e As EventArgs) Handles lnkNuovoRinnovo.Click
+        NuovoRinnovo()
         '     ?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("Codice_Richiesta"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("Record_ID"))
 
-        Response.Redirect("checkTesseramento.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+        Response.Redirect("checkTesseramentoRinnovi.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
     End Sub
 
 
-    Protected Sub lnkEqui_Click(sender As Object, e As EventArgs) Handles lnkEqui.Click
+    Protected Sub lnkRinnovi_Click(sender As Object, e As EventArgs) Handles lnkRinnovi.Click
         '    NuovaRichiesta()
 
         Response.Redirect("../HomeA.aspx")
     End Sub
 
-    Protected Sub LinkArchivioEqui_Click(sender As Object, e As EventArgs) Handles LinkArchivioEqui.Click
+    Protected Sub LinkArchivioRinnovi_Click(sender As Object, e As EventArgs) Handles LinkArchivioRinnovi.Click
         '    NuovaRichiesta()
 
-        Response.Redirect("DashboardEquiEvasi.aspx")
+        Response.Redirect("DashboardRinnoviEvasi.aspx")
     End Sub
 
 
 
 
-    Sub NuovaEquiparazione()
+    Sub NuovoRinnovo()
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
         Dim ds As DataSet
 
 
-        fmsP.SetLayout("webEquiparazioniRichiesta")
+        fmsP.SetLayout("webRinnoviRichiesta")
         Dim Request = fmsP.CreateNewRecordRequest()
 
         Request.AddField("Codice_Ente_Richiedente", Session("codice"))
@@ -118,12 +118,12 @@ Public Class AsiMasterPageEqui
                 '  AsiModel.DatiNuovoCorso. = Data.FixNull(dr("IDCorso"))
 
                 '    Session("record_ID") = Data.FixNull(dr("Record_ID"))
-                Session("IDEquiparazione") = Data.FixNull(dr("IDEquiparazione"))
+                Session("IDRinnovo") = Data.FixNull(dr("IDRinnovo"))
 
             Next
 
 
-            AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "0", Session("WebUserEnte"), "equiparazione")
+            AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "0", Session("WebUserEnte"), "rinnovo")
 
         End If
 
@@ -254,11 +254,11 @@ Public Class AsiMasterPageEqui
         Return ritorno
 
     End Function
-    Protected Sub LinkSettore_Click(sender As Object, e As EventArgs) Handles LinkSettore.Click
-        Response.Redirect("dashboardV.aspx")
-    End Sub
+    'Protected Sub LinkSettore_Click(sender As Object, e As EventArgs) Handles LinkSettore.Click
+    '    Response.Redirect("dashboardV.aspx")
+    'End Sub
 
-    Protected Sub LinkSettoreValutati_Click(sender As Object, e As EventArgs) Handles LinkSettoreValutati.Click
-        Response.Redirect("archivioEquiValutati.aspx")
-    End Sub
+    'Protected Sub LinkSettoreValutati_Click(sender As Object, e As EventArgs) Handles LinkSettoreValutati.Click
+    '    Response.Redirect("archivioEquiValutati.aspx")
+    'End Sub
 End Class

@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class AsiMasterPageEqui
+Partial Public Class AsiMasterPageRinnovi
 
     '''<summary>
     '''head control.
@@ -50,13 +50,13 @@ Partial Public Class AsiMasterPageEqui
     Protected WithEvents lnkHome As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''lnkEqui control.
+    '''lnkRinnovi control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkEqui As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lnkRinnovi As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''litDenominazione control.
@@ -77,40 +77,22 @@ Partial Public Class AsiMasterPageEqui
     Protected WithEvents lnkOut As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''LinkArchivioEqui control.
+    '''LinkArchivioRinnovi control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkArchivioEqui As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents LinkArchivioRinnovi As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''LinkSettore control.
+    '''lnkNuovoRinnovo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkSettore As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''LinkSettoreValutati control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents LinkSettoreValutati As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''lnkNuovaEquiparazione control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lnkNuovaEquiparazione As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lnkNuovoRinnovo As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''ContentPlaceHolder1 control.

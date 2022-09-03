@@ -48,8 +48,9 @@
         <div class="jumbotron jumbotron-fluid">
   <div class="container text-center">
   
- 
-       <a class="btn btn-lg btn-custom " href="#" role="button">Rinnovi</a>
+  <a class="btn btn-lg btn-custom" href="Rinnovi/DashboardRinnovi.aspx" role="button">Rinnovi</a>
+    
+     
   </div>
 </div> 
     </div>
