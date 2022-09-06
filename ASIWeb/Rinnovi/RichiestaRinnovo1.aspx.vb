@@ -420,8 +420,9 @@ Public Class RichiestaRinnovo1
         Request.AddField("Asi_specialita", datiAlbo.Specialita)
         Request.AddField("Asi_livello", datiAlbo.Livello)
         Request.AddField("Asi_qualifica", datiAlbo.qualifica)
-
-
+        Request.AddField("Asi_CodiceIscrizione", datiAlbo.qualifica)
+        Request.AddField("Asi_Disciplina", datiAlbo.disciplina)
+        Request.AddField("Asi_CodiceIscrizione", datiAlbo.codiceIscrizione)
 
 
 

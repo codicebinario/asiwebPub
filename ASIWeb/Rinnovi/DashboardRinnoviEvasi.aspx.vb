@@ -31,19 +31,19 @@ Public Class DashboardRinnoviEvasi
 
                 ris = deEnco.QueryStringDecode(ris)
 
-                    If ris = "ok" Then
-                    If Session("equiparazioneaggiunta") = "OK" Then
-                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Equiparazione caricata nel sistema! ' ).set('resizable', true).resizeTo('20%', 200);", True)
-                        Session("equiparazioneaggiunta") = Nothing
-                    End If
+                If ris = "ok" Then
+
+                    Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Equiparazione caricata nel sistema! ' ).set('resizable', true).resizeTo('20%', 200);", True)
+
+
                 ElseIf ris = "ko" Then
-                    Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Nessun rinnovo evaso  con questo codice fiscale ' ).set('resizable', true).resizeTo('20%', 200);", True)
-                    Session("equiparazioneaggiunta") = Nothing
-                    ElseIf ris = "no" Then
-                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Equiparazione senza verifica tessera.<br />Procedere con una nuova richiesta ' ).set('resizable', true).resizeTo('20%', 200);", True)
-                        Session("equiparazioneaggiunta") = Nothing
-                    End If
-                    Session("visto") = Nothing
+                    Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Nessun rinnovo evaso con questo codice fiscale ' ).set('resizable', true).resizeTo('20%', 200);", True)
+
+                ElseIf ris = "no" Then
+                    Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Equiparazione senza verifica tessera.<br />Procedere con una nuova richiesta ' ).set('resizable', true).resizeTo('20%', 200);", True)
+
+                End If
+                Session("visto") = Nothing
                 '  End If
             End If
 
@@ -99,38 +99,12 @@ Public Class DashboardRinnoviEvasi
 
             For Each dr In ds.Tables("main").Rows
 
-                'Dim VediDocumentazione As New Button
-                'VediDocumentazione.CausesValidation = False
-                'VediDocumentazione.ID = "VediDoc_" & counter1
-                'VediDocumentazione.Attributes.Add("runat", "server")
-                'VediDocumentazione.Text = "Diploma e Foto"
-                'VediDocumentazione.PostBackUrl = "vediDocumentazione.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                'VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom"
-                ''  Annulla.OnClientClick = "return confirm(""ciappa"");"
-                ''VediDocumentazione.Attributes.Add("OnClick", "if(!myConfirm())return false;")
-                ''   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")
-
-
-
-                'If Data.FixNull(dr("Codice_Status")) = "159" Then
-                '    vediDocumentazione.Visible = True
-                'Else
-                '    vediDocumentazione.Visible = False
-                'End If
-
 
 
                 If Data.FixNull(dr("Codice_Status")) = "159" Or Data.FixNull(dr("Codice_Status")) = "160" Then
                     'If counter1 <= 10 Then
 
-
-
-
-
-
                     phDash10.Visible = True
-
-
 
                     phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
 
@@ -148,7 +122,7 @@ Public Class DashboardRinnoviEvasi
                     phDash10.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
-                    phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
 
                     phDash10.Controls.Add(New LiteralControl("Rinnovo:  "))
                     phDash10.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
@@ -162,6 +136,15 @@ Public Class DashboardRinnoviEvasi
 
                     phDash10.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Asi_CodiceFiscale")) & "</small><br />"))
                     phDash10.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenza"))) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Tessera ASI: <small>" & Data.FixNull(dr("Asi_CodiceTessera")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("-------------------------------<br />"))
+                    phDash10.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Asi_Sport")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Asi_Disciplina")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Asi_Specialita")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Asi_Livello")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Qualifica: <small>" & Data.FixNull(dr("Asi_Qualifica")) & "</small><br />"))
+
 
                     phDash10.Controls.Add(New LiteralControl())
 
@@ -206,94 +189,117 @@ Public Class DashboardRinnoviEvasi
     Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
         If Page.IsValid Then
 
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiRinnovo As New DatiNuovoRinnovo
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("Asi_CodiceFiscale", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+
+            Dim Counter1 = 0
+
+            Try
+
+
+                ds = RequestA.Execute()
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    phDash.Visible = True
+                    For Each dr In ds.Tables("main").Rows
+                        Counter1 += 1
+                        If Data.FixNull(dr("Codice_Status")) = "159" Or Data.FixNull(dr("Codice_Status")) = "160" Then
+
+                            phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
+                            'accordion card
+                            phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
+                            'accordion heder
+                            phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
+
+                            ' inizio prima riga
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("Rinnovo:  "))
+                            phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
+                            phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDRinnovo")) & ">" & Data.FixNull(dr("IDRinnovo")) & "</a>"))
+                            phDash.Controls.Add(New LiteralControl())
+
+                            phDash.Controls.Add(New LiteralControl("</span><br />"))
+
+
+                            phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "</small><br />"))
+
+                            phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Asi_CodiceFiscale")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenza"))) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Tessera ASI: <small>" & Data.FixNull(dr("Asi_CodiceTessera")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("-------------------------------<br />"))
+                            phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Asi_Sport")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Asi_Disciplina")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Asi_Specialita")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Asi_Livello")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Qualifica: <small>" & Data.FixNull(dr("Asi_Qualifica")) & "</small><br />"))
+
+                            phDash.Controls.Add(New LiteralControl())
+
+                            ' phDash.Controls.Add(New LiteralControl("</span>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_Status")) & "</small>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
+
+                            '  phDash.Controls.Add(hpUPPag)
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            Counter1 += 1
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+                        Else
 
 
 
 
-            Dim DettaglioRinnovo As New DatiNuovoRinnovo
+                        End If
 
+                    Next
+                Else
+                    'Response.Write("ko")
+                    phDash.Visible = False
+                    Session("procedi") = "KO"
+                    Response.Redirect("DashboardRinnoviEvasi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+                End If
 
-            DettaglioRinnovo = AsiModel.Rinnovi.PrendiValoriNuovoRinnovoByCF(Trim(txtCodiceFiscale.Text), Session("codice"))
-            '    DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
-            '     Session("visto") = "ok"
-            If DettaglioRinnovo.trovato = True Then
-                phDash.Visible = True
+            Catch ex As Exception
 
-                phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
-
-
-
-                'accordion card
-                phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
-                'accordion heder
-                phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
-
-                phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
-
-                ' inizio prima riga
-
-                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-
-                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
-
-                phDash.Controls.Add(New LiteralControl("Rinnovo:  "))
-                phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(DettaglioRinnovo.CodiceStatus) & ">"))
-                phDash.Controls.Add(New LiteralControl("<a name=" & DettaglioRinnovo.IDRinnovo & ">" & DettaglioRinnovo.IDRinnovo & "</a>"))
-                phDash.Controls.Add(New LiteralControl())
-
-                phDash.Controls.Add(New LiteralControl("</span><br />"))
-
-
-                phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & DettaglioRinnovo.Nome & " " & DettaglioRinnovo.Cognome & "</small><br />"))
-
-                phDash.Controls.Add(New LiteralControl("CF: <small>" & DettaglioRinnovo.CodiceFiscale & "</small><br />"))
-                phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(DettaglioRinnovo.DataScadenza) & "</small><br />"))
-
-                phDash.Controls.Add(New LiteralControl())
-
-                ' phDash.Controls.Add(New LiteralControl("</span>"))
-
-                phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
-
-                phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(DettaglioRinnovo.CodiceStatus) & ">" & DettaglioRinnovo.DescrizioneStatus & "</small>"))
-
-                phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
-
-
-                'phDash.Controls.Add(vediDocumentazione)
-
-
-                phDash.Controls.Add(New LiteralControl("</div>"))
-                phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                phDash.Controls.Add(New LiteralControl("</div>"))
-
-                phDash.Controls.Add(New LiteralControl("</div>"))
-
-                phDash.Controls.Add(New LiteralControl("</div>"))
-                phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-            Else
-
-                'Response.Write("ko")
-
-                Session("procedi") = "KO"
-                Response.Redirect("DashboardRinnoviEvasi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
-
-
-            End If
-
-
-
+            End Try
         End If
     End Sub
 
