@@ -22,6 +22,9 @@ Imports System.Net.Security
 Imports System.Net
 Imports System.Web.Services.Description
 Imports System.EnterpriseServices.CompensatingResourceManager
+Imports System.Security.Policy
+Imports System.Windows
+Imports System.Runtime.InteropServices
 
 Public Class RichiestaRinnovo
     Inherits System.Web.UI.Page
@@ -42,7 +45,9 @@ Public Class RichiestaRinnovo
     Dim nomefileReale As String = " "
     Dim qualeStatus As String = ""
     Dim nomecaricato As String = ""
+    Dim codiceFiscale As String
     Dim tokenZ As String = ""
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -111,7 +116,7 @@ Public Class RichiestaRinnovo
 
             HiddenIdRecord.Value = DettaglioRinnovo.IdRecord
             HiddenIDRinnovo.Value = DettaglioRinnovo.IDRinnovo
-            Dim codiceFiscale As String = DettaglioRinnovo.CodiceFiscale
+            codiceFiscale = DettaglioRinnovo.CodiceFiscale
             Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
             lblIntestazioneRinnovo.Text = "<strong>IDRinnovo: </strong>" & IDRinnovo &
@@ -121,12 +126,97 @@ Public Class RichiestaRinnovo
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
         End If
 
-        If Page.IsPostBack Then
+        If Not Page.IsPostBack Then
 
             '  pnlFase1.Visible = False
-
+            rinnoviCF()
 
         End If
     End Sub
+    Sub rinnoviCF()
+
+        Dim ds As DataSet
+
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        fmsP.SetLayout("WebAlbo")
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        RequestP.AddSearchField("Codice Fiscale", codiceFiscale, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+        RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
+        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+
+        ds = RequestP.Execute()
+
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+
+            Dim cf As DataTable = ds.Tables("main")
+
+
+
+            '  phDash.Visible = True
+            'Dim counter As Integer = 0
+            Dim counter1 As Integer = 0
+            'Dim totale As Decimal = 0
+            '  For Each dr In ds.Tables("main").Rows
+
+
+
+            counter1 += 1
+            '  Response.Write("cf: " & Data.FixNull(dr("codice fiscale")) & "<br />")
+
+            Dim deEnco As New Ed()
+            ddlCF.Visible = True
+            ddlCF.Font.Size = FontUnit.Small
+            ddlCF.RepeatLayout = RepeatLayout.Table
+            ddlCF.RepeatDirection = RepeatDirection.Vertical
+            ddlCF.DataSource = ds
+            '  ddlCF.DataSourceID = "IDRecord"
+            ddlCF.DataTextField = "descrizione"
+            ddlCF.DataValueField = "IDRecord"
+            ddlCF.DataBind()
+
+
+
+
+
+            counter1 += 1
+            '  Next
+        Else
+
+
+            Session("procedi") = "KO"
+            Response.Redirect("DashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("koCFAlbo"))
+
+
+        End If
+
+    End Sub
+
+    Protected Sub btnCF_Click(sender As Object, e As EventArgs) Handles btnCF.Click
+
+        'Dim message As RadioButtonList = CType(phDash.FindControl("CFPresenti"), RadioButtonList)
+        If Page.IsValid Then
+
+
+            lblScelta.Visible = True
+        lblScelta.Text = "<small><strong>Hai selezionato per il rinnovo:</strong> <br />" & ddlCF.SelectedItem.Text & "</small>"
+
+            Dim idScelto As String = ""
+            idScelto = ddlCF.SelectedValue.ToString
+            Session("idScelto") = idScelto
+            ddlCF.ClearSelection()
+            BtnAvanti.Visible = True
+        End If
+    End Sub
+
+    Protected Sub BtnAvanti_Click(sender As Object, e As EventArgs) Handles BtnAvanti.Click
+
+        AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "151", Session("WebUserEnte"), "rinnovo")
+        Response.Redirect("richiestaRinnovo1.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+
+    End Sub
+
 
 End Class

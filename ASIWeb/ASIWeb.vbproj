@@ -362,7 +362,11 @@
     <Content Include="richiestaTessere.aspx" />
     <Content Include="Rinnovi\checkTesseramentoRinnovi.aspx" />
     <Content Include="Rinnovi\DashboardRinnovi.aspx" />
+    <Content Include="Rinnovi\DashboardRinnoviEvasi.aspx" />
     <Content Include="Rinnovi\RichiestaRinnovo.aspx" />
+    <Content Include="Rinnovi\RichiestaRinnovo1.aspx" />
+    <Content Include="Rinnovi\upLegRinnovi.aspx" />
+    <Content Include="Rinnovi\WebForm5.aspx" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -897,11 +901,39 @@
       <DependentUpon>DashboardRinnovi.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi\DashboardRinnoviEvasi.aspx.designer.vb">
+      <DependentUpon>DashboardRinnoviEvasi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\DashboardRinnoviEvasi.aspx.vb">
+      <DependentUpon>DashboardRinnoviEvasi.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi\RichiestaRinnovo.aspx.designer.vb">
       <DependentUpon>RichiestaRinnovo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rinnovi\RichiestaRinnovo.aspx.vb">
       <DependentUpon>RichiestaRinnovo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi\RichiestaRinnovo1.aspx.designer.vb">
+      <DependentUpon>RichiestaRinnovo1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\RichiestaRinnovo1.aspx.vb">
+      <DependentUpon>RichiestaRinnovo1.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi\upLegRinnovi.aspx.designer.vb">
+      <DependentUpon>upLegRinnovi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\upLegRinnovi.aspx.vb">
+      <DependentUpon>upLegRinnovi.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi\WebForm5.aspx.designer.vb">
+      <DependentUpon>WebForm5.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\WebForm5.aspx.vb">
+      <DependentUpon>WebForm5.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="sendFirstEmail.aspx.designer.vb">

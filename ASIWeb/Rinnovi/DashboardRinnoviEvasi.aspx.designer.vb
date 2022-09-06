@@ -11,86 +11,77 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class RichiestaRinnovo
+Partial Public Class DashboardRinnoviEvasi
 
     '''<summary>
-    '''lblIntestazioneRinnovo control.
+    '''UpdateProgress1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblIntestazioneRinnovo As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
 
     '''<summary>
-    '''HiddenIdRecord control.
+    '''litDenominazioneJumboDash control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenIdRecord As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents litDenominazioneJumboDash As Global.System.Web.UI.WebControls.Literal
 
     '''<summary>
-    '''HiddenIDRinnovo control.
+    '''txtCodiceFiscale control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenIDRinnovo As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents txtCodiceFiscale As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''UpdatePanel1 control.
+    '''btnCheck control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
+    Protected WithEvents btnCheck As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''ddlCF control.
+    '''btnUltimi5 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ddlCF As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents btnUltimi5 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''RequiredFieldValidator1 control.
+    '''RequiredFieldValidator10 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents RequiredFieldValidator10 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''btnCF control.
+    '''phDash control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnCF As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents phDash As Global.System.Web.UI.WebControls.PlaceHolder
 
     '''<summary>
-    '''lblScelta control.
+    '''phDash10 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblScelta As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''BtnAvanti control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents BtnAvanti As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents phDash10 As Global.System.Web.UI.WebControls.PlaceHolder
 End Class

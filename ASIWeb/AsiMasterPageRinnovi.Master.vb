@@ -16,28 +16,11 @@ Public Class AsiMasterPageRinnovi
         End If
 
         If Not Page.IsPostBack Then
-            'Dim quantiVal As Integer = quantiDaValutare(Session("codice"))
-
-            'If quantiDaValutare(Session("codice")) >= 1 Then
-            '    LinkSettore.Visible = True
-            '    LinkSettore.Text = "Equiparazioni da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
-            'Else
-            '    LinkSettore.Visible = False
-            'End If
-
-            'If quantiValutati(Session("codice")) = True Then
-            '    LinkSettoreValutati.Visible = True
-            'Else
-            '    LinkSettoreValutati.Visible = False
-            'End If
 
 
 
             If Not IsNothing(Session("denominazione")) Then
 
-
-                '  Dim lblMasterDen As Literal = DirectCast(Master.FindControl("litDenominazione"), Literal)
-                ' litDenominazione.Text = "Codice: " & AsiModel.LogIn.Codice & " - " & "Tipo Ente: " & AsiModel.LogIn.TipoEnte & " - " & AsiModel.LogIn.Denominazione
                 litDenominazione.Text = Session("denominazione")
 
             End If
@@ -123,7 +106,7 @@ Public Class AsiMasterPageRinnovi
             Next
 
 
-            AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "0", Session("WebUserEnte"), "rinnovo")
+            '  AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "0", Session("WebUserEnte"), "rinnovo")
 
         End If
 
@@ -162,98 +145,98 @@ Public Class AsiMasterPageRinnovi
         Return auth
 
     End Function
-    Function quantiValutati(codice As String) As Boolean
-        Dim ritorno As Boolean = False
+    'Function quantiValutati(codice As String) As Boolean
+    '    Dim ritorno As Boolean = False
 
-        Dim ds As DataSet
+    '    Dim ds As DataSet
 
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniRichiesta")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
-
-
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-            Dim counter1 As Integer = 0
-            For Each dr In ds.Tables("main").Rows
+    '    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+    '    fmsP.SetLayout("webEquiparazioniRichiesta")
+    '    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+    '    ' RequestP.AddSearchField("pre_stato_web", "1")
+    '    RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
+    '    RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+    '    RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
 
 
 
-                If Data.FixNull(dr("Codice_Status")) = "106" Or Data.FixNull(dr("Codice_Status")) = "107" Then
-                    counter1 += 1
+    '    ds = RequestP.Execute()
 
+    '    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-                End If
-
-            Next
-            If counter1 >= 1 Then
-                ritorno = True
-            Else
-                ritorno = False
-            End If
-
-        Else
-
-            ' non si sono records
-            ritorno = False
-
-
-        End If
-
-
-        Return ritorno
-
-    End Function
-    Function quantiDaValutare(codice As String) As Integer
-        Dim ritorno As Integer = 0
-
-        Dim ds As DataSet
-
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniRichiesta")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+    '        Dim counter1 As Integer = 0
+    '        For Each dr In ds.Tables("main").Rows
 
 
 
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-            Dim counter1 As Integer = 0
-            For Each dr In ds.Tables("main").Rows
+    '            If Data.FixNull(dr("Codice_Status")) = "106" Or Data.FixNull(dr("Codice_Status")) = "107" Then
+    '                counter1 += 1
 
 
+    '            End If
 
-                If Data.FixNull(dr("Codice_Status")) = "105" Then
-                    counter1 += 1
+    '        Next
+    '        If counter1 >= 1 Then
+    '            ritorno = True
+    '        Else
+    '            ritorno = False
+    '        End If
+
+    '    Else
+
+    '        ' non si sono records
+    '        ritorno = False
 
 
-                End If
+    '    End If
 
-            Next
-            If counter1 >= 1 Then
-                ritorno = counter1
-            Else
-                ritorno = 0
-            End If
 
-        Else
-            '  ritorno = counter1
+    '    Return ritorno
 
-        End If
-        Return ritorno
+    'End Function
+    'Function quantiDaValutare(codice As String) As Integer
+    '    Dim ritorno As Integer = 0
 
-    End Function
+    '    Dim ds As DataSet
+
+    '    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+    '    fmsP.SetLayout("webEquiparazioniRichiesta")
+    '    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+    '    ' RequestP.AddSearchField("pre_stato_web", "1")
+    '    RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
+    '    RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+    '    RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+
+
+
+    '    ds = RequestP.Execute()
+
+    '    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+    '        Dim counter1 As Integer = 0
+    '        For Each dr In ds.Tables("main").Rows
+
+
+
+    '            If Data.FixNull(dr("Codice_Status")) = "105" Then
+    '                counter1 += 1
+
+
+    '            End If
+
+    '        Next
+    '        If counter1 >= 1 Then
+    '            ritorno = counter1
+    '        Else
+    '            ritorno = 0
+    '        End If
+
+    '    Else
+    '        '  ritorno = counter1
+
+    '    End If
+    '    Return ritorno
+
+    'End Function
     'Protected Sub LinkSettore_Click(sender As Object, e As EventArgs) Handles LinkSettore.Click
     '    Response.Redirect("dashboardV.aspx")
     'End Sub

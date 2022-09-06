@@ -154,8 +154,8 @@
             Dim data As String = obj.ToString()
             'Dim re As String = "[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD\u10000-u10FFFF]"
             'data = Regex.Replace(data, re, "")
-
-
+            'data = data.Replace("/", " ")
+            ' data = data.Replace("/", " ")
             data = data.Replace("""", " ")
             'data = data.Replace("'", " ")
             data = data.Replace("'", "")

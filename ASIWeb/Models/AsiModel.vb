@@ -547,9 +547,9 @@ Public Class AsiModel
         '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
 
 
-        Try
+        '  Try
 
-            ds = RequestA.Execute()
+        ds = RequestA.Execute()
 
 
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
@@ -572,18 +572,18 @@ Public Class AsiModel
                 ritorno = False
             End If
 
-            'If Today.Date <= dataScadenza Then
+        'If Today.Date <= dataScadenza Then
 
-            '    ritorno = "tessera valida"
-            'Else
-            '    ritorno = "tessera scaduta"
+        '    ritorno = "tessera valida"
+        'Else
+        '    ritorno = "tessera scaduta"
 
-            'End If
+        'End If
 
 
-        Catch ex As Exception
-            ritorno = False
-        End Try
+        '  Catch ex As Exception
+        '  ritorno = False
+        ' End Try
         Return ritorno
     End Function
 
@@ -898,8 +898,32 @@ Public Class AsiModel
         Public LuogoNascita As String
         Public StatoNascita As String
 
+    End Class
 
+    Public Class DatiCodiceFiscaleRinnovi
+        Public IdRecord As String
+        Public Nome As String
+        Public Cognome As String
+        Public Indirizzo As String
+        Public Provincia As String
+        Public Comune As String
+        Public CodiceTessera As String
+        Public Cap As String
+        Public CodiceFiscale As String
+        Public DataScadenza As Date
+        Public DataNascita As Date
+        Public Email As String
+        Public LuogoNascita As String
+        Public StatoNascita As String
+        Public telefono As String
 
+        Public indirizzoResidenza As String
+        Public comuneResidenza As String
+        Public capResidenza As String
+        Public Sport As String
+        Public Specialita As String
+        Public Livello As String
+        Public qualifica As String
 
 
     End Class
@@ -970,7 +994,112 @@ Public Class AsiModel
         Return DatiCodiceFiscale
     End Function
 
+    Public Shared Function getSiglaProvincia(provincia As String) As String
+        Dim fms As FMSAxml = Nothing
+        Dim ds As DataSet = Nothing
+        Dim ritorno As String = ""
 
+
+
+        fms = Conn.Connect()
+        fms.SetLayout("webProvinceRegioni")
+        Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+        RequestA.AddSearchField("Provincia", provincia, Enumerations.SearchOption.equals)
+        'Try
+
+        ds = RequestA.Execute()
+
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+
+                ritorno = dr("Sigla")
+
+
+
+
+
+            Next
+
+            Else
+                ritorno = " "
+            End If
+        '  Catch ex As Exception
+        'ritorno = " "
+        'End Try
+        Return ritorno
+    End Function
+
+    Public Shared Function getDatiCodiceFiscaleRinnovi(idSelected As String) As DatiCodiceFiscaleRinnovi
+        Dim fms As FMSAxml = Nothing
+        Dim ds As DataSet = Nothing
+        Dim ritorno As Boolean = False
+        Dim dataScadenza As Date
+        Dim DatiCodiceFiscale As New DatiCodiceFiscaleRinnovi
+
+        fms = Conn.Connect()
+        Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+        '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+        '     fmsB.SetDatabase(Database)
+        fms.SetLayout("webAlbo")
+        Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+        RequestA.AddSearchField("IDrecord", idSelected, Enumerations.SearchOption.equals)
+        '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
+
+
+
+        Try
+
+            ds = RequestA.Execute()
+
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    '   If CDate(it) <= CDate(dr("DataScadenza")) Then
+
+                    DatiCodiceFiscale.Nome = ASIWeb.Data.FixNull(dr("nome"))
+                    DatiCodiceFiscale.Cognome = ASIWeb.Data.FixNull(dr("cognome"))
+                    DatiCodiceFiscale.CodiceFiscale = ASIWeb.Data.FixNull(dr("Codice Fiscale"))
+                    DatiCodiceFiscale.DataScadenza = ASIWeb.Data.FixNull(dr("Scadenza"))
+                    DatiCodiceFiscale.indirizzoResidenza = ASIWeb.Data.FixNull(dr("Indirizzo Residenza"))
+                    DatiCodiceFiscale.Provincia = ASIWeb.Data.FixNull(dr("provincia"))
+                    DatiCodiceFiscale.Comune = ASIWeb.Data.FixNull(dr("comune di nascita"))
+                    DatiCodiceFiscale.CodiceTessera = ASIWeb.Data.FixNull(dr("numero tessera ASI"))
+                    DatiCodiceFiscale.capResidenza = ASIWeb.Data.FixNull(dr("cap residenza"))
+                    DatiCodiceFiscale.DataNascita = ASIWeb.Data.FixNull(dr("Data di Nascita"))
+                    DatiCodiceFiscale.Email = ASIWeb.Data.FixNull(dr("indirizzo mail"))
+                    DatiCodiceFiscale.LuogoNascita = ASIWeb.Data.FixNull(dr("comune di nascita"))
+                    '  DatiCodiceFiscale.StatoNascita = ASIWeb.Data.FixNull(dr("Stato nascita"))
+                    '  End If 
+                    DatiCodiceFiscale.comuneResidenza = ASIWeb.Data.FixNull(dr("comune di residenza"))
+                    DatiCodiceFiscale.telefono = ASIWeb.Data.FixNull(dr("telefono"))
+
+                    DatiCodiceFiscale.Sport = ASIWeb.Data.FixNull(dr("SPORT"))
+                    DatiCodiceFiscale.Specialita = ASIWeb.Data.FixNull(dr("SPECIALITA"))
+                    DatiCodiceFiscale.Livello = ASIWeb.Data.FixNull(dr("livello_grado"))
+                    DatiCodiceFiscale.qualifica = ASIWeb.Data.FixNull(dr("Qualifica"))
+                Next
+
+            Else
+                ritorno = False
+            End If
+
+            'If Today.Date <= dataScadenza Then
+
+            '    ritorno = "tessera valida"
+            'Else
+            '    ritorno = "tessera scaduta"
+
+            'End If
+
+
+        Catch ex As Exception
+
+        End Try
+        Return DatiCodiceFiscale
+    End Function
     Public Class DatiNuovaEquiparazione
 
         Public IdRecord As String
@@ -1006,7 +1135,9 @@ Public Class AsiModel
         Public Cognome As String
         Public DataScadenza As String
         Public trovato As Boolean
-
+        Public ComuneNascita As String
+        Public DataNascita As String
+        Public StatoNascita As String
     End Class
     Public Class Rinnovi
 
@@ -1021,7 +1152,7 @@ Public Class AsiModel
             '     fmsB.SetDatabase(Database)
             fms.SetLayout("webRinnoviRichiesta")
             Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestA.AddSearchField("Riv_CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Asi_CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
             RequestA.AddSearchField("Codice_Ente_Richiedente", codiceEnte, Enumerations.SearchOption.equals)
 
             Try
@@ -1031,20 +1162,24 @@ Public Class AsiModel
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                     For Each dr In ds.Tables("main").Rows
 
-                        DatiRinnovo.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
-                        DatiRinnovo.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
-                        DatiRinnovo.IDRinnovo = Data.FixNull(dr("IDRinnovo"))
-                        DatiRinnovo.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
-                        DatiRinnovo.CodiceStatus = Data.FixNull(dr("Codice_Status"))
-                        DatiRinnovo.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
-                        DatiRinnovo.IdRecord = Data.FixNull(dr("Id_record"))
-                        DatiRinnovo.RinnovoCF = Data.FixNull(dr("Rin_CFVerificatoTessera"))
-                        DatiRinnovo.CodiceFiscale = Data.FixNull(dr("Rin_CodiceFiscale"))
-                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_NumeroTessera"))
-                        DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
-                        DatiRinnovo.Cognome = Data.FixNull(dr("Rin_Cognome"))
-                        DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
-                        DatiRinnovo.trovato = True
+                        If Data.FixNull(dr("Codice_Status")) = "159" Or Data.FixNull(dr("Codice_Status")) = "160" Then
+
+                            DatiRinnovo.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                            DatiRinnovo.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                            DatiRinnovo.IDRinnovo = Data.FixNull(dr("IDRinnovo"))
+                            DatiRinnovo.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
+                            DatiRinnovo.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                            DatiRinnovo.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                            DatiRinnovo.IdRecord = Data.FixNull(dr("Id_record"))
+                            DatiRinnovo.RinnovoCF = Data.FixNull(dr("Rin_CFVerificatoTessera"))
+                            DatiRinnovo.CodiceFiscale = Data.FixNull(dr("Rin_CodiceFiscale"))
+                            DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_CodiceTessera"))
+                            DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
+                            DatiRinnovo.Cognome = Data.FixNull(dr("Rin_Cognome"))
+                            DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
+                            DatiRinnovo.trovato = True
+
+                        End If
                     Next
 
 
@@ -1092,9 +1227,9 @@ Public Class AsiModel
                         DatiRinnovo.IdRecord = Data.FixNull(dr("Id_record"))
                         DatiRinnovo.RinnovoCF = Data.FixNull(dr("Rin_CFVerificatoTessera"))
                         DatiRinnovo.CodiceFiscale = Data.FixNull(dr("Rin_CodiceFiscale"))
-                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_NumeroTessera"))
+                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_CodiceTessera"))
                         DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
-                        DatiRinnovo.Cognome = Data.FixNull(dr("Rin_Cognome"))
+                        DatiRinnovo.Cognome = Data.FixNull(dr("Rin_CognomeE"))
                         DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
                     Next
 
@@ -1127,7 +1262,7 @@ Public Class AsiModel
             Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
             '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
             '     fmsB.SetDatabase(Database)
-            fmsP.SetLayout("webCheckCF")
+            fmsP.SetLayout("webCheckCFRinnovi")
             Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
             '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
@@ -1147,7 +1282,9 @@ Public Class AsiModel
                         DatiRinnovo.Nome = Data.FixNull(dr("Nome"))
                         DatiRinnovo.DataScadenza = Data.FixNull(dr("DataScadenza"))
                         DatiRinnovo.CodiceTessera = Data.FixNull(dr("Codice tessera"))
-
+                        DatiRinnovo.ComuneNascita = Data.FixNull(dr("Luogo nascita"))
+                        DatiRinnovo.DataNascita = Data.FixNull(dr("Data nascita"))
+                        DatiRinnovo.StatoNascita = Data.FixNull(dr("Stato nascita"))
 
                     End If
 
@@ -1230,21 +1367,24 @@ Public Class AsiModel
 
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                     For Each dr In ds.Tables("main").Rows
+                        If Data.FixNull(dr("Codice_Status")) = "115" Or Data.FixNull(dr("Codice_Status")) = "119" Then
 
-                        DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
-                        DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
-                        DatiEquiparazione.IDEquiparazione = Data.FixNull(dr("IDEquiparazione"))
-                        DatiEquiparazione.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
-                        DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
-                        DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
-                        DatiEquiparazione.IdRecord = Data.FixNull(dr("Id_record"))
-                        DatiEquiparazione.EquiCF = Data.FixNull(dr("Equi_CFVerificatoTessera"))
-                        DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
-                        DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
-                        DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
-                        DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
-                        DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
-                        DatiEquiparazione.trovato = True
+                            DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                            DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                            DatiEquiparazione.IDEquiparazione = Data.FixNull(dr("IDEquiparazione"))
+                            DatiEquiparazione.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
+                            DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                            DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                            DatiEquiparazione.IdRecord = Data.FixNull(dr("Id_record"))
+                            DatiEquiparazione.EquiCF = Data.FixNull(dr("Equi_CFVerificatoTessera"))
+                            DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
+                            DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
+                            DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
+                            DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
+                            DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
+                            DatiEquiparazione.trovato = True
+
+                        End If
                     Next
 
 

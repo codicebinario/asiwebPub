@@ -56,7 +56,13 @@
   justify-content: center;
   align-items: center;
  }
+
+     input[type="radio"] 
+{
+    margin-right: 2px;
+}
   </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <div class="jumbotron jumbotron-fluid rounded">
@@ -79,7 +85,7 @@
 							</div>
 							
 				</div></div>	
-       <div class="col-sm-12">
+     <%--  <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
                   <div class="form-group">
@@ -90,6 +96,98 @@
 
           </div>
       </div>
-    <br /><br />
+    <br />--%>
+
+<br />
+    
+	 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  UpdateMode="Always"> 
+          <Triggers>
+        
+		<%--	 <asp:AsyncPostBackTrigger  ControlID="ddlProvinciaResidenza"/>
+			  	 <asp:AsyncPostBackTrigger  ControlID="ddlProvinciaConsegna"/>--%>
+             <%--  <asp:PostBackTrigger  ControlID="ddlProvincia"  />--%>
+          </Triggers>
+    <ContentTemplate> 
+
+
+    <div class="col-sm-12">
+          <div class="row d-flex justify-content-left">
+             
+ <div class="col-sm-12">
+       <div class="form-check">
+                <div class="form-check">
+  
+
+              <asp:radiobuttonlist ID="ddlCF"  runat="server" Visible="false"></asp:radiobuttonlist>
+                  
+
+                    
+</div>
+               </div>
+          </div>
+             
+
+        <div class="col-sm-12">
+       <div class="form-check">
+                <div class="form-check">
+  
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="errore" ErrorMessage="effettuare una scelta per procedere oltre" ControlToValidate="ddlCF"></asp:RequiredFieldValidator>
+            
+                    
+</div>
+               </div>
+          </div>
+<br /><br />
+      <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+                                   
+						            <asp:Button ID="btnCF"  runat="server" Text="Scegli" class="btn btn-primary"    />
+                                   
+						</div>
+							</div>
+							
+				</div></div><br />
+       <div class="col-sm-12">
+					  <div class="form-check">
+                <div class="form-check">
+  
+								<div class="form-group">
+                                    <asp:Label ID="lblScelta" runat="server" Text="" Visible="false"></asp:Label>
+						           
+                                   
+						</div>
+							</div>
+							
+				</div></div>	
+  
+   <br />
+        <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+                                   
+						            <asp:Button ID="BtnAvanti" Visible="false" CausesValidation="false"  runat="server" Text="Avanti" class="btn btn-primary"    />
+                                   
+						</div>
+							</div>
+							
+				</div></div>
+
+  
+    
+        </ContentTemplate></asp:UpdatePanel>
+
+  
+
+
+
+
+
+
+     
+
+
   
 </asp:Content>

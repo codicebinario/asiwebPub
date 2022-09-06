@@ -127,7 +127,7 @@ Public Class checkTesseramentoRinnovi
 
 
                 CaricaDatiDocumentoRinnovo(Session("IDRinnovo"), Session("id_record"), Trim(txtCodiceFiscale.Text),
-DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza)
+DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
 
 
 
@@ -152,7 +152,7 @@ DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera,
     End Sub
 
     Public Function CaricaDatiDocumentoRinnovo(codR As String, IDRinnovo As String, codiceFiscale As String,
-                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String) As Boolean
+                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String, comuneNascita As String, datanascita As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
 
@@ -173,10 +173,11 @@ DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera,
         Request.AddField("Rin_Nome", nome)
         Request.AddField("Rin_Cognome", cognome)
         Request.AddField("Rin_DataScadenza", Data.SistemaData(dataScadenza))
+        Request.AddField("Rin_ComuneNascita", comuneNascita)
+        Request.AddField("Rin_DataNascita", Data.SistemaData(datanascita))
 
 
 
-        Request.AddField("Rin_Fase", "0")
         '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
         '  Try
