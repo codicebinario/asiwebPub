@@ -130,7 +130,7 @@
 						
                          <div class="col-sm-4">
 								<div class="form-group">
-									<label for="txtCognome">Codice tessera</label>
+									<label for="txtCognome">Tessera ASI</label>
                                     	<asp:textbox id="txtCodiceTessera" runat="server" Cssclass="form-control"   maxlength="250" ReadOnly="true" BackColor="#FFCCCC"></asp:textbox>
 					
 								
@@ -144,13 +144,21 @@
 
     <div class="col-sm-12">
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<div class="form-group">
 								 <label for="txtCodiceFiscale">Codice Fiscale </label>
                                     <asp:textbox id="txtCodiceFiscale" Cssclass="form-control" runat="server"  maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
 						</div>
 							</div>
-							<div class="col-sm-6">
+								<div class="col-sm-4">
+								<div class="form-group">
+									<label for="txtDataScadenza">Codice Iscrizione</label>
+                                    	<asp:textbox id="txtCodiceIscrizione" runat="server" Cssclass="form-control"   maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
+					
+								
+								</div>
+							</div>
+							<div class="col-sm-4">
 								<div class="form-group">
 									<label for="txtDataScadenza">Data Scadenza</label>
                                     	<asp:textbox id="txtDataScadenza" runat="server" Cssclass="form-control"   maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
@@ -225,6 +233,21 @@
 								
 								</div>
 							</div>
+						
+                         
+                        
+                        </div>
+                             
+                </div>
+	  <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+								 <label for="txtLivello">Disciplina </label>
+                                    <asp:textbox id="txtDisciplina" Cssclass="form-control" runat="server"  maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
+						</div>
+							</div>
+							
 						
                          
                         

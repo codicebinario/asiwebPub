@@ -755,6 +755,46 @@ Public Class AsiModel
         'Public Shared Property TipoEnte As String
 
         Public Shared Property Record_Id As String
+        Public Shared Function GetRecord_IDRinnovi(codR As String) As String
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IdRinnovo", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        Record_Id = Data.FixNull(dr("Id_record"))
+
+
+                    Next
+
+
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return Record_Id
+
+
+        End Function
+
 
 
         Public Shared Function GetRecord_ID(codR As String) As String
@@ -926,7 +966,7 @@ Public Class AsiModel
         Public qualifica As String
         Public disciplina As String
         Public codiceIscrizione As String
-
+        Public codiceEnteEx As String
     End Class
 
     Public Shared Function getDatiCodiceFiscale(codiceFiscale As String) As DatiCodiceFiscale
@@ -1083,6 +1123,7 @@ Public Class AsiModel
                     DatiCodiceFiscale.qualifica = ASIWeb.Data.FixNull(dr("Qualifica"))
                     DatiCodiceFiscale.disciplina = ASIWeb.Data.FixNull(dr("disciplina"))
                     DatiCodiceFiscale.codiceIscrizione = ASIWeb.Data.FixNull(dr("codice iscrizione"))
+                    DatiCodiceFiscale.codiceEnteEx = ASIWeb.Data.FixNull(dr("CodiceEnteAffiliante"))
                 Next
 
             Else
@@ -1418,10 +1459,10 @@ Public Class AsiModel
 
     End Function
     Public Class Equiparazione
-        Public Shared Function PrendiValoriNuovaEquiparazioneByCF(codiceFiscale As String, codiceEnte As String) As DatiNuovaEquiparazione
+        Public Shared Function PrendiValoriNuovaEquiparazioneByCF(codiceFiscale As String, codiceEnte As String) As DataSet
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing
-            Dim DatiEquiparazione As New DatiNuovaEquiparazione
+            '   Dim DatiEquiparazione As New DatiNuovaEquiparazione
 
             fms = Conn.Connect()
 
@@ -1436,32 +1477,32 @@ Public Class AsiModel
                 ds = RequestA.Execute()
 
 
-                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-                    For Each dr In ds.Tables("main").Rows
-                        If Data.FixNull(dr("Codice_Status")) = "115" Or Data.FixNull(dr("Codice_Status")) = "119" Then
+                '  If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                '   For Each dr In ds.Tables("main").Rows
+                'If Data.FixNull(dr("Codice_Status")) = "115" Or Data.FixNull(dr("Codice_Status")) = "119" Then
 
-                            DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
-                            DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
-                            DatiEquiparazione.IDEquiparazione = Data.FixNull(dr("IDEquiparazione"))
-                            DatiEquiparazione.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
-                            DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
-                            DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
-                            DatiEquiparazione.IdRecord = Data.FixNull(dr("Id_record"))
-                            DatiEquiparazione.EquiCF = Data.FixNull(dr("Equi_CFVerificatoTessera"))
-                            DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
-                            DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
-                            DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
-                            DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
-                            DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
-                            DatiEquiparazione.trovato = True
+                '    DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                '    DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                '    DatiEquiparazione.IDEquiparazione = Data.FixNull(dr("IDEquiparazione"))
+                '    DatiEquiparazione.DescrizioneStatus = Data.FixNull(dr("Descrizione_Status"))
+                '    DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                '    DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                '    DatiEquiparazione.IdRecord = Data.FixNull(dr("Id_record"))
+                '    DatiEquiparazione.EquiCF = Data.FixNull(dr("Equi_CFVerificatoTessera"))
+                '    DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
+                '    DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
+                '    DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
+                '    DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
+                '    DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
+                '    DatiEquiparazione.trovato = True
 
-                        End If
-                    Next
+                'End If
+                '  Next
 
 
-                Else
-                    DatiEquiparazione.trovato = False
-                End If
+                ' Else
+                ' DatiEquiparazione.trovato = False
+                ' End If
 
 
 
@@ -1469,7 +1510,7 @@ Public Class AsiModel
 
             End Try
 
-            Return DatiEquiparazione
+            Return ds
 
         End Function
         Public Shared Function PrendiValoriNuovaEquiparazione(IDEquiparazione As String) As DatiNuovaEquiparazione

@@ -122,13 +122,13 @@ Public Class annullaEquiparazioneMotivo
             'script per gestione caratteri speciali da inserire
             Try
                 risposta = Request.Execute()
-                AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "110", Session("WebUserEnte"), "equiparazione")
+                AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "119", Session("WebUserEnte"), "equiparazione")
             Catch ex As Exception
 
             End Try
 
 
-            Response.Redirect("archivioEquiparazioni.aspx#" & Session("IDEquiparazioni"))
+            Response.Redirect("DashboardEquiEvasi.aspx#" & Session("IDEquiparazioni"))
 
         End If
 

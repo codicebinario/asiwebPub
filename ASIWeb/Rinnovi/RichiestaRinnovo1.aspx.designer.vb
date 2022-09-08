@@ -86,6 +86,15 @@ Partial Public Class RichiestaRinnovo1
     Protected WithEvents txtCodiceFiscale As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''txtCodiceIscrizione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCodiceIscrizione As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtDataScadenza control.
     '''</summary>
     '''<remarks>
@@ -147,6 +156,15 @@ Partial Public Class RichiestaRinnovo1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtQualifica As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtDisciplina control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDisciplina As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''UpdatePanel1 control.

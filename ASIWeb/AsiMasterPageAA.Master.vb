@@ -5,10 +5,10 @@ Public Class AsiMasterPageAA
     Dim deEnco As New Ed
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
-            Response.Redirect("../login.aspx")
+            Response.Redirect("login.aspx")
         End If
         If IsNothing(Session("codice")) Then
-            Response.Redirect("../login.aspx")
+            Response.Redirect("login.aspx")
         End If
 
         If Not Page.IsPostBack Then
@@ -139,11 +139,11 @@ Public Class AsiMasterPageAA
         Session("auth") = Nothing
         Session.Clear()
         Session.Abandon()
-        Response.Redirect("../login.aspx")
+        Response.Redirect("login.aspx")
     End Sub
     Protected Sub lnkHome_Click(sender As Object, e As EventArgs) Handles lnkHome.Click
 
-        Response.Redirect("../home.aspx")
+        Response.Redirect("home.aspx")
     End Sub
     'Protected Sub lnkNuovoCorso_Click(sender As Object, e As EventArgs) Handles lnkNuovoCorso.Click
     '    NuovoCorso()

@@ -365,6 +365,7 @@
     <Content Include="Rinnovi\DashboardRinnoviEvasi.aspx" />
     <Content Include="Rinnovi\RichiestaRinnovo.aspx" />
     <Content Include="Rinnovi\RichiestaRinnovo1.aspx" />
+    <Content Include="Rinnovi\upDichiarazione.aspx" />
     <Content Include="Rinnovi\upLegRinnovi.aspx" />
     <Content Include="Rinnovi\WebForm5.aspx" />
     <Content Include="Scripts\alertify.js" />
@@ -922,6 +923,13 @@
       <DependentUpon>RichiestaRinnovo1.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi\upDichiarazione.aspx.designer.vb">
+      <DependentUpon>upDichiarazione.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\upDichiarazione.aspx.vb">
+      <DependentUpon>upDichiarazione.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi\upLegRinnovi.aspx.designer.vb">
       <DependentUpon>upLegRinnovi.aspx</DependentUpon>
     </Compile>
@@ -1067,8 +1075,10 @@
     <Folder Include="corsisti\" />
     <Folder Include="elencoPartecipantiCorsi\" />
     <Folder Include="file_storage\" />
+    <Folder Include="file_storage_dichiarazioni\" />
     <Folder Include="file_storage_equiPag\" />
     <Folder Include="file_storage_equi\" />
+    <Folder Include="file_storage_RinnoviPag\" />
     <Folder Include="fotoEquiparazioni\" />
   </ItemGroup>
   <ItemGroup>

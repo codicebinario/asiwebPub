@@ -47,6 +47,7 @@ Public Class RichiestaRinnovo
     Dim nomecaricato As String = ""
     Dim codiceFiscale As String
     Dim tokenZ As String = ""
+    Dim CodiceEnteRichiedente As String = ""
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
@@ -107,7 +108,7 @@ Public Class RichiestaRinnovo
 
             End If
             Dim IDRinnovo As String = DettaglioRinnovo.IDRinnovo
-            Dim CodiceEnteRichiedente As String = DettaglioRinnovo.CodiceEnteRichiedente
+            CodiceEnteRichiedente = DettaglioRinnovo.CodiceEnteRichiedente
             Dim DescrizioneEnteRichiedente As String = DettaglioRinnovo.DescrizioneEnteRichiedente
             Dim TipoEnte As String = DettaglioRinnovo.TipoEnte
             Dim CodiceStatus As String = DettaglioRinnovo.CodiceStatus
@@ -136,19 +137,23 @@ Public Class RichiestaRinnovo
     Sub rinnoviCF()
 
         Dim ds As DataSet
-
+        Dim codiceAffialiante As String = ""
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
         fmsP.SetLayout("WebAlbo")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Codice Fiscale", codiceFiscale, Enumerations.SearchOption.equals)
         RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
         RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
         '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
 
         ds = RequestP.Execute()
 
         If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+
+
 
 
             Dim cf As DataTable = ds.Tables("main")

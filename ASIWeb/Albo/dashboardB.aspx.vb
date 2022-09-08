@@ -231,7 +231,7 @@ Public Class dashboardB
 
                     hpUPPag.ID = "hpPag_" & counter1
                     hpUPPag.Attributes.Add("runat", "server")
-                    hpUPPag.Text = "Invia Pagamento"
+                    hpUPPag.Text = "Invia Pagamento di " & Data.FixNull(dr("TotaleCosti")) & " €"
                     hpUPPag.PostBackUrl = "upLegCorsi.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
                     hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom"
                     If (Data.FixNull(dr("Codice_Status")) = "75" And Data.FixNull(dr("fase")) = "3") Then

@@ -127,10 +127,6 @@ Public Class DashboardEquiEvasi
                     'If counter1 <= 10 Then
 
 
-
-
-
-
                     phDash10.Visible = True
 
 
@@ -211,7 +207,27 @@ Public Class DashboardEquiEvasi
                     phDash10.Controls.Add(New LiteralControl("</div>"))
 
 
+                    If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("Equi_NoteAnnullamentoEquiparazione"))) Then
 
+
+
+
+                        phDash10.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                        phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                        phDash10.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Annullamento: <span>"))
+                        phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Equi_NoteAnnullamentoEquiparazione"))))
+
+                        phDash10.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                        phDash10.Controls.Add(New LiteralControl("</div>"))
+
+                    End If
 
 
 
@@ -237,139 +253,204 @@ Public Class DashboardEquiEvasi
     End Sub
     Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
         If Page.IsValid Then
+            Dim ds As DataSet
 
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webEquiparazioniRichiesta")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
 
+            RequestP.AddSearchField("Equi_CodiceFiscale", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
 
-            'Dim dataOggi As Date = Today.Date
-            'Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
 
-            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
 
 
-            DettaglioEquiparazione = AsiModel.Equiparazione.PrendiValoriNuovaEquiparazioneByCF(Trim(txtCodiceFiscale.Text), Session("codice"))
-            '    DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
-            '     Session("visto") = "ok"
-            If DettaglioEquiparazione.trovato = True Then
-                phDash.Visible = True
 
-                phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
+            Try
 
 
+                ds = RequestP.Execute()
 
-                'accordion card
-                phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
-                'accordion heder
-                phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-                phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
+                    'Dim counter As Integer = 0
+                    Dim counter1 As Integer = 0
+                    Dim totale As Decimal = 0
 
-                ' inizio prima riga
+                    For Each dr In ds.Tables("main").Rows
 
-                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                        Dim VediDocumentazione As New Button
+                        VediDocumentazione.CausesValidation = False
+                        VediDocumentazione.ID = "VediDoc_" & counter1
+                        VediDocumentazione.Attributes.Add("runat", "server")
+                        VediDocumentazione.Text = "Diploma e Foto"
+                        VediDocumentazione.PostBackUrl = "vediDocumentazione.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                        VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom"
+                        '  Annulla.OnClientClick = "return confirm(""ciappa"");"
+                        'VediDocumentazione.Attributes.Add("OnClick", "if(!myConfirm())return false;")
+                        '   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")
 
 
-                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
 
-                phDash.Controls.Add(New LiteralControl("Equiparazione:  "))
-                phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(DettaglioEquiparazione.CodiceStatus) & ">"))
-                phDash.Controls.Add(New LiteralControl("<a name=" & DettaglioEquiparazione.IDEquiparazione & ">" & DettaglioEquiparazione.IDEquiparazione & "</a>"))
-                phDash.Controls.Add(New LiteralControl())
+                        If Data.FixNull(dr("Codice_Status")) = "115" Then
+                            VediDocumentazione.Visible = True
+                        Else
+                            VediDocumentazione.Visible = False
+                        End If
 
-                phDash.Controls.Add(New LiteralControl("</span><br />"))
 
 
-                phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & DettaglioEquiparazione.Nome & " " & DettaglioEquiparazione.Cognome & "</small><br />"))
+                        If Data.FixNull(dr("Codice_Status")) = "115" Or Data.FixNull(dr("Codice_Status")) = "119" Then
+                            'If counter1 <= 10 Then
 
-                phDash.Controls.Add(New LiteralControl("CF: <small>" & DettaglioEquiparazione.CodiceFiscale & "</small><br />"))
-                phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(DettaglioEquiparazione.DataScadenza) & "</small><br />"))
 
-                phDash.Controls.Add(New LiteralControl())
 
-                ' phDash.Controls.Add(New LiteralControl("</span>"))
 
-                phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
+                            phDash.Visible = True
 
-                phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(DettaglioEquiparazione.CodiceStatus) & ">" & DettaglioEquiparazione.DescrizioneStatus & "</small>"))
 
-                phDash.Controls.Add(New LiteralControl("</div>"))
 
+                            phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
 
-                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
 
-                'phDash.Controls.Add(AnnPrimaFase)
-                'phDash.Controls.Add(Ann)
-                'phDash.Controls.Add(btnFase2)
-                'phDash.Controls.Add(btnFase3)
-                'phDash.Controls.Add(btnFase4)
-                'phDash.Controls.Add(vediDocumentazione)
-                'phDash.Controls.Add(hpUP)
-                'phDash.Controls.Add(Verb)
-                'phDash.Controls.Add(fotoCorsisti)
 
+                            'accordion card
+                            phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
+                            'accordion heder
+                            phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
 
+                            phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
 
-                '   phDash.Controls.Add(stopFoto)
-                'phDash.Controls.Add(hpUPPag)
+                            ' inizio prima riga
 
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
 
+                            phDash.Controls.Add(New LiteralControl("Equiparazione:  "))
+                            phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
+                            phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDEquiparazione")) & ">" & Data.FixNull(dr("IDEquiparazione")) & "</a>"))
+                            phDash.Controls.Add(New LiteralControl())
 
+                            phDash.Controls.Add(New LiteralControl("</span><br />"))
 
-                phDash.Controls.Add(New LiteralControl("</div>"))
 
+                            phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Equi_Nome")) & " " & Data.FixNull(dr("Equi_Cognome")) & "</small><br />"))
 
+                            phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
 
+                            phDash.Controls.Add(New LiteralControl())
 
+                            ' phDash.Controls.Add(New LiteralControl("</span>"))
 
-                phDash.Controls.Add(New LiteralControl("</div>"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
 
 
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
+                            phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_Status")) & "</small>"))
 
+                            phDash.Controls.Add(New LiteralControl("</div>"))
 
 
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
 
+                            'phDash.Controls.Add(AnnPrimaFase)
+                            'phDash.Controls.Add(Ann)
+                            'phDash.Controls.Add(btnFase2)
+                            'phDash.Controls.Add(btnFase3)
+                            'phDash.Controls.Add(btnFase4)
+                            phDash.Controls.Add(VediDocumentazione)
+                            'phDash.Controls.Add(hpUP)
+                            'phDash.Controls.Add(Verb)
+                            'phDash.Controls.Add(fotoCorsisti)
 
 
 
+                            '   phDash.Controls.Add(stopFoto)
+                            ' phDash.Controls.Add(hpUPPag)
 
-                phDash.Controls.Add(New LiteralControl("</div>"))
 
-                phDash.Controls.Add(New LiteralControl("</div>"))
 
-                phDash.Controls.Add(New LiteralControl("</div>"))
-                phDash.Controls.Add(New LiteralControl("</div>"))
 
 
 
+                            phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                '                CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"), Trim(txtCodiceFiscale.Text),
-                'DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazione.CodiceTessera, DettaglioEquiparazione.DataScadenza)
 
 
 
-                ' Response.Redirect("DashboardEquiEvasi.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
 
 
 
-            Else
 
-                'Response.Write("ko")
+                            If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("Equi_NoteAnnullamentoEquiparazione"))) Then
 
+
+
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Annullamento: <span>"))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Equi_NoteAnnullamentoEquiparazione"))))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            End If
+
+
+
+
+
+
+                            counter1 += 1
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                        End If
+                        ' End If
+
+                    Next
+
+
+
+                End If
+
+            Catch ex As Exception
                 Session("procedi") = "KO"
                 Response.Redirect("DashboardEquiEvasi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
-
-
-            End If
+            End Try
 
 
 
         End If
+
+
+
+
+
+
+
+
 
 
     End Sub

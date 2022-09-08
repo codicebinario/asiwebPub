@@ -48,6 +48,7 @@ Public Class RichiestaRinnovo1
     Dim nomecaricato As String = ""
     Dim codiceFiscale As String
     Dim tokenZ As String = ""
+    Dim CodiceEnteRichiedente As String = ""
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
@@ -113,7 +114,7 @@ Public Class RichiestaRinnovo1
 
             End If
             Dim IDRinnovo As String = DettaglioRinnovo.IDRinnovo
-            Dim CodiceEnteRichiedente As String = DettaglioRinnovo.CodiceEnteRichiedente
+            CodiceEnteRichiedente = DettaglioRinnovo.CodiceEnteRichiedente
             Dim DescrizioneEnteRichiedente As String = DettaglioRinnovo.DescrizioneEnteRichiedente
             Dim TipoEnte As String = DettaglioRinnovo.TipoEnte
             Dim CodiceStatus As String = DettaglioRinnovo.CodiceStatus
@@ -202,10 +203,10 @@ Public Class RichiestaRinnovo1
         txtComuneNascita.Text = datiCodiceFiscale.Comune
         txtCodiceTessera.Text = datiCodiceFiscale.CodiceTessera
         txtDataScadenza.Text = datiCodiceFiscale.DataScadenza.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-
+        txtCodiceIscrizione.Text = datiCodiceFiscale.codiceIscrizione
         txtEmail.Text = datiCodiceFiscale.Email
         txtTelefonoCellulare.Text = datiCodiceFiscale.telefono
-
+        txtDisciplina.Text = datiCodiceFiscale.disciplina
         txtIndirizzoResidenza.Text = datiCodiceFiscale.indirizzoResidenza
 
         txtCapResidenza.Text = datiCodiceFiscale.capResidenza
@@ -423,7 +424,7 @@ Public Class RichiestaRinnovo1
         Request.AddField("Asi_CodiceIscrizione", datiAlbo.qualifica)
         Request.AddField("Asi_Disciplina", datiAlbo.disciplina)
         Request.AddField("Asi_CodiceIscrizione", datiAlbo.codiceIscrizione)
-
+        Request.AddField("ASI_CodiceEnteEx", datiAlbo.codiceEnteEx)
 
 
         Request.AddField("Rin_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
@@ -440,7 +441,14 @@ Public Class RichiestaRinnovo1
 
 
         End If
-        Request.AddField("Codice_Status", "152")
+        Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, CodiceEnteRichiedente)
+        If SameCode = 0 Then
+            Request.AddField("Codice_Status", "152")
+        Else
+            Request.AddField("Codice_Status", "151")
+        End If
+
+
 
         Try
             risposta = Request.Execute()
@@ -451,7 +459,11 @@ Public Class RichiestaRinnovo1
             ritorno = False
         End Try
 
-        AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
+        If SameCode = 0 Then
+            AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
+        Else
+            AsiModel.LogIn.LogCambioStatus(IDRinnovo, "151", Session("WebUserEnte"), "rinnovo")
+        End If
 
 
         ' occorre scrivere il codice che aggiorna albo con i dati giusti

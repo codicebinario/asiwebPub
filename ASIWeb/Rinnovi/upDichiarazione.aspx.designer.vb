@@ -11,16 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class upLegRinnovi
+Partial Public Class upDichiarazione
 
     '''<summary>
-    '''lnkDashboard control.
+    '''UpdateProgress1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkDashboard As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
 
     '''<summary>
     '''lblIntestazioneRinnovo control.
@@ -48,6 +48,15 @@ Partial Public Class upLegRinnovi
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents HiddenIDRinnovo As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''pnlFase1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlFase1 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''txtNote control.
@@ -84,4 +93,13 @@ Partial Public Class upLegRinnovi
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents uploadedFiles As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''btnFase2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnFase2 As Global.System.Web.UI.WebControls.Button
 End Class

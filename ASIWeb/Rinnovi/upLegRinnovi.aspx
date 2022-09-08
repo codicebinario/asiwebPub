@@ -68,7 +68,7 @@ function ServerException(mess) {
          <div class="col-6 pb-0">
         <p>
             
-              <asp:LinkButton class="nav-link text-white" ID="lnkDashboard" CausesValidation="false" runat="server">Rinnovi Attivi</asp:LinkButton>
+              <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Rinnovi Attivi</asp:LinkButton>
     
                  <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
         </p>
@@ -82,9 +82,9 @@ function ServerException(mess) {
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
-                                    <asp:Label ID="lblIntestazioneRinnovi" runat="server" Text=""></asp:Label>
+                                    <asp:Label ID="lblIntestazioneRinnovo" runat="server" Text=""></asp:Label>
                                     <asp:HiddenField ID="HiddenIdRecord" runat="server" />
-                                      <asp:HiddenField ID="HiddenIDRinnovi" runat="server" />
+                                      <asp:HiddenField ID="HiddenIDRinnovo" runat="server" />
 						</div>
 							</div>
 							
