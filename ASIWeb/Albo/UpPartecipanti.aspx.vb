@@ -20,6 +20,8 @@ Imports RestSharp
 Imports System.Collections.Generic
 Imports System.Net.Security
 Imports System.Net
+Imports System.Threading
+
 Public Class UpPartecipanti
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
@@ -121,55 +123,46 @@ Public Class UpPartecipanti
             '    Try
 
             For i = 0 To files.Count - 1 Step 1
-                    Dim file As OboutPostedFile = files(i)
+                Dim file As OboutPostedFile = files(i)
 
 
 
-                    Dim whereToSave As String = "../elencoPartecipantiCorsi/"
-
-                    tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                    ext = Path.GetExtension((file.FileName))
-                    nomefileReale = Path.GetFileName(file.FileName)
-                    nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
-
-
-
-
-
-                    '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
-
-                    file.SaveAs(MapPath(whereToSave + nomecaricato))
+                Dim whereToSave As String = "../elencoPartecipantiCorsi/"
+                tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                ext = Path.GetExtension((file.FileName))
+                nomefileReale = Path.GetFileName(file.FileName)
+                nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
 
 
 
 
-                    If uploadedFiles.Text.Length = 0 Then
 
+                '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
 
-                        Button1.Enabled = False
-                        uploadedFiles.Text = ""
-
-                        uploadedFiles.Text = "<b>Elenco partecipanti caricato con successo: " & nomecaricato & "</b><br/>"
+                file.SaveAs(MapPath(whereToSave + nomecaricato))
 
 
 
 
-                    End If
+                If uploadedFiles.Text.Length = 0 Then
 
 
+                    Button1.Enabled = False
+                    uploadedFiles.Text = ""
 
-                Next
+                    uploadedFiles.Text = "<b>Elenco partecipanti caricato con successo: " & nomecaricato & "</b><br/>"
+                End If
+            Next
 
-                Dim tokenx As String = ""
-                Dim id_att As String = ""
-                Dim tuttoRitorno As String = ""
-
-                tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato)
-                txtNote.Text = ""
-                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-                tokenx = arrKeywords(1)
-                id_att = arrKeywords(0)
-                CaricaSuFM(tokenx, id_att, nomecaricato)
+            Dim tokenx As String = ""
+            Dim id_att As String = ""
+            Dim tuttoRitorno As String = ""
+            tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato)
+            txtNote.Text = ""
+            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+            tokenx = arrKeywords(1)
+            id_att = arrKeywords(0)
+            CaricaSuFM(tokenx, id_att, nomecaricato)
             '   pnlFase1.Visible = False
             ' btnFase2.Visible = True
             'deleteFile(nomecaricato)
@@ -232,6 +225,8 @@ Public Class UpPartecipanti
 
 
         Dim ResponseUP As IRestResponse = clientUP.Execute(Requestx)
+        Thread.Sleep(2000)
+        CaricaDatiSoloScript(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato)
 
         Return True
 
@@ -241,6 +236,51 @@ Public Class UpPartecipanti
 
 
     End Function
+    Public Function CaricaDatiSoloScript(codR As String, IDCorso As String, nomecaricato As String) As String
+        '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
+
+
+        ' Dim ds As DataSet
+
+
+        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        '  Dim ds As DataSet
+        Dim risposta As String = ""
+        fmsP.SetLayout("webCorsiRichiesta")
+        Dim Request = fmsP.CreateEditRequest(codR)
+        'Request.AddField("NomeFileElencoPartecipanti", nomecaricato)
+        'Request.AddField("NoteUploadElencoCorso", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+        'Request.AddField("StatusPrimaCaricamentoXL", statusPrimaCaricamentoXL)
+
+        '  Request.AddField("Fase", "1")
+        '  Request.AddField("Codice_Status", "68")
+        ' Request.AddScript("SistemaEncodingNotePartecipanti", IDCorso)
+        Request.AddScript("ImportaCorsistiWebRun", IDCorso)
+        'If qualeStatus = "3" Then
+        '    Request1.AddField("Status_ID", "4")
+        'Else
+        '    Request1.AddField("Status_ID", "12")
+        'End If
+        Try
+            risposta = Request.Execute()
+            '   AsiModel.LogIn.LogCambioStatus(IDCorso, "68", Session("WebUserEnte"), "corso")
+            'If qualeStatus = "3" Then
+            '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
+            'Else
+            '    AsiModel.LogIn.LogCambioStatus(codR, "12", Session("WebUserEnte"))
+            'End If
+
+
+
+        Catch ex As Exception
+        End Try
+
+        '  Dim token = PrendiToken()
+
+        ' Return codR & "_|_" & token
+        Return risposta
+    End Function
+
     Public Function CaricaDatiDocumentoCorso(codR As String, IDCorso As String, nomecaricato As String) As String
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
@@ -260,7 +300,7 @@ Public Class UpPartecipanti
         '  Request.AddField("Fase", "1")
         Request.AddField("Codice_Status", "68")
         ' Request.AddScript("SistemaEncodingNotePartecipanti", IDCorso)
-        Request.AddScript("ImportaCorsistiWebRun", IDCorso)
+        '       Request.AddScript("ImportaCorsistiWebRun", IDCorso)
         'If qualeStatus = "3" Then
         '    Request1.AddField("Status_ID", "4")
         'Else

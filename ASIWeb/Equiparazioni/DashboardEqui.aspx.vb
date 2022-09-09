@@ -295,7 +295,7 @@ Public Class DashboardEqui
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
-                    phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_Status")) & "</small>"))
+                    phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
 

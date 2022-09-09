@@ -1,10 +1,14 @@
 ﻿Imports fmDotNet
 Imports ASIWeb.AsiModel
 Imports ASIWeb.Ed
+Imports System.Drawing.Imaging
+Imports System.IO
+Imports System.Net
+Imports Image = System.Drawing.Image
 
 Public Class DashboardRinnovi
     Inherits System.Web.UI.Page
-
+    Dim foto As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -43,7 +47,7 @@ Public Class DashboardRinnovi
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo non caricata nel sistema<br />Si è verificato un problema tecnico durante la procedura! ' ).set('resizable', true).resizeTo('20%', 200);", True)
                         Session("rinnovoAggiunto") = Nothing
                     ElseIf ris = "koCFAlbo" Then
-                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Impossibile andare avanti. Dati Albo da normalizzare.<br />Codice Fiscale e/o Codice Ente Affiliante inesistenti in Albo!<br />Contattare ASI per risolvere il problema. ' ).set('resizable', true).resizeTo('20%', 300);", True)
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Impossibile andare avanti. Dati Albo da normalizzare.<br />Codice Fiscale e/o Codice Ente Affiliante inesistenti in Albo!<br />Contattare ASI per risolvere il problema. Scrivi ad albo@asinazionale.it ' ).set('resizable', true).resizeTo('20%', 300);", True)
                         Session("rinnovoAggiunto") = Nothing
                     ElseIf ris = "no" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo senza verifica tessera.<br />Procedere con una nuova richiesta ' ).set('resizable', true).resizeTo('20%', 200);", True)
@@ -86,22 +90,18 @@ Public Class DashboardRinnovi
         RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
         RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         RequestP.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
-
-
         ds = RequestP.Execute()
 
-            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
 
 
-                Dim deEnco As New Ed()
-
-
-                phDash.Visible = True
-                'Dim counter As Integer = 0
-                Dim counter1 As Integer = 0
-                'Dim totale As Decimal = 0
-                For Each dr In ds.Tables("main").Rows
+            Dim deEnco As New Ed()
+            phDash.Visible = True
+            'Dim counter As Integer = 0
+            Dim counter1 As Integer = 0
+            'Dim totale As Decimal = 0
+            For Each dr In ds.Tables("main").Rows
 
 
                 If Data.FixNull(dr("Codice_Status")) = "151" Or Data.FixNull(dr("Codice_Status")) = "152" Or Data.FixNull(dr("Codice_Status")) = "153" _
@@ -110,6 +110,23 @@ Public Class DashboardRinnovi
                 Or Data.FixNull(dr("Codice_Status")) = "158" Then
 
                     counter1 += 1
+
+                    If String.IsNullOrWhiteSpace(Data.FixNull(dr("ASI_foto"))) Then
+                        foto = "..\img\noimg.jpg"
+                    Else
+                        foto = "https://93.63.195.98" & Data.FixNull(dr("ASI_foto"))
+                    End If
+
+                    Dim fotoCorsisti As New Button
+
+                    fotoCorsisti.ID = "Fot_" & counter1
+                    fotoCorsisti.Attributes.Add("runat", "server")
+                    fotoCorsisti.Text = "Foto Opzionale"
+                    fotoCorsisti.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
+
+                    fotoCorsisti.Visible = True
+
 
 
                     Dim Verb As New Button
@@ -188,7 +205,7 @@ Public Class DashboardRinnovi
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
-                    phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_Status")) & "</small>"))
+                    phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
@@ -197,7 +214,22 @@ Public Class DashboardRinnovi
 
                     phDash.Controls.Add(hpUPPag)
                     phDash.Controls.Add(Verb)
+                    phDash.Controls.Add(fotoCorsisti)
+                    phDash.Controls.Add(New LiteralControl("<br /><br /><span class=""text-center"">"))
 
+
+                    If foto = "..\img\noimg.jpg" Then
+                        phDash.Controls.Add(New LiteralControl("<img src='" & foto & "' height='70' width='50' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'>"))
+
+                    Else
+                        Dim myImage As Image = FotoS(foto)
+                        Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
+                        '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
+                        phDash.Controls.Add(New LiteralControl("<img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'>"))
+
+                    End If
+
+                    phDash.Controls.Add(New LiteralControl("</span>"))
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
@@ -209,9 +241,6 @@ Public Class DashboardRinnovi
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
                     phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-
                 End If
 
 
@@ -226,5 +255,18 @@ Public Class DashboardRinnovi
 
 
     End Sub
+    Public Function FotoS(urlFoto As String)
 
+        ' Dim pictureURL As String = "https://93.63.195.98/fmi/xml/cnt/145_ZGQ5YmRiOTYtZjc0YS00NWFmLTgyNTAtZTIyMjRjYjgzYzg0.jpg?-db=Asi&-lay=webCorsisti&-recid=145&-field=Foto(1)"
+        Dim pictureURL As String = urlFoto
+
+        Dim wClient As WebClient = New WebClient()
+        Dim nc As NetworkCredential = New NetworkCredential("enteweb", "web01")
+        wClient.Credentials = nc
+        Dim response As Stream = wClient.OpenRead(pictureURL)
+        Dim temp = Image.FromStream(response)
+        response.Close()
+        Return temp
+
+    End Function
 End Class

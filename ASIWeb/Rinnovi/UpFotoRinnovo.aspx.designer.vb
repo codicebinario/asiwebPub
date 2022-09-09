@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class richiestaEquiparazioneFoto
+Partial Public Class UpFotoRinnovo
 
     '''<summary>
     '''UpdateProgress1 control.
@@ -23,22 +23,13 @@ Partial Public Class richiestaEquiparazioneFoto
     Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
 
     '''<summary>
-    '''chkSalta control.
+    '''lblIntestazioneRinnovo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkSalta As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''lblIntestazioneEquiparazione control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblIntestazioneEquiparazione As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblIntestazioneRinnovo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''HiddenIdRecord control.
@@ -50,22 +41,13 @@ Partial Public Class richiestaEquiparazioneFoto
     Protected WithEvents HiddenIdRecord As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''HiddenIDEquiparazione control.
+    '''HiddenIDRinnovo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''lblnomef control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblnomef As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents HiddenIDRinnovo As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Label3 control.

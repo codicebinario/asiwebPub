@@ -1,5 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageEqui.Master" CodeBehind="richiestaEquiparazioneFoto.aspx.vb" Inherits="ASIWeb.richiestaEquiparazioneFoto" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageRinnovi.Master" CodeBehind="UpFotoRinnovo.aspx.vb" Inherits="ASIWeb.UpFotoRinnovo" %>
  <%@ Register TagPrefix="fup" Namespace="OboutInc.FileUpload" Assembly="obout_FileUpload" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
        <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
@@ -57,28 +58,9 @@
 
   </style>
   
-      <style>
-  
-        .success {
-         
-            color: white;
-           
-            padding:5px;
-        }
-        .salta{
-            color: white;
-           
-            padding:5px;
-
-        }
-       
-
-       
-
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   <asp:UpdateProgress ID="UpdateProgress1" runat="server"
+       <asp:UpdateProgress ID="UpdateProgress1" runat="server"
 					 DynamicLayout="false">
 	<ProgressTemplate>
 	  <div class="Progress">
@@ -90,16 +72,10 @@
     
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Caricamento foto equiparazione</h3>
-      
-       <asp:CheckBox AutoPostBack="true" CssClass="success text-white p-2" ID="chkSalta" Text="Salta il caricamento foto!!!" CausesValidation="false"  runat="server" />
-       
-     
- 
-     
+    <h3 class="display-5">Caricamento foto Rinnovo</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-                <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due">Interrompi il caricamento corso.</a>       
+               <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>     
     </p>
     
   </div></div>
@@ -107,36 +83,21 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
-                                    <asp:Label ID="lblIntestazioneEquiparazione" runat="server" Text=""></asp:Label>
+                                    <asp:Label ID="lblIntestazioneRinnovo" runat="server" Text=""></asp:Label>
                                     <asp:HiddenField ID="HiddenIdRecord" runat="server" />
-                                      <asp:HiddenField ID="HiddenIDEquiparazione" runat="server" />
+                                      <asp:HiddenField ID="HiddenIDRinnovo" runat="server" />
 						</div>
 							</div>
 							
 				</div></div>	
      
-    <div class="col-sm-12">
-          <div class="row">
-              <div class="col-sm-12">
-                  <div class="form-group">
-                       <h5>Fase 2: <asp:Label ID="lblnomef" runat="server" Text=""></asp:Label></h5>
-                      <hr />
-                  </div>
-              </div>
-
-          </div>
-      </div>
-    <br /><br />
-
- 
   
-
 
       <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
                   <div class="form-group">
-                      <h5>Caricamento Foto Equiparazione</h5>
+                      <h5>Caricamento Foto Rinnovo</h5>
                       <hr />
                   </div>
               </div>
@@ -148,13 +109,12 @@
       
        <div class="col-sm-12">
 
-         	<asp:label id="Label3" runat="server"><b>Carica la foto della persona per l'equiparazione</b></asp:label>
+         	<asp:label id="Label3" runat="server"><b>Carica la foto per il Rinnovo</b></asp:label>
 				
            <div class="custom-file mb-3">
        <asp:FileUpload ID="inputfile" class="custom-file-input" runat="server" name="filename"/>
       <label class="custom-file-label" for="inputfile">Scegli la foto</label>
     </div>
-
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" 
                             ErrorMessage="carica la foto" 
                             ControlToValidate="inputfile" CssClass="errore"></asp:RequiredFieldValidator>
@@ -207,4 +167,5 @@
 
          </div>
 
+ 
 </asp:Content>

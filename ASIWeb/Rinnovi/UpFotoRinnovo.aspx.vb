@@ -20,7 +20,7 @@ Imports RestSharp
 Imports System.Collections.Generic
 Imports System.Net.Security
 Imports System.Net
-Public Class richiestaEquiparazioneFoto
+Public Class UpFotoRinnovo
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
     Dim utente As String = ConfigurationManager.AppSettings("utente")
@@ -44,25 +44,15 @@ Public Class richiestaEquiparazioneFoto
     Dim record_ID As String = ""
     Dim pag As Integer = 0
     Dim skip As Integer = 0
+    Dim CodiceEnteRichiedente As String = ""
+    Dim codiceFiscale As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
-        If Not String.IsNullOrEmpty(fase) Then
-
-            Session("fase") = fase
-        End If
-
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
         If IsNothing(Session("codice")) Then
             Response.Redirect("../login.aspx")
         End If
-
-        'If Session("procedi") <> "OK" Then
-
-        '    Response.Redirect("checkTesseramento.aspx")
-
-        'End If
 
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
@@ -79,7 +69,7 @@ Public Class richiestaEquiparazioneFoto
             Response.Redirect("../login.aspx")
         End If
 
-        record_ID = deEnco.QueryStringDecode(Request.QueryString("record_id"))
+        record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         If Not String.IsNullOrEmpty(record_ID) Then
 
             Session("id_record") = record_ID
@@ -94,115 +84,105 @@ Public Class richiestaEquiparazioneFoto
         If Not String.IsNullOrEmpty(codR) Then
 
 
-            Session("IDEquiparazione") = codR
+
+
+            Session("IDRinnovo") = codR
+            Dim DettaglioRinnovo As New DatiNuovoRinnovo
 
 
 
 
 
-            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
-            Dim verificato As String = DettaglioEquiparazione.EquiCF
+            DettaglioRinnovo = Rinnovi.PrendiValoriNuovoRinnovo(Session("IDRinnovo"))
+            Dim verificato As String = DettaglioRinnovo.RinnovoCF
             If verificato = "0" Then
-                Response.Redirect("DashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("no"))
+                Response.Redirect("DashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("no"))
 
             End If
-            Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
-            Dim CodiceEnteRichiedente As String = DettaglioEquiparazione.CodiceEnteRichiedente
-            Dim DescrizioneEnteRichiedente As String = DettaglioEquiparazione.DescrizioneEnteRichiedente
-            Dim TipoEnte As String = DettaglioEquiparazione.TipoEnte
-            Dim CodiceStatus As String = DettaglioEquiparazione.CodiceStatus
-            Dim DescrizioneStatus As String = DettaglioEquiparazione.DescrizioneStatus
-            '  Dim TitoloCorso As String = DettaglioEquiparazione.TitoloCorso
-            HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
-            HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
+            Dim IDRinnovo As String = DettaglioRinnovo.IDRinnovo
+            CodiceEnteRichiedente = DettaglioRinnovo.CodiceEnteRichiedente
+            Dim DescrizioneEnteRichiedente As String = DettaglioRinnovo.DescrizioneEnteRichiedente
+            Dim TipoEnte As String = DettaglioRinnovo.TipoEnte
+            Dim CodiceStatus As String = DettaglioRinnovo.CodiceStatus
+            Dim DescrizioneStatus As String = DettaglioRinnovo.DescrizioneStatus
+            '      leggiDatiEsistenti(Session("codiceFiscale"))
+
+            HiddenIdRecord.Value = DettaglioRinnovo.IdRecord
+            HiddenIDRinnovo.Value = DettaglioRinnovo.IDRinnovo
+            codiceFiscale = DettaglioRinnovo.CodiceFiscale
             Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
-            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
+            lblIntestazioneRinnovo.Text = "<strong>IDRinnovo: </strong>" & IDRinnovo &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
                 "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
-
         End If
-        If fase = 2 Then
-            lblnomef.Text = "Diploma correttamente caricato"
 
 
-        End If
-        If Page.IsPostBack Then
-
-            '  pnlFase1.Visible = False
-
-
-        End If
     End Sub
-
     Protected Sub BtnUp_Click(sender As Object, e As EventArgs) Handles BtnUp.Click
 
-
-
-
-
         If inputfile.PostedFile.ContentLength > MassimoPeso Then
-                results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
-                ' controllo del tipo di file
-            ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
-                results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
-
-            Else
-
-                '   Response.Write("sono dentro")
-                Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
-                If img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
-
-                    results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+            results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
 
 
-                ElseIf img.Width > img.Height Then
-                    results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
-
-
-                ElseIf img.Width >= massinalarghezza OrElse img.Height >= massimaaltezza Then
-                    'Response.Write(maggiore)
-                    ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
-                    Dim rapporto As Integer
-                    rapporto = img.Height / 140
-                    Dim img2 As Drawing.Bitmap
-                    img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
-
-                    Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                    nomecaricato = record_ID & "_" & tokenZ & ".jpg"
-
-                    '   Response.Write(Server.MapPath("..\corsisti\"))
-                    img2.Save(Server.MapPath("..\fotoEquiparazioni\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
-                    inputfile.SaveAs(Server.MapPath("..\fotoEquiparazioni\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
+            ' controllo del tipo di file
+        ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
+            results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
 
 
 
-                End If
-                img.Dispose()
+        Else
+
+            '   Response.Write("sono dentro")
+            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
+            If img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+
+                results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
 
 
-                Dim tokenx As String = ""
-                Dim id_att As String = ""
-                Dim tuttoRitorno As String = ""
+            ElseIf img.Width > img.Height Then
+                results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
 
-                tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
 
-                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-                tokenx = arrKeywords(1)
-                id_att = arrKeywords(0)
-                CaricaSuFM(tokenx, id_att, nomecaricato)
+            ElseIf img.Width >= massinalarghezza OrElse img.Height >= massimaaltezza Then
+                'Response.Write(maggiore)
+                ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+                Dim rapporto As Integer
+                rapporto = img.Height / 140
+                Dim img2 As Drawing.Bitmap
+                img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
 
-                Response.Redirect("richiestaEquiparazioneDati1.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(3))
+                Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                nomecaricato = record_ID & "_" & tokenZ & ".jpg"
+
+                '   Response.Write(Server.MapPath("..\corsisti\"))
+                img2.Save(Server.MapPath("..\fotoRinnovo\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
+                inputfile.SaveAs(Server.MapPath("..\fotoRinnovo\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
 
 
 
             End If
+            img.Dispose()
 
 
+            Dim tokenx As String = ""
+            Dim id_att As String = ""
+            Dim tuttoRitorno As String = ""
+
+            tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
+
+            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+            tokenx = arrKeywords(1)
+            id_att = arrKeywords(0)
+            CaricaSuFM(tokenx, id_att, nomecaricato)
+
+            Response.Redirect("DashboardRinnovi.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+
+
+
+        End If
 
 
     End Sub
@@ -210,7 +190,7 @@ Public Class richiestaEquiparazioneFoto
 
         Dim host As String = HttpContext.Current.Request.Url.Host.ToLower()
 
-        Dim filePath As String = Server.MapPath(ResolveUrl("~/fotoEquiparazioni/"))
+        Dim filePath As String = Server.MapPath(ResolveUrl("~/fotoRinnovo/"))
 
         '  Dim File As HttpPostedFile = inputfile.PostedFile
         Dim File As String = nomecaricato
@@ -227,7 +207,7 @@ Public Class richiestaEquiparazioneFoto
         '    Try
 
 
-        Dim clientUP As New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webEquiparazioniRichiesta/records/" & id & "/containers/FotoEquiparazione/1")
+        Dim clientUP As New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webRinnoviRichiesta/records/" & id & "/containers/ASI_foto/1")
         clientUP.Timeout = -1
         Dim Requestx = New RestRequest(Method.POST)
         Requestx.AddHeader("Content-Type", "application/json")
@@ -241,7 +221,7 @@ Public Class richiestaEquiparazioneFoto
         'End If
 
         '  Dim filePath As String = Server.MapPath(ResolveUrl("~/file_storage/"))
-        Requestx.AddParameter("upload", Server.MapPath(ResolveUrl("~/fotoEquiparazioni/")) & nomecaricato & "")
+        Requestx.AddParameter("upload", Server.MapPath(ResolveUrl("~/fotoRinnovo/")) & nomecaricato & "")
         '  Requestx.AddParameter("upload", "D:\Dropbox\soft\Projects\ASIWeb\ASIWeb\file_storage" & nomecaricato & "")
         '   Requestx.AddParameter("upload", "C:\file_storage\" & nomecaricato & "")
         Requestx.AddFile("upload", dove)
@@ -267,10 +247,10 @@ Public Class richiestaEquiparazioneFoto
         Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         '  Dim ds As DataSet
         Dim risposta As String = ""
-        fmsP.SetLayout("webEquiparazioniRichiesta")
+        fmsP.SetLayout("webRinnoviRichiesta")
         Dim Request = fmsP.CreateEditRequest(id)
-        Request.AddField("NomeFileFotoFS", nomecaricato)
-        Request.AddField("Equi_Fase", "2")
+        Request.AddField("ASI_FotoOnFS", nomecaricato)
+
         Try
             risposta = Request.Execute()
 
@@ -316,18 +296,4 @@ Public Class richiestaEquiparazioneFoto
         Return auth
 
     End Function
-
-    Protected Sub chkSalta_CheckedChanged(sender As Object, e As EventArgs) Handles chkSalta.CheckedChanged
-
-
-        If chkSalta.Checked = True Then
-
-
-            'RequiredFieldValidator1.Enabled = False
-            'RegularExpressionValidator1.Enabled = False
-            nomecaricato = "caricamento saltato"
-            CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
-            Response.Redirect("richiestaEquiparazioneDati1.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(3))
-        End If
-    End Sub
 End Class

@@ -216,7 +216,7 @@ Public Class dashboardB
                     Verb.Text = "Invia Verbale"
                     Verb.PostBackUrl = "upVerbale.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
                     Verb.CssClass = "btn btn-success btn-sm btn-sei btn-custom"
-                    If ((Data.FixNull(dr("Codice_Status")) = "66") And Data.FixNull(dr("CheckVerbale")) = "0" And Data.FixNull(dr("fase")) = "3") Then
+                    If ((Data.FixNull(dr("Codice_Status")) = "66" Or Data.FixNull(dr("Codice_Status")) = "57") And Data.FixNull(dr("CheckVerbale")) = "0" And Data.FixNull(dr("fase")) = "3") Then
                         Verb.Visible = True
                     Else
                         Verb.Visible = False
@@ -301,7 +301,7 @@ Public Class dashboardB
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-5  text-left"">"))
 
-                    phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_Status")) & "</small>"))
+                    phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
 

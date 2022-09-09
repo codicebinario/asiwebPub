@@ -419,7 +419,12 @@ Public Class RichiestaRinnovo1
         Request.AddField("Asi_Telefono", datiAlbo.telefono)
         Request.AddField("Asi_sport", datiAlbo.Sport)
         Request.AddField("Asi_specialita", datiAlbo.Specialita)
-        Request.AddField("Asi_livello", datiAlbo.Livello)
+        If String.IsNullOrEmpty(datiAlbo.Livello) Then
+            Request.AddField("Asi_livello", "ND")
+        Else
+            Request.AddField("Asi_livello", datiAlbo.Livello)
+        End If
+
         Request.AddField("Asi_qualifica", datiAlbo.qualifica)
         Request.AddField("Asi_CodiceIscrizione", datiAlbo.qualifica)
         Request.AddField("Asi_Disciplina", datiAlbo.disciplina)
@@ -436,7 +441,7 @@ Public Class RichiestaRinnovo1
 
             Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
             Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
-            Request.AddField("Rin_ComuneConsegna", txtComuneConsegna.Text)
+            Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
             Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
 
 
@@ -458,6 +463,34 @@ Public Class RichiestaRinnovo1
         Catch ex As Exception
             ritorno = False
         End Try
+
+        'aggiornamento dati albo
+
+        'Dim fmsPA As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        ''  Dim ds As DataSet
+        'Dim rispostaA As String = ""
+        'fmsPA.SetLayout("webAlbo")
+        'Dim RequestA = fmsPA.CreateEditRequest(idScelto)
+
+        'Request.AddField("Indirizzo Residenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
+        'Request.AddField("Cap Residenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
+        'Request.AddField("Comune di Residenza", ddlComuneResidenza.SelectedItem.Text)
+        'Request.AddField("Provincia", ddlProvinciaResidenza.SelectedItem.Text)
+        'Request.AddField("Indirizzo Email", Data.PrendiStringaT(Server.HtmlEncode(txtEmail.Text)))
+        'Request.AddField("Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefonoCellulare.Text)))
+
+
+
+        'Try
+        '    risposta = Request.Execute()
+
+
+
+        'Catch ex As Exception
+
+        'End Try
+
+
 
         If SameCode = 0 Then
             AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")

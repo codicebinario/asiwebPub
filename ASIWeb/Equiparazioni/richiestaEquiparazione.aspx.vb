@@ -153,12 +153,6 @@ Public Class richiestaEquiparazione
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If uploadProgress.Files.Count > 0 Then
 
-
-
-
-
-
-
             '****************************************************
             Dim files As OboutFileCollection = uploadProgress.Files
             Dim i As Integer
