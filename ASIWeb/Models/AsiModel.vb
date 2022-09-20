@@ -1629,7 +1629,40 @@ Public Class AsiModel
 
     Public Class Corso
 
+        Public Shared Function PrendiNominativo(record_id As String) As String
 
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            Dim ds As DataSet
+            Dim ritorno As String = "noName"
+            Dim nome As String
+            Dim cognome As String
+            Dim nominativo As String
+
+            fmsP.SetLayout("webCorsisti")
+
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestP.AddSearchField("ID", record_id, Enumerations.SearchOption.equals)
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                For Each dr In ds.Tables("main").Rows
+
+                    nominativo = Data.FixNull(dr("Cognome")) & "_" & Data.FixNull(dr("Nome"))
+
+                    ritorno = nominativo
+
+                Next
+
+            Else
+
+                ritorno = "noName"
+            End If
+
+            Return ritorno
+
+        End Function
 
 
         Public Shared Function PrendiValoriNuovoCorso(IDCorso As String) As DatiNuovoCorso

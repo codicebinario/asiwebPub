@@ -140,12 +140,12 @@ Public Class dashboardV
 
                     phDash.Controls.Add(New LiteralControl("Corso:  "))
                     phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
-                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDCorso")) & ">" & Data.FixNull(dr("IDCorso")) & "</a>"))
+                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDCorso")) & ">" & Data.FixNull(dr("IDCorso")) & "</a><br />"))
+                    '    phDash.Controls.Add(New LiteralControl("</span>"))
+
+
                     phDash.Controls.Add(New LiteralControl())
 
-                    'phDash.Controls.Add(New LiteralControl("Corso:  "))
-                    'phDash.Controls.Add(New LiteralControl("<span " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
-                    'phDash.Controls.Add(New LiteralControl(Data.FixNull(dr("IDCorso"))))
 
                     phDash.Controls.Add(New LiteralControl("</span></div>"))
 
@@ -213,6 +213,32 @@ Public Class dashboardV
                         phDash.Controls.Add(New LiteralControl("</div>"))
 
                         phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                        phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left"">"))
+
+                        phDash.Controls.Add(New LiteralControl("<h6>Comitato richiedente: <span><small>" & Data.FixNull(dr("Codice_Ente_Richiedente")) & "_" & Data.FixNull(dr("Descrizione_Ente_Richiedente")) & "</small></h6><span />"))
+
+
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-5 text-left"">"))
+
+
+
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+                        'phDash.Controls.Add(New LiteralControl("Comitato:  "))
+                        'phDash.Controls.Add(New LiteralControl("<span  " & Data.FixNull(dr("Codice_Ente_Richiedente")) & "_" & Data.FixNull(dr("Descrizione_Ente_Richiedente")) & ">"))
+
+
 
 
                         'intermezzo

@@ -209,6 +209,22 @@ Public Class dashboardB
                         hpUP.Visible = False
                     End If
 
+                    Dim hpUPx As New Button
+
+                    hpUPx.ID = "hpx_" & counter1
+                    hpUPx.Attributes.Add("runat", "server")
+                    hpUPx.Text = "Invia Lista Partecipanti Corretta"
+                    hpUPx.PostBackUrl = "upPartecipanti.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    hpUPx.CssClass = "btn btn-success btn-sm btn-cinque btn-custom"
+                    If (Data.FixNull(dr("Codice_Status")) = "69" And Data.FixNull(dr("fase")) = "3") Then
+                        hpUPx.Visible = True
+                    Else
+                        hpUPx.Visible = False
+                    End If
+
+
+
+
                     Dim Verb As New Button
 
                     Verb.ID = "verb_" & counter1
@@ -315,6 +331,7 @@ Public Class dashboardB
                     phDash.Controls.Add(hpUP)
                     phDash.Controls.Add(Verb)
                     phDash.Controls.Add(fotoCorsisti)
+                    phDash.Controls.Add(hpUPx)
 
 
 

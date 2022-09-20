@@ -361,4 +361,8 @@ Public Class UpPartecipanti
         Session("fase") = "2"
         Response.Redirect("richiestaCorsoF2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
     End Sub
+
+    Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
+        Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
+    End Sub
 End Class

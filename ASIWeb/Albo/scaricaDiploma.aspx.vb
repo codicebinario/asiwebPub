@@ -51,7 +51,7 @@ Public Class scaricaDiploma
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
 
-        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsisti&-recid=" & record_ID & "&-field=Diploma(1)")
+        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsisti&-recid=" & record_ID & "&-field=Diploma(1)", record_ID)
 
 
 
@@ -87,9 +87,10 @@ Public Class scaricaDiploma
 
     End Sub
 
-    Public Function FotoS(urlFoto As String)
-
+    Public Function FotoS(urlFoto As String, record_id As String)
+        Dim nominativo As String = ""
         Dim pictureURL As String = urlFoto
+        nominativo = Corso.PrendiNominativo(record_id)
 
         Dim wClient As WebClient = New WebClient()
         Dim nc As NetworkCredential = New NetworkCredential("enteweb", "web01")
@@ -101,7 +102,7 @@ Public Class scaricaDiploma
             Dim bytes As Byte() = stream.ToArray()
             Response.Cache.SetCacheability(HttpCacheability.NoCache)
             Response.ContentType = "application/pdf"
-            Response.AddHeader("content-disposition", "attachment;filename=Example.pdf")
+            Response.AddHeader("content-disposition", "attachment;filename=" & nominativo & "_Diploma.pdf")
             Response.BinaryWrite(bytes)
             Response.Flush()
             Response.End()

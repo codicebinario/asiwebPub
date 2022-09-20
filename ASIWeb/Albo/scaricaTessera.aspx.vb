@@ -43,7 +43,7 @@ Public Class scaricaTessera
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
 
-        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsisti&-recid=" & record_ID & "&-field=Tessera(1)")
+        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsisti&-recid=" & record_ID & "&-field=Tessera(1)", record_ID)
 
 
         ' Response.Redirect("corsistiDoc.apsx?codR=" & deEnco.QueryStringEncode(codiceCorso) & "&record_ID=" & deEnco.QueryStringEncode(record_ID))
@@ -57,9 +57,48 @@ Public Class scaricaTessera
 
     End Sub
 
-    Public Function FotoS(urlFoto As String)
+    'Public Function PrendiNominativo(record_id As String) As String
+
+    '    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+    '    Dim ds As DataSet
+    '    Dim ritorno As String = "noName"
+    '    Dim nome As String
+    '    Dim cognome As String
+    '    Dim nominativo As String
+
+    '    fmsP.SetLayout("webCorsisti")
+
+    '    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+    '    RequestP.AddSearchField("ID", record_id, Enumerations.SearchOption.equals)
+
+    '    ds = RequestP.Execute()
+
+    '    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+    '        For Each dr In ds.Tables("main").Rows
+
+    '            nominativo = Data.FixNull(dr("Cognome")) & "_" & Data.FixNull(dr("Nome"))
+
+    '            ritorno = nominativo
+
+    '        Next
+
+    '    Else
+
+    '        ritorno = "noName"
+    '    End If
+
+    '    Return ritorno
+
+    'End Function
+
+
+    Public Function FotoS(urlFoto As String, record_ID As String)
 
         Dim pictureURL As String = urlFoto
+        Dim nominativo As String = ""
+
+        nominativo = Corso.PrendiNominativo(record_ID)
 
         Dim wClient As WebClient = New WebClient()
         Dim nc As NetworkCredential = New NetworkCredential("enteweb", "web01")
@@ -71,7 +110,7 @@ Public Class scaricaTessera
             Dim bytes As Byte() = stream.ToArray()
             Response.Cache.SetCacheability(HttpCacheability.NoCache)
             Response.ContentType = "application/pdf"
-            Response.AddHeader("content-disposition", "attachment;filename=Example.pdf")
+            Response.AddHeader("content-disposition", "attachment;filename=" & nominativo & "_Tessera.pdf")
             Response.BinaryWrite(bytes)
             Response.Flush()
 
