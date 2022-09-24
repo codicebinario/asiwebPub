@@ -128,6 +128,19 @@ Public Class archivioAlbo
                     End If
 
 
+                    Dim Duplica As New Button
+
+                    Duplica.ID = "Duplica" & counter1
+                    Duplica.Attributes.Add("runat", "server")
+                    Duplica.Text = "Duplica Corso"
+                    Duplica.PostBackUrl = "Duplica.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&oldStatus=" & deEnco.QueryStringEncode(oldStatus)
+                    Duplica.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
+                    If (Data.FixNull(dr("Codice_Status")) = "84" And Data.FixNull(dr("fase")) = "3") Then
+                        Duplica.Visible = True
+                    Else
+                        Duplica.Visible = False
+                    End If
+
 
 
                     phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
@@ -167,7 +180,7 @@ Public Class archivioAlbo
 
 
 
-
+                    phDash.Controls.Add(Duplica)
                     phDash.Controls.Add(CorsistiDoc)
 
                     phDash.Controls.Add(fotoCorsisti)

@@ -919,6 +919,7 @@ Public Class AsiModel
         Public TitoloCorso As String
         Public TotaleOre As String
         Public StatusPrimaCaricamentoXL As String
+        Public DataEmissione As String
 
 
     End Class
@@ -1664,6 +1665,40 @@ Public Class AsiModel
 
         End Function
 
+        Public Shared Function ControllaQuanti(IDEnte As String, tipo As String)
+            Dim vabene As Boolean = False
+            Dim ds As DataSet
+            Dim quanti As Integer = 0
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webAlboEx")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("CodiceEnteAffiliante", IDEnte, Enumerations.SearchOption.equals)
+
+            RequestP.AddSearchField("valido", tipo, Enumerations.SearchOption.equals)
+
+
+            RequestP.AddSortField("Cognome", Enumerations.Sort.Ascend)
+
+            ds = RequestP.Execute()
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                quanti = ds.Tables("main").Rows.Count
+
+                If quanti > 0 Then
+                    vabene = True
+                Else
+                    vabene = False
+
+
+                End If
+
+
+            End If
+
+            Return vabene
+
+        End Function
 
         Public Shared Function PrendiValoriNuovoCorso(IDCorso As String) As DatiNuovoCorso
 
@@ -1704,6 +1739,7 @@ Public Class AsiModel
                         DatiCorso.OraSvolgimentoA = Data.FixNull(dr("Ora_Svolgimento_Fine"))
                         DatiCorso.TitoloCorso = Data.FixNull(dr("Titolo_Corso"))
                         DatiCorso.TotaleOre = Data.FixNull(dr("oreCorso"))
+                        DatiCorso.DataEmissione = Data.FixNull(dr("Data_Emissione"))
                         '  DatiCorso.StatusPrimaCaricamentoXL = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
 
 

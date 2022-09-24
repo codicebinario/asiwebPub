@@ -192,9 +192,6 @@ Public Class richiestaCorsoF2
         Dim anno = oDateDa.Year
         Dim mese = oDateDa.Month
 
-        ' MM/dd/yyyy
-        '  HH:mm:ss 
-        '    Request.AddField("Web_DataCambioPassword", mese & "/" & giorno & "/" & anno & " " & ora & ":" & minuto & ":" & secondo)
 
 
         Request.AddField("Svolgimento_Da_Data", mese & "/" & giorno & "/" & anno)
@@ -206,6 +203,22 @@ Public Class richiestaCorsoF2
         mese = oDateA.Month
 
         Request.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
+
+
+        Dim dataEmissione = txtDataEmissione.Text
+
+        If Not String.IsNullOrEmpty(dataEmissione) Then
+
+
+            Dim oDateEmissione As DateTime = DateTime.Parse(dataEmissione)
+            giorno = oDateEmissione.Day
+            anno = oDateEmissione.Year
+            mese = oDateEmissione.Month
+
+
+
+            Request.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
+        End If
 
         '  txtOreCorso
         Request.AddField("OreCorso", txtOreCorso.Text)

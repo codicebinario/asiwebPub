@@ -228,4 +228,8 @@ Public Class AsiMasterPageAlbo
     Protected Sub LinkSettoreValutati_Click(sender As Object, e As EventArgs) Handles LinkSettoreValutati.Click
         Response.Redirect("archivioAlboValutati.aspx")
     End Sub
+
+    Protected Sub lnkExcel_Click(sender As Object, e As EventArgs) Handles lnkExcel.Click
+        Response.Redirect("partecipantiTemplate.aspx")
+    End Sub
 End Class

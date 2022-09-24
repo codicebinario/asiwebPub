@@ -70,7 +70,26 @@
  </div>     
 
 
+            <div class="row">
+     
+    <div class="col">
+        <div class="jumbotron jumbotron-fluid">
+  <div class="container text-center">
+  
+  <a class="btn btn-lg btn-custom" href="GestioneAlbo/DashboardAlbo.aspx" role="button">Consulta Albo</a>
+    
+     
+  </div>
+</div> 
+    </div>
 
+  <div class="col">
+        
+        
+
+  </div>
+ 
+ </div>    
 
 
 

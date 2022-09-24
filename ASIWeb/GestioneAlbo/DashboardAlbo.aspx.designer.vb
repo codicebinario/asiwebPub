@@ -11,122 +11,95 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class AsiMasterPageAlbo
+Partial Public Class DashboardAlbo
 
     '''<summary>
-    '''head control.
+    '''lnkAttive control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents head As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents lnkAttive As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''form1 control.
+    '''lnkScadute control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
+    Protected WithEvents lnkScadute As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''ScriptManager1 control.
+    '''lblAvviso control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ScriptManager1 As Global.System.Web.UI.ScriptManager
+    Protected WithEvents lblAvviso As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lnkHome control.
+    '''txtValore control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkHome As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents txtValore As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lnkAlbo control.
+    '''rbCF control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkAlbo As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents rbCF As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
-    '''litDenominazione control.
+    '''rbCognome control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents litDenominazione As Global.System.Web.UI.WebControls.Literal
+    Protected WithEvents rbCognome As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
-    '''lnkOut control.
+    '''RequiredFieldValidator10 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkOut As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents RequiredFieldValidator10 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''LinkArchivio control.
+    '''CustomValidator1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkArchivio As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents CustomValidator1 As Global.System.Web.UI.WebControls.CustomValidator
 
     '''<summary>
-    '''LinkSettore control.
+    '''btnCheck control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkSettore As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents btnCheck As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''LinkSettoreValutati control.
+    '''phDash control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkSettoreValutati As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''lnkNuovoCorso control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lnkNuovoCorso As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''lnkExcel control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lnkExcel As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''ContentPlaceHolder1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ContentPlaceHolder1 As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents phDash As Global.System.Web.UI.WebControls.PlaceHolder
 End Class

@@ -11,122 +11,122 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class AsiMasterPageAlbo
+Partial Public Class duplica
 
     '''<summary>
-    '''head control.
+    '''lblIntestazioneCorso control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents head As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents lblIntestazioneCorso As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''form1 control.
+    '''HiddenIdRecord control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
+    Protected WithEvents HiddenIdRecord As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''ScriptManager1 control.
+    '''HiddenIDCorso control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ScriptManager1 As Global.System.Web.UI.ScriptManager
+    Protected WithEvents HiddenIDCorso As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''lnkHome control.
+    '''lblnomef control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkHome As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lblnomef As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lnkAlbo control.
+    '''txtDataInizio control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkAlbo As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents txtDataInizio As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''litDenominazione control.
+    '''Calendar1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents litDenominazione As Global.System.Web.UI.WebControls.Literal
+    Protected WithEvents Calendar1 As Global.OboutInc.Calendar2.Calendar
 
     '''<summary>
-    '''lnkOut control.
+    '''MaskedEditExtender4 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkOut As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents MaskedEditExtender4 As Global.AjaxControlToolkit.MaskedEditExtender
 
     '''<summary>
-    '''LinkArchivio control.
+    '''txtDataFine control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkArchivio As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents txtDataFine As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''LinkSettore control.
+    '''Calendar2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkSettore As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents Calendar2 As Global.OboutInc.Calendar2.Calendar
 
     '''<summary>
-    '''LinkSettoreValutati control.
+    '''MaskedEditExtender1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkSettoreValutati As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents MaskedEditExtender1 As Global.AjaxControlToolkit.MaskedEditExtender
 
     '''<summary>
-    '''lnkNuovoCorso control.
+    '''rqDataInizio control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkNuovoCorso As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents rqDataInizio As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''lnkExcel control.
+    '''rqDataFine control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkExcel As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents rqDataFine As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''ContentPlaceHolder1 control.
+    '''btnFase3 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ContentPlaceHolder1 As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents btnFase3 As Global.System.Web.UI.WebControls.Button
 End Class

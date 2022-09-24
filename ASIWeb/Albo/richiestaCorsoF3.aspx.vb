@@ -54,7 +54,7 @@ Public Class richiestaCorsoF3
 
 
         If Session("fase") <> "3" Then
-            Response.Redirect("homeA.aspx")
+            Response.Redirect("../homeA.aspx")
         End If
 
         If IsNothing(Session("tipoEnte")) Then
@@ -116,20 +116,23 @@ Public Class richiestaCorsoF3
             Dim OraCorsoDa As String = DettaglioCorso.OraSvolgimentoDa
             Dim OraCorsoA As String = DettaglioCorso.OraSvolgimentoA
             Dim OreCorso As String = DettaglioCorso.TotaleOre
-
+            Dim DataEmissione As String = Left(DettaglioCorso.DataEmissione, 10)
 
             HiddenIdRecord.Value = DettaglioCorso.IdRecord
 
             lblIntestazioneCorso.Text = "<strong>ID Corso: </strong>" & IDCorso & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente & "<br />" &
-                 "<strong>Indirizzo: </strong>" & indirizzoSvolgimento & "<br />" &
-                 "<strong>Data Inizio: </strong>" & DataCorsoDa & " <strong>Data Fine: </strong>" & DataCorsoA &
+                 "<strong>Indirizzo: </strong>" & indirizzoSvolgimento & "<br />"
+            If Not String.IsNullOrEmpty(DataEmissione) Then
+                lblIntestazioneCorso.Text &= "<strong>Data Emissione: </strong>" & DataEmissione & " - "
+            End If
+            lblIntestazioneCorso.Text &= "<strong>Data Inizio: </strong>" & DataCorsoDa & " <strong>Data Fine: </strong>" & DataCorsoA &
                  " <strong>Ore: </strong>" & OreCorso
 
         End If
 
 
 
-        If fase = 3 Then
+            If fase = 3 Then
             lblnomef.Text = "Dati Fase 2 precedentemente caricati"
         Else
             lblnomef.Text = "Dati Fase 2 caricati correttamente"

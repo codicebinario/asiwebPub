@@ -29,6 +29,7 @@ Public Class scaricaTessera
 
     Inherits System.Web.UI.Page
     Dim codiceCorso As String
+    Dim play As String
     Dim deEnco As New Ed
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
@@ -40,6 +41,7 @@ Public Class scaricaTessera
 
         Dim pdf As String
         codiceCorso = deEnco.QueryStringDecode(Request.QueryString("codR"))
+        play = deEnco.QueryStringDecode(Request.QueryString("play"))
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
 
@@ -110,7 +112,7 @@ Public Class scaricaTessera
             Dim bytes As Byte() = stream.ToArray()
             Response.Cache.SetCacheability(HttpCacheability.NoCache)
             Response.ContentType = "application/pdf"
-            Response.AddHeader("content-disposition", "attachment;filename=" & nominativo & "_Tessera.pdf")
+            Response.AddHeader("content-disposition", "attachment;filename=" & nominativo & "_" & play & "_T.pdf")
             Response.BinaryWrite(bytes)
             Response.Flush()
 

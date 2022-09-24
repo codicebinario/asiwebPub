@@ -335,8 +335,56 @@
                         </div>
                              
                 </div>
-          
 
+
+	   <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+								 <label for="txtNome">Data Emissione - [dd-MM-yyyy] &nbsp;[*] </label>
+                                    <asp:textbox id="txtDataEmissione" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
+					
+                                    
+                                 
+			<obout:Calendar ID="Calendar3"  runat="server"  
+									TextBoxId="txtDataEmissione" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif" 
+									 DatePickerMode="True"   MonthWidth="200" MonthHeight="140"
+									
+								 Visible="true" 	StyleFolder="../calendar/styles/default"     >
+															
+								</obout:Calendar>
+
+
+
+
+
+								   <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender2"
+                        MaskType="Date"
+                        runat="server"
+                        CultureName="it-IT"
+                        Mask="99/99/9999"
+                        MessageValidatorTip="true"
+                        UserDateFormat="DayMonthYear"
+                        OnFocusCssClass="MaskedEditFocus"
+                        OnInvalidCssClass="MaskedEditError"
+                        ErrorTooltipEnabled="True"
+                        TargetControlID="txtDataInizio" />           
+                          
+                                </div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									
+								</div>
+							</div>
+						
+                         
+                        
+                        </div>
+                             
+                </div>
+
+           
 
           <div class="col-sm-12">
 						<div class="row">
