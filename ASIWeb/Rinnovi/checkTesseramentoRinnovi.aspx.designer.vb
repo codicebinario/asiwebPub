@@ -59,13 +59,13 @@ Partial Public Class checkTesseramentoRinnovi
     Protected WithEvents RequiredFieldValidator10 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''btnCheck control.
+    '''lnkCheck control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnCheck As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lnkCheck As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''lblRisultato control.

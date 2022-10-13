@@ -69,7 +69,7 @@
     <h3 class="display-5">Nuovo Rinnovo</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-            <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>     
+            <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>     
     </p>
     
   </div></div>
@@ -203,6 +203,23 @@
                                     <asp:textbox id="txtSport" Cssclass="form-control" runat="server"  maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
 						</div>
 							</div>
+
+							<div class="col-sm-6">
+								<div class="form-group">
+								 <label for="txtLivello">Disciplina </label>
+                                    <asp:textbox id="txtDisciplina" Cssclass="form-control" runat="server"  maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
+						</div>
+							</div>
+
+
+						
+                         
+                        
+                        </div>
+                             
+                </div>
+	  <div class="col-sm-12">
+						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="txtSpecialita">Specialità</label>
@@ -211,9 +228,19 @@
 								
 								</div>
 							</div>
-						
-                         
                         
+							
+						
+                         	<div class="col-sm-6">
+								<div class="form-group">
+									<label for="txtQualifica">Qualifica</label>
+                                    	<asp:textbox id="txtQualifica" runat="server" Cssclass="form-control"   maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
+					
+								
+								</div>
+							</div>
+							
+							
                         </div>
                              
                 </div>
@@ -225,28 +252,10 @@
                                     <asp:textbox id="txtLivello" Cssclass="form-control" runat="server"  maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
 						</div>
 							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label for="txtQualifica">Qualifica</label>
-                                    	<asp:textbox id="txtQualifica" runat="server" Cssclass="form-control"   maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
-					
-								
-								</div>
-							</div>
+
 						
-                         
-                        
-                        </div>
-                             
-                </div>
-	  <div class="col-sm-12">
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="form-group">
-								 <label for="txtLivello">Disciplina </label>
-                                    <asp:textbox id="txtDisciplina" Cssclass="form-control" runat="server"  maxlength="250" ReadOnly="true" BackColor="#FFCCCC" ></asp:textbox>
-						</div>
-							</div>
+
+							
 							
 						
                          
@@ -534,7 +543,9 @@
 							<div class="col-sm-12">
 								<div class="form-group">
                                    
-						            <asp:Button ID="btnFase3" runat="server" Text="Concludi" class="btn btn-primary"    />
+						            <%--<asp:Button ID="btnFase3" runat="server" Text="Concludi" class="btn btn-primary"    />--%>
+    <asp:LinkButton ID="lnkConcludi" class="btn btn-primary"   runat="server"><i class="bi bi-save"> </i>Concludi</asp:LinkButton>                       
+
                                    
 						</div>
 							</div>

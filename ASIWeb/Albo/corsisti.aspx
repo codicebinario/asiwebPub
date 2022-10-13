@@ -3,6 +3,13 @@
         <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
+    <style>
+
+        .photo-img:hover {
+    transform:scale(1.05);
+   
+}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

@@ -334,6 +334,43 @@ Public Class DashboardEqui
 
 
 
+                    phDash.Controls.Add(New LiteralControl("<hr>"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+
+                    phDash.Controls.Add(New LiteralControl("Qualifica DT:  "))
+
+                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small>"))
+                    phDash.Controls.Add(New LiteralControl())
+
+                    phDash.Controls.Add(New LiteralControl("</span><br />"))
+
+
+                    phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
+
+                    phDash.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Equi_Disciplina_Interessata")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl())
+
+                    ' phDash.Controls.Add(New LiteralControl("</span>"))
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
 
 
 

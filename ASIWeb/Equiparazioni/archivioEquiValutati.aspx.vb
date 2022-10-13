@@ -66,7 +66,7 @@ Public Class archivioEquiValutati
         Dim ds As DataSet
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webCorsiRichiesta")
+        fmsP.SetLayout("webEquiparazioniRichiesta")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
@@ -137,23 +137,13 @@ Public Class archivioEquiValutati
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6  text-left"">"))
 
                     phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
-
-
-
-
-
-
-
-
-                    phDash.Controls.Add(New LiteralControl("</div>"))
 
 
 
@@ -164,7 +154,40 @@ Public Class archivioEquiValutati
 
 
 
+                    phDash.Controls.Add(New LiteralControl("<hr>"))
 
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+
+                    phDash.Controls.Add(New LiteralControl("Qualifica DT:  "))
+
+                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small>"))
+                    phDash.Controls.Add(New LiteralControl())
+
+                    phDash.Controls.Add(New LiteralControl("</span><br />"))
+
+
+                    phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
+
+                    phDash.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Equi_Disciplina_Interessata")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl())
+
+                    ' phDash.Controls.Add(New LiteralControl("</span>"))
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
 
 
 

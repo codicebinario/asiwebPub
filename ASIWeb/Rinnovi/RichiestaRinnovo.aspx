@@ -70,7 +70,7 @@
     <h3 class="display-5">Nuovo Rinnovo</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-            <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>     
+            <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>     
     </p>
     
   </div></div>
@@ -143,7 +143,9 @@
 							<div class="col-sm-12">
 								<div class="form-group">
                                    
-						            <asp:Button ID="btnCF"  runat="server" Text="Scegli" class="btn btn-primary"    />
+						          <%--  <asp:Button ID="btnCF"  runat="server" Text="Scegli" class="btn btn-primary"    />--%>
+
+                                     <asp:LinkButton ID="lnkCF" class="btn btn-primary" runat="server"><i class="bi bi-check-all"></i>Scegli</asp:LinkButton>    
                                    
 						</div>
 							</div>
@@ -168,8 +170,11 @@
 							<div class="col-sm-12">
 								<div class="form-group">
                                    
-						            <asp:Button ID="BtnAvanti" Visible="false" CausesValidation="false"  runat="server" Text="Avanti" class="btn btn-primary"    />
-                                   
+					<%--	            <asp:Button ID="BtnAvanti"    runat="server" Text="Avanti" class="btn btn-primary"    />--%>
+                                
+                     <asp:LinkButton ID="lnkAvanti" class="btn btn-primary" Visible="false" CausesValidation="false" runat="server"><i class="bi bi-fast-forward"> </i>Avanti</asp:LinkButton>                       
+
+
 						</div>
 							</div>
 							

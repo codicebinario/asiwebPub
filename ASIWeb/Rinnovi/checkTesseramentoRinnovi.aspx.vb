@@ -104,7 +104,97 @@ Public Class checkTesseramentoRinnovi
         End If
     End Sub
 
-    Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+    '    Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+    '        If Page.IsValid Then
+
+
+    '            Dim risultatoCheck As Boolean
+    '            Dim dataOggi As Date = Today.Date
+    '            Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+
+    '            Dim DettaglioRinnovo As New DatiNuovoRinnovo
+
+
+    '            risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
+    '            DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(txtCodiceFiscale.Text)
+    '            Session("visto") = "ok"
+    '            If risultatoCheck = True Then
+
+    '                '   Response.Write("ok")
+    '                Session("procedi") = "OK"
+    '                Session("codiceFiscale") = Trim(txtCodiceFiscale.Text)
+
+
+
+    '                CaricaDatiDocumentoRinnovo(Session("IDRinnovo"), Session("id_record"), Trim(txtCodiceFiscale.Text),
+    'DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
+
+
+
+    '                Response.Redirect("richiestaRinnovo.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+
+
+
+    '            Else
+
+    '                'Response.Write("ko")
+
+    '                Session("procedi") = "KO"
+    '                Response.Redirect("DashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+
+
+    '            End If
+
+
+
+
+    '        End If
+    '    End Sub
+
+    Public Function CaricaDatiDocumentoRinnovo(codR As String, IDRinnovo As String, codiceFiscale As String,
+                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String, comuneNascita As String, datanascita As String) As Boolean
+        '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
+
+
+        ' Dim ds As DataSet
+
+
+        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        '  Dim ds As DataSet
+        Dim risposta As String = ""
+        fmsP.SetLayout("webRinnoviRichiesta")
+        Dim Request = fmsP.CreateEditRequest(IDRinnovo)
+
+
+        Request.AddField("Rin_CFVerificatoTessera", "1")
+
+        Request.AddField("Rin_CodiceFiscale", codiceFiscale)
+        Request.AddField("Rin_NumeroTessera", codiceTessera)
+        Request.AddField("Rin_Nome", nome)
+        Request.AddField("Rin_Cognome", cognome)
+        Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaData(dataScadenza))
+        Request.AddField("Rin_ComuneNascita", comuneNascita)
+        Request.AddField("Rin_DataNascita", Data.SonoDieci(datanascita))
+
+
+
+        '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+
+        '  Try
+        risposta = Request.Execute()
+
+
+
+        '  Catch ex As Exception
+
+        '  End Try
+
+
+
+        Return True
+    End Function
+
+    Protected Sub lnkCheck_Click(sender As Object, e As EventArgs) Handles lnkCheck.Click
         If Page.IsValid Then
 
 
@@ -150,47 +240,4 @@ DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera,
 
         End If
     End Sub
-
-    Public Function CaricaDatiDocumentoRinnovo(codR As String, IDRinnovo As String, codiceFiscale As String,
-                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String, comuneNascita As String, datanascita As String) As Boolean
-        '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
-
-
-        ' Dim ds As DataSet
-
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As String = ""
-        fmsP.SetLayout("webRinnoviRichiesta")
-        Dim Request = fmsP.CreateEditRequest(IDRinnovo)
-
-
-        Request.AddField("Rin_CFVerificatoTessera", "1")
-
-        Request.AddField("Rin_CodiceFiscale", codiceFiscale)
-        Request.AddField("Rin_NumeroTessera", codiceTessera)
-        Request.AddField("Rin_Nome", nome)
-        Request.AddField("Rin_Cognome", cognome)
-        Request.AddField("Rin_DataScadenza", Data.SistemaData(dataScadenza))
-        Request.AddField("Rin_ComuneNascita", comuneNascita)
-        Request.AddField("Rin_DataNascita", Data.SistemaData(datanascita))
-
-
-
-        '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
-
-        '  Try
-        risposta = Request.Execute()
-
-
-
-        '  Catch ex As Exception
-
-        '  End Try
-
-
-
-        Return True
-    End Function
 End Class

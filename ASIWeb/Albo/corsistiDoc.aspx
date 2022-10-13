@@ -17,6 +17,13 @@
         }
 
     </script>
+    <style>
+
+        .photo-img:hover {
+    transform:scale(1.05);
+   
+}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

@@ -206,6 +206,8 @@
     <Content Include="Albo\dashboardB.aspx" />
     <Content Include="Albo\dashboardV.aspx" />
     <Content Include="Albo\duplica.aspx" />
+    <Content Include="Albo\json.aspx" />
+    <Content Include="Albo\jsonData.txt" />
     <Content Include="Albo\partecipantiTemplate.aspx" />
     <Content Include="Albo\WebForm8.aspx" />
     <Content Include="AsiMasterPageEqui.Master" />
@@ -222,6 +224,7 @@
     <Content Include="Equiparazioni\richiestaEquiparazioneFoto.aspx" />
     <Content Include="Equiparazioni\scaricaDiplomaEqui.aspx" />
     <Content Include="Equiparazioni\upLegEquiparazioni.aspx" />
+    <Content Include="Equiparazioni\valutaEquiparazione.aspx" />
     <Content Include="Equiparazioni\vediDocumentazione.aspx" />
     <Content Include="GestioneAlbo\DashboardAlbo.aspx" />
     <Content Include="GestioneAlbo\ExcelOpenXmlStyles.xml" />
@@ -392,10 +395,10 @@
     <Content Include="Rinnovi\DashboardRinnoviEvasi.aspx" />
     <Content Include="Rinnovi\RichiestaRinnovo.aspx" />
     <Content Include="Rinnovi\RichiestaRinnovo1.aspx" />
+    <Content Include="Rinnovi\scaricaTesseraRinnovo.aspx" />
     <Content Include="Rinnovi\upDichiarazione.aspx" />
     <Content Include="Rinnovi\UpFotoRinnovo.aspx" />
     <Content Include="Rinnovi\upLegRinnovi.aspx" />
-    <Content Include="Rinnovi\WebForm5.aspx" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -471,6 +474,7 @@
     <Content Include="AsiMasterPageAA.Master" />
     <Content Include="AsiMasterPageRinnovi.Master" />
     <Content Include="AsiMasterPageGestioneAlbo.Master" />
+    <Content Include="Albo\json.json" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -523,6 +527,7 @@
       <DependentUpon>archivioAlboValutati.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Albo\asi.vb" />
     <Compile Include="Albo\corsisti.aspx.designer.vb">
       <DependentUpon>corsisti.aspx</DependentUpon>
     </Compile>
@@ -563,6 +568,13 @@
     </Compile>
     <Compile Include="Albo\duplica.aspx.vb">
       <DependentUpon>duplica.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Albo\json.aspx.designer.vb">
+      <DependentUpon>json.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\json.aspx.vb">
+      <DependentUpon>json.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Albo\partecipantiTemplate.aspx.designer.vb">
@@ -682,6 +694,13 @@
     </Compile>
     <Compile Include="Equiparazioni\upLegEquiparazioni.aspx.vb">
       <DependentUpon>upLegEquiparazioni.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\valutaEquiparazione.aspx.designer.vb">
+      <DependentUpon>valutaEquiparazione.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\valutaEquiparazione.aspx.vb">
+      <DependentUpon>valutaEquiparazione.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni\vediDocumentazione.aspx.designer.vb">
@@ -1014,6 +1033,13 @@
       <DependentUpon>RichiestaRinnovo1.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi\scaricaTesseraRinnovo.aspx.designer.vb">
+      <DependentUpon>scaricaTesseraRinnovo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\scaricaTesseraRinnovo.aspx.vb">
+      <DependentUpon>scaricaTesseraRinnovo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi\upDichiarazione.aspx.designer.vb">
       <DependentUpon>upDichiarazione.aspx</DependentUpon>
     </Compile>
@@ -1033,13 +1059,6 @@
     </Compile>
     <Compile Include="Rinnovi\upLegRinnovi.aspx.vb">
       <DependentUpon>upLegRinnovi.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\WebForm5.aspx.designer.vb">
-      <DependentUpon>WebForm5.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\WebForm5.aspx.vb">
-      <DependentUpon>WebForm5.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="sendFirstEmail.aspx.designer.vb">

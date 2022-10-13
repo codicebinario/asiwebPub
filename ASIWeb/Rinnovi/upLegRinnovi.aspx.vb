@@ -64,6 +64,10 @@ Public Class upLegRinnovi
             Response.Redirect("../login.aspx")
         End If
         Dim record_ID As String = ""
+
+
+
+
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         If Not String.IsNullOrEmpty(record_ID) Then
 
@@ -74,7 +78,7 @@ Public Class upLegRinnovi
         If IsNothing(Session("id_record")) Then
             Response.Redirect("../login.aspx")
         End If
-
+        'Dim corx = Request.QueryString("codR")
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
 
 
@@ -115,8 +119,7 @@ Public Class upLegRinnovi
 
 
         If QuantiAllegati(codR) = "no" Then
-
-            Button1.Enabled = False
+            lnkButton1.Enabled = False
             uploadedFiles.Text = ""
 
             uploadedFiles.Text = "<b>non è possibile caricare ulteriori documenti </b>"
@@ -206,7 +209,7 @@ Public Class upLegRinnovi
 
 
         If QuantiAllegati(HiddenIDRinnovo.Value) = "no" Then
-            Button1.Enabled = False
+            lnkButton1.Enabled = False
             uploadedFiles.Text = ""
 
             uploadedFiles.Text = "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>non è possibile caricare ulteriori documenti </b>"
@@ -241,10 +244,6 @@ Public Class upLegRinnovi
 
 
 
-        'Request.AddField("Codice_Articolo", AsiModel.CodiceArticolo)
-        'Request.AddField("Nome_Articolo", AsiModel.NomeArticolo)
-        'Request.AddField("Quantita", txtQuantita.Text)
-
 
         Dim IdAllegato As String = Request.Execute() 'per upload
 
@@ -253,9 +252,14 @@ Public Class upLegRinnovi
 
         fmsP11.SetLayout("webRinnoviAllegati")
         Dim Request11 = fmsP11.CreateEditRequest(IdAllegato)
-        '   Request.AddScript("SistemaEncodingNoteUpload_Pagamento", IdAllegato)
+        Request11.AddScript("SistemaEncodingNoteUpload_PagamentoRinnovo", IdAllegato)
+
 
         Request11.Execute()
+
+
+
+
 
 
         Dim record_id As String = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDRinnovi(codR) ' per aggiornare status
@@ -325,12 +329,159 @@ Public Class upLegRinnovi
 
     End Function
 
-    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    'Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
 
+    '    If QuantiAllegati(HiddenIDRinnovo.Value) = "no" Then
+
+    '        Button1.Enabled = False
+    '        uploadedFiles.Text = ""
+
+    '        uploadedFiles.Text = "<b>non è possibile caricare ulteriori documenti </b>"
+
+
+    '    Else
+
+
+
+
+    '        If uploadProgress.Files.Count > 0 Then
+
+
+
+
+
+    '            '****************************************************
+    '            Dim files As OboutFileCollection = uploadProgress.Files
+    '            Dim i As Integer
+
+    '            uploadedFiles.Text = ""
+
+    '            For i = 0 To files.Count - 1 Step 1
+    '                Dim file As OboutPostedFile = files(i)
+
+
+
+    '                Dim whereToSave As String = "../file_storage_RinnoviPag/"
+
+    '                tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+    '                ext = Path.GetExtension((file.FileName))
+    '                nomefileReale = Path.GetFileName(file.FileName)
+    '                nomecaricato = HiddenIDRinnovo.Value & "_" + tokenZ + ext
+
+
+
+
+
+    '                '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
+
+    '                file.SaveAs(MapPath(whereToSave + nomecaricato))
+
+
+
+
+    '                If uploadedFiles.Text.Length = 0 Then
+
+    '                    'If QuantiAllegati(HiddenIDCorso.Value) = "no" Then
+    '                    '    Button1.Enabled = False
+    '                    '    uploadedFiles.Text = ""
+
+    '                    '    uploadedFiles.Text = "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>non è possibile caricare ulteriori documenti </b>"
+    '                    'Else
+
+    '                    '    uploadedFiles.Text += "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>è possibile caricare ulteriori documenti </b>"
+    '                    'End If
+
+
+
+
+    '                End If
+
+    '                '        file.SaveAs(MapPath(whereToSave + Path.GetFileName(file.FileName)))
+
+    '                'If uploadedFiles.Text.Length = 0 Then
+    '                '    '        uploadedFiles.Text += "<b>File loaded:</b><table border=0 cellspacing=0>"
+
+    '                'Else
+
+    '                'End If
+
+    '                'uploadedFiles.Text += "<tr>"
+    '                'uploadedFiles.Text += "<td class='option2'>" + Path.GetFileName(file.FileName) + "</td>"
+    '                'uploadedFiles.Text += "<td style='font:11px Verdana;'>&nbsp;&nbsp;" + file.ContentLength.ToString() + " bytes </td>"
+    '                'uploadedFiles.Text += "<td class='option2'>&nbsp;&nbsp;(" + file.ContentType + ")</td>"
+    '                'uploadedFiles.Text += "<td style='font:11px Verdana;'>&nbsp;&nbsp;<b>a</b>: " + whereToSave + "</td>"
+    '                'uploadedFiles.Text += "</tr>"
+
+
+
+    '            Next
+
+    '            Dim tokenx As String = ""
+    '            Dim id_att As String = ""
+    '            Dim tuttoRitorno As String = ""
+
+    '            tuttoRitorno = NuovaRichiestaAllegato(HiddenIDRinnovo.Value, nomecaricato)
+    '            txtNote.Text = ""
+    '            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+    '            tokenx = arrKeywords(1)
+    '            id_att = arrKeywords(0)
+    '            CaricaSuFM(tokenx, id_att, nomecaricato)
+
+
+
+    '        End If
+
+    '    End If
+    '    'Else
+    '    'End If
+    'End Sub
+    Private Function deleteFile(nomecaricato As String) As Boolean
+        Dim FileToDelete As String
+        Dim ritorno As Boolean = False
+        '    FileToDelete = "D:\Soft\Lisa\ASIWeb\ASIWeb\file_storage\" & nomecaricato
+        FileToDelete = Server.MapPath("../file_storage_RinnoviPag/" & nomecaricato)
+        Try
+
+
+            If System.IO.File.Exists(FileToDelete.ToString()) = True Then
+                System.IO.File.Delete(FileToDelete.ToString())
+                ritorno = True
+            Else
+                ritorno = False
+
+            End If
+
+        Catch ex As Exception
+            ritorno = False
+        End Try
+        '  Try
+
+
+        '    If System.IO.File.Exists(FileToDelete) = True Then
+
+        '        System.IO.File.Delete(FileToDelete)
+        '        ritorno = True
+        '    Else
+
+        '        ritorno = False
+
+
+        '    End If
+        'Catch ex As Exception
+        '    ritorno = False
+        'End Try
+        Return ritorno
+    End Function
+
+    Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
+        Response.Redirect("dashboardRinnovi.aspx#" & codR)
+    End Sub
+
+    Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
         If QuantiAllegati(HiddenIDRinnovo.Value) = "no" Then
 
-            Button1.Enabled = False
+            lnkButton1.Enabled = False
             uploadedFiles.Text = ""
 
             uploadedFiles.Text = "<b>non è possibile caricare ulteriori documenti </b>"
@@ -431,46 +582,5 @@ Public Class upLegRinnovi
         End If
         'Else
         'End If
-    End Sub
-    Private Function deleteFile(nomecaricato As String) As Boolean
-        Dim FileToDelete As String
-        Dim ritorno As Boolean = False
-        '    FileToDelete = "D:\Soft\Lisa\ASIWeb\ASIWeb\file_storage\" & nomecaricato
-        FileToDelete = Server.MapPath("../file_storage_RinnoviPag/" & nomecaricato)
-        Try
-
-
-            If System.IO.File.Exists(FileToDelete.ToString()) = True Then
-                System.IO.File.Delete(FileToDelete.ToString())
-                ritorno = True
-            Else
-                ritorno = False
-
-            End If
-
-        Catch ex As Exception
-            ritorno = False
-        End Try
-        '  Try
-
-
-        '    If System.IO.File.Exists(FileToDelete) = True Then
-
-        '        System.IO.File.Delete(FileToDelete)
-        '        ritorno = True
-        '    Else
-
-        '        ritorno = False
-
-
-        '    End If
-        'Catch ex As Exception
-        '    ritorno = False
-        'End Try
-        Return ritorno
-    End Function
-
-    Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
-        Response.Redirect("dashboardRinnovi.aspx#" & codR)
     End Sub
 End Class

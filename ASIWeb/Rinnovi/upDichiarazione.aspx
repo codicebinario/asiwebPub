@@ -134,7 +134,7 @@ function ServerException(mess) {
     <h3 class="display-5">Invio della Dichiarazione Cambio Ente Affiliante</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-                 <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
+                 <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>
     </p>
     
   </div></div>
@@ -201,7 +201,10 @@ function ServerException(mess) {
                 
       <div class="input-group-append">
        <%-- <button class="btn btn-primary" type="button" id="customFileInput1">Upload</button>--%>
-         <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary"/>
+       <%--  <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary"/>--%>
+      <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
+
+
 
         <%--  <input type="submit" id="summ" runat="server" OnClick="Upload" value="Carica" name="mySubmit" />--%>
       </div>

@@ -119,8 +119,8 @@ Public Class upDichiarazione
         End If
     End Sub
 
-    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If uploadProgress.Files.Count > 0 Then
+    'Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    '    If uploadProgress.Files.Count > 0 Then
 
 
 
@@ -128,82 +128,82 @@ Public Class upDichiarazione
 
 
 
-            '****************************************************
-            Dim files As OboutFileCollection = uploadProgress.Files
-            Dim i As Integer
+    '        '****************************************************
+    '        Dim files As OboutFileCollection = uploadProgress.Files
+    '        Dim i As Integer
 
-            uploadedFiles.Text = ""
-            '   Try
+    '        uploadedFiles.Text = ""
+    '        '   Try
 
-            For i = 0 To files.Count - 1 Step 1
-                Dim file As OboutPostedFile = files(i)
-
-
-
-                Dim whereToSave As String = "../file_storage_dichiarazioni/"
-
-                tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                ext = Path.GetExtension((file.FileName))
-                nomefileReale = Path.GetFileName(file.FileName)
-                nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+    '        For i = 0 To files.Count - 1 Step 1
+    '            Dim file As OboutPostedFile = files(i)
 
 
 
+    '            Dim whereToSave As String = "../file_storage_dichiarazioni/"
 
-
-                '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
-
-                file.SaveAs(MapPath(whereToSave + nomecaricato))
+    '            tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+    '            ext = Path.GetExtension((file.FileName))
+    '            nomefileReale = Path.GetFileName(file.FileName)
+    '            nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
 
 
 
 
-                If uploadedFiles.Text.Length = 0 Then
 
+    '            '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
 
-                    Button1.Enabled = False
-                    uploadedFiles.Text = ""
-
-                    uploadedFiles.Text = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
+    '            file.SaveAs(MapPath(whereToSave + nomecaricato))
 
 
 
 
-                End If
+    '            If uploadedFiles.Text.Length = 0 Then
+
+
+    '                lnkButton1.Enabled = False
+    '                uploadedFiles.Text = ""
+
+    '                uploadedFiles.Text = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
 
 
 
-            Next
 
-            Dim tokenx As String = ""
-            Dim id_att As String = ""
-            Dim tuttoRitorno As String = ""
-
-            tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDRinnovo.Value, nomecaricato)
-            txtNote.Text = ""
-            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-            tokenx = arrKeywords(1)
-            id_att = arrKeywords(0)
-            CaricaSuFM(tokenx, id_att, nomecaricato)
-            '   pnlFase1.Visible = False
-            ' btnFase2.Visible = True
-            'deleteFile(nomecaricato)
-            '  Session("fase") = "2"
-            '  Response.Redirect("dashboardB.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
-            Response.Redirect("dashboardRinnovi.aspx#" & Session("IDRinnovo"))
-            '   Catch ex As Exception
-
-            '      uploadedFiles.Text = "<b>Documento non caricato: </b><br/>"
+    '            End If
 
 
-            '   End Try
 
-        Else
-            uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
-        End If
+    '        Next
+
+    '        Dim tokenx As String = ""
+    '        Dim id_att As String = ""
+    '        Dim tuttoRitorno As String = ""
+
+    '        tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDRinnovo.Value, nomecaricato)
+    '        txtNote.Text = ""
+    '        Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+    '        tokenx = arrKeywords(1)
+    '        id_att = arrKeywords(0)
+    '        CaricaSuFM(tokenx, id_att, nomecaricato)
+    '        '   pnlFase1.Visible = False
+    '        ' btnFase2.Visible = True
+    '        'deleteFile(nomecaricato)
+    '        '  Session("fase") = "2"
+    '        '  Response.Redirect("dashboardB.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+    '        Response.Redirect("dashboardRinnovi.aspx#" & Session("IDRinnovo"))
+    '        '   Catch ex As Exception
+
+    '        '      uploadedFiles.Text = "<b>Documento non caricato: </b><br/>"
 
 
-    End Sub
+    '        '   End Try
+
+    '    Else
+    '        uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
+    '    End If
+
+
+    'End Sub
     Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String) As Boolean
 
         Dim host As String = HttpContext.Current.Request.Url.Host.ToLower()
@@ -270,6 +270,8 @@ Public Class upDichiarazione
         Request.AddField("DichiarazioneEAOnFS", nomecaricato)
         Request.AddField("NoteDichiarazione", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
         Request.AddField("Codice_Status", "152")
+        Request.AddScript("SistemaEncodingNoteDichiarazioneRinnovi", IDRinnovo)
+
         AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
         '  Request.AddField("Fase", "1")
         ' Request.AddField("CheckVerbale", "1")
@@ -333,5 +335,89 @@ Public Class upDichiarazione
     Protected Sub btnFase2_Click(sender As Object, e As EventArgs) Handles btnFase2.Click
         Session("fase") = "2"
         Response.Redirect("richiestaCorsoF2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+    End Sub
+
+    Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
+        If uploadProgress.Files.Count > 0 Then
+
+
+
+
+
+
+
+            '****************************************************
+            Dim files As OboutFileCollection = uploadProgress.Files
+            Dim i As Integer
+
+            uploadedFiles.Text = ""
+            '   Try
+
+            For i = 0 To files.Count - 1 Step 1
+                Dim file As OboutPostedFile = files(i)
+
+
+
+                Dim whereToSave As String = "../file_storage_dichiarazioni/"
+
+                tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                ext = Path.GetExtension((file.FileName))
+                nomefileReale = Path.GetFileName(file.FileName)
+                nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+
+
+
+
+
+                '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
+
+                file.SaveAs(MapPath(whereToSave + nomecaricato))
+
+
+
+
+                If uploadedFiles.Text.Length = 0 Then
+
+
+                    lnkButton1.Enabled = False
+                    uploadedFiles.Text = ""
+
+                    uploadedFiles.Text = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
+
+
+
+
+                End If
+
+
+
+            Next
+
+            Dim tokenx As String = ""
+            Dim id_att As String = ""
+            Dim tuttoRitorno As String = ""
+
+            tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDRinnovo.Value, nomecaricato)
+            txtNote.Text = ""
+            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+            tokenx = arrKeywords(1)
+            id_att = arrKeywords(0)
+            CaricaSuFM(tokenx, id_att, nomecaricato)
+            '   pnlFase1.Visible = False
+            ' btnFase2.Visible = True
+            'deleteFile(nomecaricato)
+            '  Session("fase") = "2"
+            '  Response.Redirect("dashboardB.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+            Response.Redirect("dashboardRinnovi.aspx#" & Session("IDRinnovo"))
+            '   Catch ex As Exception
+
+            '      uploadedFiles.Text = "<b>Documento non caricato: </b><br/>"
+
+
+            '   End Try
+
+        Else
+            uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
+        End If
     End Sub
 End Class

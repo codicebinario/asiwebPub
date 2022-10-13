@@ -1393,6 +1393,7 @@ Public Class AsiModel
 
                         DatiRinnovo.Cognome = Data.FixNull(dr("Cognome"))
                         DatiRinnovo.Nome = Data.FixNull(dr("Nome"))
+                        ' DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
                         DatiRinnovo.DataScadenza = Data.FixNull(dr("DataScadenza"))
                         DatiRinnovo.CodiceTessera = Data.FixNull(dr("Codice tessera"))
                         DatiRinnovo.ComuneNascita = Data.FixNull(dr("Luogo nascita"))
@@ -1665,6 +1666,34 @@ Public Class AsiModel
 
         End Function
 
+
+        Public Shared Function QuantiCorsisti(codR As String) As Boolean
+            Dim fms As FMSAxml = AsiModel.Conn.Connect()
+            Dim ds As DataSet = Nothing
+            Dim esiste As Boolean = False
+
+            fms.SetLayout("webCorsisti")
+
+            Dim RequestPTot = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestPTot.AddSearchField("IDCorso", codR, Enumerations.SearchOption.equals)
+
+            ds = RequestPTot.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 1 Then
+
+                esiste = True
+            Else
+
+
+                esiste = False
+
+            End If
+
+            Return esiste
+
+        End Function
+
+
         Public Shared Function ControllaQuanti(IDEnte As String, tipo As String)
             Dim vabene As Boolean = False
             Dim ds As DataSet
@@ -1760,7 +1789,62 @@ Public Class AsiModel
         End Function
     End Class
 
-    Public Class EsisteCodRAllegati
+    Public Class QuantiCorsisti
+
+
+
+
+        Public Class EsisteCodRAllegati
+
+            'Public Shared Property Denominazione As String
+            'Public Shared Property Codice As String
+            'Public Shared Property TipoEnte As String
+
+
+
+
+            Public Shared Function EsisteCodR(codR As String) As Boolean
+                Dim fms As FMSAxml = Nothing
+                Dim ds As DataSet = Nothing
+                Dim esiste As Boolean = False
+
+                fms = Conn.Connect()
+
+                '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+                '     fmsB.SetDatabase(Database)
+                fms.SetLayout("web_richiesta_allegati")
+                Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestA.AddSearchField("Codice_Richiesta", codR, Enumerations.SearchOption.equals)
+
+                Try
+                    ds = RequestA.Execute()
+
+
+                    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                        'For Each dr In ds.Tables("main").Rows
+
+                        '    Denominazione = Data.FixNull(dr("denominazione"))
+                        '    TipoEnte = Data.FixNull(dr("tipo_ente"))
+                        '    Codice = Data.FixNull(dr("codice"))
+                        'Next
+
+                        esiste = True
+
+                    End If
+
+
+
+                Catch ex As Exception
+                    esiste = False
+                End Try
+
+                Return esiste
+
+            End Function
+
+        End Class
+
+
 
         'Public Shared Property Denominazione As String
         'Public Shared Property Codice As String
@@ -1809,7 +1893,6 @@ Public Class AsiModel
         End Function
 
     End Class
-
 
     Public Shared Property CodiceRichiesta As String
     Public Shared Property CodiceArticolo As String

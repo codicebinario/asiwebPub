@@ -101,13 +101,15 @@ Public Class DashboardRinnovi
             'Dim counter As Integer = 0
             Dim counter1 As Integer = 0
             'Dim totale As Decimal = 0
+            Dim codR As String
+            Dim record_id As String
             For Each dr In ds.Tables("main").Rows
 
 
                 If Data.FixNull(dr("Codice_Status")) = "151" Or Data.FixNull(dr("Codice_Status")) = "152" Or Data.FixNull(dr("Codice_Status")) = "153" _
                 Or Data.FixNull(dr("Codice_Status")) = "154" Or Data.FixNull(dr("Codice_Status")) = "155" _
-                Or Data.FixNull(dr("Codice_Status")) = "156" Or Data.FixNull(dr("Codice_Status")) = "156" _
-                Or Data.FixNull(dr("Codice_Status")) = "158" Then
+                Or Data.FixNull(dr("Codice_Status")) = "156" Or Data.FixNull(dr("Codice_Status")) = "156" Or Data.FixNull(dr("Codice_Status")) = "157" _
+                Or Data.FixNull(dr("Codice_Status")) = "158" Or Data.FixNull(dr("Codice_Status")) = "159" Then
 
                     counter1 += 1
 
@@ -117,25 +119,56 @@ Public Class DashboardRinnovi
                         foto = "https://93.63.195.98" & Data.FixNull(dr("ASI_foto"))
                     End If
 
-                    Dim fotoCorsisti As New Button
+                    Dim fotoCorsistiLnk As New LinkButton
+                    fotoCorsistiLnk.ID = "Fot_" & counter1
+                    fotoCorsistiLnk.Attributes.Add("runat", "server")
+                    fotoCorsistiLnk.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Foto Opzionale"
 
-                    fotoCorsisti.ID = "Fot_" & counter1
-                    fotoCorsisti.Attributes.Add("runat", "server")
-                    fotoCorsisti.Text = "Foto Opzionale"
-                    fotoCorsisti.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
+                    fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                    ' fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & Data.FixNull(dr("IDRinnovo")) & "&record_ID=" & dr("id_record")
 
-                    fotoCorsisti.Visible = True
+                    fotoCorsistiLnk.CssClass = "btn btn-success btn-sm btn-otto btn-custom  mb-1"
 
+                    fotoCorsistiLnk.Visible = True
 
 
-                    Dim Verb As New Button
+                    Dim hpUPPag As New LinkButton
+
+                    hpUPPag.ID = "hpPag_" & counter1
+                    hpUPPag.Attributes.Add("runat", "server")
+                    codR = WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))))
+                    record_id = WebUtility.UrlEncode(deEnco.QueryStringEncode(WebUtility.UrlEncode(dr("id_record"))))
+                    hpUPPag.PostBackUrl = "upLegRinnovi.aspx?codR=" & codR & "&record_ID=" & record_id
+
+                    hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("Rin_CostoRinnovo")) & " €"
+
+                    hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom  mb-1"
+                    If (Data.FixNull(dr("Codice_Status")) = "158" Or (Data.FixNull(dr("Codice_Status")) = "155")) Then
+                        hpUPPag.Visible = True
+                    Else
+                        hpUPPag.Visible = False
+                    End If
+
+
+                    'Dim fotoCorsisti As New Button
+
+                    'fotoCorsisti.ID = "Fot_" & counter1
+                    'fotoCorsisti.Attributes.Add("runat", "server")
+                    'fotoCorsisti.Text = "Foto Opzionale"
+                    'fotoCorsisti.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
+                    'fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
+
+                    'fotoCorsisti.Visible = True
+
+
+
+                    Dim Verb As New LinkButton
 
                     Verb.ID = "verb_" & counter1
                     Verb.Attributes.Add("runat", "server")
-                    Verb.Text = "Invia dichiarazione cambio E.A."
-                    Verb.PostBackUrl = "upDichiarazione.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    Verb.CssClass = "btn btn-success btn-sm btn-sei btn-custom"
+                    Verb.Text = "<i class=""bi bi-file""> </i>Invia cambio E.A."
+                    Verb.PostBackUrl = "upDichiarazione.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                    Verb.CssClass = "btn btn-success btn-sm btn-sei btn-custom  mb-1"
                     If Data.FixNull(dr("Codice_Status")) = "151" Then
                         Verb.Visible = True
                     Else
@@ -145,21 +178,12 @@ Public Class DashboardRinnovi
 
 
 
-                    Dim hpUPPag As New Button
-
-                    hpUPPag.ID = "hpPag_" & counter1
-                    hpUPPag.Attributes.Add("runat", "server")
-                    hpUPPag.Text = "Invia Pagamento di: " & Data.FixNull(dr("Rin_CostoRinnovo")) & " €"
-                    hpUPPag.PostBackUrl = "upLegRinnovi.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom"
-                    If (Data.FixNull(dr("Codice_Status")) = "158" Or (Data.FixNull(dr("Codice_Status")) = "155")) Then
-                        hpUPPag.Visible = True
-                    Else
-                        hpUPPag.Visible = False
-                    End If
 
 
 
+
+
+                    '   <i class="bi bi-wallet"></i>
                     phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
                     'accordion card
                     phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
@@ -186,15 +210,17 @@ Public Class DashboardRinnovi
                     phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "</small><br />"))
 
                     phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Asi_CodiceFiscale")) & "</small><br />"))
-                    phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenza"))) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Tess. ASI: <small>" & Data.FixNull(dr("Asi_CodiceTessera")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
-                    phDash.Controls.Add(New LiteralControl("Tessera ASI: <small>" & Data.FixNull(dr("Asi_CodiceTessera")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenza"))) & "</small><br />"))
+
                     phDash.Controls.Add(New LiteralControl("-------------------------------<br />"))
                     phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Asi_Sport")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Asi_Disciplina")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Asi_Specialita")) & "</small><br />"))
-                    phDash.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Asi_Livello")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Qualifica: <small>" & Data.FixNull(dr("Asi_Qualifica")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Asi_Livello")) & "</small><br />"))
+
 
                     phDash.Controls.Add(New LiteralControl())
 
@@ -214,7 +240,8 @@ Public Class DashboardRinnovi
 
                     phDash.Controls.Add(hpUPPag)
                     phDash.Controls.Add(Verb)
-                    phDash.Controls.Add(fotoCorsisti)
+                    '   phDash.Controls.Add(fotoCorsisti)
+                    phDash.Controls.Add(fotoCorsistiLnk)
                     phDash.Controls.Add(New LiteralControl("<br /><br /><span class=""text-center"">"))
 
 

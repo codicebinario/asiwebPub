@@ -82,10 +82,11 @@ Public Class DashboardEquiEvasi
         RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
         '  RequestP.AddSearchField("Codice_Status", "115", Enumerations.SearchOption.equals)
         '  RequestP.AddSearchField("Codice_Status", "119", Enumerations.SearchOption.equals)
+        RequestP.SetMax(10)
+
         RequestP.AddSortField("Codice_Status", Enumerations.Sort.Descend)
 
 
-        RequestP.SetMax(10)
 
 
         ds = RequestP.Execute()
@@ -231,6 +232,39 @@ Public Class DashboardEquiEvasi
 
 
 
+                    phDash10.Controls.Add(New LiteralControl("<hr>"))
+
+
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+
+                    phDash10.Controls.Add(New LiteralControl("Qualifica DT:  "))
+
+                    phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small>"))
+                    phDash10.Controls.Add(New LiteralControl())
+
+                    phDash10.Controls.Add(New LiteralControl("</span><br />"))
+
+
+                    phDash10.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
+
+                    phDash10.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Equi_Disciplina_Interessata")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl())
+
+
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+
+
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
 
 
 
@@ -415,8 +449,40 @@ Public Class DashboardEquiEvasi
 
 
 
+                            phDash.Controls.Add(New LiteralControl("<hr>"))
 
 
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("Qualifica DT:  "))
+
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small>"))
+                            phDash.Controls.Add(New LiteralControl())
+
+                            phDash.Controls.Add(New LiteralControl("</span><br />"))
+
+
+                            phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
+
+                            phDash.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Equi_Disciplina_Interessata")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl())
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
 
                             counter1 += 1
                             phDash.Controls.Add(New LiteralControl("</div>"))

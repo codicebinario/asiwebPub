@@ -75,7 +75,7 @@
     <h3 class="display-5">Caricamento foto Rinnovo</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-               <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>     
+               <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>     
     </p>
     
   </div></div>
@@ -126,7 +126,9 @@
         <br />
  <div class="col-sm-12">
     
-    <asp:Button ID="BtnUp" class="btn btn-primary" runat="server" Text="Carica" />
+   <%-- <asp:Button ID="BtnUp" class="btn btn-primary" runat="server" Text="Carica" />--%>
+       <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
+
     </div>
 
 

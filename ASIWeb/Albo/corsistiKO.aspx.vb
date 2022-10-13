@@ -129,9 +129,15 @@ Public Class corsistiKO
         End If
 
         If Not Page.IsPostBack Then
-
+            Dim esistonoCorsisti As Boolean
+            esistonoCorsisti = AsiModel.Corso.QuantiCorsisti(codR)
             '  pnlFase1.Visible = False
-            caricaCorsisti(pag, record_ID, codR, skip, pagine)
+
+            If esistonoCorsisti = True Then
+                caricaCorsisti(pag, record_ID, codR, skip, pagine)
+            End If
+
+
 
         End If
 

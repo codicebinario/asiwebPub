@@ -68,9 +68,9 @@ function ServerException(mess) {
          <div class="col-6 pb-0">
         <p>
             
-              <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Rinnovi Attivi</asp:LinkButton>
+              <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server"><i class="bi bi-skip-backward-btn"> </i>Rinnovi Attivi</asp:LinkButton>
     
-                 <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
+                 <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>
         </p>
        
              </div>
@@ -122,7 +122,11 @@ function ServerException(mess) {
       </div>
       <div class="input-group-append">
        <%-- <button class="btn btn-primary" type="button" id="customFileInput1">Upload</button>--%>
-         <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"  class="btn btn-primary"/>
+         <%-- <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true" class="btn btn-primary" />--%>
+
+  <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
+
+
         <%--  <input type="submit" id="summ" runat="server" OnClick="Upload" value="Carica" name="mySubmit" />--%>
       </div>
     </div>

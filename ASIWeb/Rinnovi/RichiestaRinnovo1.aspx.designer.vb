@@ -131,6 +131,15 @@ Partial Public Class RichiestaRinnovo1
     Protected WithEvents txtSport As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''txtDisciplina control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDisciplina As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtSpecialita control.
     '''</summary>
     '''<remarks>
@@ -138,15 +147,6 @@ Partial Public Class RichiestaRinnovo1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtSpecialita As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''txtLivello control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtLivello As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''txtQualifica control.
@@ -158,13 +158,13 @@ Partial Public Class RichiestaRinnovo1
     Protected WithEvents txtQualifica As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtDisciplina control.
+    '''txtLivello control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtDisciplina As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtLivello As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''UpdatePanel1 control.
@@ -347,11 +347,11 @@ Partial Public Class RichiestaRinnovo1
     Protected WithEvents txtCapConsegna As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''btnFase3 control.
+    '''lnkConcludi control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnFase3 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lnkConcludi As Global.System.Web.UI.WebControls.LinkButton
 End Class

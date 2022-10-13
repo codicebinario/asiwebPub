@@ -9,7 +9,12 @@
          width:50%;
         }
 
-          
+           .AccessoKey{
+
+    text-decoration:underline;
+    color: darkred;
+         }
+
 
     </style>
 </asp:Content>
@@ -23,7 +28,7 @@
   <div class="container text-center">
    
    
-       <a class="btn btn-lg btn-custom " href="dashboard.aspx" role="button">Tesseramento</a>
+       <a class="btn btn-lg btn-custom " href="dashboard.aspx" role="button" accesskey="T"><span class="AccessoKey">T</span>esseramento</a>
   
 </div> 
     </div>
@@ -33,7 +38,7 @@
   <div class="container text-center">
     
   
-      <a class="btn btn-lg btn-custom" href="HomeA.aspx" role="button">Albo</a>
+      <a class="btn btn-lg btn-custom" href="HomeA.aspx" role="button" accesskey="A"><span class="AccessoKey">A</span>lbo</a>
   </div>
 </div>
 

@@ -12,9 +12,10 @@
        a {color: #005a7c;}
         a:hover {color: darkred;}
    
-        .btn-custom {
-         width:160px;
-        font-size: x-small;
+         .btn-custom {
+         width:220px;
+          
+      /*  font-size: xx-small;*/
 
 
         }
@@ -117,8 +118,8 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 							 <label for="txtNomexxxxxxxxxxx">--- </label><br />
-                                     <asp:Button ID="btnCheck" runat="server" Text="Trova" class="btn btn-primary"    />
-								
+                                  <%--   <asp:Button ID="btnCheck" runat="server" Text="Trova" class="btn btn-primary" />--%>
+                                    <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-primary"><i class="bi bi-person-badge"> </i>Trova</asp:LinkButton>
 								</div>
 							</div>
 						
@@ -126,8 +127,11 @@
                         	<div class="col-sm-2">
 								<div class="form-group">
 							 <label for="txtNomexxxxxxxxxxx">--- </label><br />
-                                     <asp:Button ID="btnUltimi5" runat="server" Text="Ultimi 10.." CausesValidation="false" class="btn btn-primary"    />
-								
+                                 
+
+                                   <%--  <asp:Button ID="btnUltimi5" runat="server" Text="Ultimi 10.."  class="btn btn-primary"    />--%>
+								      <asp:LinkButton ID="lnkLast10" runat="server" CausesValidation="false" CssClass="btn btn-primary"><i class="bi bi-list-task"> </i>Ultimi 10..</asp:LinkButton>
+			
 								</div>
 							</div>
 						

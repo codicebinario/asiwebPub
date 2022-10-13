@@ -68,13 +68,13 @@ Partial Public Class RichiestaRinnovo
     Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''btnCF control.
+    '''lnkCF control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnCF As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lnkCF As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''lblScelta control.
@@ -86,11 +86,11 @@ Partial Public Class RichiestaRinnovo
     Protected WithEvents lblScelta As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''BtnAvanti control.
+    '''lnkAvanti control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents BtnAvanti As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lnkAvanti As Global.System.Web.UI.WebControls.LinkButton
 End Class

@@ -235,7 +235,7 @@ Public Class corsisti
                     Dim myImage As Image = FotoS(foto)
                     Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
                     '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img  src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
 
                 End If
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""btn btn-success btn-sm btn-due"" href='upCorsista.aspx?skip=" & skip & "&pag=" & pag & "&codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&id=" & deEnco.QueryStringEncode(id) & "'>Carica Foto</a></td>"))

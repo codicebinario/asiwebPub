@@ -368,25 +368,25 @@ Public Class RichiestaRinnovo1
 
     End Sub
 
-    Protected Sub btnFase3_Click(sender As Object, e As EventArgs) Handles btnFase3.Click
-        If Page.IsValid Then
+    'Protected Sub btnFase3_Click(sender As Object, e As EventArgs) Handles btnFase3.Click
+    '    If Page.IsValid Then
 
-            Dim ritorno As Boolean
+    '        Dim ritorno As Boolean
 
 
-            ritorno = CaricaDatiDaSceltaRinnovo(Session("IDRinnovo"), Session("id_record"), Session("idScelto"))
+    '        ritorno = CaricaDatiDaSceltaRinnovo(Session("IDRinnovo"), Session("id_record"), Session("idScelto"))
 
-            If ritorno = True Then
-                Session("visto") = "ok"
-                Session("rinnovoAggiunto") = "OK"
-                Response.Redirect("dashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("ok"))
-            ElseIf ritorno = False Then
-                Response.Redirect("dashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("pr"))
-                Session("visto") = "ok"
-            End If
+    '        If ritorno = True Then
+    '            Session("visto") = "ok"
+    '            Session("rinnovoAggiunto") = "OK"
+    '            Response.Redirect("dashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("ok"))
+    '        ElseIf ritorno = False Then
+    '            Response.Redirect("dashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("pr"))
+    '            Session("visto") = "ok"
+    '        End If
 
-        End If
-    End Sub
+    '    End If
+    'End Sub
     Public Function CaricaDatiDaSceltaRinnovo(IDRinnovo As String, idrecord As String, idScelto As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
@@ -504,4 +504,23 @@ Public Class RichiestaRinnovo1
         Return ritorno
     End Function
 
+    Protected Sub lnkConcludi_Click(sender As Object, e As EventArgs) Handles lnkConcludi.Click
+        If Page.IsValid Then
+
+            Dim ritorno As Boolean
+
+
+            ritorno = CaricaDatiDaSceltaRinnovo(Session("IDRinnovo"), Session("id_record"), Session("idScelto"))
+
+            If ritorno = True Then
+                Session("visto") = "ok"
+                Session("rinnovoAggiunto") = "OK"
+                Response.Redirect("dashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("ok"))
+            ElseIf ritorno = False Then
+                Response.Redirect("dashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("pr"))
+                Session("visto") = "ok"
+            End If
+
+        End If
+    End Sub
 End Class

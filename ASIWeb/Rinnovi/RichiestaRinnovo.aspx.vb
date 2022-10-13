@@ -199,29 +199,49 @@ Public Class RichiestaRinnovo
 
     End Sub
 
-    Protected Sub btnCF_Click(sender As Object, e As EventArgs) Handles btnCF.Click
+    'Protected Sub btnCF_Click(sender As Object, e As EventArgs) Handles btnCF.Click
 
+    '    'Dim message As RadioButtonList = CType(phDash.FindControl("CFPresenti"), RadioButtonList)
+    '    If Page.IsValid Then
+
+
+    '        lblScelta.Visible = True
+    '    lblScelta.Text = "<small><strong>Hai selezionato per il rinnovo:</strong> <br />" & ddlCF.SelectedItem.Text & "</small>"
+
+    '        Dim idScelto As String = ""
+    '        idScelto = ddlCF.SelectedValue.ToString
+    '        Session("idScelto") = idScelto
+    '        ddlCF.ClearSelection()
+    '        BtnAvanti.Visible = True
+    '    End If
+    'End Sub
+
+    'Protected Sub BtnAvanti_Click(sender As Object, e As EventArgs) Handles BtnAvanti.Click
+
+    '    AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "151", Session("WebUserEnte"), "rinnovo")
+    '    Response.Redirect("richiestaRinnovo1.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+
+    'End Sub
+
+    Protected Sub lnkCF_Click(sender As Object, e As EventArgs) Handles lnkCF.Click
         'Dim message As RadioButtonList = CType(phDash.FindControl("CFPresenti"), RadioButtonList)
         If Page.IsValid Then
 
 
             lblScelta.Visible = True
-        lblScelta.Text = "<small><strong>Hai selezionato per il rinnovo:</strong> <br />" & ddlCF.SelectedItem.Text & "</small>"
+            lblScelta.Text = "<small><strong>Hai selezionato per il rinnovo:</strong> <br />" & ddlCF.SelectedItem.Text & "</small>"
 
             Dim idScelto As String = ""
             idScelto = ddlCF.SelectedValue.ToString
             Session("idScelto") = idScelto
             ddlCF.ClearSelection()
-            BtnAvanti.Visible = True
+            lnkAvanti.Visible = True
         End If
     End Sub
 
-    Protected Sub BtnAvanti_Click(sender As Object, e As EventArgs) Handles BtnAvanti.Click
-
+    Protected Sub lnkAvanti_Click(sender As Object, e As EventArgs) Handles lnkAvanti.Click
         AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "151", Session("WebUserEnte"), "rinnovo")
         Response.Redirect("richiestaRinnovo1.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
 
     End Sub
-
-
 End Class
