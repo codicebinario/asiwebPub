@@ -91,15 +91,15 @@
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
     <h3 class="display-5">Caricamento foto equiparazione</h3>
-      
-       <asp:CheckBox AutoPostBack="true" CssClass="success text-white p-2" ID="chkSalta" Text="Salta il caricamento foto!!!" CausesValidation="false"  runat="server" />
+      <label id="lbl" for="chkSalta" Class="success text-white"  style="padding-left:20px">Salta il caricamento foto!!!</label>
+       <asp:CheckBox AutoPostBack="true" CssClass="success text-white" ID="chkSalta" CausesValidation="false"  runat="server" />
        
      
  
      
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-                <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due">Interrompi il caricamento corso.</a>       
+                <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due"><i class="bi bi-sign-stop-fill"> </i>Interrompi il caricamento corso.</a>       
     </p>
     
   </div></div>
@@ -165,8 +165,9 @@
      </div>
         <br />
  <div class="col-sm-12">
-    
-    <asp:Button ID="BtnUp" class="btn btn-primary" runat="server" Text="Carica" />
+<asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
+
+<%--    <asp:Button ID="BtnUp" class="btn btn-primary" runat="server" Text="Carica" />--%>
     </div>
 
 

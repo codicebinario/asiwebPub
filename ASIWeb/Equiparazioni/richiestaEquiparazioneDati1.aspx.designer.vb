@@ -284,11 +284,11 @@ Partial Public Class richiestaEquiparazioneDati1
     Protected WithEvents chkStampaDiploma As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''btnFase3 control.
+    '''lnkButton1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnFase3 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
 End Class

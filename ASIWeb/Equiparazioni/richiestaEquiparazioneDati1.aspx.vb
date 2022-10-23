@@ -295,16 +295,16 @@ Public Class richiestaEquiparazioneDati1
         End If
     End Sub
 
-    Protected Sub btnFase3_Click(sender As Object, e As EventArgs) Handles btnFase3.Click
-        If Page.IsValid Then
+    'Protected Sub btnFase3_Click(sender As Object, e As EventArgs) Handles btnFase3.Click
+    '    If Page.IsValid Then
 
-            CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
+    '        CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
 
-            Session("fase") = "3"
-            Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&fase=" & deEnco.QueryStringEncode(3))
+    '        Session("fase") = "3"
+    '        Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&fase=" & deEnco.QueryStringEncode(3))
 
-        End If
-    End Sub
+    '    End If
+    'End Sub
 
     Public Function CaricaDatiDocumentoCorso(codR As String, IDEquiparazione As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
@@ -373,5 +373,14 @@ Public Class richiestaEquiparazioneDati1
         Return True
     End Function
 
+    Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
+        If Page.IsValid Then
 
+            CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
+
+            Session("fase") = "3"
+            Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&fase=" & deEnco.QueryStringEncode(3))
+
+        End If
+    End Sub
 End Class

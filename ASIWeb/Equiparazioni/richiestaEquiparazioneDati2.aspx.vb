@@ -445,20 +445,20 @@ Public Class richiestaEquiparazioneDati2
 
 
 
-    Protected Sub btnFase4_Click(sender As Object, e As EventArgs) Handles btnFase4.Click
-        If Page.IsValid Then
+    'Protected Sub btnFase4_Click(sender As Object, e As EventArgs) Handles btnFase4.Click
+    '    If Page.IsValid Then
 
-            CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
+    '        CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
 
-            Session("fase") = "4"
-            Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+    '        Session("fase") = "4"
+    '        Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
 
 
-            Session("equiparazioneaggiunta") = "OK"
-            Response.Redirect("dashboardE.aspx?ris=" & deEnco.QueryStringEncode("ok"))
+    '        Session("equiparazioneaggiunta") = "OK"
+    '        Response.Redirect("dashboardE.aspx?ris=" & deEnco.QueryStringEncode("ok"))
 
-        End If
-    End Sub
+    '    End If
+    'End Sub
 
     Public Function CaricaDatiDocumentoCorso(codR As String, IDEquiparazione As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
@@ -535,4 +535,18 @@ Public Class richiestaEquiparazioneDati2
         End If
     End Sub
 
+    Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
+        If Page.IsValid Then
+
+            CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
+
+            Session("fase") = "4"
+            Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+
+
+            Session("equiparazioneaggiunta") = "OK"
+            Response.Redirect("dashboardE.aspx?ris=" & deEnco.QueryStringEncode("ok"))
+
+        End If
+    End Sub
 End Class

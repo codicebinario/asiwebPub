@@ -49,10 +49,10 @@ Public Class scaricaDiplomaEqui
         Dim pdf As String
         IdEquiparazione = deEnco.QueryStringDecode(Request.QueryString("codR"))
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
+        ' Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
         Dim nominativo As String = deEnco.QueryStringDecode(Request.QueryString("nominativo"))
 
-        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webEquiparazioniRichiesta&-recid=" & record_ID & "&-field=DiplomaEquiparazione(1)", nominativo)
+        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nominativo & "?-db=Asi&-lay=webEquiparazioniRichiesta&-recid=" & record_ID & "&-field=DiplomaEquiparazione(1)", nominativo)
 
 
 

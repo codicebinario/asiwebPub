@@ -104,7 +104,96 @@ Public Class checkTesseramento
         End If
     End Sub
 
-    Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+    '    Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+    '        If Page.IsValid Then
+
+
+    '            Dim risultatoCheck As Boolean
+    '            Dim dataOggi As Date = Today.Date
+    '            Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+
+    '            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+
+
+    '            risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
+    '            DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
+    '            Session("visto") = "ok"
+    '            If risultatoCheck = True Then
+
+    '                '   Response.Write("ok")
+    '                Session("procedi") = "OK"
+    '                Session("codiceFiscale") = Trim(txtCodiceFiscale.Text)
+
+
+
+    '                CaricaDatiDocumentoEquiparazione(Session("IDEquiparazione"), Session("id_record"), Trim(txtCodiceFiscale.Text),
+    'DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazione.CodiceTessera, DettaglioEquiparazione.DataScadenza)
+
+
+
+    '                Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+
+
+
+    '            Else
+
+    '                'Response.Write("ko")
+
+    '                Session("procedi") = "KO"
+    '                Response.Redirect("DashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+
+
+    '            End If
+
+
+
+
+    '        End If
+    '    End Sub
+
+    Public Function CaricaDatiDocumentoEquiparazione(codR As String, IDEquiparazione As String, codiceFiscale As String,
+                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String) As Boolean
+        '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
+
+
+        ' Dim ds As DataSet
+
+
+        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        '  Dim ds As DataSet
+        Dim risposta As String = ""
+        fmsP.SetLayout("webEquiparazioniRichiesta")
+        Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
+
+
+        Request.AddField("Equi_CFVerificatoTessera", "1")
+
+        Request.AddField("Equi_CodiceFiscale", codiceFiscale)
+        Request.AddField("Equi_NumeroTessera", codiceTessera)
+        Request.AddField("Equi_Nome", nome)
+        Request.AddField("Equi_Cognome", cognome)
+        Request.AddField("Equi_DataScadenza", Data.SistemaData(dataScadenza))
+
+
+
+        Request.AddField("Equi_Fase", "0")
+        '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+
+        '  Try
+        risposta = Request.Execute()
+
+
+
+        '  Catch ex As Exception
+
+        '  End Try
+
+
+
+        Return True
+    End Function
+
+    Protected Sub lnkCheck_Click(sender As Object, e As EventArgs) Handles lnkCheck.Click
         If Page.IsValid Then
 
 
@@ -150,46 +239,4 @@ DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazi
 
         End If
     End Sub
-
-    Public Function CaricaDatiDocumentoEquiparazione(codR As String, IDEquiparazione As String, codiceFiscale As String,
-                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String) As Boolean
-        '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
-
-
-        ' Dim ds As DataSet
-
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As String = ""
-        fmsP.SetLayout("webEquiparazioniRichiesta")
-        Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
-
-
-        Request.AddField("Equi_CFVerificatoTessera", "1")
-
-        Request.AddField("Equi_CodiceFiscale", codiceFiscale)
-        Request.AddField("Equi_NumeroTessera", codiceTessera)
-        Request.AddField("Equi_Nome", nome)
-        Request.AddField("Equi_Cognome", cognome)
-        Request.AddField("Equi_DataScadenza", Data.SistemaData(dataScadenza))
-
-
-
-        Request.AddField("Equi_Fase", "0")
-        '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
-
-        '  Try
-        risposta = Request.Execute()
-
-
-
-        '  Catch ex As Exception
-
-        '  End Try
-
-
-
-        Return True
-    End Function
 End Class

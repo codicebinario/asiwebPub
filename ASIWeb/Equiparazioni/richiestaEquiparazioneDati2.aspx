@@ -36,7 +36,7 @@
   </style>
 	 <script type = "text/javascript">
   function DisableButton() {
-      document.getElementById("<%=btnFase4.ClientID %>").disabled = true;
+      document.getElementById("<%=lnkButton1.ClientID %>").disabled = true;
   }
   window.onbeforeunload = DisableButton;
      </script>
@@ -47,7 +47,7 @@
     <h3 class="display-5">Nuova Equiparazione</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-          <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due">Interrompi Equiparazione.</a>        
+          <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due"><i class="bi bi-sign-stop-fill"> </i>Interrompi Equiparazione.</a>        
     </p>
   </div></div>
       <div class="col-sm-12">
@@ -224,7 +224,8 @@
 							<div class="col-sm-12">
 								<div class="form-group">
                                    
-						            <asp:Button ID="btnFase4" runat="server" Text="Concludi" class="btn btn-primary"    />
+<%--						            <asp:Button ID="btnFase4" runat="server" Text="Concludi" class="btn btn-primary"    />--%>
+                                      <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-browser-chrome"> </i>Concludi</asp:LinkButton>      
                                    
 						</div>
 							</div>

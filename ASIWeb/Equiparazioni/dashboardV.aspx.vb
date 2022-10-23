@@ -1,6 +1,8 @@
 ﻿Imports fmDotNet
 Imports ASIWeb.AsiModel
 Imports ASIWeb.Ed
+Imports System.Net
+
 Public Class dashboardV1
     Inherits System.Web.UI.Page
 
@@ -74,7 +76,17 @@ Public Class dashboardV1
 
                     Dim deEnco As New Ed()
                     Dim nomeFile As String
+                    Dim diploma As String
+
+
                     nomeFile = Data.FixNull(dr("NomeFileDiplomaFS"))
+
+                    If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaEquiparazione"))) Then
+                        diploma = "..\img\noPdf.jpg"
+                    Else
+                        diploma = "https://93.63.195.98" & Data.FixNull(dr("DiplomaEquiparazione"))
+                    End If
+
 
                     ' da valutare il diploma sia caricato su Fm,
 
@@ -82,26 +94,28 @@ Public Class dashboardV1
                     '    nomeFile = Data.FixNull(dr("NomeFileOnFSFromFM"))
                     'End If
 
-                    Dim Ann As New Button
+                    Dim Ann As New LinkButton
 
                     Ann.ID = "ann_" & counter1
                     Ann.Attributes.Add("runat", "server")
-                    Ann.Text = "Valuta Equiparazione"
-                    Ann.PostBackUrl = "valutaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    Ann.CssClass = "btn btn-success btn-sm btn-uno btn-custom"
+                    Ann.Text = "<i class=""bi bi-bookmark-check""> </i>Valuta Equiparazione"
+                    Ann.PostBackUrl = "valutaEquiparazione.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                    Ann.CssClass = "btn btn-success btn-sm btn-uno btn-custom mb-2"
                     '    Ann.Attributes.Add("OnClick", "if(!myValuta())return false;")
 
 
 
-                    Dim PianoCorso As New Button
 
-                    PianoCorso.ID = "vediPianoCorso_" & counter1
-                    PianoCorso.Attributes.Add("runat", "server")
-                    PianoCorso.Text = "Scarica Diploma"
-                    '  PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("NomeFileOnFS"))
-                    PianoCorso.PostBackUrl = "scaricaDiplomaEqui.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(nomeFile)
 
-                    PianoCorso.CssClass = "btn btn-success btn-sm btn-due btn-custom"
+                    'Dim PianoCorso As New LinkButton
+
+                    'PianoCorso.ID = "vediPianoCorso_" & counter1
+                    'PianoCorso.Attributes.Add("runat", "server")
+                    'PianoCorso.Text = "<i class=""bi bi-box-arrow-down""> </i>Scarica Diploma"
+                    ''  PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("NomeFileOnFS"))
+                    'PianoCorso.PostBackUrl = "scaricaDiplomaEqui.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(nomeFile))
+
+                    'PianoCorso.CssClass = "btn btn-success btn-sm btn-due btn-custom mb-2"
                     ' PianoCorso.Attributes.Add("OnClick", "if(!myValuta())return false;")
 
 
@@ -152,12 +166,32 @@ Public Class dashboardV1
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
 
-                    phDash.Controls.Add(PianoCorso)
+                    '   phDash.Controls.Add(PianoCorso)
                     phDash.Controls.Add(Ann)
 
+                    If diploma = "..\img\noPdf.jpg" Then
+                        '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
 
 
+                    Else
+                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEqui.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileDiplomaFS"))) & "&nominativo=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
 
+
+                    End If
+
+
+                    'Dim PianoCorso As New LinkButton
+
+                    'PianoCorso.ID = "vediPianoCorso_" & counter1
+                    'PianoCorso.Attributes.Add("runat", "server")
+                    'PianoCorso.Text = "<i class=""bi bi-box-arrow-down""> </i>Scarica Diploma"
+                    ''  PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("NomeFileOnFS"))
+                    'PianoCorso.PostBackUrl = "scaricaDiplomaEqui.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(nomeFile))
+
+                    'PianoCorso.CssClass = "btn btn-success btn-sm btn-due btn-custom mb-2"
+                    ' PianoCorso.Attributes.Add("OnClick", "if(!myValuta())return false;")
 
 
 

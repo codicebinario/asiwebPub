@@ -139,73 +139,73 @@ Public Class richiestaEquiparazioneFoto
         End If
     End Sub
 
-    Protected Sub BtnUp_Click(sender As Object, e As EventArgs) Handles BtnUp.Click
+    'Protected Sub BtnUp_Click(sender As Object, e As EventArgs) Handles BtnUp.Click
 
 
 
 
 
-        If inputfile.PostedFile.ContentLength > MassimoPeso Then
-                results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
-                ' controllo del tipo di file
-            ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
-                results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
+    '    If inputfile.PostedFile.ContentLength > MassimoPeso Then
+    '            results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
+    '            ' controllo del tipo di file
+    '        ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
+    '            results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
 
-            Else
+    '        Else
 
-                '   Response.Write("sono dentro")
-                Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
-                If img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+    '            '   Response.Write("sono dentro")
+    '            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
+    '            If img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
 
-                    results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
-
-
-                ElseIf img.Width > img.Height Then
-                    results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
+    '                results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
 
 
-                ElseIf img.Width >= massinalarghezza OrElse img.Height >= massimaaltezza Then
-                    'Response.Write(maggiore)
-                    ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
-                    Dim rapporto As Integer
-                    rapporto = img.Height / 140
-                    Dim img2 As Drawing.Bitmap
-                    img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
-
-                    Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                    nomecaricato = record_ID & "_" & tokenZ & ".jpg"
-
-                    '   Response.Write(Server.MapPath("..\corsisti\"))
-                    img2.Save(Server.MapPath("..\fotoEquiparazioni\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
-                    inputfile.SaveAs(Server.MapPath("..\fotoEquiparazioni\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
+    '            ElseIf img.Width > img.Height Then
+    '                results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
 
 
+    '            ElseIf img.Width >= massinalarghezza OrElse img.Height >= massimaaltezza Then
+    '                'Response.Write(maggiore)
+    '                ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+    '                Dim rapporto As Integer
+    '                rapporto = img.Height / 140
+    '                Dim img2 As Drawing.Bitmap
+    '                img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
 
-                End If
-                img.Dispose()
+    '                Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+    '                nomecaricato = record_ID & "_" & tokenZ & ".jpg"
 
-
-                Dim tokenx As String = ""
-                Dim id_att As String = ""
-                Dim tuttoRitorno As String = ""
-
-                tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
-
-                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-                tokenx = arrKeywords(1)
-                id_att = arrKeywords(0)
-                CaricaSuFM(tokenx, id_att, nomecaricato)
-
-                Response.Redirect("richiestaEquiparazioneDati1.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(3))
+    '                '   Response.Write(Server.MapPath("..\corsisti\"))
+    '                img2.Save(Server.MapPath("..\fotoEquiparazioni\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
+    '                inputfile.SaveAs(Server.MapPath("..\fotoEquiparazioni\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
 
 
 
-            End If
+    '            End If
+    '            img.Dispose()
+
+
+    '            Dim tokenx As String = ""
+    '            Dim id_att As String = ""
+    '            Dim tuttoRitorno As String = ""
+
+    '            tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
+
+    '            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+    '            tokenx = arrKeywords(1)
+    '            id_att = arrKeywords(0)
+    '            CaricaSuFM(tokenx, id_att, nomecaricato)
+
+    '            Response.Redirect("richiestaEquiparazioneDati1.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(3))
+
+
+
+    '        End If
 
 
 
 
-    End Sub
+    'End Sub
     Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String) As Boolean
 
         Dim host As String = HttpContext.Current.Request.Url.Host.ToLower()
@@ -329,5 +329,68 @@ Public Class richiestaEquiparazioneFoto
             CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
             Response.Redirect("richiestaEquiparazioneDati1.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(3))
         End If
+    End Sub
+
+    Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
+
+
+
+        If inputfile.PostedFile.ContentLength > MassimoPeso Then
+            results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
+            ' controllo del tipo di file
+        ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
+            results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
+
+        Else
+
+            '   Response.Write("sono dentro")
+            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
+            If img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+
+                results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+
+
+            ElseIf img.Width > img.Height Then
+                results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
+
+
+            ElseIf img.Width >= massinalarghezza OrElse img.Height >= massimaaltezza Then
+                'Response.Write(maggiore)
+                ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+                Dim rapporto As Integer
+                rapporto = img.Height / 140
+                Dim img2 As Drawing.Bitmap
+                img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
+
+                Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                nomecaricato = record_ID & "_" & tokenZ & ".jpg"
+
+                '   Response.Write(Server.MapPath("..\corsisti\"))
+                img2.Save(Server.MapPath("..\fotoEquiparazioni\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
+                inputfile.SaveAs(Server.MapPath("..\fotoEquiparazioni\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
+
+
+
+            End If
+            img.Dispose()
+
+
+            Dim tokenx As String = ""
+            Dim id_att As String = ""
+            Dim tuttoRitorno As String = ""
+
+            tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
+
+            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+            tokenx = arrKeywords(1)
+            id_att = arrKeywords(0)
+            CaricaSuFM(tokenx, id_att, nomecaricato)
+
+            Response.Redirect("richiestaEquiparazioneDati1.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(3))
+
+
+
+        End If
+
     End Sub
 End Class
