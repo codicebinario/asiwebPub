@@ -42,7 +42,17 @@ Public Class richiestaCorsoF2
     Dim qualeStatus As String = ""
     Dim nomecaricato As String = ""
     Dim tokenZ As String = ""
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim giorno As Integer = Now.Day()
+        Dim mese As Integer = Now.Month()
+        Dim anno As Integer = Now.Year()
+
+        Calendar3.DateMin = Now.Year() & "/01/01"
+        Calendar3.DateMax = Now.Year & "/12/31"
+        'DateFirstMonth = "2022-08-26"
+        'DateMax = "2022-09-13" DateMin="2022-08-26"
         Dim fase As String = Request.QueryString("fase")
         If Not String.IsNullOrEmpty(fase) Then
             fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
@@ -339,5 +349,20 @@ Public Class richiestaCorsoF2
         End If
     End Sub
 
+    Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
+        If String.IsNullOrEmpty(txtDataEmissione.Text) Then
+            args.IsValid = True
+        Else
 
+            Dim annoCorrente = Now.Year()
+            Dim annoInserito = Right(txtDataEmissione.Text, 4)
+
+            If annoCorrente = annoInserito Then
+                args.IsValid = True
+            Else
+                args.IsValid = False
+            End If
+        End If
+
+    End Sub
 End Class

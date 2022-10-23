@@ -2,6 +2,7 @@
 Imports ASIWeb.AsiModel
 Imports ASIWeb.Ed
 Imports System.Globalization
+Imports System.Net
 
 Public Class DashboardEquiEvasi
     Inherits System.Web.UI.Page
@@ -80,7 +81,7 @@ Public Class DashboardEquiEvasi
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
-        '  RequestP.AddSearchField("Codice_Status", "115", Enumerations.SearchOption.equals)
+        ' RequestP.AddSearchField("Codice_Status", "115", Enumerations.SearchOption.equals)
         '  RequestP.AddSearchField("Codice_Status", "119", Enumerations.SearchOption.equals)
         RequestP.SetMax(10)
 
@@ -97,19 +98,32 @@ Public Class DashboardEquiEvasi
             Dim counter1 As Integer = 0
             Dim totale As Decimal = 0
 
-
-
+            Dim tessera As String
+            Dim nominativo As String
+            Dim diploma As String
 
 
             For Each dr In ds.Tables("main").Rows
+                If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaAsiText"))) Then
+                    diploma = "..\img\noPdf.jpg"
+                Else
+                    diploma = "https://93.63.195.98" & Data.FixNull(dr("DiplomaAsiText"))
+                End If
 
-                Dim VediDocumentazione As New Button
+                If String.IsNullOrWhiteSpace(Data.FixNull(dr("TesseraEquiparazioneText"))) Then
+                    tessera = "..\img\noPdf.jpg"
+                Else
+                    tessera = "https://93.63.195.98" & Data.FixNull(dr("TesseraEquiparazioneText"))
+                End If
+
+
+                Dim VediDocumentazione As New LinkButton
                 VediDocumentazione.CausesValidation = False
                 VediDocumentazione.ID = "VediDoc_" & counter1
                 VediDocumentazione.Attributes.Add("runat", "server")
-                VediDocumentazione.Text = "Diploma e Foto"
-                VediDocumentazione.PostBackUrl = "vediDocumentazione.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom"
+                VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Diploma e Foto"
+                VediDocumentazione.PostBackUrl = "vediDocumentazione.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
                 '  Annulla.OnClientClick = "return confirm(""ciappa"");"
                 'VediDocumentazione.Attributes.Add("OnClick", "if(!myConfirm())return false;")
                 '   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")
@@ -161,6 +175,7 @@ Public Class DashboardEquiEvasi
                     phDash10.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Equi_Nome")) & " " & Data.FixNull(dr("Equi_Cognome")) & "</small><br />"))
 
                     phDash10.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Cod.Tessera: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
                     phDash10.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
 
                     phDash10.Controls.Add(New LiteralControl())
@@ -195,6 +210,30 @@ Public Class DashboardEquiEvasi
                     ' phDash10.Controls.Add(hpUPPag)
 
 
+                    If tessera = "..\img\noPdf.jpg" Then
+                        '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
+
+
+                    Else
+                        phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" target=""_blank"" href='scaricaTesseraEquiparazioneN.aspx?record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraEquiparazioneText"))) & "&nominativo=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))
+
+
+                    End If
+
+
+                    If diploma = "..\img\noPdf.jpg" Then
+                        '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
+
+
+                    Else
+                        phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEquiparazioneN.aspx?record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaAsiText"))) & "&nominativo=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
+
+
+                    End If
 
 
 
@@ -285,7 +324,50 @@ Public Class DashboardEquiEvasi
         End If
 
     End Sub
-    Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+
+
+
+
+
+
+
+
+
+
+
+
+    Function SonoDieci(valore As String) As String
+        Dim risultato As String = ""
+
+        If Len(valore) >= 10 Then
+
+
+            risultato = Left(valore, 10)
+
+
+            risultato = Left(valore, 10)
+
+
+
+        Else
+
+            risultato = ""
+
+        End If
+
+
+
+
+        Return risultato
+
+
+    End Function
+
+    'Protected Sub btnUltimi5_Click(sender As Object, e As EventArgs) Handles btnUltimi5.Click
+    '    Equiparazioni()
+    'End Sub
+
+    Protected Sub lnkCheck_Click(sender As Object, e As EventArgs) Handles lnkCheck.Click
         If Page.IsValid Then
             Dim ds As DataSet
 
@@ -311,16 +393,29 @@ Public Class DashboardEquiEvasi
                     'Dim counter As Integer = 0
                     Dim counter1 As Integer = 0
                     Dim totale As Decimal = 0
-
+                    Dim tessera As String
+                    Dim nominativo As String
+                    Dim diploma As String
                     For Each dr In ds.Tables("main").Rows
+                        If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaAsiText"))) Then
+                            diploma = "..\img\noPdf.jpg"
+                        Else
+                            diploma = "https://93.63.195.98" & Data.FixNull(dr("DiplomaAsiText"))
+                        End If
 
-                        Dim VediDocumentazione As New Button
+                        If String.IsNullOrWhiteSpace(Data.FixNull(dr("TesseraEquiparazioneText"))) Then
+                            tessera = "..\img\noPdf.jpg"
+                        Else
+                            tessera = "https://93.63.195.98" & Data.FixNull(dr("TesseraEquiparazioneText"))
+                        End If
+
+                        Dim VediDocumentazione As New LinkButton
                         VediDocumentazione.CausesValidation = False
                         VediDocumentazione.ID = "VediDoc_" & counter1
                         VediDocumentazione.Attributes.Add("runat", "server")
-                        VediDocumentazione.Text = "Diploma e Foto"
-                        VediDocumentazione.PostBackUrl = "vediDocumentazione.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                        VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom"
+                        VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Diploma e Foto"
+                        VediDocumentazione.PostBackUrl = "vediDocumentazione.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                        VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
                         '  Annulla.OnClientClick = "return confirm(""ciappa"");"
                         'VediDocumentazione.Attributes.Add("OnClick", "if(!myConfirm())return false;")
                         '   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")
@@ -376,6 +471,7 @@ Public Class DashboardEquiEvasi
                             phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Equi_Nome")) & " " & Data.FixNull(dr("Equi_Cognome")) & "</small><br />"))
 
                             phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Cod.Tessera: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
                             phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
 
                             phDash.Controls.Add(New LiteralControl())
@@ -408,6 +504,31 @@ Public Class DashboardEquiEvasi
 
                             '   phDash.Controls.Add(stopFoto)
                             ' phDash.Controls.Add(hpUPPag)
+
+                            If tessera = "..\img\noPdf.jpg" Then
+                                '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
+
+
+                            Else
+                                phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" target=""_blank"" href='scaricaTesseraEquiparazioneN.aspx?record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraEquiparazioneText"))) & "&nominativo=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))
+
+
+                            End If
+
+
+                            If diploma = "..\img\noPdf.jpg" Then
+                                '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
+
+
+                            Else
+                                phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEquiparazioneN.aspx?record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaAsiText"))) & "&nominativo=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
+
+
+                            End If
 
 
 
@@ -509,45 +630,9 @@ Public Class DashboardEquiEvasi
 
 
         End If
-
-
-
-
-
-
-
-
-
-
     End Sub
-    Function SonoDieci(valore As String) As String
-        Dim risultato As String = ""
 
-        If Len(valore) >= 10 Then
-
-
-            risultato = Left(valore, 10)
-
-
-            risultato = Left(valore, 10)
-
-
-
-        Else
-
-            risultato = ""
-
-        End If
-
-
-
-
-        Return risultato
-
-
-    End Function
-
-    Protected Sub btnUltimi5_Click(sender As Object, e As EventArgs) Handles btnUltimi5.Click
+    Protected Sub lnkLast10_Click(sender As Object, e As EventArgs) Handles lnkLast10.Click
         Equiparazioni()
     End Sub
 End Class

@@ -27,29 +27,30 @@ Public Class richiestaTessere
         System.Threading.Thread.CurrentThread.CurrentCulture = cultureFormat
         System.Threading.Thread.CurrentThread.CurrentUICulture = cultureFormat
 
+        If Not Page.IsPostBack Then
+            Dim record_ID As String = ""
+            record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
+            If Not String.IsNullOrEmpty(record_ID) Then
 
-        If Session("auth") = "0" Or IsNothing(Session("auth")) Then
-            Response.Redirect("login.aspx")
+                Session("id_richiesta") = record_ID
+
+            End If
+            If IsNothing(Session("id_richiesta")) Then
+                Response.Redirect("login.aspx")
+            End If
+            Dim codR As String = ""
+            codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
+            If Not String.IsNullOrEmpty(codR) Then
+
+
+                Session("Codice_Richiesta") = codR
+
+            End If
         End If
-        Dim record_ID As String = ""
-        record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        If Not String.IsNullOrEmpty(record_ID) Then
-
-            Session("id_richiesta") = record_ID
-
-        End If
-
-        If IsNothing(Session("id_richiesta")) Then
-            Response.Redirect("login.aspx")
-        End If
-        Dim codR As String = ""
-        codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
-        If Not String.IsNullOrEmpty(codR) Then
 
 
-            Session("Codice_Richiesta") = codR
 
-        End If
+
 
 
         'If Not IsNothing(Session("denominazione")) Then

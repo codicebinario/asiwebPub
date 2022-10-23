@@ -14,6 +14,12 @@
        });
   
    </script> 
+    <script type = "text/javascript">
+        function DisableButton() {
+            document.getElementById("<%=btnSave.ClientID %>").disabled = true;
+        }
+        window.onbeforeunload = DisableButton;
+    </script>
     <style>
 
            a {color: #005a7c;}

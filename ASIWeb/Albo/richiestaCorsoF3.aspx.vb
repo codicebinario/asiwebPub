@@ -222,7 +222,7 @@ Public Class richiestaCorsoF3
 
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestP.AddSearchField("Prime4Lettere", prefixText, Enumerations.SearchOption.beginsWith)
-
+        RequestP.AddSortField("NominativoControllo")
         ds = RequestP.Execute()
 
         Dim customers As List(Of String) = New List(Of String)()

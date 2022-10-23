@@ -223,11 +223,14 @@
     <Content Include="Equiparazioni\richiestaEquiparazioneDati2.aspx" />
     <Content Include="Equiparazioni\richiestaEquiparazioneFoto.aspx" />
     <Content Include="Equiparazioni\scaricaDiplomaEqui.aspx" />
+    <Content Include="Equiparazioni\scaricaDiplomaEquiparazioneN.aspx" />
+    <Content Include="Equiparazioni\scaricaTesseraEquiparazioneN.aspx" />
     <Content Include="Equiparazioni\upLegEquiparazioni.aspx" />
     <Content Include="Equiparazioni\valutaEquiparazione.aspx" />
     <Content Include="Equiparazioni\vediDocumentazione.aspx" />
     <Content Include="GestioneAlbo\DashboardAlbo.aspx" />
     <Content Include="GestioneAlbo\ExcelOpenXmlStyles.xml" />
+    <Content Include="GestioneAlbo\scaricaTesseraAlbo.aspx" />
     <Content Include="GestioneAlbo\scaricaTessere.aspx" />
     <Content Include="GestioneAlbo\scaricaTessereS.aspx" />
     <Content Include="GestioneAlbo\WebForm6.aspx" />
@@ -399,6 +402,7 @@
     <Content Include="Rinnovi\upDichiarazione.aspx" />
     <Content Include="Rinnovi\UpFotoRinnovo.aspx" />
     <Content Include="Rinnovi\upLegRinnovi.aspx" />
+    <Content Include="Rinnovi\WebForm9.aspx" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -689,6 +693,20 @@
       <DependentUpon>scaricaDiplomaEqui.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Equiparazioni\scaricaDiplomaEquiparazioneN.aspx.designer.vb">
+      <DependentUpon>scaricaDiplomaEquiparazioneN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\scaricaDiplomaEquiparazioneN.aspx.vb">
+      <DependentUpon>scaricaDiplomaEquiparazioneN.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\scaricaTesseraEquiparazioneN.aspx.designer.vb">
+      <DependentUpon>scaricaTesseraEquiparazioneN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\scaricaTesseraEquiparazioneN.aspx.vb">
+      <DependentUpon>scaricaTesseraEquiparazioneN.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Equiparazioni\upLegEquiparazioni.aspx.designer.vb">
       <DependentUpon>upLegEquiparazioni.aspx</DependentUpon>
     </Compile>
@@ -715,6 +733,13 @@
     </Compile>
     <Compile Include="GestioneAlbo\DashboardAlbo.aspx.vb">
       <DependentUpon>DashboardAlbo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="GestioneAlbo\scaricaTesseraAlbo.aspx.designer.vb">
+      <DependentUpon>scaricaTesseraAlbo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneAlbo\scaricaTesseraAlbo.aspx.vb">
+      <DependentUpon>scaricaTesseraAlbo.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="GestioneAlbo\scaricaTessere.aspx.designer.vb">
@@ -1060,6 +1085,13 @@
     <Compile Include="Rinnovi\upLegRinnovi.aspx.vb">
       <DependentUpon>upLegRinnovi.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi\WebForm9.aspx.designer.vb">
+      <DependentUpon>WebForm9.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi\WebForm9.aspx.vb">
+      <DependentUpon>WebForm9.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="sendFirstEmail.aspx.designer.vb">
       <DependentUpon>sendFirstEmail.aspx</DependentUpon>

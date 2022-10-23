@@ -44,6 +44,7 @@ Public Class richiestaEquiparazioneDati2
     Dim codR As String = ""
     Dim tokenZ As String = ""
     Dim record_ID As String = ""
+    Dim codiceFiscale As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
 
@@ -65,9 +66,9 @@ Public Class richiestaEquiparazioneDati2
             Response.Redirect("../login.aspx")
         End If
 
-        If IsNothing(Session("codiceFiscale")) Then
-            Response.Redirect("../login.aspx")
-        End If
+        'If IsNothing(Session("codiceFiscale")) Then
+        '    Response.Redirect("../login.aspx")
+        'End If
         'If Session("procedi") <> "OK" Then
 
         '    Response.Redirect("checkTesseramento.aspx")
@@ -85,9 +86,9 @@ Public Class richiestaEquiparazioneDati2
         'pag = Request.QueryString("pag")
         'skip = Request.QueryString("skip")
 
-        If Session("auth") = "0" Or IsNothing(Session("auth")) Then
-            Response.Redirect("../login.aspx")
-        End If
+        'If Session("auth") = "0" Or IsNothing(Session("auth")) Then
+        '    Response.Redirect("../login.aspx")
+        'End If
 
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_id"))
         If Not String.IsNullOrEmpty(record_ID) Then
@@ -128,7 +129,7 @@ Public Class richiestaEquiparazioneDati2
             '  Dim TitoloCorso As String = DettaglioEquiparazione.TitoloCorso
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
-            Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
+            codiceFiscale = DettaglioEquiparazione.CodiceFiscale
             Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
             lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &

@@ -341,7 +341,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-								 <label for="txtNome">Data Emissione - [dd-MM-yyyy] &nbsp;[*] </label>
+								 <label for="txtNome">Data Emissione - [dd-MM-yyyy] &nbsp;</label>
                                     <asp:textbox id="txtDataEmissione" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
 					
                                     
@@ -353,11 +353,6 @@
 								 Visible="true" 	StyleFolder="../calendar/styles/default"     >
 															
 								</obout:Calendar>
-
-
-
-
-
 								   <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender2"
                         MaskType="Date"
                         runat="server"
@@ -368,7 +363,7 @@
                         OnFocusCssClass="MaskedEditFocus"
                         OnInvalidCssClass="MaskedEditError"
                         ErrorTooltipEnabled="True"
-                        TargetControlID="txtDataInizio" />           
+                        TargetControlID="txtDataEmissione" />           
                           
                                 </div>
 							</div>
@@ -383,7 +378,31 @@
                         </div>
                              
                 </div>
+	<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group"> 
+									
+									
+		<asp:CustomValidator ID="CustomValidator1" ControlToValidate="txtDataEmissione" Enabled="true" Display="Dynamic" runat="server" ErrorMessage="Inserire una data dell'anno corrente" CssClass="errore"></asp:CustomValidator>
+								
+             
+	       
+						</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+					  
+ 
 
+
+
+
+					</div>
+								
+								</div>
+							</div>
+						</div>
            
 
           <div class="col-sm-12">

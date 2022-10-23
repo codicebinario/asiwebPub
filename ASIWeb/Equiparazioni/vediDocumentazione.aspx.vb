@@ -47,6 +47,7 @@ Public Class vediDocumentazione
     Dim codR As String = ""
     Dim tokenZ As String = ""
     Dim record_ID As String = ""
+    Dim nominativo As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
 
@@ -98,6 +99,8 @@ Public Class vediDocumentazione
         If IsNothing(Session("id_record")) Then
             Response.Redirect("../login.aspx")
         End If
+        '    nominativo = deEnco.QueryStringDecode(Request.QueryString("nominativo"))
+
         Dim IDEquiparazione As String = ""
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
         If Not String.IsNullOrEmpty(codR) Then
@@ -227,7 +230,7 @@ Public Class vediDocumentazione
                 Else
                     plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>"))
 
-                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaDiplomaEqui.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(recordid) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileFotoFS"))) & "'>Diploma</a>"))
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaDiplomaEqui.aspx?nominativo=" & deEnco.QueryStringEncode(cognome & "_" & nome) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(recordid) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileFotoFS"))) & "'>Diploma</a>"))
 
                     plTabellaEquiparazione.Controls.Add(New LiteralControl("</td>"))
 

@@ -31,7 +31,7 @@ Public Class json
         Dim token As String = PrendiToken()
 
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-        url = "https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/testJson/records/"
+        url = "https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/testApi/records/"
 
         Dim clientF = New RestClient(url)
         clientF.Timeout = -1
@@ -54,29 +54,16 @@ Public Class json
         Dim i As Integer = 0
         For i = 0 To CInt(quanti - 1)
 
-            codice_status = j("response")("data")(i)("fieldData")("Codice_Status")
-            idCorso = j("response")("data")(i)("fieldData")("IDCorso")
+            codice_status = j("response")("data")(i)("fieldData")("Id")
+            idCorso = j("response")("data")(i)("fieldData")("Cognome")
             '   Response.Write("Quanti: " & quanti.ToString)
-            Response.Write(i & " - Codice Status: " & codice_status.ToString & " - IdCorso: " & idCorso.ToString & "<br/>")
+            Response.Write(i & " - ID: " & codice_status.ToString & " - Cognome: " & idCorso.ToString & "<br/>")
 
         Next
 
 
 
 
-        'If p.IDCorso.Contains("_") Then
-        '    matrix = p.clip_name.Split("_")
-        '    '  For i As Integer = 0 To matrix.Length - 1
-        '    clip = matrix(0)
-        '    cod = matrix(1)
-        'Else
-        '    clip = p.clip_name
-        '    cod = "00000000"
-
-
-        'End If
-
-        '  Next
 
 
     End Sub

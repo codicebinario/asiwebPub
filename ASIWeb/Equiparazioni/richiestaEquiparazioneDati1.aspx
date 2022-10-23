@@ -380,9 +380,9 @@
 								
 								</div>
 							</div>
-						<div class="col-sm-6">
+						<div class="col-sm-3">
 								<div class="form-group">
-								 <div class="col-6">
+								 <div class="col-3">
                             <label for="txtNome"></label>
 								  <div class="form-control-plaintext">
        
@@ -393,6 +393,19 @@
 								</div>
 							</div>
                          
+
+							<div class="col-sm-3">
+								<div class="form-group">
+								 <div class="col-3">
+                            <label for="txtNome"></label>
+								  <div class="form-control-plaintext">
+       
+         <asp:CheckBox ID="chkStampaDiploma" class="form-check-input" runat="server" />
+     <label class="form-check-label" for="chkStampaDiploma">Stampa Diploma</label>
+           </div>
+  </div>
+								</div>
+							</div>
                         
                         </div>
                              

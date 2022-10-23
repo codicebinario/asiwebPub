@@ -230,6 +230,15 @@ Partial Public Class richiestaCorsoF2
     Protected WithEvents MaskedEditExtender2 As Global.AjaxControlToolkit.MaskedEditExtender
 
     '''<summary>
+    '''CustomValidator1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CustomValidator1 As Global.System.Web.UI.WebControls.CustomValidator
+
+    '''<summary>
     '''txtDataInizio control.
     '''</summary>
     '''<remarks>

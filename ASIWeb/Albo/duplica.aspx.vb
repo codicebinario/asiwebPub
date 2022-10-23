@@ -42,6 +42,9 @@ Public Class duplica
     Dim tokenZ As String = ""
     Dim codiceCorso As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Calendar3.DateMin = Now.Year() & "/01/01"
+        Calendar3.DateMax = Now.Year & "/12/31"
         Dim fase As String = Request.QueryString("fase")
         'If Not String.IsNullOrEmpty(fase) Then
         '    fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
@@ -115,13 +118,24 @@ Public Class duplica
     End Sub
 
     Protected Sub btnFase3_Click(sender As Object, e As EventArgs) Handles btnFase3.Click
+        If IsNothing(Session("id_record")) Then
+            Response.Redirect("../login.aspx")
+        End If
+
+        If IsNothing(Session("IDCorso")) Then
+            Response.Redirect("../login.aspx")
+        End If
+
+
+
+
         If Page.IsValid Then
 
             '*********** duplico ***********
 
             Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
             fmsP.SetLayout("webCorsiRichiesta")
-            Dim RequestP = fmsP.CreateDuplicateRequest(235)
+            Dim RequestP = fmsP.CreateDuplicateRequest(Session("id_record"))
             Dim dupRecID = RequestP.Execute()
 
             '************* trovo il nuovo codice corso *************
@@ -172,6 +186,23 @@ Public Class duplica
             mese = oDateA.Month
 
             Requesty.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
+
+            Dim dataEmissione = txtDataEmissione.Text
+            If Not String.IsNullOrEmpty(dataEmissione) Then
+
+
+                Dim oDateEmissione As DateTime = DateTime.Parse(dataEmissione)
+                giorno = oDateEmissione.Day
+                anno = oDateEmissione.Year
+                mese = oDateEmissione.Month
+
+
+
+                Requesty.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
+            End If
+
+
+
             Requesty.AddField("Fase", "3")
             Requesty.AddField("Codice_status", "54")
             Requesty.AddField("NoteValutazioneSettore", "")
@@ -220,6 +251,8 @@ Public Class duplica
             Requesty.AddField("DataOraRifiutoRichiestaDT", "")
             Requesty.AddField("DataOraSpedito", "")
             Requesty.AddField("DataOraVariazioneStatusNonFornitoDT", "")
+            Requesty.AddField("CorsoDuplicato", "si")
+            Requesty.AddField("CorsoPadre", Session("IDCorso"))
 
             Try
                 risposta = Requesty.Execute()
@@ -236,5 +269,23 @@ Public Class duplica
 
             Response.Redirect("dashboardB.aspx#" & codiceCorso)
         End If
+    End Sub
+
+
+    Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
+        If String.IsNullOrEmpty(txtDataEmissione.Text) Then
+            args.IsValid = True
+        Else
+
+            Dim annoCorrente = Now.Year()
+            Dim annoInserito = Right(txtDataEmissione.Text, 4)
+
+            If annoCorrente = annoInserito Then
+                args.IsValid = True
+            Else
+                args.IsValid = False
+            End If
+        End If
+
     End Sub
 End Class

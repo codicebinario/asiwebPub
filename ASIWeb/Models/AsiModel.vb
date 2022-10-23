@@ -1007,6 +1007,19 @@ Public Class AsiModel
                         DatiCodiceFiscale.Comune = ASIWeb.Data.FixNull(dr("comune residenza"))
                         DatiCodiceFiscale.CodiceTessera = ASIWeb.Data.FixNull(dr("codice tessera"))
                         DatiCodiceFiscale.Cap = ASIWeb.Data.FixNull(dr("cap residenza"))
+
+                        '*****  da sistemare la data **********
+
+                        'Dim dataInseriraDa = ASIWeb.Data.FixNull(dr("Data Nascita"))
+                        'Dim oDateDa As DateTime = DateTime.Parse(dataInseriraDa)
+                        'Dim giorno = oDateDa.Day
+                        'Dim anno = oDateDa.Year
+                        'Dim mese = oDateDa.Month
+
+                        'DatiCodiceFiscale.DataNascita = mese & "/" & giorno & "/" & anno
+
+
+
                         DatiCodiceFiscale.DataNascita = ASIWeb.Data.FixNull(dr("Data Nascita"))
                         DatiCodiceFiscale.Email = ASIWeb.Data.FixNull(dr("email"))
                         DatiCodiceFiscale.LuogoNascita = ASIWeb.Data.FixNull(dr("Luogo nascita"))

@@ -187,24 +187,30 @@ Public Class DashboardAlbo
 
 
 
-            Try
+            '    Try
 
 
 
 
-                ds = RequestP.Execute()
+            ds = RequestP.Execute()
 
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
                     'Dim counter As Integer = 0
                     Dim counter1 As Integer = 0
                     Dim totale As Decimal = 0
+                    Dim tessera As String
+                    Dim nominativo As String
 
                     For Each dr In ds.Tables("main").Rows
 
                         phDash.Visible = True
 
-
+                        If String.IsNullOrWhiteSpace(Data.FixNull(dr("tessera"))) Then
+                            tessera = "..\img\noPdf.jpg"
+                        Else
+                            tessera = "https://93.63.195.98" & Data.FixNull(dr("tessera"))
+                        End If
 
                         phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
 
@@ -248,8 +254,20 @@ Public Class DashboardAlbo
                         phDash.Controls.Add(New LiteralControl("Disciplina   : <small>" & Data.FixNull(dr("Disciplina")) & "</small><br />"))
                         phDash.Controls.Add(New LiteralControl("Specialità   : <small>" & Data.FixNull(dr("Specialita")) & "</small><br />"))
                         phDash.Controls.Add(New LiteralControl("Livello      : <small>" & Data.FixNull(dr("Livello_Grado")) & "</small><br />"))
+                    If tessera = "..\img\noPdf.jpg" Then
+                        '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
 
-                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+                    Else
+                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom "" target=""_blank"" href='scaricaTesseraAlbo.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "&nominativo=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Cognome")) & "_" & Data.FixNull(dr("Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))
+
+
+                    End If
+
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
 
                         phDash.Controls.Add(New LiteralControl("</div>"))
                         'intermezzo
@@ -284,6 +302,14 @@ Public Class DashboardAlbo
 
                         '   phDash.Controls.Add(New LiteralControl("</div>"))
 
+
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
+
+                    '      phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small><br /><br />"))
+                    '  phDash10.Controls.Add(New LiteralControl("</span><small>Tessera: </small><small></small><br /><br />"))
+
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
 
 
 
@@ -334,10 +360,10 @@ Public Class DashboardAlbo
 
 
                 End If
-            Catch ex As Exception
-                'Session("procedi") = "KO"
-                'Response.Redirect("DashboardEquiEvasi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
-            End Try
+            '    Catch ex As Exception
+            'Session("procedi") = "KO"
+            'Response.Redirect("DashboardEquiEvasi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+            '   End Try
 
 
         End If

@@ -75,9 +75,9 @@ Public Class richiestaEquiparazioneFoto
         pag = Request.QueryString("pag")
         skip = Request.QueryString("skip")
 
-        If Session("auth") = "0" Or IsNothing(Session("auth")) Then
-            Response.Redirect("../login.aspx")
-        End If
+        'If Session("auth") = "0" Or IsNothing(Session("auth")) Then
+        '    Response.Redirect("../login.aspx")
+        'End If
 
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_id"))
         If Not String.IsNullOrEmpty(record_ID) Then

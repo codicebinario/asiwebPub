@@ -275,6 +275,15 @@ Partial Public Class richiestaEquiparazioneDati1
     Protected WithEvents chkStampaCartacea As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''chkStampaDiploma control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkStampaDiploma As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''btnFase3 control.
     '''</summary>
     '''<remarks>
