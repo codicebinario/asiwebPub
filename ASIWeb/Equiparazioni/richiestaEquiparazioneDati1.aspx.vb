@@ -130,7 +130,7 @@ Public Class richiestaEquiparazioneDati1
 
             lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
-                "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
+                "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
 
@@ -182,15 +182,15 @@ Public Class richiestaEquiparazioneDati1
             ddlProvinciaResidenza.Items.Insert(0, New ListItem("##", "##"))
 
 
-            ddlProvinciaConsegna.DataSource = SingleSport
+            'ddlProvinciaConsegna.DataSource = SingleSport
 
 
-            ddlProvinciaConsegna.DataTextField = "sigla"
-            ddlProvinciaConsegna.DataValueField = "sigla"
+            'ddlProvinciaConsegna.DataTextField = "sigla"
+            'ddlProvinciaConsegna.DataValueField = "sigla"
 
-            ddlProvinciaConsegna.DataBind()
-            'ddlSport.DataValueField = "Sport"
-            ddlProvinciaConsegna.Items.Insert(0, New ListItem("##", "##"))
+            'ddlProvinciaConsegna.DataBind()
+            ''ddlSport.DataValueField = "Sport"
+            'ddlProvinciaConsegna.Items.Insert(0, New ListItem("##", "##"))
 
 
         End If
@@ -227,39 +227,39 @@ Public Class richiestaEquiparazioneDati1
 
     End Sub
 
-    Protected Sub ddlProvinciaConsegna_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlProvinciaConsegna.SelectedIndexChanged
-        Dim selezionato As String = ddlProvinciaConsegna.SelectedItem.Value
-        Dim ds2 As DataSet
+    'Protected Sub ddlProvinciaConsegna_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlProvinciaConsegna.SelectedIndexChanged
+    '    Dim selezionato As String = ddlProvinciaConsegna.SelectedItem.Value
+    '    Dim ds2 As DataSet
 
-        Dim fmsP1 As FMSAxml = AsiModel.Conn.Connect()
-        fmsP1.SetLayout("webComuniItaliani")
-        Dim RequestP2 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
-        RequestP2.AddSearchField("sigla", selezionato, Enumerations.SearchOption.equals)
-        RequestP2.AddSortField("descrizioneComune", Enumerations.Sort.Ascend)
+    '    Dim fmsP1 As FMSAxml = AsiModel.Conn.Connect()
+    '    fmsP1.SetLayout("webComuniItaliani")
+    '    Dim RequestP2 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
+    '    RequestP2.AddSearchField("sigla", selezionato, Enumerations.SearchOption.equals)
+    '    RequestP2.AddSortField("descrizioneComune", Enumerations.Sort.Ascend)
 
-        ds2 = RequestP2.Execute()
+    '    ds2 = RequestP2.Execute()
 
-        If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
+    '    If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
 
-            'For Each dr In ds.Tables("main").Rows
+    '        'For Each dr In ds.Tables("main").Rows
 
-            '    Response.Write("Sport: " & dr("Sport") & " - Disciplina: " & dr("Disciplina") & " - Specialità: " & dr("Specialita") & "<br />")
+    '        '    Response.Write("Sport: " & dr("Sport") & " - Disciplina: " & dr("Disciplina") & " - Specialità: " & dr("Specialita") & "<br />")
 
 
-            Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
+    '        Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
 
-            ddlComuneConsegna.DataSource = comuni
+    '        ddlComuneConsegna.DataSource = comuni
 
-            ddlComuneConsegna.DataTextField = "descrizioneComune"
-            ddlComuneConsegna.DataValueField = "descrizioneComune"
+    '        ddlComuneConsegna.DataTextField = "descrizioneComune"
+    '        ddlComuneConsegna.DataValueField = "descrizioneComune"
 
-            ddlComuneConsegna.DataBind()
+    '        ddlComuneConsegna.DataBind()
 
-            ddlComuneConsegna.Items.Insert(0, New ListItem("##", "##"))
-            ' ddlProvincia.Items.Clear()
+    '        ddlComuneConsegna.Items.Insert(0, New ListItem("##", "##"))
+    '        ' ddlProvincia.Items.Clear()
 
-        End If
-    End Sub
+    '    End If
+    'End Sub
 
     Protected Sub ddlProvinciaResidenza_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlProvinciaResidenza.SelectedIndexChanged
         Dim selezionato As String = ddlProvinciaResidenza.SelectedItem.Value
@@ -325,25 +325,18 @@ Public Class richiestaEquiparazioneDati1
         Request.AddField("Equi_NumeroTessera", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceTessera.Text)))
         Request.AddField("Equi_CodiceFiscale", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceFiscale.Text)))
         Request.AddField("Equi_ComuneNascita", Data.PrendiStringaT(Server.HtmlEncode(txtComuneNascita.Text)))
-
-        Request.AddField("Equi_DataScadenza", Data.SistemaData(txtDataScadenza.Text))
+        Request.AddField("Equi_DataScadenza", Data.SistemaDataUK(txtDataScadenza.Text))
         Request.AddField("Equi_DataNascita", Data.SistemaData(txtDataNascita.Text))
-
         Request.AddField("Equi_IndirizzoEmail", Data.PrendiStringaT(Server.HtmlEncode(txtEmail.Text)))
         Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefonoCellulare.Text)))
-
-
         Request.AddField("Equi_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
         Request.AddField("Equi_ProvinciaResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlProvinciaResidenza.SelectedItem.Text)))
         Request.AddField("Equi_ComuneResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlComuneResidenza.SelectedItem.Text)))
         Request.AddField("Equi_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
-
-
-
-        Request.AddField("Equi_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
-        Request.AddField("Equi_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(ddlProvinciaConsegna.SelectedItem.Text)))
-        Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(ddlComuneConsegna.SelectedItem.Text)))
-        Request.AddField("Equi_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
+        Request.AddField("Equi_IndirizzoConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text))))
+        Request.AddField("Equi_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
+        Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
+        Request.AddField("Equi_CapConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text))))
 
         If chkStampaCartacea.Checked = True Then
             Request.AddField("Equi_StampaCartaceo", "si")
@@ -382,5 +375,36 @@ Public Class richiestaEquiparazioneDati1
             Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&fase=" & deEnco.QueryStringEncode(3))
 
         End If
+    End Sub
+
+    Protected Sub chkStampaCartacea_CheckedChanged(sender As Object, e As EventArgs) Handles chkStampaCartacea.CheckedChanged
+
+        If chkStampaCartacea.Checked = True Then
+
+            pnlDatiConsegna.Visible = True
+        ElseIf chkStampaCartacea.Checked = False Then
+            pnlDatiConsegna.Visible = False
+        End If
+
+    End Sub
+    Protected Sub chkcopia_CheckedChanged(sender As Object, e As EventArgs) Handles chkCopia.CheckedChanged
+        If chkCopia.Checked Then
+
+
+            txtIndirizzoConsegna.Text = txtIndirizzoResidenza.Text
+            If ddlProvinciaResidenza.SelectedIndex > 1 Then
+                txtProvinciaConsegna.Text = ddlProvinciaResidenza.SelectedItem.Text
+            End If
+            If ddlComuneResidenza.SelectedIndex > 1 Then
+                txtComuneConsegna.Text = ddlComuneResidenza.SelectedItem.Text
+
+            End If
+
+            txtCapConsegna.Text = txtCapResidenza.Text
+
+
+
+        End If
+
     End Sub
 End Class

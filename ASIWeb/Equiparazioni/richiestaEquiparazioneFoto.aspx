@@ -61,12 +61,12 @@
   
         .success {
          
-            color: white;
+            color: red;
            
             padding:5px;
         }
         .salta{
-            color: white;
+            color: red;
            
             padding:5px;
 
@@ -91,8 +91,7 @@
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
     <h3 class="display-5">Caricamento foto equiparazione</h3>
-      <label id="lbl" for="chkSalta" Class="success text-white"  style="padding-left:20px">Salta il caricamento foto!!!</label>
-       <asp:CheckBox AutoPostBack="true" CssClass="success text-white" ID="chkSalta" CausesValidation="false"  runat="server" />
+      
        
      
  
@@ -113,8 +112,8 @@
 						</div>
 							</div>
 							
-				</div></div>	
-     
+				</div></div>
+    
     <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
@@ -138,6 +137,9 @@
                   <div class="form-group">
                       <h5>Caricamento Foto Equiparazione</h5>
                       <hr />
+                      <div class="alert alert-danger" role="alert">
+ Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
+</div>
                   </div>
               </div>
 
@@ -155,6 +157,28 @@
       <label class="custom-file-label" for="inputfile">Scegli la foto</label>
     </div>
 
+           <div class="col-sm-12">
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="form-group">
+
+<div class="alert alert-danger" role="alert">  <asp:CheckBox AutoPostBack="true" CssClass="success" ID="chkSalta" CausesValidation="false"  runat="server" />
+ <strong>Salta il caricamento foto: </strong> se si vuole procedere senza caricare la foto, metti il check-box ed attendi. 
+  
+</div>
+
+   <%-- <label id="lbl" for="chkSalta" Class="success"  style="padding-left:20px">Salta il caricamento foto!!!</label>--%>
+     
+
+     </div>
+              </div>
+
+          </div>
+      </div>
+    <br /><br />
+
+
+           		<div class="errore" id="results"  runat="server"><br /></div>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" 
                             ErrorMessage="carica la foto" 
                             ControlToValidate="inputfile" CssClass="errore"></asp:RequiredFieldValidator>
@@ -182,7 +206,7 @@
 					<asp:label id="Label1" runat="server" Width="484px" 
         style="font-size: medium; font-weight: 700; color: #FF0000">Min Altezza: 140 pixel - Min Larghezza: 100 pixel</asp:label><br />
 
-					<div class="errore" id="results"  runat="server"><br /></div>
+			
   </div>
 
          <div class="col-sm-12">

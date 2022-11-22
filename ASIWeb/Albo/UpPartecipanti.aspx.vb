@@ -168,6 +168,9 @@ Public Class UpPartecipanti
             'deleteFile(nomecaricato)
             '  Session("fase") = "2"
             '   Response.Redirect("dashboardB.aspx#" & Session("IDCorso") & "?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+
+
+
             Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
 
             '   Catch ex As Exception
@@ -253,7 +256,7 @@ Public Class UpPartecipanti
         'Request.AddField("StatusPrimaCaricamentoXL", statusPrimaCaricamentoXL)
 
         '  Request.AddField("Fase", "1")
-        '  Request.AddField("Codice_Status", "68")
+        Request.AddField("Codice_Status", "68")
         ' Request.AddScript("SistemaEncodingNotePartecipanti", IDCorso)
         Request.AddScript("ImportaCorsistiWebRun", IDCorso)
         'If qualeStatus = "3" Then
@@ -263,7 +266,7 @@ Public Class UpPartecipanti
         'End If
         Try
             risposta = Request.Execute()
-            '   AsiModel.LogIn.LogCambioStatus(IDCorso, "68", Session("WebUserEnte"), "corso")
+            AsiModel.LogIn.LogCambioStatus(IDCorso, "68", Session("WebUserEnte"), "corso")
             'If qualeStatus = "3" Then
             '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
             'Else
@@ -298,7 +301,7 @@ Public Class UpPartecipanti
         Request.AddField("StatusPrimaCaricamentoXL", statusPrimaCaricamentoXL)
 
         '  Request.AddField("Fase", "1")
-        Request.AddField("Codice_Status", "68")
+        'Request.AddField("Codice_Status", "68")
         ' Request.AddScript("SistemaEncodingNotePartecipanti", IDCorso)
         '       Request.AddScript("ImportaCorsistiWebRun", IDCorso)
         'If qualeStatus = "3" Then
@@ -308,7 +311,7 @@ Public Class UpPartecipanti
         'End If
         Try
             risposta = Request.Execute()
-            AsiModel.LogIn.LogCambioStatus(IDCorso, "68", Session("WebUserEnte"), "corso")
+            '   AsiModel.LogIn.LogCambioStatus(IDCorso, "68", Session("WebUserEnte"), "corso")
             'If qualeStatus = "3" Then
             '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
             'Else
@@ -365,4 +368,8 @@ Public Class UpPartecipanti
     Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
         Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
     End Sub
+
+    'Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
+    '    Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
+    'End Sub
 End Class

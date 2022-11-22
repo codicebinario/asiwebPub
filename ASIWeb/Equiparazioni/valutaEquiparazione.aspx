@@ -69,7 +69,8 @@ $(document).ready(function(){
     <h3 class="display-5">Valutazione Equiparazione</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-                 <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
+                      <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboardTorna" CausesValidation="false" runat="server">Torna alla pagina precedente</asp:LinkButton>
+
     </p>
   </div></div>
       <div class="col-sm-12">
@@ -153,13 +154,66 @@ $(document).ready(function(){
                              
                 </div>
 
+
+      <div class="col-sm-12">
+						<div class="row">
+							
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="txtCognome">Diritti Segreteria [*]</label>
+                                
+					 <asp:dropdownlist id="ddlDirittiSegreteria" runat="server" Cssclass="form-control input-sm">
+                          <asp:ListItem Value="##">##</asp:ListItem>
+                         <asp:ListItem Value="0">0</asp:ListItem>
+                        <asp:ListItem Value="10">10</asp:ListItem>
+                          <asp:ListItem Value="20">20</asp:ListItem>
+                          <asp:ListItem Value="30">30</asp:ListItem>
+					 </asp:dropdownlist>
+								
+								</div>
+							</div>
+						
+                         <div class="col-sm-8">
+								<div class="form-group">
+									
+								</div>
+							</div>
+                        
+                        </div>
+                             
+                </div>
+
+     <div class="col-sm-12">
+						<div class="row">
+							
+							<div class="col-sm-4">
+								<div class="form-group">
+								  <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" InitialValue="##" 
+										CssClass="errore" ErrorMessage="Diritti Segreteria" ControlToValidate="ddlDirittiSegreteria" 
+										EnableClientScript="true"></asp:RequiredFieldValidator>
+								
+								</div>
+							</div>
+						
+                         <div class="col-sm-8">
+								<div class="form-group">
+								
+								
+								</div>
+							</div>
+                        
+                        </div>
+                             
+                </div>
+
+
      <div class="col-sm-12">
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
                                    
-						            <asp:Button ID="btnValuta" runat="server" Text="Valuta" class="btn btn-primary"    />
-                                   
+<%--						            <asp:Button ID="btnValuta" runat="server" Text="Valuta" class="btn btn-primary"    />--%>
+                                 <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-check2-circle"> </i>Valutazione</asp:LinkButton>  
 						</div>
 							</div>
 							

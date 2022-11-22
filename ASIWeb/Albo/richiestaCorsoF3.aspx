@@ -265,10 +265,23 @@ $(document).ready(function(){
 								
 								</div>
 							</div>
+
+							  
+                               <div class="col-sm-4">
+								<div class="form-group">
+									<asp:Panel runat="server" ID="pnlMonteOreFormazione" Visible="false">
+									<label for="txtMonteOreFormazione">Monte Ore Formazione</label>
+                                      	<asp:textbox id="txtMonteOreFormazione" runat="server" Cssclass="form-control"></asp:textbox>
+					
+								  </asp:Panel>
+								</div>
+							</div>
+                      
+
                         
                         </div>
                              
-                </div>
+        </div>
 
            <div class="col-sm-12">
 						<div class="row">
@@ -284,11 +297,20 @@ $(document).ready(function(){
 						
                          <div class="col-sm-4">
 								<div class="form-group">
+								
 								<%--  <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" inizialValue="##"
 										CssClass="errore" ErrorMessage="Livello" ControlToValidate="ddlLivello" 
 										EnableClientScript="true"></asp:RequiredFieldValidator>
 								--%>
 								</div>
+							</div>
+
+							   <div class="col-sm-4">
+								<div class="form-group">	
+									<asp:RangeValidator ID="RangeMonteore" CssClass="errore"  ControlToValidate="txtMonteOreFormazione" runat="server" ErrorMessage="un numero tra 0 e 9999" Display="Dynamic" MaximumValue="9999" MinimumValue="0" Type="Integer" Visible="False"></asp:RangeValidator>
+
+							<%--		<asp:RegularExpressionValidator ID="RegularExpressionValidator2" Display="Dynamic" ControlToValidate="txtOreCorso" EnableClientScript="true" ValidationExpression="^[0-9]*$" CssClass="errore" runat="server"  ErrorMessage="solo numeri"></asp:RegularExpressionValidator>
+							--%>		</div>
 							</div>
                         
                         </div>
@@ -309,7 +331,7 @@ $(document).ready(function(){
 									<label for="txtCognome">Elenco Docenti (max 4 caratteri del cognome) </label>
 									   <asp:TextBox ID="txtDocenteCognome" Cssclass="form-control" placeholder="cognome" maxlength="100" runat="server"></asp:TextBox>
             <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" ServiceMethod="SearchCustomers"
-                MinimumPrefixLength="2" CompletionInterval="100"      EnableCaching="false" CompletionSetCount="100"
+                MinimumPrefixLength="2" CompletionInterval="100"       EnableCaching="false" CompletionSetCount="100"
                 TargetControlID="txtDocenteCognome" FirstRowSelected="false" >
             </ajaxToolkit:AutoCompleteExtender>
 									<asp:Label ID="lblAvviso" runat="server" Text=""></asp:Label>
@@ -448,9 +470,10 @@ ClientValidationFunction = "ValidateListBoxComponenti"></asp:CustomValidator>
 								 <label for="txtNome">Quota di partecipazione </label>
                                     <asp:textbox id="txtQuota" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
 									<asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtQuota" EnableClientScript="true" Display="Dynamic" ValidationExpression="^\d{0,9}(?:[,]\d{1,2})?$" CssClass="errore" runat="server"  ErrorMessage="Solo valuta"></asp:RegularExpressionValidator>
-							<asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtQuota"  ErrorMessage="Quota di partecipazione"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
-									
-								</div>
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtQuota"  ErrorMessage="Quota di partecipazione"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
+                                    <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="txtQuota" CssClass="errore" ErrorMessage="Il valore deve essere maggiore o uguale ad 1"></asp:CustomValidator>
+
+                                </div>
 							</div>
 							
                          

@@ -23,6 +23,15 @@ Partial Public Class UpVerbale
     Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
 
     '''<summary>
+    '''lnkDashboard control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lnkDashboard As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''lblIntestazioneCorso control.
     '''</summary>
     '''<remarks>

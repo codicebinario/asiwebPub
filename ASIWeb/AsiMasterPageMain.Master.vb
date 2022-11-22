@@ -20,7 +20,7 @@ Public Class AsiMasterPageMain
 
                 '  Dim lblMasterDen As Literal = DirectCast(Master.FindControl("litDenominazione"), Literal)
                 ' litDenominazione.Text = "Codice: " & AsiModel.LogIn.Codice & " - " & "Tipo Ente: " & AsiModel.LogIn.TipoEnte & " - " & AsiModel.LogIn.Denominazione
-                litDenominazione.Text = Session("denominazione")
+                litDenominazione.Text = "<i Class=""bi bi-intersect""> </i>" & Session("denominazione")
 
             End If
 

@@ -228,6 +228,7 @@
     <Content Include="Equiparazioni\upLegEquiparazioni.aspx" />
     <Content Include="Equiparazioni\valutaEquiparazione.aspx" />
     <Content Include="Equiparazioni\vediDocumentazione.aspx" />
+    <Content Include="Equiparazioni\WebForm5.aspx" />
     <Content Include="GestioneAlbo\DashboardAlbo.aspx" />
     <Content Include="GestioneAlbo\ExcelOpenXmlStyles.xml" />
     <Content Include="GestioneAlbo\scaricaTesseraAlbo.aspx" />
@@ -726,6 +727,13 @@
     </Compile>
     <Compile Include="Equiparazioni\vediDocumentazione.aspx.vb">
       <DependentUpon>vediDocumentazione.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni\WebForm5.aspx.designer.vb">
+      <DependentUpon>WebForm5.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni\WebForm5.aspx.vb">
+      <DependentUpon>WebForm5.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="GestioneAlbo\DashboardAlbo.aspx.designer.vb">

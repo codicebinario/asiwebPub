@@ -45,6 +45,7 @@ Public Class richiestaEquiparazioneDati2
     Dim tokenZ As String = ""
     Dim record_ID As String = ""
     Dim codiceFiscale As String
+    Dim MostraMonteOreFormazione As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
 
@@ -126,6 +127,7 @@ Public Class richiestaEquiparazioneDati2
             Dim TipoEnte As String = DettaglioEquiparazione.TipoEnte
             Dim CodiceStatus As String = DettaglioEquiparazione.CodiceStatus
             Dim DescrizioneStatus As String = DettaglioEquiparazione.DescrizioneStatus
+            ' Dim MostraMonteOreFormazione As String = DettaglioEquiparazione.MostraMonteOreFormazione
             '  Dim TitoloCorso As String = DettaglioEquiparazione.TitoloCorso
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
@@ -134,7 +136,7 @@ Public Class richiestaEquiparazioneDati2
 
             lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
-                "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
+                "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
 
@@ -152,70 +154,76 @@ Public Class richiestaEquiparazioneDati2
         End If
         If Not Page.IsPostBack Then
 
+            'If MostraMonteOreFormazione = "1" Then
+
+            '    pnlMonteOreFormazione.Visible = True
+
+
+            'End If
             If Session("tipoEnte") <> "Settori" Then
 
-                Dim ds As DataSet
+                    Dim ds As DataSet
 
-                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-                fmsP.SetLayout("webSportDNet")
-                Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
+                    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+                    fmsP.SetLayout("webSportDNet")
+                    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
 
-                RequestP.AddSortField("Sport", Enumerations.Sort.Ascend)
+                    RequestP.AddSortField("Sport", Enumerations.Sort.Ascend)
 
-                ds = RequestP.Execute()
+                    ds = RequestP.Execute()
 
-                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-                    Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sport_ID", "Sport")
+                        Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sport_ID", "Sport")
 
-                    ddlSport.DataSource = SingleSport
+                        ddlSport.DataSource = SingleSport
 
-                    ddlSport.DataTextField = "Sport"
-                    ddlSport.DataValueField = "Sport_ID"
+                        ddlSport.DataTextField = "Sport"
+                        ddlSport.DataValueField = "Sport_ID"
 
-                    ddlSport.DataBind()
+                        ddlSport.DataBind()
 
-                    ddlSport.Items.Insert(0, New ListItem("##", "##"))
+                        ddlSport.Items.Insert(0, New ListItem("##", "##"))
 
+
+                    End If
+
+
+                ElseIf Session("tipoEnte") = "Settori" Then
+                    Dim ds As DataSet
+
+                    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+                    fmsP.SetLayout("webDisciplineSportSettoriDNet")
+                    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+                    RequestP.AddSearchField("Settore_Richiedente", Session("denominazione"), Enumerations.SearchOption.equals)
+
+                    RequestP.AddSortField("Sport", Enumerations.Sort.Ascend)
+
+                    ds = RequestP.Execute()
+
+                    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                        Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sport_ID", "Sport")
+
+                        ddlSport.DataSource = SingleSport
+
+                        ddlSport.DataTextField = "Sport"
+                        ddlSport.DataValueField = "Sport_ID"
+
+                        ddlSport.DataBind()
+
+                        ddlSport.Items.Insert(0, New ListItem("##", "##"))
+
+
+                    End If
 
                 End If
 
 
-            ElseIf Session("tipoEnte") = "Settori" Then
-                Dim ds As DataSet
-
-                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-                fmsP.SetLayout("webDisciplineSportSettoriDNet")
-                Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-                RequestP.AddSearchField("Settore_Richiedente", Session("denominazione"), Enumerations.SearchOption.equals)
-
-                RequestP.AddSortField("Sport", Enumerations.Sort.Ascend)
-
-                ds = RequestP.Execute()
-
-                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-                    Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sport_ID", "Sport")
-
-                    ddlSport.DataSource = SingleSport
-
-                    ddlSport.DataTextField = "Sport"
-                    ddlSport.DataValueField = "Sport_ID"
-
-                    ddlSport.DataBind()
-
-                    ddlSport.Items.Insert(0, New ListItem("##", "##"))
-
-
-                End If
+                QualificheCorsi()
+                LivelliCorsi()
 
             End If
-
-
-            QualificheCorsi()
-            LivelliCorsi()
-
-        End If
 
     End Sub
 
@@ -518,7 +526,7 @@ Public Class richiestaEquiparazioneDati2
         anno = oDateDa.Year
         mese = oDateDa.Month
 
-        Return mese & "/" & giorno & "/" & anno
+        Return giorno & "/" & mese & "/" & anno
 
 
     End Function

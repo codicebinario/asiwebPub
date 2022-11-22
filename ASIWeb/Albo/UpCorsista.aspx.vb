@@ -29,7 +29,7 @@ Public Class UpCorsista
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
     Dim deEnco As New Ed()
-    Const MassimoPeso As Integer = 3102400
+    Const MassimoPeso As Integer = 512000
     Const FileType As String = "image/*"
     ' in pixel
     Const massimaaltezza As Integer = 140
@@ -107,7 +107,7 @@ Public Class UpCorsista
         End If
     End Sub
     Protected Sub BtnUp_Click(sender As Object, e As EventArgs) Handles BtnUp.Click
-
+        Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
         If inputfile.PostedFile.ContentLength > MassimoPeso Then
             results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
 
@@ -118,37 +118,33 @@ Public Class UpCorsista
 
 
 
+        ElseIf img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+
+            results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+
+
+        ElseIf img.Width > img.Height Then
+            results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
+
+
+        ElseIf img.Width > massinalarghezza OrElse img.Height > massimaaltezza Then
+            'Response.Write(maggiore)
+            results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
         Else
 
-            '   Response.Write("sono dentro")
-            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
-            If img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+            Dim rapporto As Integer
+            rapporto = img.Height / 140
+            Dim img2 As Drawing.Bitmap
+            img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
 
-                results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+            Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+            nomecaricato = record_ID & "_" & tokenZ & ".jpg"
 
-
-            ElseIf img.Width > img.Height Then
-                results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
-
-
-            ElseIf img.Width >= massinalarghezza OrElse img.Height >= massimaaltezza Then
-                'Response.Write(maggiore)
-                ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
-                Dim rapporto As Integer
-                rapporto = img.Height / 140
-                Dim img2 As Drawing.Bitmap
-                img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
-
-                Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                nomecaricato = record_ID & "_" & tokenZ & ".jpg"
-
-                '   Response.Write(Server.MapPath("..\corsisti\"))
-                img2.Save(Server.MapPath("..\corsisti\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
-                inputfile.SaveAs(Server.MapPath("..\corsisti\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
+            '   Response.Write(Server.MapPath("..\corsisti\"))
+            img2.Save(Server.MapPath("..\corsisti\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
+            inputfile.SaveAs(Server.MapPath("..\corsisti\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
 
 
-
-            End If
             img.Dispose()
 
 
@@ -165,9 +161,10 @@ Public Class UpCorsista
 
             Response.Redirect("corsisti.aspx?skip=" & skip & "&pag=" & pag & "&codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
 
-
-
         End If
+
+
+
 
 
     End Sub
@@ -282,5 +279,7 @@ Public Class UpCorsista
 
     End Function
 
-
+    'Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
+    '    Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
+    'End Sub
 End Class

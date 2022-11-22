@@ -29,6 +29,7 @@ Public Class valutaCorso
     Dim pass As String = ConfigurationManager.AppSettings("pass")
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
+    Dim codR As String = ""
     Dim deEnco As New Ed()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If IsNothing(Session("tipoEnte")) Then
@@ -68,7 +69,8 @@ Public Class valutaCorso
         If IsNothing(Session("id_record")) Then
             Response.Redirect("../login.aspx")
         End If
-        Dim codR As String = ""
+
+
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
         If Not String.IsNullOrEmpty(codR) Then
 
@@ -145,5 +147,9 @@ Public Class valutaCorso
 
 
 
+    End Sub
+
+    Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
+        Response.Redirect("dashboardB.aspx#" & codR)
     End Sub
 End Class

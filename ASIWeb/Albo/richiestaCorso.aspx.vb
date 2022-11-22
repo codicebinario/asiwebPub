@@ -110,6 +110,10 @@ Public Class richiestaCorso
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
+        Dim tokenx As String = ""
+        Dim id_att As String = ""
+        Dim tuttoRitorno As String = ""
+
         If uploadProgress.Files.Count > 0 Then
 
 
@@ -121,73 +125,75 @@ Public Class richiestaCorso
             '****************************************************
             Dim files As OboutFileCollection = uploadProgress.Files
             Dim i As Integer
+            Dim quantisono As Integer
+
+            quantisono = files.Count()
 
             uploadedFiles.Text = ""
-            Try
+            '   Try
 
-                For i = 0 To files.Count - 1 Step 1
-                    Dim file As OboutPostedFile = files(i)
-
-
-
-                    Dim whereToSave As String = "../file_storage/"
-
-                    tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                    ext = Path.GetExtension((file.FileName))
-                    nomefileReale = Path.GetFileName(file.FileName)
-                    nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+            For i = 0 To files.Count - 1 Step 1
+                Dim file As OboutPostedFile = files(i)
 
 
 
+                Dim whereToSave As String = "../file_storage/"
 
-
-                    '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
-
-                    file.SaveAs(MapPath(whereToSave + nomecaricato))
+                tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                ext = Path.GetExtension((file.FileName))
+                nomefileReale = Path.GetFileName(file.FileName)
+                nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
 
 
 
 
-                    If uploadedFiles.Text.Length = 0 Then
 
+                '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
 
-                        Button1.Enabled = False
-                        uploadedFiles.Text = ""
-
-                        uploadedFiles.Text = "<b>Documento corso caricato con successo: " & nomecaricato & "</b><br/>"
+                file.SaveAs(MapPath(whereToSave + nomecaricato))
 
 
 
 
-                    End If
 
 
 
-                Next
-
-                Dim tokenx As String = ""
-                Dim id_att As String = ""
-                Dim tuttoRitorno As String = ""
-
-                tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato)
-                txtNote.Text = ""
+                tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato, i)
                 Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                '  txtNote.Text = ""
                 tokenx = arrKeywords(1)
                 id_att = arrKeywords(0)
-
-                CaricaSuFM(tokenx, id_att, nomecaricato)
-                '   pnlFase1.Visible = False
-                ' btnFase2.Visible = True
-                'deleteFile(nomecaricato)
-                Session("fase") = "2"
-                Response.Redirect("richiestaCorsoF2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
-
-            Catch ex As Exception
-
-                uploadedFiles.Text = "<b>Documento corso non caricato: </b><br/>"
+                CaricaSuFM(tokenx, id_att, nomecaricato, i)
+            Next
 
 
-            End Try
+
+
+
+
+
+
+            '   pnlFase1.Visible = False
+            ' btnFase2.Visible = True
+            'deleteFile(nomecaricato)
+            Session("fase") = "2"
+            Response.Redirect("richiestaCorsoF2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+
+
+            If uploadedFiles.Text.Length = 0 Then
+
+
+                Button1.Enabled = False
+                uploadedFiles.Text = ""
+
+                uploadedFiles.Text = "<b>Documento corso caricato con successo: " & nomecaricato & "</b><br/>"
+
+
+
+
+            End If
+
+
 
         Else
             uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
@@ -196,7 +202,7 @@ Public Class richiestaCorso
 
     End Sub
 
-    Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String) As Boolean
+    Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String, i As Integer) As Boolean
 
 
 
@@ -214,13 +220,24 @@ Public Class richiestaCorso
 
 
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-
+        Dim clientUP As RestClient
 
         '    Try
 
+        Select Case i
+            Case 0
+                clientUP = New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webCorsiRichiesta/records/" & id & "/containers/Programma_Tecnico_Didattico/1")
 
-        Dim clientUP As New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webCorsiRichiesta/records/" & id & "/containers/Programma_Tecnico_Didattico/1")
+            Case 1
+                clientUP = New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webCorsiRichiesta/records/" & id & "/containers/Programma_Tecnico_Didattico2/1")
+
+            Case 2
+                clientUP = New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webCorsiRichiesta/records/" & id & "/containers/Programma_Tecnico_Didattico3/1")
+        End Select
+
         clientUP.Timeout = -1
+
+
         Dim Requestx = New RestRequest(Method.POST)
         Requestx.AddHeader("Content-Type", "application/json")
         Requestx.AddHeader("Content-Type", "multipart/form-data")
@@ -249,7 +266,7 @@ Public Class richiestaCorso
 
 
     End Function
-    Public Function CaricaDatiDocumentoCorso(codR As String, IDCorso As String, nomecaricato As String) As String
+    Public Function CaricaDatiDocumentoCorso(codR As String, IDCorso As String, nomecaricato As String, i As Integer) As String
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
 
@@ -261,8 +278,30 @@ Public Class richiestaCorso
         Dim risposta As String = ""
         fmsP.SetLayout("webCorsiRichiesta")
         Dim Request = fmsP.CreateEditRequest(codR)
-        Request.AddField("NomeFileOnFS", nomecaricato)
+
+
+
+
+
+
+        Select Case i
+            Case 0
+                Request.AddField("NomeFileOnFS", nomecaricato)
+
+
+            Case 1
+                Request.AddField("NomeFileOnFS2", nomecaricato)
+
+            Case 2
+                Request.AddField("NomeFileOnFS3", nomecaricato)
+
+        End Select
+
         Request.AddField("NoteUploadDocumentoCorso", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+
+
+
+
         Request.AddField("Fase", "1")
         Request.AddField("Codice_Status", "51")
         Request.AddScript("SistemaEncodingNoteUpload_PianoCorso", IDCorso)

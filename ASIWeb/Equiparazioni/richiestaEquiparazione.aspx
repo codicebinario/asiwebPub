@@ -164,6 +164,7 @@ function ServerException(mess) {
               <div class="col-sm-12">
                   <div class="form-group">
                       <h5>Fase 1: Caricamento Diploma Equiparazione</h5>
+
                       <hr />
 <div class="alert alert-danger" role="alert">
  Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
@@ -208,12 +209,13 @@ function ServerException(mess) {
         <label class="custom-file-label" for="customFileInput">Carica il diploma</label>
         
         </div>   
-                
+                 <div>
+                <asp:LinkButton ID="lnkButton1" class="btn btn-primary ml-2" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
+</div>
       <div class="input-group-append">
        <%-- <button class="btn btn-primary" type="button" id="customFileInput1">Upload</button>--%>
 
-           <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
-
+           
 
         <%--  <input type="submit" id="summ" runat="server" OnClick="Upload" value="Carica" name="mySubmit" />--%>
       </div>

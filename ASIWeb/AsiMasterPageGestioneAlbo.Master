@@ -11,6 +11,7 @@
    <!-- Bootstrap CSS -->
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Css/custom.css" rel="stylesheet" />
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
  <!-- font awesome -->
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" />
 
@@ -97,14 +98,14 @@
       <ul class="navbar-nav mr-auto">
        
            <li class="nav-item text-white">
-         <asp:LinkButton class="nav-link" ID="lnkHome" CausesValidation="false" runat="server">HOME</asp:LinkButton>
+         <asp:LinkButton class="nav-link" ID="lnkHome" CausesValidation="false" runat="server"><i class="bi bi-house"> </i>HOME</asp:LinkButton>
          
             
          
         </li>
 
              <li class="nav-item text-white">
-         <asp:LinkButton class="nav-link" ID="lnkAlbo" CausesValidation="false" runat="server">ALBO</asp:LinkButton>
+         <asp:LinkButton class="nav-link" ID="lnkAlbo" CausesValidation="false" runat="server"><i class="bi bi-book"> </i>ALBO</asp:LinkButton>
          
             
          
@@ -124,13 +125,13 @@
 
            <li class="nav-item">
          
-        <span class="nav-link"> Utenti online: <%=Application("ActiveUsers").ToString()%></span>
+        <span class="nav-link"><i class="bi bi-people"> </i> Utenti online: <%=Application("ActiveUsers").ToString()%></span>
         </li>
       </ul>
         <ul class="navbar-nav ml-auto">
 
            <li class="nav-item mio">
-                  <asp:LinkButton class="nav-link" ID="lnkOut" CausesValidation="false" runat="server">Esci</asp:LinkButton>
+                  <asp:LinkButton class="nav-link" ID="lnkOut" CausesValidation="false" runat="server"><i class="bi bi-door-open"> </i>Esci</asp:LinkButton>
          
         </li>
       </ul>

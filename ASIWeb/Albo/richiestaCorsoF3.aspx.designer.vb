@@ -149,6 +149,24 @@ Partial Public Class richiestaCorsoF3
     Protected WithEvents ddlLivello As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''pnlMonteOreFormazione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlMonteOreFormazione As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''txtMonteOreFormazione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtMonteOreFormazione As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''RequiredFieldValidator2 control.
     '''</summary>
     '''<remarks>
@@ -156,6 +174,15 @@ Partial Public Class richiestaCorsoF3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''RangeMonteore control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RangeMonteore As Global.System.Web.UI.WebControls.RangeValidator
 
     '''<summary>
     '''Updatepanel2 control.
@@ -318,6 +345,15 @@ Partial Public Class richiestaCorsoF3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents RequiredFieldValidator5 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''CustomValidator2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CustomValidator2 As Global.System.Web.UI.WebControls.CustomValidator
 
     '''<summary>
     '''btnFase3 control.

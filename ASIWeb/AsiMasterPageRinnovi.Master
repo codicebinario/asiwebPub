@@ -104,14 +104,14 @@
       <ul class="navbar-nav mr-auto">
        
         <li class="nav-item text-white">
-         <asp:LinkButton class="nav-link" ID="lnkHome" CausesValidation="false" runat="server">HOME</asp:LinkButton>
+         <asp:LinkButton class="nav-link" ID="lnkHome" CausesValidation="false" runat="server"><i class="bi bi-house"> </i>HOME</asp:LinkButton>
          
             
          
         </li>
 
              <li class="nav-item text-white">
-         <asp:LinkButton class="nav-link" ID="lnkRinnovi" CausesValidation="false" runat="server">Albo</asp:LinkButton>
+         <asp:LinkButton class="nav-link" ID="lnkRinnovi" CausesValidation="false" runat="server"><i class="bi bi-book"> </i>Albo</asp:LinkButton>
          
             
          
@@ -133,13 +133,13 @@
 
            <li class="nav-item">
          
-     <span class="nav-link"> Utenti online: <%=Application("ActiveUsers").ToString()%></span>
+     <span class="nav-link"><i class="bi bi-people"> </i> Utenti online: <%=Application("ActiveUsers").ToString()%></span>
         </li>
       </ul>
         <ul class="navbar-nav ml-auto">
 
            <li class="nav-item">
-                  <asp:LinkButton class="nav-link" ID="lnkOut" CausesValidation="false" runat="server">Esci</asp:LinkButton>
+                  <asp:LinkButton class="nav-link" ID="lnkOut" CausesValidation="false" runat="server"><i class="bi bi-door-open"> </i>Esci</asp:LinkButton>
          
         </li>
       </ul>
@@ -162,14 +162,14 @@
     <div class="collapse navbar-collapse" id="navbarCollapse1">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="DashboardRinnovi.aspx" accesskey="A">Richieste Rinnovi <span class="AccessoKey">A</span>ttivi</a>
+          <a class="nav-link" href="DashboardRinnovi.aspx" accesskey="A"><i class="bi bi-arrow-up-circle"> </i>Rinnovi Attivi</a>
         </li>
           
        
            <li class="nav-item">
       
           
-      <asp:LinkButton ID="LinkArchivioRinnovi"  cssclass="nav-link" CausesValidation="false" runat="server" accesskey="V">Rinno<span class="AccessoKey">V</span>i Evasi</asp:LinkButton>
+      <asp:LinkButton ID="LinkArchivioRinnovi"  cssclass="nav-link" CausesValidation="false" runat="server" accesskey="V"><i class="bi bi-arrow-down-circle"> </i>Rinnovi Evasi</asp:LinkButton>
       </li>
 
  <%--<li class="nav-item">
@@ -191,7 +191,7 @@
 
 
           <li class="nav-item">       
-               <asp:LinkButton ID="lnkNuovoRinnovo"  cssclass="nav-link" CausesValidation="false" runat="server" accesskey="N"><span class="AccessoKey">N</span>uovo Rinnovo</asp:LinkButton>
+               <asp:LinkButton ID="lnkNuovoRinnovo"  cssclass="nav-link" CausesValidation="false" runat="server" accesskey="N"><i class="bi bi-folder-plus"> </i>Nuovo Rinnovo</asp:LinkButton>
         
      
       

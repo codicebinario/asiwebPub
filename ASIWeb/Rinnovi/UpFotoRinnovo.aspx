@@ -75,7 +75,9 @@
     <h3 class="display-5">Caricamento foto Rinnovo</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-               <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>     
+             
+ 
+          <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboardTorna" CausesValidation="false" runat="server">Torna alla pagina precedente</asp:LinkButton>
     </p>
     
   </div></div>
@@ -98,7 +100,10 @@
               <div class="col-sm-12">
                   <div class="form-group">
                       <h5>Caricamento Foto Rinnovo</h5>
-                      <hr />
+                         <hr />
+<div class="alert alert-danger" role="alert">
+ Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
+</div>
                   </div>
               </div>
 
@@ -118,7 +123,7 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" 
                             ErrorMessage="carica la foto" 
                             ControlToValidate="inputfile" CssClass="errore"></asp:RequiredFieldValidator>
-
+           	<div class="errore" id="results"  runat="server"><br /></div>
              <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"  ControlToValidate="inputfile"
             ErrorMessage="il file deve essere in formato jpg" 
             ValidationExpression="(.*?)\.(jpg|JPG)$" Display="Dynamic" CssClass="errore"></asp:RegularExpressionValidator>
@@ -143,7 +148,7 @@
 					<asp:label id="Label1" runat="server" Width="484px" 
         style="font-size: medium; font-weight: 700; color: #FF0000">Min Altezza: 140 pixel - Min Larghezza: 100 pixel</asp:label><br />
 
-					<div class="errore" id="results"  runat="server"><br /></div>
+				
   </div>
 
          <div class="col-sm-12">

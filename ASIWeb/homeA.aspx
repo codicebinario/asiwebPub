@@ -26,20 +26,20 @@
   <div class="row">
      
     <div class="col">
-        <div class="jumbotron jumbotron-fluid">
+        <div class="jumbotron jumbotron-fluid rounded">
   <div class="container text-center">
    
    
-       <a class="btn btn-lg btn-custom" href="albo/dashboardB.aspx" accesskey="C" role="button"><span class="AccessoKey">C</span>orsi</a>
+       <a class="btn btn-lg btn-custom" href="albo/dashboardB.aspx" accesskey="C" role="button"><i class="bi bi-body-text"> </i>Corsi</a>
   
 </div> 
     </div>
       </div>
   <div class="col">
-           <div class="jumbotron jumbotron-fluid">
+           <div class="jumbotron jumbotron-fluid rounded">
   <div class="container text-center">
     
-    <a class="btn btn-lg btn-custom" href="Equiparazioni/DashboardEqui.aspx" role="button" accesskey="q">E<span class="AccessoKey">q</span>uiparazioni</a>
+    <a class="btn btn-lg btn-custom" href="Equiparazioni/DashboardEqui.aspx" role="button" accesskey="q"><i class="bi bi-code-slash"> </i>Equiparazioni</a>
     
   </div>
 </div>
@@ -52,10 +52,10 @@
          <div class="row">
      
     <div class="col">
-        <div class="jumbotron jumbotron-fluid">
+        <div class="jumbotron jumbotron-fluid rounded">
   <div class="container text-center">
   
-  <a class="btn btn-lg btn-custom" href="Rinnovi/DashboardRinnovi.aspx" role="button" accesskey="R"><span class="AccessoKey">R</span>innovi</a>
+  <a class="btn btn-lg btn-custom" href="Rinnovi/DashboardRinnovi.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"> </i>Rinnovi</a>
     
      
   </div>
@@ -64,9 +64,9 @@
 
   <div class="col">
         
-         <div class="jumbotron jumbotron-fluid">
+         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container text-center">
-  <a class="btn btn-lg btn-custom" href="GestioneAlbo/DashboardAlbo.aspx" accesskey="A" role="button">Consulta <span class="AccessoKey">A</span>lbo</a>
+  <a class="btn btn-lg btn-custom" href="GestioneAlbo/DashboardAlbo.aspx" accesskey="A" role="button"><i class="bi bi-journal-text"> </i>Consulta Albo</a>
   
  
     <%--   <a class="btn btn-lg btn-custom " href="#" role="button">Ristampa</a>--%>

@@ -108,7 +108,48 @@ Public Class valutaEquiparazione
 
     End Sub
 
-    Protected Sub btnValuta_Click(sender As Object, e As EventArgs) Handles btnValuta.Click
+    'Protected Sub btnValuta_Click(sender As Object, e As EventArgs) Handles btnValuta.Click
+    '    If Page.IsValid Then
+
+    '        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+    '        '  Dim ds As DataSet
+    '        Dim risposta As String = ""
+    '        fmsP.SetLayout("webEquiparazioniRichiesta")
+    '        Dim Request = fmsP.CreateEditRequest(Session("id_record"))
+
+    '        Dim valutazione As String = ddlValutazione.SelectedItem.Value
+
+    '        If valutazione = "S" Then
+    '            Request.AddField("Codice_Status", "106")
+    '        ElseIf valutazione = "N" Then
+    '            Request.AddField("Codice_Status", "107")
+
+    '        End If
+
+    '        Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+    '        'Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
+    '        'script per gestione caratteri speciali da inserire.
+    '        Try
+
+
+    '            risposta = Request.Execute()
+    '            If valutazione = "S" Then
+    '                AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione")
+    '            ElseIf valutazione = "N" Then
+    '                AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione")
+
+    '            End If
+    '        Catch ex As Exception
+
+    '        End Try
+    '        Response.Redirect("archivioEquiValutati.aspx#" & codR)
+
+    '    End If
+
+
+    'End Sub
+
+    Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
         If Page.IsValid Then
 
             Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
@@ -118,6 +159,7 @@ Public Class valutaEquiparazione
             Dim Request = fmsP.CreateEditRequest(Session("id_record"))
 
             Dim valutazione As String = ddlValutazione.SelectedItem.Value
+            Dim dirittiSegreteria As String = ddlDirittiSegreteria.SelectedItem.Value
 
             If valutazione = "S" Then
                 Request.AddField("Codice_Status", "106")
@@ -127,6 +169,7 @@ Public Class valutaEquiparazione
             End If
 
             Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+            Request.AddField("Equi_DirittiSegreteria", dirittiSegreteria)
             'Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
             'script per gestione caratteri speciali da inserire.
             Try
@@ -145,7 +188,9 @@ Public Class valutaEquiparazione
             Response.Redirect("archivioEquiValutati.aspx#" & codR)
 
         End If
+    End Sub
 
-
+    Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
+        Response.Redirect("dashboardB.aspx#" & codR)
     End Sub
 End Class

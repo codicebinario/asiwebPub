@@ -36,8 +36,8 @@
        
     <%--     <asp:LinkButton class="nav-link text-white" ID="lnkNuovoExcel" CausesValidation="false" runat="server">Carica l'elenco corretto</asp:LinkButton>
     --%>
-            
-           <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>   
+            <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboardTorna" CausesValidation="false" runat="server">Torna alla pagina precedente</asp:LinkButton>
+             
       
             
     </p>

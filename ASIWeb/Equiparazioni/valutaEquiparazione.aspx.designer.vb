@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class valutaEquiparazione
 
     '''<summary>
+    '''lnkDashboardTorna control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lnkDashboardTorna As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''lblIntestazioneEquiparazioni control.
     '''</summary>
     '''<remarks>
@@ -77,11 +86,29 @@ Partial Public Class valutaEquiparazione
     Protected WithEvents RequiredFieldValidator3 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''btnValuta control.
+    '''ddlDirittiSegreteria control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnValuta As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents ddlDirittiSegreteria As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''RequiredFieldValidator1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''lnkButton1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
 End Class

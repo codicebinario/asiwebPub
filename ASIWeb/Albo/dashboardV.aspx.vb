@@ -1,6 +1,7 @@
 ﻿Imports fmDotNet
 Imports ASIWeb.AsiModel
 Imports ASIWeb.Ed
+Imports System.Net
 
 Public Class dashboardV
     Inherits System.Web.UI.Page
@@ -39,7 +40,9 @@ Public Class dashboardV
 
         End If
     End Sub
-
+    Private Shared Function GetCode(ByVal text As String) As String
+        Return text.Split(New Char() {"."c})(0).Last().ToString()
+    End Function
     Sub Corsi()
 
 
@@ -80,10 +83,32 @@ Public Class dashboardV
 
                     Dim deEnco As New Ed()
                     Dim nomeFile As String
+                    Dim nomeFile2 As String
+                    Dim nomeFile3 As String
+                    'Dim extension As String
+                    'Dim extension2 As String
+                    'Dim extension3 As String
+
+                    'Dim PianoCorso As New LinkButton
+                    'Dim PianoCorso2 As New LinkButton
+                    'Dim PianoCorso3 As New LinkButton
+
                     nomeFile = Data.FixNull(dr("NomeFileOnFS"))
+                    nomeFile2 = Data.FixNull(dr("NomeFileOnFS2"))
+                    nomeFile3 = Data.FixNull(dr("NomeFileOnFS3"))
+                    'extension = nomeFile.Split(".").Last().ToString()
 
                     If String.IsNullOrWhiteSpace(nomeFile) Then
                         nomeFile = Data.FixNull(dr("NomeFileOnFSFromFM"))
+                        'extension = nomeFile.Split(".").Last().ToString()
+                    End If
+                    If String.IsNullOrWhiteSpace(nomeFile2) Then
+                        nomeFile2 = Data.FixNull(dr("NomeFileOnFSFromFM2"))
+                        'extension = nomeFile.Split(".").Last().ToString()
+                    End If
+                    If String.IsNullOrWhiteSpace(nomeFile3) Then
+                        nomeFile3 = Data.FixNull(dr("NomeFileOnFSFromFM3"))
+                        'extension = nomeFile.Split(".").Last().ToString()
                     End If
 
                     'caricato solo il documento corso
@@ -94,27 +119,56 @@ Public Class dashboardV
 
 
 
-                    Dim Ann As New Button
+                    Dim Ann As New LinkButton
 
                     Ann.ID = "ann_" & counter1
                     Ann.Attributes.Add("runat", "server")
-                    Ann.Text = "Valuta Corso"
-                    Ann.PostBackUrl = "valutaCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record"))
-                    Ann.CssClass = "btn btn-success btn-sm btn-uno btn-custom"
+                    Ann.Text = "<i class=""bi bi-hand-index""> </i>Valuta Corso"
+                    Ann.PostBackUrl = "valutaCorso.aspx?codR=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) & "&record_ID=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                    Ann.CssClass = "btn btn-success btn-sm btn-uno btn-custom mb-2"
                     '    Ann.Attributes.Add("OnClick", "if(!myValuta())return false;")
 
 
+                    'If String.IsNullOrWhiteSpace(nomeFile) Then
 
-                    Dim PianoCorso As New Button
 
-                    PianoCorso.ID = "vediPianoCorso_" & counter1
-                    PianoCorso.Attributes.Add("runat", "server")
-                    PianoCorso.Text = "Scarica Piano Corso"
-                    '  PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("NomeFileOnFS"))
-                    PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(nomeFile)
 
-                    PianoCorso.CssClass = "btn btn-success btn-sm btn-due btn-custom"
-                    ' PianoCorso.Attributes.Add("OnClick", "if(!myValuta())return false;")
+                    '    PianoCorso.ID = "vediPianoCorso_" & counter1
+                    '    PianoCorso.Attributes.Add("runat", "server")
+                    '    PianoCorso.Text = "<i class=""bi bi-house-door""> </i>Scarica Piano Corso"
+                    '    PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & WebUtility.UrlEncode(dr("IDCorso")) & "&nomeFilePC=" & WebUtility.UrlEncode(nomeFile)
+                    '    PianoCorso.CssClass = "btn btn-success btn-sm btn-due btn-custom mb-2"
+
+                    'End If
+
+
+                    'If String.IsNullOrWhiteSpace(nomeFile2) Then
+
+                    '    PianoCorso2.ID = "vediPianoCorso_" & counter1
+                    '    PianoCorso2.Attributes.Add("runat", "server")
+                    '    PianoCorso2.Text = "<i class=""bi bi-house-door""> </i>Scarica Documento"
+                    '    PianoCorso2.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & WebUtility.UrlEncode(dr("IDCorso")) & "&nomeFilePC=" & WebUtility.UrlEncode(nomeFile)
+                    '    PianoCorso2.CssClass = "btn btn-success btn-sm btn-due btn-custom mb-2"
+
+
+                    'End If
+
+
+                    'If String.IsNullOrWhiteSpace(nomeFile3) Then
+
+                    '    PianoCorso3.ID = "vediPianoCorso_" & counter1
+                    '    PianoCorso3.Attributes.Add("runat", "server")
+                    '    PianoCorso3.Text = "<i class=""bi bi-house-door""> </i>Scarica Documento"
+                    '    PianoCorso3.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & WebUtility.UrlEncode(dr("IDCorso")) & "&nomeFilePC=" & WebUtility.UrlEncode(nomeFile)
+                    '    PianoCorso3.CssClass = "btn btn-success btn-sm btn-due btn-custom mb-2"
+
+
+
+                    'End If
+
+
 
 
 
@@ -164,7 +218,42 @@ Public Class dashboardV
                     '     "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(nomeFile)
 
 
-                    phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" href='scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(nomeFile)) & "'>Piano Corso</a>"))
+
+                    '
+                    If Not String.IsNullOrWhiteSpace(nomeFile) Then
+
+                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" href='scaricaPianoCorso.aspx?s=1&codR=" &
+                                                           dr("IDCorso") & "&nomeFilePC=" &
+                                                           nomeFile & "'><i class=""bi bi-download""> </i>Piano Corso</a>"))
+
+
+                    End If
+
+                    If Not String.IsNullOrWhiteSpace(nomeFile2) Then
+
+                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" href='scaricaPianoCorso.aspx?s=2&codR=" &
+                                                           dr("IDCorso") & "&nomeFilePC=" &
+                                                           nomeFile2 & "'><i class=""bi bi-download""> </i>Altro Documento</a>"))
+
+
+                    End If
+
+
+
+                    If Not String.IsNullOrWhiteSpace(nomeFile3) Then
+
+                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" href='scaricaPianoCorso.aspx?s=3&codR=" &
+                                                           dr("IDCorso") & "&nomeFilePC=" &
+                                                           nomeFile3 & "'><i class=""bi bi-download""> </i>Altro Documento</a>"))
+
+
+                    End If
+
+
+
+                    ' phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" href='scaricaPianoCorso.aspx?codR=" &
+                    '  WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) & "&nomeFilePC=" &
+                    '  WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(nomeFile))) & "'><i class=""bi bi-download""> </i>Piano Corso</a>"))
 
                     'phDash.Controls.Add(PianoCorso)
 

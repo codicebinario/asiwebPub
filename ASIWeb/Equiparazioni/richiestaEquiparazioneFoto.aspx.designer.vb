@@ -23,15 +23,6 @@ Partial Public Class richiestaEquiparazioneFoto
     Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
 
     '''<summary>
-    '''chkSalta control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkSalta As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''lblIntestazioneEquiparazione control.
     '''</summary>
     '''<remarks>
@@ -86,6 +77,24 @@ Partial Public Class richiestaEquiparazioneFoto
     Protected WithEvents inputfile As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
+    '''chkSalta control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkSalta As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''results control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''RequiredFieldValidator1 control.
     '''</summary>
     '''<remarks>
@@ -120,13 +129,4 @@ Partial Public Class richiestaEquiparazioneFoto
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''results control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 End Class

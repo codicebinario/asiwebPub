@@ -26,6 +26,7 @@ Imports System.Security.Policy
 Imports System.Windows
 Imports System.Runtime.InteropServices
 Imports System.Globalization
+Imports System.Threading
 
 Public Class RichiestaRinnovo1
     Inherits System.Web.UI.Page
@@ -128,7 +129,7 @@ Public Class RichiestaRinnovo1
 
             lblIntestazioneRinnovo.Text = "<strong>IDRinnovo: </strong>" & IDRinnovo &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
-                "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
+                "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
         End If
@@ -389,7 +390,9 @@ Public Class RichiestaRinnovo1
     'End Sub
     Public Function CaricaDatiDaSceltaRinnovo(IDRinnovo As String, idrecord As String, idScelto As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
-
+        Dim SettaggioCulture As CultureInfo = CultureInfo.CreateSpecificCulture("it-IT")
+        Thread.CurrentThread.CurrentCulture = SettaggioCulture
+        Thread.CurrentThread.CurrentUICulture = SettaggioCulture
         Dim ritorno As Boolean = False
 
 
@@ -412,7 +415,22 @@ Public Class RichiestaRinnovo1
         Request.AddField("Asi_CodiceTessera", datiAlbo.CodiceTessera)
         Request.AddField("Asi_Nome", datiAlbo.Nome)
         Request.AddField("Asi_Cognome", datiAlbo.Cognome)
-        Request.AddField("Asi_DataScadenza", Data.SistemaData(datiAlbo.DataScadenza))
+
+        Dim miaDataScadenza As DateTime
+        '  miaDataScadenza = DateTime.ParseExact(DataScadenzaPulita, "dd/MM/yyyy", CultureInfo.InvariantCulture)
+        'Dim oDate As DateTime = DateTime.ParseExact(dataScadenza, "dd-HH-yyyy HH:mm tt", Nothing)
+        Dim DataScadenzaPulita As String
+
+        DataScadenzaPulita = DateTime.Parse(Data.SonoDieci(datiAlbo.DataScadenza), SettaggioCulture)
+        'If DateTime.Parse(DataScadenzaPulita) Then
+        Request.AddField("Asi_DataScadenza", Data.SistemaDataUK(DataScadenzaPulita))
+        'miaDataScadenza2 = miaDataScadenza.ToString("MM/dd/yyyy hh:mm:ss")
+        '  Request.AddField("Data_ScadenzaTesseraASI", miaDataScadenza.ToString("dd/MM/yyyy", New CultureInfo("it-IT")))
+        'End If
+
+
+
+        'Request.AddField("Asi_DataScadenza", Data.SistemaData(datiAlbo.DataScadenza))
         Request.AddField("Asi_LuogoNascita", datiAlbo.Comune)
         Request.AddField("Asi_Datanascita", Data.SistemaData(datiAlbo.DataNascita))
         Request.AddField("Asi_Email", datiAlbo.Email)
@@ -430,7 +448,7 @@ Public Class RichiestaRinnovo1
         Request.AddField("Asi_Disciplina", datiAlbo.disciplina)
         Request.AddField("Asi_CodiceIscrizione", datiAlbo.codiceIscrizione)
         Request.AddField("ASI_CodiceEnteEx", datiAlbo.codiceEnteEx)
-
+        Request.AddField("ASI_NomeEnteEx", datiAlbo.nomeEnteEx)
 
         Request.AddField("Rin_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
         Request.AddField("Rin_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
@@ -455,14 +473,14 @@ Public Class RichiestaRinnovo1
 
 
 
-        Try
-            risposta = Request.Execute()
+        ' Try
+        risposta = Request.Execute()
 
             ritorno = True
 
-        Catch ex As Exception
-            ritorno = False
-        End Try
+        'Catch ex As Exception
+        '    ritorno = False
+        'End Try
 
         'aggiornamento dati albo
 

@@ -146,7 +146,7 @@ Public Class DashboardEquiEvasi
 
 
 
-                    phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
+                    phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
 
 
 
@@ -175,7 +175,7 @@ Public Class DashboardEquiEvasi
                     phDash10.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Equi_Nome")) & " " & Data.FixNull(dr("Equi_Cognome")) & "</small><br />"))
 
                     phDash10.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
-                    phDash10.Controls.Add(New LiteralControl("Cod.Tessera: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Tessera Ass.: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
                     phDash10.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
 
                     phDash10.Controls.Add(New LiteralControl())
@@ -217,7 +217,7 @@ Public Class DashboardEquiEvasi
                     Else
                         phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" target=""_blank"" href='scaricaTesseraEquiparazioneN.aspx?record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraEquiparazioneText"))) & "&nominativo=" _
-                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))
 
 
                     End If
@@ -228,9 +228,15 @@ Public Class DashboardEquiEvasi
 
 
                     Else
-                        phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEquiparazioneN.aspx?record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
+                        If Data.FixNull(dr("Equi_StampaDiploma")) = "no" Then
+
+                        Else
+                            phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEquiparazioneN.aspx?record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaAsiText"))) & "&nominativo=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
+
+                        End If
+
 
 
                     End If
@@ -238,7 +244,7 @@ Public Class DashboardEquiEvasi
 
 
 
-                    phDash10.Controls.Add(New LiteralControl("</div>"))
+                        phDash10.Controls.Add(New LiteralControl("</div>"))
 
 
 
@@ -279,12 +285,10 @@ Public Class DashboardEquiEvasi
 
                     phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
 
-                    phDash10.Controls.Add(New LiteralControl("Qualifica DT:  "))
 
-                    phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small>"))
-                    phDash10.Controls.Add(New LiteralControl())
+                    '   phDash10.Controls.Add(New LiteralControl())
 
-                    phDash10.Controls.Add(New LiteralControl("</span><br />"))
+                    '  phDash10.Controls.Add(New LiteralControl("</span><br />"))
 
 
                     phDash10.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
@@ -293,7 +297,19 @@ Public Class DashboardEquiEvasi
                     phDash10.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
                     phDash10.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
                     phDash10.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
-                    phDash10.Controls.Add(New LiteralControl())
+                    phDash10.Controls.Add(New LiteralControl("Qualifica DT:  "))
+
+                    phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small><br />"))
+
+                    If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("NoteValutazioneSettore"))) Then
+                        phDash10.Controls.Add(New LiteralControl("Note da Settore:  "))
+                        phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneSettore")) & "</small><br />"))
+
+
+                    End If
+
+
+                    '  phDash10.Controls.Add(New LiteralControl())
 
 
                     phDash10.Controls.Add(New LiteralControl("</div>"))
@@ -442,7 +458,7 @@ Public Class DashboardEquiEvasi
 
 
 
-                            phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
+                            phDash.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
 
 
 
@@ -471,7 +487,7 @@ Public Class DashboardEquiEvasi
                             phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Equi_Nome")) & " " & Data.FixNull(dr("Equi_Cognome")) & "</small><br />"))
 
                             phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
-                            phDash.Controls.Add(New LiteralControl("Cod.Tessera: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
+                            phDash.Controls.Add(New LiteralControl("Tessera Ass.: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
                             phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
 
                             phDash.Controls.Add(New LiteralControl())
@@ -578,12 +594,8 @@ Public Class DashboardEquiEvasi
 
                             phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
 
-                            phDash.Controls.Add(New LiteralControl("Qualifica DT:  "))
 
-                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small>"))
-                            phDash.Controls.Add(New LiteralControl())
-
-                            phDash.Controls.Add(New LiteralControl("</span><br />"))
+                            '   phDash.Controls.Add(New LiteralControl("</span><br />"))
 
 
                             phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
@@ -592,7 +604,19 @@ Public Class DashboardEquiEvasi
                             phDash.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
                             phDash.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
                             phDash.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
-                            phDash.Controls.Add(New LiteralControl())
+
+                            phDash.Controls.Add(New LiteralControl("Qualifica DT:  "))
+
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small><br />"))
+
+
+
+                            If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("NoteValutazioneSettore"))) Then
+                                phDash.Controls.Add(New LiteralControl("Note da Settore:  "))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneSettore")) & "</small><br />"))
+
+
+                            End If
 
 
 

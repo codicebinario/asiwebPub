@@ -35,11 +35,29 @@ Public Class scaricaPianoCorso
         End If
         Dim deEnco As New Ed
         Dim pdf As String
-        codiceCorso = deEnco.QueryStringDecode(Request.QueryString("codR"))
-        Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
+        '  codiceCorso = deEnco.QueryStringDecode(Request.QueryString("codR"))
 
-        pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico(1)", codiceCorso)
+        codiceCorso = Request.QueryString("codR")
+        '  Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
+        ' Dim nomeFilePC As String = deEnco.QueryStringDecode(Request.QueryString("nomeFilePC"))
+        Dim s As Integer = Request.QueryString("s")
+        Dim nomeFilePC As String = Request.QueryString("nomeFilePC")
+        Dim extension As String
+        extension = nomeFilePC.Split(".").Last().ToString()
+
+        Select Case s
+            Case 1
+                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico(1)", codiceCorso, extension)
+
+            Case 2
+                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico2(1)", codiceCorso, extension)
+
+            Case 3
+                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico3(1)", codiceCorso, extension)
+
+
+        End Select
+
 
 
 
@@ -69,7 +87,7 @@ Public Class scaricaPianoCorso
         'Response.Redirect("dashboardV.aspx#" & codiceCorso)
     End Sub
 
-    Public Function FotoS(urlFoto As String, codiceCorso As String)
+    Public Function FotoS(urlFoto As String, codiceCorso As String, extension As String)
 
         Dim pictureURL As String = urlFoto
 
@@ -83,8 +101,21 @@ Public Class scaricaPianoCorso
             CopyStream(temp, stream)
             Dim bytes As Byte() = stream.ToArray()
             Response.Cache.SetCacheability(HttpCacheability.NoCache)
-            Response.ContentType = "application/pdf"
-            Response.AddHeader("content-disposition", "attachment;filename=" & codiceCorso & "_PianoCorso.pdf")
+            Select Case extension
+                Case "pdf"
+                    Response.ContentType = "application/pdf"
+                    Response.AddHeader("content-disposition", "attachment;filename=" & codiceCorso & "_PianoCorso.pdf")
+
+                Case "doc"
+                    Response.ContentType = "application/msword"
+                    Response.AddHeader("content-disposition", "attachment;filename=" & codiceCorso & "_PianoCorsoDoc.doc")
+                Case "docx"
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    Response.AddHeader("content-disposition", "attachment;filename=" & codiceCorso & "_PianoCorsoDoc.docx")
+            End Select
+
+
+
             Response.BinaryWrite(bytes)
             Response.Flush()
             Response.End()

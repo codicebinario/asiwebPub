@@ -42,6 +42,7 @@ Public Class richiestaCorsoF3
     Dim qualeStatus As String = ""
     Dim nomecaricato As String = ""
     Dim tokenZ As String = ""
+    Dim MostraMonteOreFormazione As Integer = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim fase As String = Request.QueryString("fase")
         If Not String.IsNullOrEmpty(fase) Then
@@ -117,7 +118,7 @@ Public Class richiestaCorsoF3
             Dim OraCorsoA As String = DettaglioCorso.OraSvolgimentoA
             Dim OreCorso As String = DettaglioCorso.TotaleOre
             Dim DataEmissione As String = Left(DettaglioCorso.DataEmissione, 10)
-
+            MostraMonteOreFormazione = DettaglioCorso.MostraMonteOreFormazione
             HiddenIdRecord.Value = DettaglioCorso.IdRecord
 
             lblIntestazioneCorso.Text = "<strong>ID Corso: </strong>" & IDCorso & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente & "<br />" &
@@ -143,6 +144,11 @@ Public Class richiestaCorsoF3
         End If
 
         If Not Page.IsPostBack Then
+
+            If MostraMonteOreFormazione = 1 Then
+                pnlMonteOreFormazione.Visible = True
+                RangeMonteore.Visible = True
+            End If
 
             If Session("tipoEnte") <> "Settori" Then
 
@@ -634,6 +640,8 @@ Public Class richiestaCorsoF3
             Request.AddField("Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
             Request.AddField("Livello", ddlLivello.SelectedItem.Text)
             Request.AddField("Quota_Partecipazione", String.Format("{0:C2}", txtQuota.Text.ToString))
+
+            Request.AddField("MonteOreFormazione", txtMonteOreFormazione.Text)
             'Request.AddField("Settore_Approvazione", Data.PrendiStringaT(Server.HtmlEncode(txtSettoreApprovante.Text)))
             Request.AddField("Fase", "3")
             Request.AddField("Codice_status", "54")
@@ -690,7 +698,13 @@ Public Class richiestaCorsoF3
         End If
     End Sub
 
+    Protected Sub CustomValidator2_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator2.ServerValidate
 
 
-
+        If txtQuota.Text >= 1 Then
+            args.IsValid = True
+        Else
+            args.IsValid = False
+        End If
+    End Sub
 End Class

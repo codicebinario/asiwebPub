@@ -1,6 +1,9 @@
 ﻿Imports fmDotNet
 Imports ASIWeb.AsiModel
 Imports ASIWeb.Ed
+Imports System.Net
+Imports DocumentFormat.OpenXml.InkML
+
 Public Class archivioAlbo
     Inherits System.Web.UI.Page
 
@@ -89,8 +92,8 @@ Public Class archivioAlbo
             For Each dr In ds.Tables("main").Rows
                 Dim oldStatus As String = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
                 If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "99" _
-                    Or Data.FixNull(dr("Codice_Status")) = "60" Or Data.FixNull(dr("Codice_Status")) = "72" _
-                     Then
+                    Or Data.FixNull(dr("Codice_Status")) = "60" Then
+
 
 
                     counter1 += 1
@@ -100,27 +103,33 @@ Public Class archivioAlbo
 
                     Dim deEnco As New Ed()
 
-                    Dim fotoCorsisti As New Button
+                    'Dim fotoCorsisti As New LinkButton
 
-                    fotoCorsisti.ID = "Fot_" & counter1
-                    fotoCorsisti.Attributes.Add("runat", "server")
-                    fotoCorsisti.Text = "Corsisti KO"
-                    fotoCorsisti.PostBackUrl = "corsistiKO.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&oldStatus=" & deEnco.QueryStringEncode(oldStatus)
-                    fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
-                    If (Data.FixNull(dr("Codice_Status")) = "72" And Data.FixNull(dr("fase")) = "3") Then
-                        fotoCorsisti.Visible = True
-                    Else
-                        fotoCorsisti.Visible = False
-                    End If
+                    'fotoCorsisti.ID = "Fot_" & counter1
+                    'fotoCorsisti.Attributes.Add("runat", "server")
+                    'fotoCorsisti.Text = "<i class=""bi bi-bar-chart-steps""> </i>Corsisti KO"
+                    'fotoCorsisti.PostBackUrl = "corsistiKO.aspx?codR=" &
+                    '    WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                    '    "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record"))) &
+                    '    "&oldStatus=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(oldStatus))
+                    'fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
+                    'If (Data.FixNull(dr("Codice_Status")) = "72" And Data.FixNull(dr("fase")) = "3") Then
+                    '    fotoCorsisti.Visible = True
+                    'Else
+                    '    fotoCorsisti.Visible = False
+                    'End If
 
 
-                    Dim CorsistiDoc As New Button
+                    Dim CorsistiDoc As New LinkButton
 
                     CorsistiDoc.ID = "CorsistiDoc_" & counter1
                     CorsistiDoc.Attributes.Add("runat", "server")
-                    CorsistiDoc.Text = "Corsisti Documenti"
-                    CorsistiDoc.PostBackUrl = "corsistiDoc.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&oldStatus=" & deEnco.QueryStringEncode(oldStatus)
-                    CorsistiDoc.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
+                    CorsistiDoc.Text = "<i class=""bi bi-file-earmark-text""> </i>Corsisti Documenti"
+                    CorsistiDoc.PostBackUrl = "corsistiDoc.aspx?codR=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record"))) & "&oldStatus=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(oldStatus))
+                    CorsistiDoc.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
                     If (Data.FixNull(dr("Codice_Status")) = "84" And Data.FixNull(dr("fase")) = "3") Then
                         CorsistiDoc.Visible = True
                     Else
@@ -128,13 +137,15 @@ Public Class archivioAlbo
                     End If
 
 
-                    Dim Duplica As New Button
+                    Dim Duplica As New LinkButton
 
                     Duplica.ID = "Duplica" & counter1
                     Duplica.Attributes.Add("runat", "server")
-                    Duplica.Text = "Duplica Corso"
-                    Duplica.PostBackUrl = "Duplica.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&oldStatus=" & deEnco.QueryStringEncode(oldStatus)
-                    Duplica.CssClass = "btn btn-success btn-sm btn-otto btn-custom"
+                    Duplica.Text = "<i class=""bi bi-front""> </i>Duplica Corso"
+                    Duplica.PostBackUrl = "Duplica.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record"))) & "&oldStatus=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(oldStatus))
+                    Duplica.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
                     If (Data.FixNull(dr("Codice_Status")) = "84" And Data.FixNull(dr("fase")) = "3") Then
                         Duplica.Visible = True
                     Else
@@ -183,13 +194,7 @@ Public Class archivioAlbo
                     phDash.Controls.Add(Duplica)
                     phDash.Controls.Add(CorsistiDoc)
 
-                    phDash.Controls.Add(fotoCorsisti)
-                    phDash.Controls.Add(New LiteralControl("<br />"))
-
-                    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo text-left""><br />Note Corsisti KO: <span><br />"))
-                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Motivo_Corsisti_KO"))))
-
-                    phDash.Controls.Add(New LiteralControl("</small></h6></span>"))
+                    ' phDash.Controls.Add(fotoCorsisti)
 
 
 
@@ -374,7 +379,7 @@ Public Class archivioAlbo
                     If String.IsNullOrEmpty(Data.FixNull(dr("Quota_Partecipazione"))) Then
                         quota = 0
                     Else
-                        quota = dr("Quota_Partecipazione")
+                        quota = Data.FixNull(dr("Quota_Partecipazione"))
                     End If
 
 
@@ -387,7 +392,8 @@ Public Class archivioAlbo
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
 
-                    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Quota: <span><small> " & quota.ToString("C2", New Globalization.CultureInfo("it-IT")) & "</small></h6><span />"))
+                    '    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Quota: <span><small> " & quota.ToString("C2", New Globalization.CultureInfo("it-IT")) & "</small></h6><span />"))
+                    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Quota: <span><small> " & quota.ToString("N2") & "</small></h6><span />"))
 
 
                     phDash.Controls.Add(New LiteralControl("</div>"))

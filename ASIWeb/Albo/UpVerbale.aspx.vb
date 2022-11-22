@@ -104,6 +104,9 @@ Public Class Upverbale
     End Sub
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
+        Dim tokenx As String = ""
+        Dim id_att As String = ""
+        Dim tuttoRitorno As String = ""
         If uploadProgress.Files.Count > 0 Then
 
 
@@ -142,33 +145,20 @@ Public Class Upverbale
 
 
 
-                If uploadedFiles.Text.Length = 0 Then
-
-
-                    Button1.Enabled = False
-                    uploadedFiles.Text = ""
-
-                    uploadedFiles.Text = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
 
 
 
-
-                End If
-
-
-
+                tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato, i)
+                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                '  txtNote.Text = ""
+                tokenx = arrKeywords(1)
+                id_att = arrKeywords(0)
+                CaricaSuFM(tokenx, id_att, nomecaricato, i)
             Next
 
-            Dim tokenx As String = ""
-            Dim id_att As String = ""
-            Dim tuttoRitorno As String = ""
 
-            tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato)
-            txtNote.Text = ""
-            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-            tokenx = arrKeywords(1)
-            id_att = arrKeywords(0)
-            CaricaSuFM(tokenx, id_att, nomecaricato)
+
+
             '   pnlFase1.Visible = False
             ' btnFase2.Visible = True
             'deleteFile(nomecaricato)
@@ -179,6 +169,18 @@ Public Class Upverbale
 
             '      uploadedFiles.Text = "<b>Documento non caricato: </b><br/>"
 
+            If uploadedFiles.Text.Length = 0 Then
+
+
+                Button1.Enabled = False
+                uploadedFiles.Text = ""
+
+                uploadedFiles.Text = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
+
+
+
+
+            End If
 
             '   End Try
 
@@ -188,7 +190,8 @@ Public Class Upverbale
 
 
     End Sub
-    Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String) As Boolean
+    Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String, i As Integer
+                               ) As Boolean
 
         Dim host As String = HttpContext.Current.Request.Url.Host.ToLower()
 
@@ -205,11 +208,21 @@ Public Class Upverbale
 
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
-
+        Dim clientUP As RestClient
         '    Try
+        Select Case i
+            Case 0
+                clientUP = New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webCorsiRichiesta/records/" & id & "/containers/Verbale_Fine_Corso/1")
+
+            Case 1
+                clientUP = New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webCorsiRichiesta/records/" & id & "/containers/Verbale_Fine_Corso2/1")
+
+            Case 2
+                clientUP = New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webCorsiRichiesta/records/" & id & "/containers/Verbale_Fine_Corso3/1")
 
 
-        Dim clientUP As New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webCorsiRichiesta/records/" & id & "/containers/Verbale_Fine_Corso/1")
+        End Select
+
         clientUP.Timeout = -1
         Dim Requestx = New RestRequest(Method.POST)
         Requestx.AddHeader("Content-Type", "application/json")
@@ -239,7 +252,7 @@ Public Class Upverbale
 
 
     End Function
-    Public Function CaricaDatiDocumentoCorso(codR As String, IDCorso As String, nomecaricato As String) As String
+    Public Function CaricaDatiDocumentoCorso(codR As String, IDCorso As String, nomecaricato As String, i As Integer) As String
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
 
@@ -251,8 +264,25 @@ Public Class Upverbale
         Dim risposta As String = ""
         fmsP.SetLayout("webCorsiRichiesta")
         Dim Request = fmsP.CreateEditRequest(codR)
-        Request.AddField("NomeFileVerbale", nomecaricato)
+
+        Select Case i
+            Case 0
+                Request.AddField("NomeFileVerbale", nomecaricato)
+
+            Case 1
+                Request.AddField("NomeFileVerbale2", nomecaricato)
+
+
+            Case 2
+                Request.AddField("NomeFileVerbale3", nomecaricato)
+
+        End Select
+
+
+
         Request.AddField("NoteUploadVerbale", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+
+
         '  Request.AddField("Fase", "1")
         Request.AddField("CheckVerbale", "1")
         Request.AddScript("SistemaEncodingNoteUpload_Verbale", IDCorso)
@@ -315,5 +345,10 @@ Public Class Upverbale
     Protected Sub btnFase2_Click(sender As Object, e As EventArgs) Handles btnFase2.Click
         Session("fase") = "2"
         Response.Redirect("richiestaCorsoF2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+    End Sub
+
+    Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
+        Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
+
     End Sub
 End Class

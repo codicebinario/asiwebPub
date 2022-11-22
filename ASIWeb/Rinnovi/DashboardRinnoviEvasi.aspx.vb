@@ -176,6 +176,12 @@ Public Class DashboardRinnoviEvasi
                     phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
                     phDash10.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small><br /><br />"))
+                    If Not String.IsNullOrEmpty(dr("Asi_codiceEnteEx")) Then
+                        phDash10.Controls.Add(New LiteralControl("Ente di Origine:<br /> <small>" & Data.FixNull(dr("Asi_NomeEnteEx")) & "</small><br /><br />"))
+
+
+                    End If
+
                     '  phDash10.Controls.Add(New LiteralControl("</span><small>Tessera: </small><small></small><br /><br />"))
 
                     If tessera = "..\img\noPdf.jpg" Then
@@ -186,7 +192,7 @@ Public Class DashboardRinnoviEvasi
                         phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom "" target=""_blank"" href='scaricaTesseraRinnovo.aspx?codR=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("StringaNomeFile"))) & "&nominativo=" _
-                             & deEnco.QueryStringEncode(Data.FixNull(dr("Asi_Cognome")) & "_" & Data.FixNull(dr("Asi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Asi_Cognome")) & "_" & Data.FixNull(dr("Asi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))
 
 
                     End If
@@ -434,6 +440,12 @@ Public Class DashboardRinnoviEvasi
                         phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
                         phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small><br /><br />"))
+                        If Not String.IsNullOrEmpty(dr("Asi_codiceEnteEx")) Then
+                            phDash.Controls.Add(New LiteralControl("Ente di Origine:<br /> <small>" & Data.FixNull(dr("Asi_NomeEnteEx")) & "</small><br /><br />"))
+
+
+                        End If
+
                         '  phDash.Controls.Add(New LiteralControl("</span><small>Tessera: </small><small></small><br /><br />"))
 
                         If tessera = "..\img\noPdf.jpg" Then

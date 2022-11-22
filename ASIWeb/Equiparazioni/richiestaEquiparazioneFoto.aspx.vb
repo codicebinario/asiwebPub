@@ -29,7 +29,7 @@ Public Class richiestaEquiparazioneFoto
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
     Dim deEnco As New Ed()
-    Const MassimoPeso As Integer = 3102400
+    Const MassimoPeso As Integer = 512000
     Const FileType As String = "image/*"
     ' in pixel
     Const massimaaltezza As Integer = 140
@@ -121,7 +121,7 @@ Public Class richiestaEquiparazioneFoto
 
             lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
-                "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
+                "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
 
@@ -333,6 +333,7 @@ Public Class richiestaEquiparazioneFoto
 
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
 
+        Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
 
 
         If inputfile.PostedFile.ContentLength > MassimoPeso Then
@@ -341,24 +342,21 @@ Public Class richiestaEquiparazioneFoto
         ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
             results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
 
+        ElseIf img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+
+            results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+
+
+        ElseIf img.Width > img.Height Then
+            results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
+
+
+        ElseIf img.Width > massinalarghezza OrElse img.Height > massimaaltezza Then
+            'Response.Write(maggiore)
+            ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
         Else
-
-            '   Response.Write("sono dentro")
-            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
-            If img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
-
-                results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
-
-
-            ElseIf img.Width > img.Height Then
-                results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
-
-
-            ElseIf img.Width >= massinalarghezza OrElse img.Height >= massimaaltezza Then
-                'Response.Write(maggiore)
-                ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
-                Dim rapporto As Integer
-                rapporto = img.Height / 140
+            Dim rapporto As Integer
+            rapporto = img.Height / 140
                 Dim img2 As Drawing.Bitmap
                 img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
 
@@ -371,7 +369,7 @@ Public Class richiestaEquiparazioneFoto
 
 
 
-            End If
+
             img.Dispose()
 
 

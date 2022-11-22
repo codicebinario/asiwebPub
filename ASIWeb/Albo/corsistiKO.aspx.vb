@@ -201,6 +201,7 @@ Public Class corsistiKO
         RequestP.AddSearchField("IDCorso", Session("IDCorso"), Enumerations.SearchOption.equals)
         RequestP.AddSearchField("Corsista_OK_KO", "KO", Enumerations.SearchOption.equals)
         'fmsP.GetPictureReference("", ""
+
         ds = RequestP.Execute()
 
 
@@ -352,15 +353,19 @@ Public Class corsistiKO
         Dim RequestP = fmsP.CreateEditRequest(Session("IDCorso"))
         RequestP.AddField("Codice_Status", Session("oldStatus"))
 
-        Try
-            RequestP.Execute()
+        '   Try
+        RequestP.Execute()
             AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), Session("oldStatus"), Session("WebUserEnte"), "corso")
-            '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
-            '  Session("annullaCorso") = "ok"
+        '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
+        '  Session("annullaCorso") = "ok"
 
-        Catch ex As Exception
+        '     Catch ex As Exception
 
-        End Try
+        '  End Try
+        Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
+    End Sub
+
+    Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
         Response.Redirect("dashboardB.aspx#" & Session("IDCorso"))
     End Sub
 End Class

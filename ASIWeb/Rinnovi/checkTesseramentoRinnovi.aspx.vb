@@ -23,6 +23,7 @@ Imports System.Net
 Imports System.Web.Services.Description
 Imports System.EnterpriseServices.CompensatingResourceManager
 Imports System.Globalization
+Imports System.Threading
 
 Public Class checkTesseramentoRinnovi
     Inherits System.Web.UI.Page
@@ -165,6 +166,16 @@ Public Class checkTesseramentoRinnovi
         fmsP.SetLayout("webRinnoviRichiesta")
         Dim Request = fmsP.CreateEditRequest(IDRinnovo)
 
+        Dim SettaggioCulture As CultureInfo = CultureInfo.CreateSpecificCulture("it-IT")
+        Thread.CurrentThread.CurrentCulture = SettaggioCulture
+        Thread.CurrentThread.CurrentUICulture = SettaggioCulture
+        ' DateTime.Parse(dataScadenza, SettaggioCulture)
+        Dim DataScadenzaPulita As String
+
+        DataScadenzaPulita = DateTime.Parse(Data.SonoDieci(dataScadenza), SettaggioCulture)
+
+
+
 
         Request.AddField("Rin_CFVerificatoTessera", "1")
 
@@ -172,7 +183,22 @@ Public Class checkTesseramentoRinnovi
         Request.AddField("Rin_NumeroTessera", codiceTessera)
         Request.AddField("Rin_Nome", nome)
         Request.AddField("Rin_Cognome", cognome)
-        Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaData(dataScadenza))
+        'Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaData(dataScadenza))
+        Dim miaDataScadenza As DateTime
+        Dim miaDataScadenza2 As DateTime
+        '  miaDataScadenza = DateTime.ParseExact(DataScadenzaPulita, "dd/MM/yyyy", CultureInfo.InvariantCulture)
+        'Dim oDate As DateTime = DateTime.ParseExact(dataScadenza, "dd-HH-yyyy HH:mm tt", Nothing)
+        '  If DateTime.TryParse(DataScadenzaPulita, miaDataScadenza) Then
+        Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaDataUK(DataScadenzaPulita))
+        'miaDataScadenza2 = miaDataScadenza.ToString("MM/dd/yyyy hh:mm:ss")
+        '  Request.AddField("Data_ScadenzaTesseraASI", miaDataScadenza.ToString("dd/MM/yyyy", New CultureInfo("it-IT")))
+        '  End If
+        '   Request.AddField("Data_ScadenzaTesseraASI", "31/12/2022")
+
+
+        ' Request.AddField("Data_ScadenzaTesseraASI", Data.SonoDieci(dataScadenza))
+        'Dim miadata As DateTime = DateTime.Parse("31/12/2022", SettaggioCulture)
+
         Request.AddField("Rin_ComuneNascita", comuneNascita)
         Request.AddField("Rin_DataNascita", Data.SonoDieci(datanascita))
 

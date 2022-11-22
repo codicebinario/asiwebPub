@@ -159,8 +159,227 @@ Public Class DashboardAlbo
 
     End Sub
 
-    Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+    'Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
 
+    '    If Page.IsValid Then
+    '        Dim ds As DataSet
+
+
+
+    '        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+    '        fmsP.SetLayout("WebAlboEx")
+    '        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+    '        ' RequestP.AddSearchField("pre_stato_web", "1")
+
+
+    '        If rbCF.Checked = True Then
+    '            RequestP.AddSearchField("Codice Fiscale", Trim(txtValore.Text), Enumerations.SearchOption.equals)
+    '        ElseIf rbCognome.Checked = True Then
+
+    '            RequestP.AddSearchField("Cognome", Trim(txtValore.Text), Enumerations.SearchOption.equals)
+    '        End If
+
+
+
+    '        RequestP.AddSearchField("CodiceEnteAffiliante", Session("codice"), Enumerations.SearchOption.equals)
+
+
+
+
+
+    '        '    Try
+
+
+
+
+    '        ds = RequestP.Execute()
+
+    '            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+    '                'Dim counter As Integer = 0
+    '                Dim counter1 As Integer = 0
+    '                Dim totale As Decimal = 0
+    '                Dim tessera As String
+    '                Dim nominativo As String
+
+    '                For Each dr In ds.Tables("main").Rows
+
+    '                    phDash.Visible = True
+
+    '                    If String.IsNullOrWhiteSpace(Data.FixNull(dr("tessera"))) Then
+    '                        tessera = "..\img\noPdf.jpg"
+    '                    Else
+    '                        tessera = "https://93.63.195.98" & Data.FixNull(dr("tessera"))
+    '                    End If
+
+    '                    phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
+
+
+
+    '                    'accordion card
+    '                    phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
+    '                    'accordion heder
+    '                    phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
+
+    '                    phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
+
+    '                    ' inizio prima riga
+
+    '                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+
+    '                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
+
+    '                    phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Cognome")) & " " & Data.FixNull(dr("Nome")) & "</small><br />"))
+
+    '                    phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Codice Fiscale")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Scadenza"))) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Tessera ASI: <small>" & Data.FixNull(dr("Numero Tessera ASI")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("CODICE ISCRIZIONE")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Email: <small>" & Data.FixNull(dr("Indirizzo mail")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Comune Nascita: <small>" & Data.FixNull(dr("Comune di Nascita")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Data Nascita: <small>" & Data.SonoDieci(Data.FixNull(dr("Data di Nascita"))) & "</small><br />"))
+
+
+    '                    phDash.Controls.Add(New LiteralControl())
+
+    '                    ' phDash.Controls.Add(New LiteralControl("</span>"))
+
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+    '                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6  text-left"">"))
+    '                    phDash.Controls.Add(New LiteralControl("Dati Sportivi: <small>" & Data.FixNull(dr("Qualifica")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Sport        : <small>" & Data.FixNull(dr("Sport")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Disciplina   : <small>" & Data.FixNull(dr("Disciplina")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Specialità   : <small>" & Data.FixNull(dr("Specialita")) & "</small><br />"))
+    '                    phDash.Controls.Add(New LiteralControl("Livello      : <small>" & Data.FixNull(dr("Livello_Grado")) & "</small><br />"))
+    '                If tessera = "..\img\noPdf.jpg" Then
+    '                    '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
+
+
+    '                Else
+    '                    phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom "" target=""_blank"" href='scaricaTesseraAlbo.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+    '                         & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "&nominativo=" _
+    '                         & deEnco.QueryStringEncode(Data.FixNull(dr("Cognome")) & "_" & Data.FixNull(dr("Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))
+
+
+    '                End If
+
+
+    '                phDash.Controls.Add(New LiteralControl("</div>"))
+
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+    '                    'intermezzo
+    '                    phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+    '                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+    '                    phDash.Controls.Add(New LiteralControl("<hr>"))
+
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+    '                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+    '                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+    '                    phDash.Controls.Add(New LiteralControl("Indirizzo: <small>" & Data.FixNull(dr("Indirizzo Residenza")) & " - " & Data.FixNull(dr("Comune di Residenza")) & " - " & Data.FixNull(dr("Cap Residenza")) & " - " & Data.FixNull(dr("Provincia")) & "</small><br />"))
+
+
+
+    '                    phDash.Controls.Add(New LiteralControl())
+
+    '                    phDash.Controls.Add(New LiteralControl("</span>"))
+
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+    '                    '   phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+    '                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
+
+    '                '      phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small><br /><br />"))
+    '                '  phDash10.Controls.Add(New LiteralControl("</span><small>Tessera: </small><small></small><br /><br />"))
+
+
+    '                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+
+
+
+
+
+    '                    counter1 += 1
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+    '                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+    '                Next
+    '            Else
+    '                phDash.Visible = True
+
+
+
+    '                phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
+
+
+
+    '                'accordion card
+    '                phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
+    '                'accordion heder
+    '                phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
+
+    '                phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
+
+    '                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+    '                phDash.Controls.Add(New LiteralControl("<small>nessun risultato dalla ricerca</small><br />"))
+
+
+    '                phDash.Controls.Add(New LiteralControl("</div>"))
+    '                phDash.Controls.Add(New LiteralControl("</div>"))
+
+    '                phDash.Controls.Add(New LiteralControl("</div>"))
+
+    '                phDash.Controls.Add(New LiteralControl("</div>"))
+    '                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+    '            End If
+    '        '    Catch ex As Exception
+    '        'Session("procedi") = "KO"
+    '        'Response.Redirect("DashboardEquiEvasi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+    '        '   End Try
+
+
+    '    End If
+
+
+    'End Sub
+
+    Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
+        If rbCF.Checked = False And rbCognome.Checked = False Then
+            args.IsValid = False
+        Else
+            args.IsValid = True
+        End If
+    End Sub
+
+    Protected Sub lnkCheck_Click(sender As Object, e As EventArgs) Handles lnkCheck.Click
         If Page.IsValid Then
             Dim ds As DataSet
 
@@ -194,66 +413,66 @@ Public Class DashboardAlbo
 
             ds = RequestP.Execute()
 
-                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-                    'Dim counter As Integer = 0
-                    Dim counter1 As Integer = 0
-                    Dim totale As Decimal = 0
-                    Dim tessera As String
-                    Dim nominativo As String
+                'Dim counter As Integer = 0
+                Dim counter1 As Integer = 0
+                Dim totale As Decimal = 0
+                Dim tessera As String
+                Dim nominativo As String
 
-                    For Each dr In ds.Tables("main").Rows
+                For Each dr In ds.Tables("main").Rows
 
-                        phDash.Visible = True
+                    phDash.Visible = True
 
-                        If String.IsNullOrWhiteSpace(Data.FixNull(dr("tessera"))) Then
-                            tessera = "..\img\noPdf.jpg"
-                        Else
-                            tessera = "https://93.63.195.98" & Data.FixNull(dr("tessera"))
-                        End If
+                    If String.IsNullOrWhiteSpace(Data.FixNull(dr("tessera"))) Then
+                        tessera = "..\img\noPdf.jpg"
+                    Else
+                        tessera = "https://93.63.195.98" & Data.FixNull(dr("tessera"))
+                    End If
 
-                        phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
-
-
-
-                        'accordion card
-                        phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
-                        'accordion heder
-                        phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
-
-                        ' inizio prima riga
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                    phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
 
 
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
 
-                        phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Cognome")) & " " & Data.FixNull(dr("Nome")) & "</small><br />"))
+                    'accordion card
+                    phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
+                    'accordion heder
+                    phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
 
-                        phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Codice Fiscale")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Scadenza"))) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Tessera ASI: <small>" & Data.FixNull(dr("Numero Tessera ASI")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("CODICE ISCRIZIONE")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Email: <small>" & Data.FixNull(dr("Indirizzo mail")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Comune Nascita: <small>" & Data.FixNull(dr("Comune di Nascita")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Data Nascita: <small>" & Data.SonoDieci(Data.FixNull(dr("Data di Nascita"))) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
 
+                    ' inizio prima riga
 
-                        phDash.Controls.Add(New LiteralControl())
-
-                        ' phDash.Controls.Add(New LiteralControl("</span>"))
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6  text-left"">"))
-                        phDash.Controls.Add(New LiteralControl("Dati Sportivi: <small>" & Data.FixNull(dr("Qualifica")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Sport        : <small>" & Data.FixNull(dr("Sport")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Disciplina   : <small>" & Data.FixNull(dr("Disciplina")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Specialità   : <small>" & Data.FixNull(dr("Specialita")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Livello      : <small>" & Data.FixNull(dr("Livello_Grado")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
+
+                    phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Cognome")) & " " & Data.FixNull(dr("Nome")) & "</small><br />"))
+
+                    phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Codice Fiscale")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Scadenza"))) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Tessera ASI: <small>" & Data.FixNull(dr("Numero Tessera ASI")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("CODICE ISCRIZIONE")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Email: <small>" & Data.FixNull(dr("Indirizzo mail")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Comune Nascita: <small>" & Data.FixNull(dr("Comune di Nascita")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Data Nascita: <small>" & Data.SonoDieci(Data.FixNull(dr("Data di Nascita"))) & "</small><br />"))
+
+
+                    phDash.Controls.Add(New LiteralControl())
+
+                    ' phDash.Controls.Add(New LiteralControl("</span>"))
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6  text-left"">"))
+                    phDash.Controls.Add(New LiteralControl("Dati Sportivi: <small>" & Data.FixNull(dr("Qualifica")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Sport        : <small>" & Data.FixNull(dr("Sport")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Disciplina   : <small>" & Data.FixNull(dr("Disciplina")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Specialità   : <small>" & Data.FixNull(dr("Specialita")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Livello      : <small>" & Data.FixNull(dr("Livello_Grado")) & "</small><br />"))
                     If tessera = "..\img\noPdf.jpg" Then
                         '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
 
@@ -269,41 +488,41 @@ Public Class DashboardAlbo
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-                        'intermezzo
-                        phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+                    'intermezzo
+                    phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
 
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
 
-                        phDash.Controls.Add(New LiteralControl("<hr>"))
+                    phDash.Controls.Add(New LiteralControl("<hr>"))
 
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                        phDash.Controls.Add(New LiteralControl("Indirizzo: <small>" & Data.FixNull(dr("Indirizzo Residenza")) & " - " & Data.FixNull(dr("Comune di Residenza")) & " - " & Data.FixNull(dr("Cap Residenza")) & " - " & Data.FixNull(dr("Provincia")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("</div>"))
 
 
 
-                        phDash.Controls.Add(New LiteralControl())
-
-                        phDash.Controls.Add(New LiteralControl("</span>"))
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
+                    phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                        '   phDash.Controls.Add(New LiteralControl("</div>"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                    phDash.Controls.Add(New LiteralControl("Indirizzo: <small>" & Data.FixNull(dr("Indirizzo Residenza")) & " - " & Data.FixNull(dr("Comune di Residenza")) & " - " & Data.FixNull(dr("Cap Residenza")) & " - " & Data.FixNull(dr("Provincia")) & "</small><br />"))
 
 
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
+
+                    phDash.Controls.Add(New LiteralControl())
+
+                    phDash.Controls.Add(New LiteralControl("</span>"))
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+                    phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                    '   phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
                     '      phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small><br /><br />"))
                     '  phDash10.Controls.Add(New LiteralControl("</span><small>Tessera: </small><small></small><br /><br />"))
@@ -319,38 +538,7 @@ Public Class DashboardAlbo
 
 
 
-                        counter1 += 1
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-
-                    Next
-                Else
-                    phDash.Visible = True
-
-
-
-                    phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
-
-
-
-                    'accordion card
-                    phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
-                    'accordion heder
-                    phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
-
-                    phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
-
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-                    phDash.Controls.Add(New LiteralControl("<small>nessun risultato dalla ricerca</small><br />"))
-
-
-                    phDash.Controls.Add(New LiteralControl("</div>"))
+                    counter1 += 1
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
@@ -359,23 +547,44 @@ Public Class DashboardAlbo
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                End If
+
+                Next
+            Else
+                phDash.Visible = True
+
+
+
+                phDash.Controls.Add(New LiteralControl("<div class=""col-sm-10 mb-3 mb-md-0"">"))
+
+
+
+                'accordion card
+                phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
+                'accordion heder
+                phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
+
+                phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
+
+                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                phDash.Controls.Add(New LiteralControl("<small>nessun risultato dalla ricerca</small><br />"))
+
+
+                phDash.Controls.Add(New LiteralControl("</div>"))
+                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                phDash.Controls.Add(New LiteralControl("</div>"))
+                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+            End If
             '    Catch ex As Exception
             'Session("procedi") = "KO"
             'Response.Redirect("DashboardEquiEvasi.aspx?ris=" & deEnco.QueryStringEncode("ko"))
             '   End Try
 
 
-        End If
-
-
-    End Sub
-
-    Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
-        If rbCF.Checked = False And rbCognome.Checked = False Then
-            args.IsValid = False
-        Else
-            args.IsValid = True
         End If
     End Sub
 End Class

@@ -77,6 +77,15 @@ Partial Public Class AsiMasterPageEqui
     Protected WithEvents lnkOut As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''LinkEquiAttive control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkEquiAttive As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''LinkArchivioEqui control.
     '''</summary>
     '''<remarks>

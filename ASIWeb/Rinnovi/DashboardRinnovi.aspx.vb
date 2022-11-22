@@ -140,7 +140,7 @@ Public Class DashboardRinnovi
                     record_id = WebUtility.UrlEncode(deEnco.QueryStringEncode(WebUtility.UrlEncode(dr("id_record"))))
                     hpUPPag.PostBackUrl = "upLegRinnovi.aspx?codR=" & codR & "&record_ID=" & record_id
 
-                    hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("Rin_CostoRinnovo")) & " €"
+                    hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("Rin_CostoRinnovo")) & " Euro"
 
                     hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom  mb-1"
                     If (Data.FixNull(dr("Codice_Status")) = "158" Or (Data.FixNull(dr("Codice_Status")) = "155")) Then
@@ -211,7 +211,7 @@ Public Class DashboardRinnovi
 
                     phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Asi_CodiceFiscale")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Tess. ASI: <small>" & Data.FixNull(dr("Asi_CodiceTessera")) & "</small><br />"))
-                    phDash.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Tess.Tecnico: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenza"))) & "</small><br />"))
 
                     phDash.Controls.Add(New LiteralControl("-------------------------------<br />"))
@@ -231,8 +231,12 @@ Public Class DashboardRinnovi
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
-                    phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
+                    phDash.Controls.Add(New LiteralControl("</span>Status:<small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small><br />"))
+                    If Data.FixNull(dr("Codice_Status")) = "151" Then
+                        phDash.Controls.Add(New LiteralControl("Ente di Origine:<br /> <small>" & Data.FixNull(dr("Asi_NomeEnteEx")) & "</small><br />"))
 
+
+                    End If
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
 

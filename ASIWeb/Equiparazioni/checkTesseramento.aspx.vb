@@ -152,10 +152,10 @@ Public Class checkTesseramento
     '    End Sub
 
     Public Function CaricaDatiDocumentoEquiparazione(codR As String, IDEquiparazione As String, codiceFiscale As String,
-                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String) As Boolean
+                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As Date) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
-
+        Dim DataScadenzaSistemata As String
         ' Dim ds As DataSet
 
 
@@ -172,7 +172,8 @@ Public Class checkTesseramento
         Request.AddField("Equi_NumeroTessera", codiceTessera)
         Request.AddField("Equi_Nome", nome)
         Request.AddField("Equi_Cognome", cognome)
-        Request.AddField("Equi_DataScadenza", Data.SistemaData(dataScadenza))
+        DataScadenzaSistemata = Data.SistemaDataUK(Data.SonoDieci(dataScadenza))
+        Request.AddField("Equi_DataScadenza", DataScadenzaSistemata)
 
 
 

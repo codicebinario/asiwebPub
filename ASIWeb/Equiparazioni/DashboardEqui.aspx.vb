@@ -286,7 +286,7 @@ Public Class DashboardEqui
                     phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Equi_Nome")) & " " & Data.FixNull(dr("Equi_Cognome")) & "</small><br />"))
 
                     phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
-                    phDash.Controls.Add(New LiteralControl("Cod.Tessera: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Tessera Ass.: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
 
                     phDash.Controls.Add(New LiteralControl())
@@ -343,14 +343,9 @@ Public Class DashboardEqui
                     phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
 
-                    phDash.Controls.Add(New LiteralControl("Qualifica DT:  "))
 
-                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small>"))
-                    phDash.Controls.Add(New LiteralControl())
-
-                    phDash.Controls.Add(New LiteralControl("</span><br />"))
 
 
                     phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
@@ -359,7 +354,22 @@ Public Class DashboardEqui
                     phDash.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
-                    phDash.Controls.Add(New LiteralControl())
+                    phDash.Controls.Add(New LiteralControl("Qualifica DT:  "))
+
+                    phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small><br />"))
+
+                    If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("NoteValutazioneSettore"))) Then
+                        phDash.Controls.Add(New LiteralControl("Note da Settore:  "))
+                        phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneSettore")) & "</small><br />"))
+
+
+                    End If
+
+                    '  phDash.Controls.Add(New LiteralControl())
+
+                    '  phDash.Controls.Add(New LiteralControl("</span><br />"))
+
+                    '   phDash.Controls.Add(New LiteralControl())
 
                     ' phDash.Controls.Add(New LiteralControl("</span>"))
 
@@ -370,7 +380,7 @@ Public Class DashboardEqui
 
 
 
-                    phDash.Controls.Add(New LiteralControl("</div>"))
+                        phDash.Controls.Add(New LiteralControl("</div>"))
 
 
 
@@ -379,15 +389,15 @@ Public Class DashboardEqui
 
 
 
-                    counter1 += 1
-                    phDash.Controls.Add(New LiteralControl("</div>"))
+                        counter1 += 1
+                        phDash.Controls.Add(New LiteralControl("</div>"))
 
-                    phDash.Controls.Add(New LiteralControl("</div>"))
+                        phDash.Controls.Add(New LiteralControl("</div>"))
 
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-                    phDash.Controls.Add(New LiteralControl("</div>"))
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+                        phDash.Controls.Add(New LiteralControl("</div>"))
 
-                End If
+                    End If
             Next
 
         End If

@@ -16,7 +16,7 @@ Public Class AsiMasterPageAlbo
 
             If quantiDaValutare(Session("codice")) >= 1 Then
                 LinkSettore.Visible = True
-                LinkSettore.Text = "Corsi da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
+                LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Corsi da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
             Else
                 LinkSettore.Visible = False
             End If
@@ -34,7 +34,7 @@ Public Class AsiMasterPageAlbo
 
                 '  Dim lblMasterDen As Literal = DirectCast(Master.FindControl("litDenominazione"), Literal)
                 ' litDenominazione.Text = "Codice: " & AsiModel.LogIn.Codice & " - " & "Tipo Ente: " & AsiModel.LogIn.TipoEnte & " - " & AsiModel.LogIn.Denominazione
-                litDenominazione.Text = Session("denominazione")
+                litDenominazione.Text = "<i Class=""bi bi-intersect""> </i>" & Session("denominazione")
 
             End If
 

@@ -158,6 +158,9 @@ function ServerException(mess) {
                   <div class="form-group">
                       <h5>Caricamento Dichiarazione</h5>
                       <hr />
+<div class="alert alert-danger" role="alert">
+ Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
+</div>
                   </div>
               </div>
 
@@ -197,18 +200,18 @@ function ServerException(mess) {
         <input type="file" name="myFile1"   class="custom-file-input" id="customFileInput" aria-describedby="customFileInput"  required>
         <label class="custom-file-label" for="customFileInput">Carica la Dichiarazione</label>
         
-        </div>   
-                
-      <div class="input-group-append">
+        </div>
+
+<%--                 <div class="input-group-append">--%>
        <%-- <button class="btn btn-primary" type="button" id="customFileInput1">Upload</button>--%>
        <%--  <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary"/>--%>
-      <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
+      <asp:LinkButton ID="lnkButton1" class="btn btn-primary ml-2" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
 
 
 
         <%--  <input type="submit" id="summ" runat="server" OnClick="Upload" value="Carica" name="mySubmit" />--%>
-      </div>
-    </div>
+  <%--    </div>--%>
+  <%--  </div>--%>
 
 </div></div></div>
     <br />

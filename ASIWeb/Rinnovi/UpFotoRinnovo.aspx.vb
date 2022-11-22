@@ -29,7 +29,7 @@ Public Class UpFotoRinnovo
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
     Dim deEnco As New Ed()
-    Const MassimoPeso As Integer = 3102400
+    Const MassimoPeso As Integer = 512000
     Const FileType As String = "image/*"
     ' in pixel
     Const massimaaltezza As Integer = 140
@@ -298,6 +298,8 @@ Public Class UpFotoRinnovo
     End Function
 
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
+        Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
+
         If inputfile.PostedFile.ContentLength > MassimoPeso Then
             results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
 
@@ -308,24 +310,22 @@ Public Class UpFotoRinnovo
 
 
 
+        ElseIf img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+
+            results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+
+
+        ElseIf img.Width > img.Height Then
+            results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
+
+
+        ElseIf img.Width > massinalarghezza OrElse img.Height > massimaaltezza Then
+            'Response.Write(maggiore)
+            results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+
         Else
-
-            '   Response.Write("sono dentro")
-            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
-            If img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
-
-                results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
-
-
-            ElseIf img.Width > img.Height Then
-                results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
-
-
-            ElseIf img.Width >= massinalarghezza OrElse img.Height >= massimaaltezza Then
-                'Response.Write(maggiore)
-                ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
-                Dim rapporto As Integer
-                rapporto = img.Height / 140
+            Dim rapporto As Integer
+            rapporto = img.Height / 140
                 Dim img2 As Drawing.Bitmap
                 img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
 
@@ -338,7 +338,7 @@ Public Class UpFotoRinnovo
 
 
 
-            End If
+
             img.Dispose()
 
 
@@ -358,5 +358,9 @@ Public Class UpFotoRinnovo
 
 
         End If
+    End Sub
+
+    Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
+        Response.Redirect("DashboardRinnovi.aspx")
     End Sub
 End Class

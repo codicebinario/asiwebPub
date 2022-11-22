@@ -14,8 +14,8 @@
         a:hover {color: darkred;}
    
         .btn-custom {
-         width:160px;
-        font-size: x-small;
+         width:220px;
+      
 
 
         }
@@ -89,12 +89,12 @@
   <div class="container">
     <h3 class="display-5">Consulta Albo</h3>
     <p class="lead">
-    <asp:LinkButton  ID="lnkAttive" class="btn btn-success btn-sm btn-tre" CausesValidation="false" runat="server">Scarica Albo Attivi</asp:LinkButton>
-    <asp:LinkButton  ID="lnkScadute" class="btn btn-success btn-sm btn-tre" CausesValidation="false" runat="server">Scarica Albo Scaduti</asp:LinkButton>
+    <asp:LinkButton  ID="lnkAttive" class="btn btn-success btn-sm btn-tre" CausesValidation="false" runat="server"><i class="bi bi-cloud-arrow-down"> </i>Scarica Albo Attivi</asp:LinkButton>
+    <asp:LinkButton  ID="lnkScadute" class="btn btn-success btn-sm btn-tre" CausesValidation="false" runat="server"><i class="bi bi-cloud-arrow-down-fill"> </i>Scarica Albo Scaduti</asp:LinkButton>
         <asp:Label ID="lblAvviso" runat="server" Text="" Visible="true"></asp:Label>
         <br />
         <br />
-        Attendere qualche secondo per avere i dati in formato Excel se presenti.
+        Attendere qualche secondo per avere i dati in formato <i class="bi bi-file-earmark-spreadsheet"> </i>Excel se presenti.
    
     </p>
   </div>
@@ -173,7 +173,8 @@
 								<div class="form-group">
 
                                      <label for="txtNomexxxxxxxxxxx"></label><br />
-                                     <asp:Button ID="btnCheck" runat="server" Text="Trova" class="btn btn-primary"    />
+                                  <%--   <asp:Button ID="btnCheck" runat="server" Text="Trova" class="btn btn-primary"    />--%>
+                                    <asp:LinkButton ID="lnkCheck" runat="server" CssClass="btn btn-primary"><i class="bi bi-person-badge"> </i>Trova</asp:LinkButton>
 									</div>
 							</div>
 							<div class="col-sm-6">

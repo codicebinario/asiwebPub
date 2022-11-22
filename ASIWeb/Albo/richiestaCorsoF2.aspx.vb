@@ -101,7 +101,8 @@ Public Class richiestaCorsoF2
         If fase = 2 Then
             lblnomef.Text = "Documento caricato precedentemente"
         Else
-            lblnomef.Text = "Documento " & nomef & "caricato con successo"
+            ' lblnomef.Text = "Documento " & nomef & " caricato con successo"
+            lblnomef.Text = "Documento caricato con successo"
         End If
 
         If Not String.IsNullOrEmpty(codR) Then

@@ -281,7 +281,7 @@ Public Class corsistiDoc
                     plTabellaCorsisti.Controls.Add(New LiteralControl("<td>"))
                     '   plTabellaCorsisti.Controls.Add(ScaricaTessera)
 
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaTessera.aspx?play=" & deEnco.QueryStringEncode(codiceIscrizione) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "'>Tessera</a>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaTessera.aspx?play=" & deEnco.QueryStringEncode(codiceIscrizione) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "'>Tess.Tecnico</a>"))
                     plTabellaCorsisti.Controls.Add(New LiteralControl("</td>"))
                     'Dim myImage As Image = FotoS(foto)
                     'Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
@@ -388,6 +388,10 @@ Public Class corsistiDoc
         Return temp
 
     End Function
+
+    Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
+        Response.Redirect("archivioAlbo.aspx#" & Session("IDCorso"))
+    End Sub
 
     'Protected Sub lnkNuovoExcel_Click(sender As Object, e As EventArgs) Handles lnkNuovoExcel.Click
     '    If Session("auth") = "0" Or IsNothing(Session("auth")) Then

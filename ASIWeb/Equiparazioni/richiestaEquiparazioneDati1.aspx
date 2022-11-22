@@ -172,7 +172,7 @@
           <Triggers>
         
 			 <asp:AsyncPostBackTrigger  ControlID="ddlProvinciaResidenza"/>
-			  	 <asp:AsyncPostBackTrigger  ControlID="ddlProvinciaConsegna"/>
+		<%--	  	 <asp:AsyncPostBackTrigger  ControlID="ddlProvinciaConsegna"/>--%>
              <%--  <asp:PostBackTrigger  ControlID="ddlProvincia"  />--%>
           </Triggers>
     <ContentTemplate> 
@@ -334,6 +334,45 @@
                         </div>
                              
                 </div>
+		   <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+							
+         <label  for="chkStampaCartacea"   style="padding-left:20px">Stampa Cartacea</label>
+         <asp:CheckBox ID="chkStampaCartacea"  runat="server" AutoPostBack="true" />
+	
+								
+                            
+        <label id="lblsd" for="chkStampaDiploma"   style="padding-left:20px">Stampa Diploma</label>
+         <asp:CheckBox ID="chkStampaDiploma"  runat="server" />
+   
+
+       
+  </div></div></div></div>
+
+	<asp:Panel ID="pnlDatiConsegna" runat="server" Visible="false">
+	
+<div class="alert alert-danger" role="alert">
+ <strong>Indirizzo di consegna: </strong> va compilato in caso di scelta "Stampa Cartacea". Se l'indirizzo è quello di residenza,
+	copia i dati in automatico con il pulsante "Copia Dati da Residenza"
+</div>
+
+		 <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+                  
+        <label for="chkCopia" style="padding-left:20px">Copia Dati da Residenza</label>
+     <asp:CheckBox ID="chkCopia"  runat="server" AutoPostBack="true" />
+    
+           
+  
+								</div>
+							</div>
+           </div></div>              
+
+
 
 
 	  <div class="col-sm-12">
@@ -346,10 +385,35 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									 <label for="ddlProvincia">Provincia Consegna  </label>
-                                   <asp:dropdownlist id="ddlProvinciaConsegna" runat="server" Cssclass="form-control input-sm" AutoPostBack="true" ></asp:dropdownlist>
-				
-									
+									 <label for="txtProvincia">Provincia Consegna  </label>
+                               
+				<asp:TextBox id="txtProvinciaConsegna" CssClass="form-control" runat="server" MaxLength="250"></asp:TextBox>									
+								
+								</div>
+							</div>
+						
+                         
+                        
+                        </div>
+                             
+                </div>
+
+		  <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" Display="Dynamic"
+										CssClass="errore" ErrorMessage="indirizzo di consegna" ControlToValidate="txtIndirizzoConsegna" 
+										EnableClientScript="true" ></asp:RequiredFieldValidator>
+
+									</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+								  <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server"  Display="Dynamic"
+										CssClass="errore" ErrorMessage="provincia di consegna" ControlToValidate="txtProvinciaConsegna" 
+										EnableClientScript="true" ></asp:RequiredFieldValidator>
 								
 								</div>
 							</div>
@@ -363,16 +427,16 @@
 
 	 <div class="col-sm-12">
 						<div class="row">
-							<div class="col-sm-3">
+							<div class="col-sm-6">
 								<div class="form-group">
 											<label for="txtCognome">Comune Consegna</label>
-                                    <asp:dropdownlist id="ddlComuneConsegna" runat="server" Cssclass="form-control"   maxlength="250" ></asp:dropdownlist>
+                                    <asp:textbox id="txtComuneConsegna" runat="server" Cssclass="form-control"   maxlength="250" ></asp:textbox>
 					
 								
 								
 						</div>
 							</div>
-							<div class="col-sm-3">
+							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="txtCognome">Cap Consegna</label>
                                     	<asp:textbox id="txtCapConsegna" runat="server" Cssclass="form-control"   maxlength="250" ></asp:textbox>
@@ -380,41 +444,50 @@
 								
 								</div>
 							</div>
-						<div class="col-sm-3">
-								<div class="form-group">
-							
-         <label  for="chkStampaCartacea"   style="padding-left:20px">Stampa Cartacea</label>
-         <asp:CheckBox ID="chkStampaCartacea"  runat="server" />
-										<div class="form-group">
-								
-                            
-        <label id="lblsd" for="chkStampaDiploma"   style="padding-left:20px">Stampa Diploma</label>
-         <asp:CheckBox ID="chkStampaDiploma"  runat="server" />
-   
-
-        
-  </div>
+					
           
    </div>
 							
 							</div>
                          
+		 <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
 
-							<div class="col-sm-3">
-							
-							
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" Display="Dynamic"
+										CssClass="errore" ErrorMessage="comune di consegna" ControlToValidate="txtComuneConsegna" 
+										EnableClientScript="true" ></asp:RequiredFieldValidator>
+
+									</div>
 							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+								  <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server"  Display="Dynamic"
+										CssClass="errore" ErrorMessage="cap di consegna" ControlToValidate="txtCapConsegna" 
+										EnableClientScript="true" ></asp:RequiredFieldValidator>
+								
+								</div>
+							</div>
+						
+                         
                         
                         </div>
                              
                 </div>
+
+	
+	
+	</asp:Panel>
+
+					
 
 		    <div class="col-sm-12">
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
                                    
-<%--						            <asp:Button ID="btnFase3" runat="server" Text="Avanti" class="btn btn-primary"    />--%>
+
                                  <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-forward"> </i>Avanti</asp:LinkButton>                       
           
 						</div>

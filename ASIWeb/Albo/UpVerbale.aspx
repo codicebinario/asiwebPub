@@ -9,10 +9,15 @@
       content: "" !important;
     }
     .custom-file {
-      overflow: hidden;
+           display: block;
+    /*  overflow: hidden;*/
     }
     .custom-file-input {
       white-space: nowrap;
+    }
+     .custom-file-label {
+      
+     color:red;
     }
     .legacy{
     color:white;
@@ -134,7 +139,7 @@ function ServerException(mess) {
     <h3 class="display-5">Invio del Verbale Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-                 <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
+        <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Termima Caricamento</asp:LinkButton>
     </p>
     
   </div></div>
@@ -158,6 +163,9 @@ function ServerException(mess) {
                   <div class="form-group">
                       <h5>Caricamento Verbale Corso</h5>
                       <hr />
+                      <div class="alert alert-danger" role="alert">
+                          Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
+                      </div>
                   </div>
               </div>
 
@@ -174,7 +182,9 @@ function ServerException(mess) {
           <div class="row">
               <div class="col-sm-12">
                   <div class="form-group">
-                      <label for="z" class="titoletto">Caricamento Verbale [formato PDF]</label>
+                      <label for="z" class="titoletto">
+                          Caricare Verbale ed eventuali altri documenti. [formato PDF, ed if formati word (DOC e DOCX)].
+                          I documenti 2 e 3 non sono obbligatori.</label>
                     
                   </div>
               </div>
@@ -187,25 +197,36 @@ function ServerException(mess) {
     <div class="form-control-plaintext"> <label class="form-check-label" for="txtNote">Note</label>
         <asp:TextBox ID="txtNote" CssClass="form-control" runat="server"></asp:TextBox>
     </div>
-             <div class="input-group">
+          
 
 
 
-      <div class="custom-file">
-<%-- <input type="file" name="myFile1"    id="customFileInput"  >--%>
+                 <div class="custom-file mb-2">
 
-        <input type="file" name="myFile1"   class="custom-file-input" id="customFileInput" aria-describedby="customFileInput"  required>
-        <label class="custom-file-label" for="customFileInput">Carica il Verbale</label>
-        
-        </div>   
+
+                     <input type="file" name="myFile1" class="custom-file-input" id="customFileInput" aria-describedby="customFileInput" required>
+                     <label class="custom-file-label" for="customFileInput">Carica il verbale (obbligatorio)</label>
+
+                 </div>
+                 <div class="custom-file mb-2">
+
+
+                     <input type="file" name="myFile2" class="custom-file-input" id="customFileInput2" aria-describedby="customFileInput2">
+                     <label class="custom-file-label" for="customFileInput2">Carica un secondo documento (facoltativo)</label>
+                 </div>
+                 <div class="custom-file mb-2">
+
+
+                     <input type="file" name="myFile3" class="custom-file-input " id="customFileInput3" aria-describedby="customFileInput3">
+                     <label class="custom-file-label" for="customFileInput3">Carica un terzo documento (facoltativo)</label>
+                 </div>
                 
-      <div class="input-group-append">
-       <%-- <button class="btn btn-primary" type="button" id="customFileInput1">Upload</button>--%>
-         <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary"/>
+
+         <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary ml-2 mt-2"/>
 
         <%--  <input type="submit" id="summ" runat="server" OnClick="Upload" value="Carica" name="mySubmit" />--%>
-      </div>
-    </div>
+   <%--   </div>--%>
+
 
 </div></div></div>
     <br />
@@ -227,7 +248,8 @@ function ServerException(mess) {
         
       
           <fup:Format Ext="pdf" MaxByteSize="5240000"/>
-         
+        <fup:Format Ext="doc" MaxByteSize="5240000" />
+        <fup:Format Ext="docx" MaxByteSize="5240000" />
                  
        
      </AllowedFileFormats>

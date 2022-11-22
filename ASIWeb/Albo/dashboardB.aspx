@@ -13,8 +13,8 @@
         a:hover {color: darkred;}
    
         .btn-custom {
-         width:160px;
-        font-size: x-small;
+         width:220px;
+      /*  font-size: small;*/
 
 
         }

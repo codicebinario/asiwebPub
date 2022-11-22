@@ -536,15 +536,18 @@ Public Class AsiModel
         Dim fms As FMSAxml = Nothing
         Dim ds As DataSet = Nothing
         Dim ritorno As Boolean = False
-        Dim dataScadenza As Date
+        Dim dataScadenza As DateTime
         fms = Conn.Connect()
-        Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+        Dim it As DateTime = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+
+        '    it = SistemaData(it)
+
         '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
         '     fmsB.SetDatabase(Database)
         fms.SetLayout("webCheckCF")
         Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
-        '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
+        ' RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
 
 
         '  Try
@@ -552,33 +555,29 @@ Public Class AsiModel
         ds = RequestA.Execute()
 
 
-            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-                For Each dr In ds.Tables("main").Rows
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+            For Each dr In ds.Tables("main").Rows
 
-                    If CDate(it) <= CDate(dr("DataScadenza")) Then
+                '   dataScadenza = dr("DataScadenza")
 
-
-
-
-                        ritorno = True
-
-                    End If
+                'If CDate(it) <= CDate(dr("DataScadenza")) Then
+                If it <= dr("Data Scadenza") Then
 
 
 
-                Next
+                    ritorno = True
 
-            Else
-                ritorno = False
+                End If
+
+
+
+            Next
+
+        Else
+            ritorno = False
             End If
 
-        'If Today.Date <= dataScadenza Then
 
-        '    ritorno = "tessera valida"
-        'Else
-        '    ritorno = "tessera scaduta"
-
-        'End If
 
 
         '  Catch ex As Exception
@@ -920,7 +919,7 @@ Public Class AsiModel
         Public TotaleOre As String
         Public StatusPrimaCaricamentoXL As String
         Public DataEmissione As String
-
+        Public MostraMonteOreFormazione As Integer
 
     End Class
     Public Class DatiCodiceFiscale
@@ -968,6 +967,7 @@ Public Class AsiModel
         Public disciplina As String
         Public codiceIscrizione As String
         Public codiceEnteEx As String
+        Public nomeEnteEx As String
     End Class
 
     Public Shared Function getDatiCodiceFiscale(codiceFiscale As String) As DatiCodiceFiscale
@@ -1138,6 +1138,7 @@ Public Class AsiModel
                     DatiCodiceFiscale.disciplina = ASIWeb.Data.FixNull(dr("disciplina"))
                     DatiCodiceFiscale.codiceIscrizione = ASIWeb.Data.FixNull(dr("codice iscrizione"))
                     DatiCodiceFiscale.codiceEnteEx = ASIWeb.Data.FixNull(dr("CodiceEnteAffiliante"))
+                    DatiCodiceFiscale.nomeEnteEx = ASIWeb.Data.FixNull(dr("RILASCIATO Da"))
                 Next
 
             Else
@@ -1172,8 +1173,10 @@ Public Class AsiModel
         Public CodiceTessera As String
         Public Nome As String
         Public Cognome As String
-        Public DataScadenza As String
+        Public DataScadenza As Date
         Public trovato As Boolean
+        Public PagamentoTotale As Decimal
+
 
     End Class
 
@@ -1562,6 +1565,8 @@ Public Class AsiModel
                         DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
                         DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
                         DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
+                        DatiEquiparazione.PagamentoTotale = Data.FixNull(dr("QuotaPagamento"))
+                        '    DatiEquiparazione.MostraMonteOreFormazione = Data.FixNull(dr("MonteOreFormazioneFlag"))
                     Next
 
 
@@ -1589,7 +1594,7 @@ Public Class AsiModel
             Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
             '  Dim ds As DataSet
             Dim risposta As String = ""
-            Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+            Dim it As DateTime = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
             '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
             '     fmsB.SetDatabase(Database)
             fmsP.SetLayout("webCheckCF")
@@ -1605,12 +1610,12 @@ Public Class AsiModel
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                 For Each dr In ds.Tables("main").Rows
 
-                    If CDate(it) <= CDate(dr("DataScadenza")) Then
+                    If it <= dr("Data Scadenza") Then
 
 
                         DettaglioEquiparazione.Cognome = Data.FixNull(dr("Cognome"))
                         DettaglioEquiparazione.Nome = Data.FixNull(dr("Nome"))
-                        DettaglioEquiparazione.DataScadenza = Data.FixNull(dr("DataScadenza"))
+                        DettaglioEquiparazione.DataScadenza = Data.FixNull(dr("Data Scadenza"))
                         DettaglioEquiparazione.CodiceTessera = Data.FixNull(dr("Codice tessera"))
 
 
@@ -1756,8 +1761,8 @@ Public Class AsiModel
             Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("IDCorso", IDCorso, Enumerations.SearchOption.equals)
 
-            Try
-                ds = RequestA.Execute()
+            '  Try
+            ds = RequestA.Execute()
 
 
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
@@ -1777,15 +1782,15 @@ Public Class AsiModel
                         DatiCorso.RegioneSvolgimento = Data.FixNull(dr("Regione_Svolgimento"))
                         DatiCorso.SvolgimentoDataDa = Data.FixNull(dr("Svolgimento_Da_Data"))
                         DatiCorso.SvolgimentoDataA = Data.FixNull(dr("Svolgimento_A_Data"))
-                        DatiCorso.OraSvolgimentoDa = Data.FixNull(dr("Ora_Svolgimento_Inizio"))
-                        DatiCorso.OraSvolgimentoA = Data.FixNull(dr("Ora_Svolgimento_Fine"))
+                        'DatiCorso.OraSvolgimentoDa = Data.FixNull(dr("Ora_Svolgimento_Inizio"))
+                        'DatiCorso.OraSvolgimentoA = Data.FixNull(dr("Ora_Svolgimento_Fine"))
                         DatiCorso.TitoloCorso = Data.FixNull(dr("Titolo_Corso"))
                         DatiCorso.TotaleOre = Data.FixNull(dr("oreCorso"))
                         DatiCorso.DataEmissione = Data.FixNull(dr("Data_Emissione"))
-                        '  DatiCorso.StatusPrimaCaricamentoXL = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
+                    DatiCorso.MostraMonteOreFormazione = Data.FixNullInteger(dr("MonteOreFormazioneFlag"))                        '  DatiCorso.StatusPrimaCaricamentoXL = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
 
 
-                    Next
+                Next
 
 
 
@@ -1793,9 +1798,9 @@ Public Class AsiModel
 
 
 
-            Catch ex As Exception
+            'Catch ex As Exception
 
-            End Try
+            'End Try
 
             Return DatiCorso
 

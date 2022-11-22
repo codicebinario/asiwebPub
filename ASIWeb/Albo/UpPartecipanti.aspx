@@ -106,7 +106,9 @@ function ServerException(mess) {
     <h3 class="display-5">Invio Lista Partecipanti al Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-                  <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Corsi Attivi</asp:LinkButton>
+                  <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Termima Caricamento</asp:LinkButton>
+        
+        
     </p>
     
   </div></div>
@@ -168,15 +170,15 @@ function ServerException(mess) {
 
         <input type="file" name="myFile1"   class="custom-file-input" id="customFileInput" aria-describedby="customFileInput"  required>
         <label class="custom-file-label" for="customFileInput">Carica l'elenco</label>
-        
+     
         </div>   
                 
-      <div class="input-group-append">
+     <%-- <div class="input-group-append">--%>
        <%-- <button class="btn btn-primary" type="button" id="customFileInput1">Upload</button>--%>
-         <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary"/>
+            <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary ml-2"/>
 
         <%--  <input type="submit" id="summ" runat="server" OnClick="Upload" value="Carica" name="mySubmit" />--%>
-      </div>
+    <%--  </div>--%>
     </div>
 
 </div></div></div>

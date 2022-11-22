@@ -63,6 +63,23 @@
         anno = oDateDa.Year
         mese = oDateDa.Month
 
+        Return giorno & "/" & mese & "/" & anno
+
+
+    End Function
+    Public Shared Function SistemaDataUK(valore As String) As String
+
+        Dim oDateDa As DateTime
+        Dim giorno
+        Dim anno
+        Dim mese
+
+        Dim miaData = valore
+        oDateDa = DateTime.Parse(miaData)
+        giorno = oDateDa.Day
+        anno = oDateDa.Year
+        mese = oDateDa.Month
+
         Return mese & "/" & giorno & "/" & anno
 
 
@@ -97,7 +114,17 @@
         End If
     End Function
 
+    Public Shared Function FixNullInteger(ByVal dbvalue) As Integer
+        If dbvalue Is DBNull.Value Then
+            Return 0
+        Else
+            'NOTE: This will cast value to string if
+            'it isn't a string.
 
+            Return dbvalue
+        End If
+
+    End Function
 
 
     Public Shared Function FixNull(ByVal dbvalue)

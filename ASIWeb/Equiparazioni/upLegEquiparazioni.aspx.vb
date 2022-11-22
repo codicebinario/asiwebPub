@@ -97,14 +97,15 @@ Public Class upLegEquiparazioni
             Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
             Dim codiceTessera As String = DettaglioEquiparazione.CodiceTessera
             Dim dataScadenza As String = DettaglioEquiparazione.DataScadenza
+            Dim pagamento As Decimal = DettaglioEquiparazione.PagamentoTotale
             idEqui = DettaglioEquiparazione.IDEquiparazione
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
 
             lblIntestazioneEquiparazioni.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente & "<br />" &
                  "<strong>Nominativo: </strong>" & nominativo & "<br />" &
-                 "<strong>Codice Fiscale: </strong>" & codiceFiscale & " <strong>Numero Tessera: </strong>" & codiceTessera &
-                 " <strong>Data Scadenza: </strong>" & dataScadenza
+                 "<strong>Codice Fiscale: </strong>" & codiceFiscale & " <strongTessera ASI: </strong>" & codiceTessera &
+                 " <strong>Data Scadenza: </strong>" & dataScadenza & " <strong>Pagamento: </strong>" & pagamento & "€"
 
         End If
 
@@ -208,10 +209,10 @@ Public Class upLegEquiparazioni
             Button1.Enabled = False
             uploadedFiles.Text = ""
 
-            uploadedFiles.Text = "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>non è possibile caricare ulteriori documenti </b>"
+            uploadedFiles.Text = "<b>File caricato con successo: </b><br/><b>non è possibile caricare ulteriori documenti </b>"
         Else
 
-            uploadedFiles.Text += "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>è possibile caricare ulteriori documenti </b>"
+            uploadedFiles.Text += "<b>File caricato con successo: </b><br/><b>è possibile caricare ulteriori documenti </b>"
         End If
 
 

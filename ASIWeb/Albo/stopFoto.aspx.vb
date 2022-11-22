@@ -20,11 +20,11 @@ Public Class stopFoto
         fmsP.SetLayout("webCorsiRichiesta")
 
         Dim RequestP = fmsP.CreateEditRequest(record_ID)
-        RequestP.AddField("Codice_Status", "75")
+        RequestP.AddField("Codice_Status", "73")
 
         Try
             risposta = RequestP.Execute()
-            AsiModel.LogIn.LogCambioStatus(codiceCorso, "75", Session("WebUserEnte"), "corso")
+            AsiModel.LogIn.LogCambioStatus(codiceCorso, "73", Session("WebUserEnte"), "corso")
             '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
             Session("stoCorsi") = "ok"
 

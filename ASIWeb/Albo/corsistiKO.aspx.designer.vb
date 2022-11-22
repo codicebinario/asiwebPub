@@ -23,6 +23,15 @@ Partial Public Class corsistiKO
     Protected WithEvents lnkNuovoExcel As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''lnkDashboardTorna control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lnkDashboardTorna As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''lblIntestazioneCorso control.
     '''</summary>
     '''<remarks>

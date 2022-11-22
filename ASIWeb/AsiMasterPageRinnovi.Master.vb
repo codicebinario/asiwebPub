@@ -21,7 +21,7 @@ Public Class AsiMasterPageRinnovi
 
             If Not IsNothing(Session("denominazione")) Then
 
-                litDenominazione.Text = Session("denominazione")
+                litDenominazione.Text = "<i Class=""bi bi-intersect""> </i>" & Session("denominazione")
 
             End If
 

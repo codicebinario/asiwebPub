@@ -452,8 +452,9 @@
                             <label for="txtNome"></label>
 								  <div class="form-control-plaintext">
        
-         <asp:CheckBox ID="chkStampaCartacea" class="form-check-input" runat="server" AutoPostBack="true" />
-     <label class="form-check-label" for="chkStampaCartacea">Stampa Cartacea</label>
+         <asp:CheckBox ID="chkStampaCartacea"   runat="server" AutoPostBack="true" />
+     <label style="padding-left:20px" for="chkStampaCartacea">Stampa Cartacea</label>
+
            
    </div></div>
 								</div>
@@ -477,6 +478,10 @@
 
 
 		<asp:Panel ID="pnlDatiConsegna" runat="server" Visible="false">
+<div class="alert alert-danger" role="alert">
+ <strong>Indirizzo di consegna: </strong> va compilato in caso di scelta "Stampa Cartacea". Se l'indirizzo è quello di residenza,
+	copia i dati in automatico con il pulsante "Copia Dati da Residenza"
+</div>
 
 				<div class="col-sm-6">
 								<div class="form-group">
@@ -484,8 +489,8 @@
                             <label for="txtNome"></label>
 								  <div class="form-control-plaintext">
        
-     <asp:CheckBox ID="chkCopia" class="form-check-input" runat="server" AutoPostBack="true" />
-     <label class="form-check-label" for="chkCopia">Copia Dati da Residenza</label>
+     <asp:CheckBox ID="chkCopia"  runat="server" AutoPostBack="true" />
+     <label style="padding-left:20px"  for="chkCopia">Copia Dati da Residenza</label>
            
    </div></div>
 								</div>
@@ -515,7 +520,31 @@
                         </div>
                              
                 </div>
+			<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
 
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" Display="Dynamic"
+										CssClass="errore" ErrorMessage="indirizzo di consegna" ControlToValidate="txtIndirizzoConsegna" 
+										EnableClientScript="true" ></asp:RequiredFieldValidator>
+
+									</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+								  <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server"  Display="Dynamic"
+										CssClass="errore" ErrorMessage="provincia di consegna" ControlToValidate="txtProvinciaConsegna" 
+										EnableClientScript="true" ></asp:RequiredFieldValidator>
+								
+								</div>
+							</div>
+						
+                         
+                        
+                        </div>
+                             
+                </div>
 
 	 <div class="col-sm-12">
 						<div class="row">
@@ -536,7 +565,35 @@
 								</div>
 							</div>
 							</div></div>
-			</asp:Panel>
+			 <div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" Display="Dynamic"
+										CssClass="errore" ErrorMessage="comune di consegna" ControlToValidate="txtComuneConsegna" 
+										EnableClientScript="true" ></asp:RequiredFieldValidator>
+
+									</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+								  <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server"  Display="Dynamic"
+										CssClass="errore" ErrorMessage="cap di consegna" ControlToValidate="txtCapConsegna" 
+										EnableClientScript="true" ></asp:RequiredFieldValidator>
+								
+								</div>
+							</div>
+						
+                         
+                        
+                        </div>
+                             
+                </div>
+
+		
+		
+		</asp:Panel>
 		</ContentTemplate></asp:UpdatePanel>
 		    <div class="col-sm-12">
 						<div class="row">

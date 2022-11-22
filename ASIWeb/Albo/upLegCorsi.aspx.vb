@@ -40,8 +40,7 @@ Public Class upLegCorsi
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
     Dim codR As String = ""
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
-
-
+    Dim s As Integer = 0 'pagamento da status 82
 
 
 
@@ -67,6 +66,7 @@ Public Class upLegCorsi
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
+        s = Request.QueryString("s")
         Dim record_ID As String = ""
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         If Not String.IsNullOrEmpty(record_ID) Then
@@ -205,10 +205,10 @@ Public Class upLegCorsi
             Button1.Enabled = False
             uploadedFiles.Text = ""
 
-            uploadedFiles.Text = "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>non è possibile caricare ulteriori documenti </b>"
+            uploadedFiles.Text = "<b>File caricato con successo.</b><br/><b>non è possibile caricare ulteriori documenti. </b>"
         Else
 
-            uploadedFiles.Text += "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>è possibile caricare ulteriori documenti </b>"
+            uploadedFiles.Text += "<b>File caricato con successo.</b><br/><b>è possibile caricare ulteriori documenti. </b>"
         End If
 
 
@@ -263,13 +263,24 @@ Public Class upLegCorsi
         Dim Request1 = fmsP1.CreateEditRequest(record_id)
 
         'If qualeStatus = "3" Then
-        Request1.AddField("Codice_Status", "78")
+        If s = 82 Then
+            Request1.AddField("Codice_Status", "83")
+        Else
+            Request1.AddField("Codice_Status", "81")
+        End If
+
         'Else
         '    Request1.AddField("Status_ID", "12")
         'End If
         Try
             risposta = Request1.Execute()
-            AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "78", Session("WebUserEnte"), "corso")
+
+            If s = 82 Then
+                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "83", Session("WebUserEnte"), "corso")
+            Else
+                AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "81", Session("WebUserEnte"), "corso")
+            End If
+
             'If qualeStatus = "3" Then
             '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
             'Else
@@ -469,4 +480,8 @@ Public Class upLegCorsi
     Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
         Response.Redirect("dashboardB.aspx#" & codR)
     End Sub
+
+    'Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
+    '    Response.Redirect("dashboardB.aspx#" & codR)
+    'End Sub
 End Class
