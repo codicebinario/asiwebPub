@@ -1,5 +1,6 @@
 ﻿Imports fmDotNet
 Imports ASIWeb.Ed
+Imports ASIWeb.AsiModel
 Public Class AsiMasterPageAlbo
     Inherits System.Web.UI.MasterPage
     Dim deEnco As New Ed
@@ -12,16 +13,41 @@ Public Class AsiMasterPageAlbo
         End If
 
         If Not Page.IsPostBack Then
-            Dim quantiVal As Integer = quantiDaValutare(Session("codice"))
+            Dim quantiVal As Integer = ContatoriEvasi.quantiDaValutare(Session("codice"))
+            Dim quantiValutati As Integer = ContatoriEvasi.quantiValutati(Session("codice"))
+            Dim quantiCorsiAttivi As Integer = ContatoriAttivi.quantiCorsiAttivi(Session("codice"))
+            Dim quantiCorsiEvasi As Integer = ContatoriEvasi.quantiCorsiEvasi(Session("codice"))
+            ' LinkArchivio
+            If quantiCorsiAttivi >= 1 Then
+                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light""> " & quantiCorsiAttivi & "</span>"
+            Else
+                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light"">0</span>"
 
-            If quantiDaValutare(Session("codice")) >= 1 Then
+            End If
+
+            If quantiCorsiEvasi >= 1 Then
+                LinkArchivio.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Evasi <span class=""badge badge-light""> " & quantiCorsiEvasi & "</span>"
+            Else
+                LinkArchivio.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Evasi <span class=""badge badge-light"">0</span>"
+
+            End If
+
+
+            If quantiVal >= 1 Then
                 LinkSettore.Visible = True
                 LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Corsi da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
             Else
+
+                LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Corsi da Valutare <span class=""badge badge-light"">0</span>"
+
                 LinkSettore.Visible = False
             End If
 
-            If quantiValutati(Session("codice")) = True Then
+
+
+            If quantiValutati >= 1 Then
+                LinkSettoreValutati.Text = "<i class=""bi bi-arrows-angle-expand""> </i>Corsi Valutati <span class=""badge badge-light""> " & quantiValutati & "</span>"
+
                 LinkSettoreValutati.Visible = True
             Else
                 LinkSettoreValutati.Visible = False
@@ -42,99 +68,99 @@ Public Class AsiMasterPageAlbo
 
     End Sub
 
-    Function quantiDaValutare(codice As String) As Integer
-        Dim ritorno As Integer = 0
+    'Function quantiDaValutare(codice As String) As Integer
+    '    Dim ritorno As Integer = 0
 
-        Dim ds As DataSet
+    '    Dim ds As DataSet
 
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webCorsiRichiesta")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
-
-
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-            Dim counter1 As Integer = 0
-            For Each dr In ds.Tables("main").Rows
+    '    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+    '    fmsP.SetLayout("webCorsiRichiesta")
+    '    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+    '    ' RequestP.AddSearchField("pre_stato_web", "1")
+    '    RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
+    '    RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+    '    RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
 
 
-                If Data.FixNull(dr("Codice_Status")) = "63" Then
-                    counter1 += 1
+    '    ds = RequestP.Execute()
 
-
-                End If
-
-            Next
-            If counter1 >= 1 Then
-                ritorno = counter1
-            Else
-                ritorno = 0
-            End If
-
-        Else
-            '  ritorno = counter1
-
-        End If
-        Return ritorno
-
-    End Function
-
-    Function quantiValutati(codice As String) As Boolean
-        Dim ritorno As Boolean = False
-
-        Dim ds As DataSet
-
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webCorsiRichiesta")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+    '    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+    '        Dim counter1 As Integer = 0
+    '        For Each dr In ds.Tables("main").Rows
 
 
 
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-            Dim counter1 As Integer = 0
-            For Each dr In ds.Tables("main").Rows
+    '            If Data.FixNull(dr("Codice_Status")) = "63" Then
+    '                counter1 += 1
 
 
+    '            End If
 
-                If Data.FixNull(dr("Codice_Status")) = "64" Or Data.FixNull(dr("Codice_Status")) = "65" Then
-                    counter1 += 1
+    '        Next
+    '        If counter1 >= 1 Then
+    '            ritorno = counter1
+    '        Else
+    '            ritorno = 0
+    '        End If
+
+    '    Else
+    '        '  ritorno = counter1
+
+    '    End If
+    '    Return ritorno
+
+    'End Function
+
+    'Function quantiValutati(codice As String) As Boolean
+    '    Dim ritorno As Boolean = False
+
+    '    Dim ds As DataSet
+
+    '    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+    '    fmsP.SetLayout("webCorsiRichiesta")
+    '    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+    '    ' RequestP.AddSearchField("pre_stato_web", "1")
+    '    RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
+    '    RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+    '    RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
 
-                End If
 
-            Next
-            If counter1 >= 1 Then
-                ritorno = True
-            Else
-                ritorno = False
-            End If
+    '    ds = RequestP.Execute()
 
-        Else
+    '    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-            ' non si sono records
-            ritorno = False
+    '        Dim counter1 As Integer = 0
+    '        For Each dr In ds.Tables("main").Rows
 
 
-        End If
+
+    '            If Data.FixNull(dr("Codice_Status")) = "64" Or Data.FixNull(dr("Codice_Status")) = "65" Then
+    '                counter1 += 1
 
 
-        Return ritorno
+    '            End If
 
-    End Function
+    '        Next
+    '        If counter1 >= 1 Then
+    '            ritorno = True
+    '        Else
+    '            ritorno = False
+    '        End If
+
+    '    Else
+
+    '        ' non si sono records
+    '        ritorno = False
+
+
+    '    End If
+
+
+    '    Return ritorno
+
+    'End Function
 
     Protected Sub lnkOut_Click(sender As Object, e As EventArgs) Handles lnkOut.Click
         Session("auth") = "0"
@@ -231,5 +257,9 @@ Public Class AsiMasterPageAlbo
 
     Protected Sub lnkExcel_Click(sender As Object, e As EventArgs) Handles lnkExcel.Click
         Response.Redirect("partecipantiTemplate.aspx")
+    End Sub
+
+    Protected Sub lnkAttivi_Click(sender As Object, e As EventArgs) Handles lnkAttivi.Click
+        Response.Redirect("DashboardB.aspx")
     End Sub
 End Class

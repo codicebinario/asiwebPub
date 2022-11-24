@@ -161,8 +161,9 @@
     <div class="collapse navbar-collapse" id="navbarCollapse1">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="DashboardB.aspx" ><i class="bi bi-arrow-up-circle"> </i>Corsi Attivi</a>
-  
+         <%-- <a class="nav-link" href="DashboardB.aspx" ><i class="bi bi-arrow-up-circle"> </i>Corsi Attivi</a>--%>
+            <asp:LinkButton ID="lnkAttivi" CssClass="nav-link" CausesValidation="false" runat="server"><i class="bi bi-arrow-up-circle"> </i>Corsi Attivi</asp:LinkButton>
+
         </li>
           
        

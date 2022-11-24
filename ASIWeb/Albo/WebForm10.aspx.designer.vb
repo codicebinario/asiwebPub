@@ -11,32 +11,23 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class homeA
+Partial Public Class WebForm10
 
     '''<summary>
-    '''HiddenQuantiCorsiAttivi control.
+    '''form1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenQuantiCorsiAttivi As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
-    '''HiddenQuanteEquiparazioniAttive control.
+    '''idQuantiCorsiAttivi control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenQuanteEquiparazioniAttive As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''HiddenQuantiRinnoviAttivi control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents HiddenQuantiRinnoviAttivi As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents idQuantiCorsiAttivi As Global.System.Web.UI.WebControls.HiddenField
 End Class

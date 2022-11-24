@@ -21,6 +21,7 @@ Imports System.Collections.Generic
 Imports System.Net.Security
 Imports System.Net
 Imports System.Threading
+Imports DocumentFormat.OpenXml.Office2010.ExcelAc
 
 Public Class richiestaCorsoF3
     Inherits System.Web.UI.Page
@@ -133,7 +134,7 @@ Public Class richiestaCorsoF3
 
 
 
-            If fase = 3 Then
+        If fase = 3 Then
             lblnomef.Text = "Dati Fase 2 precedentemente caricati"
         Else
             lblnomef.Text = "Dati Fase 2 caricati correttamente"
@@ -394,13 +395,24 @@ Public Class richiestaCorsoF3
             Dim Users As ListItemCollection = New ListItemCollection
             Dim User As ListItem
             If Len(txtDocenteCognome.Text) > 0 And txtDocenteCognome.Text <> "cognome" Then
+
                 Users.Add(Trim(txtDocenteCognome.Text))
                 SetFocusControl("txtDocenteNome")
             End If
-            For Each User In Users
+                For Each User In Users
                 '    txtDocenteNome.Text = ""
                 txtDocenteCognome.Text = ""
-                lstDocenti.Items.Add(User)
+                '    Dim alreadyExist As Boolean = Users.Contains(User)
+                If Not lstDocenti.Items.Contains(User) Then
+                    lstDocenti.Items.Add(User)
+                Else
+                    txtDocenteCognome.Text = User.ToString
+                    lblAvviso.Text = "nominativo già selezionato"
+                End If
+
+
+
+
             Next
         Else
 
@@ -420,14 +432,25 @@ Public Class richiestaCorsoF3
         '  System.Threading.Thread.Sleep(3000)
         Dim Users As ListItemCollection = New ListItemCollection
         Dim User As ListItem
+        lblAvviso2.Text = ""
         If Len(txtCommissioneNome.Text) > 0 And Len(txtCommissioneCognome.Text) > 0 And txtCommissioneNome.Text <> "nome" And txtCommissioneCognome.Text <> "cognome" Then
             Users.Add(txtCommissioneNome.Text & " " & txtCommissioneCognome.Text)
             SetFocusControl("txtCommissioneNome")
         End If
         For Each User In Users
-            txtCommissioneNome.Text = ""
-            txtCommissioneCognome.Text = ""
-            lstComponenti.Items.Add(User)
+
+
+            If Not lstComponenti.Items.Contains(User) Then
+                lstComponenti.Items.Add(User)
+                txtCommissioneNome.Text = ""
+                txtCommissioneCognome.Text = ""
+            Else
+
+                lblAvviso2.Text = "nominativo già selezionato"
+            End If
+
+
+
         Next
     End Sub
 

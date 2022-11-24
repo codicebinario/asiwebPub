@@ -284,6 +284,15 @@ Partial Public Class richiestaCorsoF3
     Protected WithEvents txtCommissioneCognome As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblAvviso2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblAvviso2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''btnAggiungiComponente control.
     '''</summary>
     '''<remarks>

@@ -209,6 +209,8 @@
     <Content Include="Albo\json.aspx" />
     <Content Include="Albo\jsonData.txt" />
     <Content Include="Albo\partecipantiTemplate.aspx" />
+    <Content Include="Albo\WebForm10.aspx" />
+    <Content Include="Albo\WebForm11.aspx" />
     <Content Include="Albo\WebForm8.aspx" />
     <Content Include="AsiMasterPageEqui.Master" />
     <Content Include="AsiMasterPageMain.Master" />
@@ -587,6 +589,20 @@
     </Compile>
     <Compile Include="Albo\partecipantiTemplate.aspx.vb">
       <DependentUpon>partecipantiTemplate.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Albo\WebForm10.aspx.designer.vb">
+      <DependentUpon>WebForm10.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\WebForm10.aspx.vb">
+      <DependentUpon>WebForm10.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Albo\WebForm11.aspx.designer.vb">
+      <DependentUpon>WebForm11.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\WebForm11.aspx.vb">
+      <DependentUpon>WebForm11.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Albo\WebForm8.aspx.designer.vb">

@@ -1933,9 +1933,322 @@ Public Class AsiModel
 
 
     'End Class
+    Public Class ContatoriEvasi
+
+        Public Shared Function quantiDaValutare(codice As String) As Integer
+            Dim ritorno As Integer = 0
+
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webCorsiRichiesta")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Settore_Approvazione_ID", codice, Enumerations.SearchOption.equals)
 
 
 
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                Dim counter1 As Integer = 0
+                For Each dr In ds.Tables("main").Rows
+
+
+
+                    If Data.FixNull(dr("Codice_Status")) = "63" Then
+                        counter1 += 1
+
+
+                    End If
+
+                Next
+                If counter1 >= 1 Then
+                    ritorno = counter1
+                Else
+                    ritorno = 0
+                End If
+
+            Else
+                '  ritorno = counter1
+
+            End If
+            Return ritorno
+
+        End Function
+
+        Public Shared Function quantiValutati(codice As String) As Integer
+            Dim ritorno As Integer = 0
+
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webCorsiRichiesta")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Settore_Approvazione_ID", codice, Enumerations.SearchOption.equals)
+            'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+            'RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                Dim counter1 As Integer = 0
+                For Each dr In ds.Tables("main").Rows
+
+
+
+                    If Data.FixNull(dr("Codice_Status")) = "64" Or Data.FixNull(dr("Codice_Status")) = "65" Then
+                        counter1 += 1
+
+
+                    End If
+
+                Next
+                If counter1 >= 1 Then
+                    ritorno = counter1
+                Else
+                    ritorno = 0
+                End If
+
+            Else
+
+                ' non si sono records
+                ' ritorno = 0
+
+
+            End If
+
+
+            Return ritorno
+
+        End Function
+
+
+        Public Shared Function quantiCorsiEvasi(codice As String) As Integer
+
+            Dim ritorno As Integer = 0
+
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webCorsiRichiesta")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+            ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                Dim counter1 As Integer = 0
+                For Each dr In ds.Tables("main").Rows
+
+
+
+                    If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "99" _
+                    Or Data.FixNull(dr("Codice_Status")) = "60" Then
+                        counter1 += 1
+                    Else
+
+
+
+
+                    End If
+
+                Next
+                If counter1 >= 1 Then
+                    ritorno = counter1
+                Else
+                    ritorno = 0
+                End If
+
+            Else
+                '  ritorno = counter1
+
+            End If
+            Return ritorno
+
+        End Function
+
+
+    End Class
+
+    Public Class ContatoriAttivi
+
+        Public Shared Function quantiCorsiAttivi(codice As String) As Integer
+
+            Dim ritorno As Integer = 0
+
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webCorsiRichiesta")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+            ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                Dim counter1 As Integer = 0
+                For Each dr In ds.Tables("main").Rows
+
+
+
+                    If Data.FixNull(dr("Codice_Status")) = "51" Or Data.FixNull(dr("Codice_Status")) = "54" _
+                Or Data.FixNull(dr("Codice_Status")) = "57" Or Data.FixNull(dr("Codice_Status")) = "70" _
+                Or Data.FixNull(dr("Codice_Status")) = "63" Or Data.FixNull(dr("Codice_Status")) = "64" _
+                Or Data.FixNull(dr("Codice_Status")) = "65" Or Data.FixNull(dr("Codice_Status")) = "66" _
+                Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "68" _
+                Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
+                Or Data.FixNull(dr("Codice_Status")) = "73" Or Data.FixNull(dr("Codice_Status")) = "83" _
+                Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78" _
+                Or Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "81" Then
+                        counter1 += 1
+                    Else
+
+
+
+
+                    End If
+
+                Next
+                If counter1 >= 1 Then
+                    ritorno = counter1
+                Else
+                    ritorno = 0
+                End If
+
+            Else
+                '  ritorno = counter1
+
+            End If
+            Return ritorno
+
+        End Function
+
+        Public Shared Function quanteEquiAttive(codice As String) As Integer
+
+            Dim ritorno As Integer = 0
+
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webEquiparazioniRichiesta")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+            ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                Dim counter1 As Integer = 0
+                For Each dr In ds.Tables("main").Rows
+
+
+                    If Data.FixNull(dr("Codice_Status")) = "101" Or Data.FixNull(dr("Codice_Status")) = "102" _
+                Or Data.FixNull(dr("Codice_Status")) = "103" Or Data.FixNull(dr("Codice_Status")) = "104" _
+                Or Data.FixNull(dr("Codice_Status")) = "105" Or Data.FixNull(dr("Codice_Status")) = "106" _
+                Or Data.FixNull(dr("Codice_Status")) = "107" Or Data.FixNull(dr("Codice_Status")) = "108" _
+                Or Data.FixNull(dr("Codice_Status")) = "109" Or Data.FixNull(dr("Codice_Status")) = "110" _
+                Or Data.FixNull(dr("Codice_Status")) = "111" _
+                Or Data.FixNull(dr("Codice_Status")) = "112" Or Data.FixNull(dr("Codice_Status")) = "113" _
+                Or Data.FixNull(dr("Codice_Status")) = "114" Then
+                        counter1 += 1
+                    Else
+
+                    End If
+
+
+
+
+
+
+
+                Next
+                If counter1 >= 1 Then
+                    ritorno = counter1
+                Else
+                    ritorno = 0
+                End If
+
+            Else
+                '  ritorno = counter1
+
+            End If
+            Return ritorno
+
+        End Function
+
+
+        Public Shared Function quantiRinnoviAttivi(codice As String) As Integer
+
+            Dim ritorno As Integer = 0
+
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webRinnoviRichiesta")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+            ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                Dim counter1 As Integer = 0
+                For Each dr In ds.Tables("main").Rows
+
+
+                    If Data.FixNull(dr("Codice_Status")) = "151" Or Data.FixNull(dr("Codice_Status")) = "152" _
+                Or Data.FixNull(dr("Codice_Status")) = "153" _
+                Or Data.FixNull(dr("Codice_Status")) = "154" Or Data.FixNull(dr("Codice_Status")) = "155" _
+                Or Data.FixNull(dr("Codice_Status")) = "156" Or Data.FixNull(dr("Codice_Status")) = "156" _
+                Or Data.FixNull(dr("Codice_Status")) = "157" _
+                Or Data.FixNull(dr("Codice_Status")) = "158" Or Data.FixNull(dr("Codice_Status")) = "159" Then
+
+                        counter1 += 1
+
+                    Else
+
+
+                    End If
+
+                Next
+                If counter1 >= 1 Then
+                    ritorno = counter1
+                Else
+                    ritorno = 0
+                End If
+
+            Else
+                '  ritorno = counter1
+
+            End If
+            Return ritorno
+
+        End Function
+    End Class
 
 
 End Class

@@ -329,12 +329,12 @@ $(document).ready(function(){
 							<div class="col-sm-4">
 								<div class="form-group">
 									<label for="txtCognome">Elenco Docenti (max 4 caratteri del cognome) </label>
-									   <asp:TextBox ID="txtDocenteCognome" Cssclass="form-control" placeholder="cognome" maxlength="100" runat="server"></asp:TextBox>
+				<asp:TextBox ID="txtDocenteCognome" Cssclass="form-control" placeholder="cognome" maxlength="100" runat="server"></asp:TextBox>
             <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" ServiceMethod="SearchCustomers"
                 MinimumPrefixLength="2" CompletionInterval="100"       EnableCaching="false" CompletionSetCount="100"
                 TargetControlID="txtDocenteCognome" FirstRowSelected="false" >
             </ajaxToolkit:AutoCompleteExtender>
-									<asp:Label ID="lblAvviso" runat="server" Text=""></asp:Label>
+									<asp:Label CssClass="errore" ID="lblAvviso" runat="server" Text=""></asp:Label>
 							<%--	<asp:textbox id="txtDocenteNome"  runat="server" Cssclass="form-control" placeholder="nome" maxlength="100"></asp:textbox>
 								<asp:textbox id="txtDocenteCognome"  runat="server" Cssclass="form-control" placeholder="cognome" maxlength="100"></asp:textbox>
 						--%>	</div>
@@ -407,7 +407,8 @@ ClientValidationFunction = "ValidateListBoxDocenti"></asp:CustomValidator>
 									<label for="txtCognome">Componenti Commissione </label>
 								<asp:textbox id="txtCommissioneNome"  runat="server" Cssclass="form-control" placeholder="nome" maxlength="100"></asp:textbox>
 								<asp:textbox id="txtCommissioneCognome"  runat="server" Cssclass="form-control" placeholder="cognome" maxlength="100"></asp:textbox>
-							</div>
+                                    <asp:Label CssClass="errore" ID="lblAvviso2" runat="server" Text=""></asp:Label>
+									</div>
 								</div>
 							
 							<div class="col-sm-2 text-center">
