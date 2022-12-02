@@ -134,7 +134,7 @@ function ServerException(mess) {
     <h3 class="display-5">Invio del documento pagamento Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-             <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Termima Caricamento</a>       
+             <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna a Corsi Attivi</a>       
     </p>
     
   </div></div>
@@ -158,6 +158,9 @@ function ServerException(mess) {
                   <div class="form-group">
                       <h5>Caricamento Documento Corso</h5>
                       <hr />
+                      <div class="alert alert-danger" role="alert">
+                          Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
+                      </div>
                   </div>
               </div>
 

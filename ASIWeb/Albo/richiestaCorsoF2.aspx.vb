@@ -184,8 +184,9 @@ Public Class richiestaCorsoF2
         '  Dim ds As DataSet
         Dim risposta As String = ""
         fmsP.SetLayout("webCorsiRichiesta")
-        Dim Request = fmsP.CreateEditRequest(codR)
+        Dim Request = fmsP.CreateEditRequest(IDCorso)
         Request.AddField("Titolo_Corso", Data.PrendiStringaT(Server.HtmlEncode(txtDenominazione.Text)))
+
         Request.AddField("Cap_Svolgimento", Data.PrendiStringaT(Server.HtmlEncode(txtCap.Text)))
         Request.AddField("Comune_Svolgimento", Data.PrendiStringaT(Server.HtmlEncode(ddlComune.SelectedItem.Text)))
         Request.AddField("LocalitaSvolgimento", Data.PrendiStringaT(Server.HtmlEncode(txtLocalitaSvolgimento.Text)))
@@ -231,24 +232,15 @@ Public Class richiestaCorsoF2
             Request.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
         End If
 
-        '  txtOreCorso
+
         Request.AddField("OreCorso", txtOreCorso.Text)
-        'Request.AddField("Ora_Svolgimento_Inizio", txtOraInizio.Text)
-        'Request.AddField("Ora_Svolgimento_Fine", txtOraFine.Text)
+
         Request.AddField("Fase", "2")
         Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
-        'If qualeStatus = "3" Then
-        '    Request1.AddField("Status_ID", "4")
-        'Else
-        '    Request1.AddField("Status_ID", "12")
-        'End If
+
         Try
             risposta = Request.Execute()
-            'If qualeStatus = "3" Then
-            '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
-            'Else
-            '    AsiModel.LogIn.LogCambioStatus(codR, "12", Session("WebUserEnte"))
-            'End If
+
 
 
 
@@ -272,6 +264,10 @@ Public Class richiestaCorsoF2
 
     Protected Sub btnFase3_Click(sender As Object, e As EventArgs) Handles btnFase3.Click
         If Page.IsValid Then
+            If Session("auth") = "0" Or IsNothing(Session("auth")) Then
+                Response.Redirect("../login.aspx")
+            End If
+
 
             CaricaDatiDocumentoCorso(Session("IDCorso"), Session("id_record"))
 

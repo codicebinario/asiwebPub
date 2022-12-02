@@ -355,7 +355,8 @@
 	
 <div class="alert alert-danger" role="alert">
  <strong>Indirizzo di consegna: </strong> va compilato in caso di scelta "Stampa Cartacea". Se l'indirizzo è quello di residenza,
-	copia i dati in automatico con il pulsante "Copia Dati da Residenza"
+	copia i dati in automatico con il pulsante "Copia Dati da Residenza", oppure scegli "Spedire a E.A. e verrà caricato l'indirizzo 
+	 (E.A.). In entrambi i casi i dati possono essere modificati.
 </div>
 
 		 <div class="col-sm-12">
@@ -366,9 +367,11 @@
         <label for="chkCopia" style="padding-left:20px">Copia Dati da Residenza</label>
      <asp:CheckBox ID="chkCopia"  runat="server" AutoPostBack="true" />
     
-           
-  
-								</div>
+                                    <label for="chkEA" style="padding-left: 20px">Spedire a E.A.</label>
+                                    <asp:CheckBox ID="chkEA" runat="server" AutoPostBack="true" />
+
+
+                                </div>
 							</div>
            </div></div>              
 

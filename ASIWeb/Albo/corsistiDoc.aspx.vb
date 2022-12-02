@@ -389,9 +389,9 @@ Public Class corsistiDoc
 
     End Function
 
-    Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
-        Response.Redirect("archivioAlbo.aspx#" & Session("IDCorso"))
-    End Sub
+    'Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
+    '    Response.Redirect("archivioAlbo.aspx#" & Session("IDCorso"))
+    'End Sub
 
     'Protected Sub lnkNuovoExcel_Click(sender As Object, e As EventArgs) Handles lnkNuovoExcel.Click
     '    If Session("auth") = "0" Or IsNothing(Session("auth")) Then

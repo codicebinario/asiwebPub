@@ -622,6 +622,10 @@ Public Class richiestaCorsoF3
 
     Protected Sub btnFase3_Click(sender As Object, e As EventArgs) Handles btnFase3.Click
         If Page.IsValid Then
+            If Session("auth") = "0" Or IsNothing(Session("auth")) Then
+                Response.Redirect("../login.aspx")
+            End If
+
 
             Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
             '  Dim ds As DataSet
@@ -723,11 +727,17 @@ Public Class richiestaCorsoF3
 
     Protected Sub CustomValidator2_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator2.ServerValidate
 
+        If IsNumeric(txtQuota.Text) Then
 
-        If txtQuota.Text >= 1 Then
-            args.IsValid = True
+            If txtQuota.Text >= 1 Then
+                args.IsValid = True
+            Else
+                args.IsValid = False
+            End If
         Else
             args.IsValid = False
+
         End If
+
     End Sub
 End Class

@@ -141,7 +141,7 @@ function ServerException(mess) {
     <h3 class="display-5">Nuovo Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-            <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Termima Caricamento</a>     
+            <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna a Corsi Attivi</a>     
     </p>
     
   </div></div>

@@ -169,39 +169,6 @@ Public Class duplica
             fmsPy.SetLayout("webCorsiRichiesta")
             Dim Requesty = fmsPy.CreateEditRequest(dupRecID)
 
-            Dim dataInseriraDa = txtDataInizio.Text
-            Dim oDateDa As DateTime = DateTime.Parse(dataInseriraDa)
-            Dim giorno = oDateDa.Day
-            Dim anno = oDateDa.Year
-            Dim mese = oDateDa.Month
-
-
-
-            Requesty.AddField("Svolgimento_Da_Data", mese & "/" & giorno & "/" & anno)
-
-            Dim dataInseriraA = txtDataFine.Text
-            Dim oDateA As DateTime = DateTime.Parse(dataInseriraA)
-            giorno = oDateA.Day
-            anno = oDateA.Year
-            mese = oDateA.Month
-
-            Requesty.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
-
-            Dim dataEmissione = txtDataEmissione.Text
-            If Not String.IsNullOrEmpty(dataEmissione) Then
-
-
-                Dim oDateEmissione As DateTime = DateTime.Parse(dataEmissione)
-                giorno = oDateEmissione.Day
-                anno = oDateEmissione.Year
-                mese = oDateEmissione.Month
-
-
-
-                Requesty.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
-            End If
-
-
 
             Requesty.AddField("Fase", "3")
             Requesty.AddField("Codice_status", "54")
@@ -252,7 +219,51 @@ Public Class duplica
             Requesty.AddField("DataOraSpedito", "")
             Requesty.AddField("DataOraVariazioneStatusNonFornitoDT", "")
             Requesty.AddField("CorsoDuplicato", "si")
+
+
+            Requesty.AddField("Verbale_Fine_Corso2", "")
+            Requesty.AddField("Verbale_Fine_Corso3", "")
+            Requesty.AddField("NomeFileVerbale2", "")
+            Requesty.AddField("NomeFileVerbale3", "")
+
+
             Requesty.AddField("CorsoPadre", Session("IDCorso"))
+
+
+            Dim dataInseriraDa = txtDataInizio.Text
+            Dim oDateDa As DateTime = DateTime.Parse(dataInseriraDa)
+            Dim giorno = oDateDa.Day
+            Dim anno = oDateDa.Year
+            Dim mese = oDateDa.Month
+
+
+
+            Requesty.AddField("Svolgimento_Da_Data", mese & "/" & giorno & "/" & anno)
+
+            Dim dataInseriraA = txtDataFine.Text
+            Dim oDateA As DateTime = DateTime.Parse(dataInseriraA)
+            giorno = oDateA.Day
+            anno = oDateA.Year
+            mese = oDateA.Month
+
+            Requesty.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
+
+            Dim dataEmissione = txtDataEmissione.Text
+            If Not String.IsNullOrEmpty(dataEmissione) Then
+
+
+                Dim oDateEmissione As DateTime = DateTime.Parse(dataEmissione)
+                giorno = oDateEmissione.Day
+                anno = oDateEmissione.Year
+                mese = oDateEmissione.Month
+
+
+
+                Requesty.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
+            End If
+
+
+
 
             Try
                 risposta = Requesty.Execute()

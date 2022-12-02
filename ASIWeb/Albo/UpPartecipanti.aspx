@@ -106,7 +106,7 @@ function ServerException(mess) {
     <h3 class="display-5">Invio Lista Partecipanti al Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-                  <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Termima Caricamento</asp:LinkButton>
+                  <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Torna a Corsi Attivi</asp:LinkButton>
         
         
     </p>
@@ -132,6 +132,9 @@ function ServerException(mess) {
                   <div class="form-group">
                       <h5>Caricamento Documento Corso</h5>
                       <hr />
+                      <div class="alert alert-danger" role="alert">
+                          Dopo aver iniziato il caricamento attendi la fine della procedura senza fare click su altri pulsanti.
+                      </div>
                   </div>
               </div>
 
@@ -200,7 +203,7 @@ function ServerException(mess) {
     <AllowedFileFormats>
         
       
-          <fup:Format Ext="xlsx" MaxByteSize="5240000"/>
+          <fup:Format Ext="xlsx" MaxByteSize="200000000" />
       
                  
        

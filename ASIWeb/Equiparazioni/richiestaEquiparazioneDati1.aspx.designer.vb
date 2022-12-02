@@ -266,6 +266,15 @@ Partial Public Class richiestaEquiparazioneDati1
     Protected WithEvents chkCopia As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''chkEA control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkEA As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''txtIndirizzoConsegna control.
     '''</summary>
     '''<remarks>

@@ -90,7 +90,7 @@
 </div>
  </asp:Panel>
             
-<asp:Panel ID="pnlPAssCambiata1" runat="server" Visible="false">
+           <asp:Panel ID="pnlPAssCambiata1" runat="server" Visible="false">
  <div class="alert alert-warning alert-dismissible fade show" role="alert">
   <strong>Password non cambiata!</strong><br /> Riprovare.
                

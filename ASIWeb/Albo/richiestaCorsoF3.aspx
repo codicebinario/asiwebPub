@@ -469,7 +469,10 @@ ClientValidationFunction = "ValidateListBoxComponenti"></asp:CustomValidator>
 							<div class="col-sm-4">
 								<div class="form-group">
 								 <label for="txtNome">Quota di partecipazione </label>
-                                    <asp:textbox id="txtQuota" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
+                                    <asp:TextBox ID="txtQuota"  CssClass="form-control" runat="server" MaxLength="250"></asp:textbox>
+								
+                                 
+									
 									<asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtQuota" EnableClientScript="true" Display="Dynamic" ValidationExpression="^\d{0,9}(?:[,]\d{1,2})?$" CssClass="errore" runat="server"  ErrorMessage="Solo valuta"></asp:RegularExpressionValidator>
 									<asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtQuota"  ErrorMessage="Quota di partecipazione"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
                                     <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="txtQuota" CssClass="errore" ErrorMessage="Il valore deve essere maggiore o uguale ad 1"></asp:CustomValidator>

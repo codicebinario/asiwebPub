@@ -98,6 +98,68 @@
           </Triggers>
     <ContentTemplate>
         <div class="col-sm-12">
+
+
+
+          
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="chkEA" style="padding-right: 10px; color:red; font-weight:bold">Equiparazione da Federazione </label>
+                            <asp:CheckBox ID="chkDaFederazione" runat="server"  />
+
+
+
+                            
+                  </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+          
+
+           <%-- <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+
+                            
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                      
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+--%>
+
+
+
+
+
+
+
+            <div class="col-sm-12">
+
+
+
 						<div class="row">
 							<div class="col-sm-4">
 								<div class="form-group">

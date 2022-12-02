@@ -338,6 +338,10 @@ Public Class richiestaEquiparazioneDati1
         Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
         Request.AddField("Equi_CapConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text))))
 
+        If chkEA.Checked Then
+            Request.AddField("Equi_InviaA", "EA")
+        End If
+
         If chkStampaCartacea.Checked = True Then
             Request.AddField("Equi_StampaCartaceo", "si")
         End If
@@ -403,6 +407,38 @@ Public Class richiestaEquiparazioneDati1
             txtCapConsegna.Text = txtCapResidenza.Text
 
 
+
+        End If
+
+    End Sub
+
+    Protected Sub chkEA_CheckedChanged(sender As Object, e As EventArgs) Handles chkEA.CheckedChanged
+        If chkEA.Checked = True Then
+
+            If Session("auth") = "0" Or IsNothing(Session("auth")) Then
+                Response.Redirect("../login.aspx")
+            End If
+            Dim address As New List(Of IndirizzoEA)
+            address = AsiModel.leggiIndirizzoSpedizioneEA(Session("WebUserEnte"), Session("password"))
+
+            If address.Count >= 1 Then
+
+
+                For Each item In address
+
+                    txtIndirizzoConsegna.Text = item.IndirizzoConsegnaEA
+                    txtCapConsegna.Text = item.CapEA
+                    txtComuneConsegna.Text = item.ComuneEA
+                    txtProvinciaConsegna.Text = item.ProvinciaEA
+
+
+
+                Next
+            End If
+            chkCopia.Enabled = False
+
+        Else
+            chkCopia.Enabled = True
 
         End If
 

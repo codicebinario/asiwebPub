@@ -391,11 +391,15 @@ Public Class dashboardV
 
                         phDash.Controls.Add(New LiteralControl("</div>"))
 
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
 
                         phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Data Richiesta: <span><small> " & Data.FixNull(dr("IndicatoreDataOraCreazione")) & "</small></h6><span />"))
 
 
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
+
+                        phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Data Emissione: <span><small> " & SonoDieci(Data.FixNull(dr("Data_Emissione"))) & "</small></h6><span />"))
                         phDash.Controls.Add(New LiteralControl("</div>"))
 
                         phDash.Controls.Add(New LiteralControl("</div>"))

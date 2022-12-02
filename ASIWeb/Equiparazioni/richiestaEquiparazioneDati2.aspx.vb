@@ -490,6 +490,9 @@ Public Class richiestaEquiparazioneDati2
         Request.AddField("Equi_Specialita_ID", ddlSpecialita.SelectedItem.Value)
         Request.AddField("Equi_Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
         Request.AddField("Equi_Livello", ddlLivello.SelectedItem.Text)
+        If chkDaFederazione.Checked = True Then
+            Request.AddField("Equi_DaFederazione", "si")
+        End If
         Request.AddField("Codice_status", "102")
         'Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
         Session("visto") = "ok"

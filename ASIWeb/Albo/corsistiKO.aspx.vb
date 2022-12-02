@@ -350,7 +350,7 @@ Public Class corsistiKO
 
         fmsP.SetLayout("webCorsiRichiesta")
 
-        Dim RequestP = fmsP.CreateEditRequest(Session("IDCorso"))
+        Dim RequestP = fmsP.CreateEditRequest(Session("id_record"))
         RequestP.AddField("Codice_Status", Session("oldStatus"))
 
         '   Try

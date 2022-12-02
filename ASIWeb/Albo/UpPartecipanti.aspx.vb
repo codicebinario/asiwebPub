@@ -181,7 +181,7 @@ Public Class UpPartecipanti
             '  End Try
 
         Else
-            uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
+            uploadedFiles.Text = "<b>Il Documento supera la dimensione massima consentita! </b><br/>"
         End If
 
 

@@ -101,7 +101,7 @@ Public Class dashboardB
                 Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "68" _
                 Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
                 Or Data.FixNull(dr("Codice_Status")) = "73" Or Data.FixNull(dr("Codice_Status")) = "83" _
-                Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78" _
+                Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "85" Or Data.FixNull(dr("Codice_Status")) = "78" _
                 Or Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "81" Then
 
 
@@ -220,6 +220,22 @@ Public Class dashboardB
                     '    Else
                     '        Ann.Visible = False
                     '    End If
+                    Dim Duplica As New LinkButton
+                    Duplica.ID = "Duplica" & counter1
+                    duplica.Attributes.Add("runat", "server")
+                    duplica.Text = "<i class=""bi bi-front""> </i>Duplica Corso"
+                    duplica.PostBackUrl = "Duplica.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record"))) & "&oldStatus=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(oldStatus))
+                    duplica.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
+                    If Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78" _
+                    Or Data.FixNull(dr("Codice_Status")) = "81" Or Data.FixNull(dr("Codice_Status")) = "82" _
+                    Or Data.FixNull(dr("Codice_Status")) = "83" Or Data.FixNull(dr("Codice_Status")) = "84" _
+                    Or Data.FixNull(dr("Codice_Status")) = "85" Then
+                        Duplica.Visible = True
+                    Else
+                        Duplica.Visible = False
+                    End If
 
 
 
@@ -254,7 +270,22 @@ Public Class dashboardB
                     End If
 
 
+                    Dim CorsistiDoc As New LinkButton
 
+                    CorsistiDoc.ID = "CorsistiDoc_" & counter1
+                    CorsistiDoc.Attributes.Add("runat", "server")
+                    CorsistiDoc.Text = "<i class=""bi bi-file-earmark-text""> </i>Corsisti Documenti"
+                    CorsistiDoc.PostBackUrl = "corsistiDoc.aspx?codR=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record"))) & "&oldStatus=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(oldStatus))
+                    CorsistiDoc.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
+                    '  And Data.FixNull(dr("fase")) = "3"
+                    If (Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "83") Then
+                        CorsistiDoc.Visible = True
+                    Else
+                        CorsistiDoc.Visible = False
+                    End If
 
                     Dim Verb As New LinkButton
 
@@ -299,7 +330,7 @@ Public Class dashboardB
                         WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
                         "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
                     hpUPPag82.CssClass = "btn btn-success btn-sm btn-sette btn-custom mb-2"
-                    If (Data.FixNull(dr("Codice_Status")) = "82" And Data.FixNull(dr("fase")) = "3") Then
+                    If (Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "85") And Data.FixNull(dr("fase")) = "3" Then
                         hpUPPag82.Visible = True
                     Else
                         hpUPPag82.Visible = False
@@ -391,7 +422,8 @@ Public Class dashboardB
                     phDash.Controls.Add(fotoCorsisti)
                     phDash.Controls.Add(fotoCorsistiKO)
                     phDash.Controls.Add(hpUPx)
-
+                    phDash.Controls.Add(CorsistiDoc)
+                    phDash.Controls.Add(Duplica)
 
 
                     phDash.Controls.Add(StopFoto)
@@ -511,9 +543,14 @@ Public Class dashboardB
                         phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">A: <span><small> " & SonoDieci(Data.FixNull(dr("Svolgimento_a_Data"))) & "</small></h6><span />"))
                         phDash.Controls.Add(New LiteralControl("</div>"))
 
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
 
                         phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Data Richiesta: <span><small> " & Data.FixNull(dr("IndicatoreDataOraCreazione")) & "</small></h6><span />"))
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
+
+                        phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Data Emissione: <span><small> " & SonoDieci(Data.FixNull(dr("Data_Emissione"))) & "</small></h6><span />"))
                         phDash.Controls.Add(New LiteralControl("</div>"))
 
                         phDash.Controls.Add(New LiteralControl("</div>"))

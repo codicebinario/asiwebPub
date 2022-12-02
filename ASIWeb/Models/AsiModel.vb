@@ -18,7 +18,7 @@ Imports System.Web.Script.Serialization
 
 
 Imports System.Collections.Generic
-
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.Net.Http
 'Imports FMdotNet__DataAPI
 
@@ -213,6 +213,8 @@ Public Class AsiModel
 
 
 
+
+
     Public Class LogIn
 
         Public Shared Property Denominazione As String
@@ -320,6 +322,7 @@ Public Class AsiModel
             Return accesso
 
         End Function
+
 
 
         Public Shared Function Login(user As String, pass As String) As Boolean
@@ -1918,21 +1921,8 @@ Public Class AsiModel
     Public Shared Property IDCorso As String
 
 
-    'Public Class Dashboard
-
-    '    Public Shared Property Record_ID
-    '    Public Shared Property Ente_Codice
-    '    Public Shared Property Data
-
-    '    Public Shared Property Codice_Richiesta
-
-    '    Public Shared Property pre_stato_ente
 
 
-
-
-
-    'End Class
     Public Class ContatoriEvasi
 
         Public Shared Function quantiDaValutare(codice As String) As Integer
@@ -2115,7 +2105,7 @@ Public Class AsiModel
                 Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
                 Or Data.FixNull(dr("Codice_Status")) = "73" Or Data.FixNull(dr("Codice_Status")) = "83" _
                 Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78" _
-                Or Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "81" Then
+                Or Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "85" Or Data.FixNull(dr("Codice_Status")) = "81" Then
                         counter1 += 1
                     Else
 
@@ -2250,6 +2240,66 @@ Public Class AsiModel
         End Function
     End Class
 
+
+
+    Public Class IndirizzoEA
+            Public IndirizzoConsegnaEA As String
+            Public ComuneEA As String
+            Public CapEA As String
+            Public ProvinciaEA As String
+
+        End Class
+
+        Public Shared Function leggiIndirizzoSpedizioneEA(user As String, pass As String) As List(Of IndirizzoEA)
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+
+            '    Try
+            fms = Conn.Connect()
+        '    Catch ex As Exception
+
+        '  End Try
+        Dim indirizzo As New List(Of IndirizzoEA)
+
+        '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+        '     fmsB.SetDatabase(Database)
+        fms.SetLayout("web_enti")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("Web_User_Ente", user, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Web_Password_Ente", pass, Enumerations.SearchOption.equals)
+
+        '  Try
+        ds = RequestA.Execute()
+
+
+
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+            For Each dr In ds.Tables("main").Rows
+                indirizzo.Add(New IndirizzoEA With {
+                                .IndirizzoConsegnaEA = Data.FixNull(dr("SpedizioneIndirizzo")),
+                                .CapEA = Data.FixNull(dr("SpedizioneCap")),
+                                .ComuneEA = Data.FixNull(dr("SpedizioneComune")),
+                                .ProvinciaEA = Data.FixNull(dr("SpedizioneProvincia"))
+                                                                                             })
+            Next
+
+
+
+            '
+
+
+        End If
+
+
+
+        '  Catch ex As Exception
+
+
+        'd Try
+
+        Return indirizzo
+
+    End Function
 
 End Class
 

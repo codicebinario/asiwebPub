@@ -386,6 +386,7 @@
     <Content Include="img\bg.png" />
     <Content Include="img\blue_line.jpg" />
     <Content Include="img\done.png" />
+    <Content Include="img\favicon.ico" />
     <Content Include="img\icon2.gif" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\noimg.jpg" />
@@ -475,6 +476,7 @@
     <Content Include="Models\HandlerVB.ashx" />
     <Content Include="calendar\styles\Thumbs.db" />
     <Content Include="WebForm1.aspx" />
+    <Content Include="WebForm12.aspx" />
     <Content Include="WebForm2.aspx" />
     <Content Include="WebForm3.aspx" />
     <Content Include="WebForm4.aspx" />
@@ -1181,6 +1183,13 @@
     </Compile>
     <Compile Include="WebForm1.aspx.vb">
       <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="WebForm12.aspx.designer.vb">
+      <DependentUpon>WebForm12.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm12.aspx.vb">
+      <DependentUpon>WebForm12.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="WebForm2.aspx.designer.vb">
