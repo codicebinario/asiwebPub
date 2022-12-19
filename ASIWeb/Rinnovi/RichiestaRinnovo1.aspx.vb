@@ -464,6 +464,10 @@ Public Class RichiestaRinnovo1
 
 
         End If
+        If chkEA.Checked Then
+            Request.AddField("Rin_InviaA", "EA")
+        End If
+
         Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, CodiceEnteRichiedente)
         If SameCode = 0 Then
             Request.AddField("Codice_Status", "152")
@@ -538,6 +542,37 @@ Public Class RichiestaRinnovo1
                 Response.Redirect("dashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("pr"))
                 Session("visto") = "ok"
             End If
+
+        End If
+    End Sub
+
+    Protected Sub chkEA_CheckedChanged(sender As Object, e As EventArgs) Handles chkEA.CheckedChanged
+        If chkEA.Checked = True Then
+
+            If Session("auth") = "0" Or IsNothing(Session("auth")) Then
+                Response.Redirect("../login.aspx")
+            End If
+            Dim address As New List(Of IndirizzoEA)
+            address = AsiModel.leggiIndirizzoSpedizioneEA(Session("WebUserEnte"), Session("password"))
+
+            If address.Count >= 1 Then
+
+
+                For Each item In address
+
+                    txtIndirizzoConsegna.Text = item.IndirizzoConsegnaEA
+                    txtCapConsegna.Text = item.CapEA
+                    txtComuneConsegna.Text = item.ComuneEA
+                    txtProvinciaConsegna.Text = item.ProvinciaEA
+
+
+
+                Next
+            End If
+            chkCopia.Enabled = False
+
+        Else
+            chkCopia.Enabled = True
 
         End If
     End Sub

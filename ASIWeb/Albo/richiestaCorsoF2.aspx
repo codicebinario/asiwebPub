@@ -34,6 +34,19 @@
 
     }
   </style>
+	<script>
+        function myConfirm() {
+
+            let text = "Sei certo che i dati siano esatti?";
+            if (confirm(text) == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -573,7 +586,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
                                    
-						            <asp:Button ID="btnFase3" runat="server" Text="Avanti" class="btn btn-primary"    />
+						            <asp:Button ID="btnFase3" OnClientClick="if(!myConfirm())return false;" runat="server" Text="Avanti" class="btn btn-primary" />
                                    
 						</div>
 							</div>

@@ -32,9 +32,10 @@ Public Class UpCorsista
     Const MassimoPeso As Integer = 512000
     Const FileType As String = "image/*"
     ' in pixel
-    Const massimaaltezza As Integer = 140
-    Const massinalarghezza As Integer = 100
-
+    Const massimaaltezza As Integer = 1400
+    Const massinalarghezza As Integer = 1000
+    Const minimaAltezza As Integer = 140
+    Const minimaLarghezza As Integer = 100
     Dim ext As String = " "
     Dim nomefileReale As String = " "
     Dim qualeStatus As String = ""
@@ -118,7 +119,7 @@ Public Class UpCorsista
 
 
 
-        ElseIf img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+        ElseIf img.Width < minimaLarghezza OrElse img.Height < minimaAltezza Then
 
             results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
 

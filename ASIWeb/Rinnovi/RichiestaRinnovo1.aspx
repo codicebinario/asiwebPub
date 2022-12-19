@@ -459,31 +459,18 @@
    </div></div>
 								</div>
 							</div>
-                         
-                        
-                      
-	<%--	<div class="col-sm-12">
-          <div class="row">
-              <div class="col-sm-12">
-                  <div class="form-group">
-                    
-                      <hr />
-                  </div>
-              </div>
-
-          </div>
-      </div>--%>
-
+      
 
 
 
 		<asp:Panel ID="pnlDatiConsegna" runat="server" Visible="false">
-<div class="alert alert-danger" role="alert">
- <strong>Indirizzo di consegna: </strong> va compilato in caso di scelta "Stampa Cartacea". Se l'indirizzo è quello di residenza,
-	copia i dati in automatico con il pulsante "Copia Dati da Residenza"
-</div>
+            <div class="alert alert-danger" role="alert">
+                <strong>Indirizzo di consegna: </strong>va compilato in caso di scelta "Stampa Cartacea". Se l'indirizzo è quello di residenza,
+	copia i dati in automatico con il pulsante "Copia Dati da Residenza", oppure scegli "Spedire a E.A. e verrà caricato l'indirizzo 
+	 (E.A.). In entrambi i casi i dati possono essere modificati.
+            </div>
 
-				<div class="col-sm-6">
+				<div class="col-sm-12">
 								<div class="form-group">
 								 <div class="col-6">
                             <label for="txtNome"></label>
@@ -491,6 +478,8 @@
        
      <asp:CheckBox ID="chkCopia"  runat="server" AutoPostBack="true" />
      <label style="padding-left:20px"  for="chkCopia">Copia Dati da Residenza</label>
+  <label for="chkEA" style="padding-left: 20px">Spedire a E.A.</label>
+  <asp:CheckBox ID="chkEA" runat="server" AutoPostBack="true" />
            
    </div></div>
 								</div>
@@ -548,7 +537,7 @@
 
 	 <div class="col-sm-12">
 						<div class="row">
-							<div class="col-sm-3">
+							<div class="col-sm-6">
 								<div class="form-group">
 											<label for="txtCognome">Comune Consegna</label>
                                   <asp:textbox id="txtComuneConsegna" Cssclass="form-control" runat="server"  maxlength="250"  ></asp:textbox>
@@ -556,7 +545,7 @@
 								
 						</div>
 							</div>
-							<div class="col-sm-3">
+							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="txtCognome">Cap Consegna</label>
                                     	<asp:textbox id="txtCapConsegna" runat="server" Cssclass="form-control"   maxlength="250" ></asp:textbox>
