@@ -1329,6 +1329,55 @@ Public Class AsiModel
             Return DatiRinnovo
 
         End Function
+        Public Shared Function PrendiValoriNuovoRinnovo2(IdRecord As Integer) As DatiNuovoRinnovo
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiRinnovo As New DatiNuovoRinnovo
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviRichiesta2")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("id_record", IdRecord, Enumerations.SearchOption.equals)
+
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        DatiRinnovo.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                        DatiRinnovo.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                        DatiRinnovo.IDRinnovo = Data.FixNull(dr("IDRinnovo"))
+                        DatiRinnovo.DescrizioneStatus = Data.FixNull(dr("Descrizione_StatusWeb"))
+                        DatiRinnovo.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                        DatiRinnovo.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                        DatiRinnovo.IdRecord = Data.FixNull(dr("Id_record"))
+                        DatiRinnovo.RinnovoCF = Data.FixNull(dr("Rin_CFVerificatoTessera"))
+                        DatiRinnovo.CodiceFiscale = Data.FixNull(dr("Rin_CodiceFiscale"))
+                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_CodiceTessera"))
+                        DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
+                        DatiRinnovo.Cognome = Data.FixNull(dr("Rin_CognomeE"))
+                        DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
+                    Next
+
+
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return DatiRinnovo
+        End Function
+
         Public Shared Function PrendiValoriNuovoRinnovo(IDRinnovo As String) As DatiNuovoRinnovo
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing
@@ -1442,7 +1491,40 @@ Public Class AsiModel
             Return DatiRinnovo
         End Function
 
+        Public Shared Function NuovoRinnovo(codiceEnteRichiedente As Integer) As Integer
 
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            Dim ds As DataSet
+            Dim idrecord As Integer
+            Dim idRinnovoM As Integer = 0
+            fmsP.SetLayout("webRinnoviMaster")
+            Dim Request = fmsP.CreateNewRecordRequest()
+
+            Request.AddField("CodiceEnteRichiedente", codiceEnteRichiedente)
+            Request.AddField("CodiceStatus", "0")
+
+
+            idrecord = Request.Execute()
+
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestP.AddSearchField("idrecord", idrecord, Enumerations.SearchOption.equals)
+
+            ds = RequestP.Execute()
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    idRinnovoM = Data.FixNull(dr("IDRinnovoM"))
+
+                Next
+
+
+            End If
+
+
+            Return idRinnovoM
+
+        End Function
 
 
     End Class

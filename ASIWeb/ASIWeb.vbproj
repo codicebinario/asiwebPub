@@ -220,6 +220,7 @@
     <Content Include="Albo\WebForm8.aspx" />
     <Content Include="AsiMasterPageEqui.Master" />
     <Content Include="AsiMasterPageMain.Master" />
+    <Content Include="AsiMasterPageRinnovi.Master" />
     <Content Include="Css\customEquiparazione.css" />
     <Content Include="Equiparazioni\annullaEquiparazione.aspx" />
     <Content Include="Equiparazioni\annullaEquiparazioneMotivo.aspx" />
@@ -403,7 +404,11 @@
     <Content Include="PageNotFound.aspx" />
     <Content Include="passM.aspx" />
     <Content Include="richiestaTessere.aspx" />
-    <Content Include="Rinnovi2\DashBoardRinnovi.aspx" />
+    <Content Include="Rinnovi2\checkTesseramentoRinnovi2.aspx" />
+    <Content Include="Rinnovi2\DashBoardRinnovi2.aspx" />
+    <Content Include="Rinnovi2\RichiestaRinnovo12.aspx" />
+    <Content Include="Rinnovi2\RichiestaRinnovo2.aspx" />
+    <Content Include="Rinnovi2\WebForm15.aspx" />
     <Content Include="Rinnovi\checkTesseramentoRinnovi.aspx" />
     <Content Include="Rinnovi\DashboardRinnovi.aspx" />
     <Content Include="Rinnovi\DashboardRinnoviEvasi.aspx" />
@@ -490,9 +495,9 @@
     <Content Include="WebForm3.aspx" />
     <Content Include="WebForm4.aspx" />
     <Content Include="AsiMasterPageAA.Master" />
-    <Content Include="AsiMasterPageRinnovi.Master" />
     <Content Include="AsiMasterPageGestioneAlbo.Master" />
     <Content Include="Albo\json.json" />
+    <Content Include="AsiMasterPageRinnovi2.Master" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -649,6 +654,13 @@
     </Compile>
     <Compile Include="AsiMasterPageRinnovi.Master.vb">
       <DependentUpon>AsiMasterPageRinnovi.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AsiMasterPageRinnovi2.Master.designer.vb">
+      <DependentUpon>AsiMasterPageRinnovi2.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AsiMasterPageRinnovi2.Master.vb">
+      <DependentUpon>AsiMasterPageRinnovi2.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni\annullaEquiparazione.aspx.designer.vb">
@@ -1058,11 +1070,39 @@
       <DependentUpon>richiestaTessere.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Rinnovi2\DashBoardRinnovi.aspx.designer.vb">
-      <DependentUpon>DashBoardRinnovi.aspx</DependentUpon>
+    <Compile Include="Rinnovi2\checkTesseramentoRinnovi2.aspx.designer.vb">
+      <DependentUpon>checkTesseramentoRinnovi2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Rinnovi2\DashBoardRinnovi.aspx.vb">
-      <DependentUpon>DashBoardRinnovi.aspx</DependentUpon>
+    <Compile Include="Rinnovi2\checkTesseramentoRinnovi2.aspx.vb">
+      <DependentUpon>checkTesseramentoRinnovi2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi2\DashBoardRinnovi2.aspx.designer.vb">
+      <DependentUpon>DashBoardRinnovi2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\DashBoardRinnovi2.aspx.vb">
+      <DependentUpon>DashBoardRinnovi2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi2\RichiestaRinnovo12.aspx.designer.vb">
+      <DependentUpon>RichiestaRinnovo12.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\RichiestaRinnovo12.aspx.vb">
+      <DependentUpon>RichiestaRinnovo12.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi2\RichiestaRinnovo2.aspx.designer.vb">
+      <DependentUpon>RichiestaRinnovo2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\RichiestaRinnovo2.aspx.vb">
+      <DependentUpon>RichiestaRinnovo2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi2\WebForm15.aspx.designer.vb">
+      <DependentUpon>WebForm15.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\WebForm15.aspx.vb">
+      <DependentUpon>WebForm15.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Rinnovi\checkTesseramentoRinnovi.aspx.designer.vb">

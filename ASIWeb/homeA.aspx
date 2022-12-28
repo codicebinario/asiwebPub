@@ -84,14 +84,41 @@
 
   </div>
  
- </div>     
+ </div>
+
+    <div class="row">
+
+        <div class="col">
+            <div class="jumbotron jumbotron-fluid rounded">
+                <div class="container text-center">
+
+                    <a class="btn btn-lg btn-custom" href="Rinnovi2/DashboardRinnovi2.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"></i> Rinnovi 2.0</a>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+
+            <div class="jumbotron jumbotron-fluid rounded">
+                <div class="container text-center">
+              
+
+                    <%--   <a class="btn btn-lg btn-custom " href="#" role="button">Ristampa</a>--%>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 
 
-          
- 
 
-  </div>
+
+
+</div>
 
 
 

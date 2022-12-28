@@ -11,23 +11,23 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class DashBoardRinnovi1
+Partial Public Class WebForm15
 
     '''<summary>
-    '''litDenominazioneJumboDash control.
+    '''form1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents litDenominazioneJumboDash As Global.System.Web.UI.WebControls.Literal
+    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
-    '''phDash control.
+    '''Repeater1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents phDash As Global.System.Web.UI.WebControls.PlaceHolder
+    Protected WithEvents Repeater1 As Global.System.Web.UI.WebControls.Repeater
 End Class

@@ -4,7 +4,7 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports System.Net
 
-Public Class AsiMasterPageRinnovi
+Public Class AsiMasterPageRinnovi2
     Inherits System.Web.UI.MasterPage
     Dim deEnco As New Ed
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -41,11 +41,11 @@ Public Class AsiMasterPageRinnovi
         Response.Redirect("../home.aspx")
     End Sub
     Protected Sub lnkNuovoRinnovo_Click(sender As Object, e As EventArgs) Handles lnkNuovoRinnovo.Click
-        NuovoRinnovo()
-        '     ?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("Codice_Richiesta"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("Record_ID"))
-
-        Response.Redirect("checkTesseramentoRinnovi.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
-
+        Dim idRinnovoM As Integer
+        idRinnovoM = AsiModel.Rinnovi.NuovoRinnovo(Session("codice"))
+        If idRinnovoM >= 1 Then
+            Response.Redirect("checkTesseramentoRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(idRinnovoM))
+        End If
 
     End Sub
 
@@ -70,16 +70,16 @@ Public Class AsiMasterPageRinnovi
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
         Dim ds As DataSet
-        Dim id_record As Integer
 
-        fmsP.SetLayout("webRinnoviMaster")
+
+        fmsP.SetLayout("webRinnoviRichiesta")
         Dim Request = fmsP.CreateNewRecordRequest()
 
         Request.AddField("Codice_Ente_Richiedente", Session("codice"))
         Request.AddField("Codice_Status", "0")
 
 
-        id_record = Request.Execute()
+        Session("id_record") = Request.Execute()
 
 
 
@@ -94,7 +94,7 @@ Public Class AsiMasterPageRinnovi
 
 
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        RequestP.AddSearchField("id_record", id_record, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("id_record", Session("id_record"), Enumerations.SearchOption.equals)
 
         ds = RequestP.Execute()
         If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
@@ -103,7 +103,7 @@ Public Class AsiMasterPageRinnovi
                 '  AsiModel.DatiNuovoCorso. = Data.FixNull(dr("IDCorso"))
 
                 '    Session("record_ID") = Data.FixNull(dr("Record_ID"))
-                Session("IDRinnovoM") = Data.FixNull(dr("IDRinnovoM"))
+                Session("IDRinnovo") = Data.FixNull(dr("IDRinnovo"))
 
             Next
 
