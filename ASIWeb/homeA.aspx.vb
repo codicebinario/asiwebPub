@@ -6,6 +6,10 @@ Public Class homeA
     Dim quanteEquiAttive As Integer = 0
     Dim quantiRinnoviAttivi As Integer = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+
+
+
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("login.aspx")
         End If
@@ -38,6 +42,14 @@ Public Class homeA
 
 
         End If
+    End Sub
+
+
+    ' System.Threading.Thread.Sleep(5000)
+
+
+    Protected Sub LinkButton1_Click(sender As Object, e As EventArgs) Handles LinkButton1.Click
+        Response.Redirect("Rinnovi2/DashboardRinnovi2.aspx")
     End Sub
 
 

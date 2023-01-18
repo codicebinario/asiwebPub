@@ -156,7 +156,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse1">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="DashboardRinnovi.aspx" accesskey="A"><i class="bi bi-arrow-up-circle"> </i>Rinnovi Attivi</a>
+          <a class="nav-link" href="DashboardRinnovi2.aspx" accesskey="A"><i class="bi bi-arrow-up-circle"> </i>Rinnovi Attivi</a>
         </li>
           
        

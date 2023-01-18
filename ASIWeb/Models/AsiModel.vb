@@ -1211,12 +1211,104 @@ Public Class AsiModel
 
     End Class
     Public Class Rinnovi
+        Shared Function CancellaGruppo(idRecord As Integer)
+            Dim ritorno As Boolean = False
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP.SetLayout("webRinnoviMaster")
+            Dim Request = fmsP.CreateDeleteRequest(idRecord)
+            Try
+                Request.Execute()
+                ritorno = True
+            Catch ex As Exception
+                ritorno = False
+            End Try
+
+            Return ritorno
+
+        End Function
+        Public Shared Function quanteRichiestePerGruppo(idRinnovoM As Integer) As Integer
+            Dim ritorno As Integer = 0
+
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+
+            RequestP.AddSearchField("idRinnovoM", idRinnovoM, Enumerations.SearchOption.equals)
+            '  RequestP.AddSearchField("idRinnovo", idRinnovo, Enumerations.SearchOption.equals)
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                Dim counter1 As Integer = 0
+                For Each dr In ds.Tables("main").Rows
+
+
+
+                    If Data.FixNull(dr("Codice_Status")) <> "0" Then
+                        counter1 += 1
+
+
+                    End If
+
+                Next
+                If counter1 >= 1 Then
+                    ritorno = counter1
+                Else
+                    ritorno = 0
+                End If
+
+            Else
+
+                ' non si sono records
+                ' ritorno = 0
+
+
+            End If
+
+
+            Return ritorno
+
+        End Function
+        Shared Function PrendiIDrecordMaster(IdRinnovo As Integer)
+            Dim idrecord As Integer = 0
+
+            Dim ds As DataSet = Nothing
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP.SetLayout("webRinnoviMaster")
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        idrecord = dr("idRecord")
+                    Next
+                End If
+
+            Catch ex As Exception
+                idrecord = 0
+            End Try
+
+            Return idrecord
+        End Function
 
         Public Shared Function PrendiValoriNuovoRinnovoByCF(codiceFiscale As String, codiceEnte As String) As DatiNuovoRinnovo
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing
             Dim DatiRinnovo As New DatiNuovoRinnovo
-            Dim ritorno As Boolean = false
+            Dim ritorno As Boolean = False
             fms = Conn.Connect()
 
             '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
@@ -1377,7 +1469,38 @@ Public Class AsiModel
 
             Return DatiRinnovo
         End Function
+        Public Shared Function QuantiRinnoviPerGruppo(IDRinnovoM As Integer) As Integer
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiRinnovo As New DatiNuovoRinnovo
+            Dim quanti As Integer = 0
+            fms = Conn.Connect()
 
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviRichiesta2")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDRinnovoM", IDRinnovoM, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice_Status", 0, Enumerations.SearchOption.biggerThan)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                    quanti = ds.Tables("main").Rows.Count
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return quanti
+        End Function
         Public Shared Function PrendiValoriNuovoRinnovo(IDRinnovo As String) As DatiNuovoRinnovo
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing

@@ -46,6 +46,7 @@ Public Class checkTesseramentoRinnovi2
     Dim nomecaricato As String = ""
     Dim tokenZ As String = ""
     Dim codR As Integer = 0
+    Dim t As Integer = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -68,35 +69,11 @@ Public Class checkTesseramentoRinnovi2
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
-        'Dim record_ID As String = ""
-        'record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        'If Not String.IsNullOrEmpty(record_ID) Then
 
-        '    Session("id_record") = record_ID
-
-        'End If
-
-        'If IsNothing(Session("id_record")) Then
-        '    Response.Redirect("../login.aspx")
-        'End If
 
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
-        'If Not String.IsNullOrEmpty(codR) Then
+        t = Request.QueryString("t")
 
-
-        '    Session("IDRinnovo") = codR
-        '    Dim DettaglioRinnovo As New DatiNuovoRinnovo
-        '    DettaglioRinnovo = Rinnovi.PrendiValoriNuovoRinnovo(Session("IDRinnovo"))
-        '    Dim IDRinnovo As String = DettaglioRinnovo.IDRinnovo
-        '    Dim CodiceEnteRichiedente As String = DettaglioRinnovo.CodiceEnteRichiedente
-        '    Dim DescrizioneEnteRichiedente As String = DettaglioRinnovo.DescrizioneEnteRichiedente
-        '    Dim TipoEnte As String = DettaglioRinnovo.TipoEnte
-        '    Dim CodiceStatus As String = DettaglioRinnovo.CodiceStatus
-        '    Dim DescrizioneStatus As String = DettaglioRinnovo.DescrizioneStatus
-        '    HiddenIdRecord.Value = DettaglioRinnovo.IdRecord
-        '    HiddenIDRinnovo.Value = DettaglioRinnovo.IDRinnovo
-        '    lblIntestazioneRinnovo.Text = "<strong>ID Rinnovo: </strong>" & IDRinnovo & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
-        'End If
 
         If Page.IsPostBack Then
 
@@ -194,9 +171,19 @@ DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera,
             Else
 
                 'Response.Write("ko")
+                If t = 1 Then
+                    ' cancella il gruppo
+                    idrecord = AsiModel.Rinnovi.PrendiIDrecordMaster(codR)
+                    If idrecord > 0 Then
 
+                        AsiModel.Rinnovi.CancellaGruppo(idrecord)
+                    End If
+
+
+
+                End If
                 Session("procedi") = "KO"
-                Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+                Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("ko"))
 
 
             End If

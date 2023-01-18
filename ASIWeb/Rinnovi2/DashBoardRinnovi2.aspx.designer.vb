@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class DashBoardRinnovi2
 
     '''<summary>
+    '''UpdateProgress1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
+
+    '''<summary>
     '''litDenominazioneJumboDash control.
     '''</summary>
     '''<remarks>

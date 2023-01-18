@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class homeA
 
     '''<summary>
+    '''PageUpdateProgress control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PageUpdateProgress As Global.System.Web.UI.UpdateProgress
+
+    '''<summary>
     '''HiddenQuantiCorsiAttivi control.
     '''</summary>
     '''<remarks>
@@ -39,4 +48,22 @@ Partial Public Class homeA
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents HiddenQuantiRinnoviAttivi As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''Panel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Panel As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
+    '''LinkButton1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkButton1 As Global.System.Web.UI.WebControls.LinkButton
 End Class

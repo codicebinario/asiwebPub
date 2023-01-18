@@ -18,6 +18,37 @@
     border-left: 2em solid red;*/
 }
     </style>
+    <style>
+
+        .card-title{
+    font-size:0.8rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+       a {color: #005a7c;}
+        a:hover {color: darkred;}
+   
+        .btn-custom {
+         width:220px;
+          
+      /*  font-size: xx-small;*/
+
+
+        }
+        .piccolo{
+
+ font-size: small;
+        }
+           a:target {
+
+           
+    font-size: x-large;
+      background: yellow;
+    }
+ 
+    </style>
 <%--    <script>
         function js_onload_code() {
 
@@ -29,6 +60,18 @@
     </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server"
+        DynamicLayout="false">
+        <ProgressTemplate>
+            <div class="Progress">
+                <div class="btn">loading...</div>
+
+            </div>
+        </ProgressTemplate>
+    </asp:UpdateProgress>
+
+
     <div class="row">
         <div class="col-sm-12 mb-3 mb-md-0">
             <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">

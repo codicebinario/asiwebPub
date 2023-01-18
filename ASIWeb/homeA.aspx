@@ -22,11 +22,21 @@
       width:80%;
     margin: auto;
   }
-          
-
+        .posCentre{width:300px;margin:0 auto;}  
+    
     </style>
+    
+  
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:UpdateProgress runat="server" ID="PageUpdateProgress">
+        <ProgressTemplate>
+            <div class="posCentre alert alert-danger mb-2" role="alert">
+                      Sto caricando la pagina richiesta..
+            </div>
+         
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 <div class="container">
   
     <asp:HiddenField  ID="HiddenQuantiCorsiAttivi" runat="server" Value="0" />
@@ -91,9 +101,19 @@
         <div class="col">
             <div class="jumbotron jumbotron-fluid rounded">
                 <div class="container text-center">
+                    <asp:UpdatePanel runat="server" ID="Panel">
+                        <ContentTemplate>
+                            <asp:LinkButton cssclass="btn btn-lg btn-custom" ID="LinkButton1" runat="server"><i class="bi bi-wrench-adjustable-circle"></i>Rinnovi 2.0</asp:LinkButton>
+                            
 
-                    <a class="btn btn-lg btn-custom" href="Rinnovi2/DashboardRinnovi2.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"></i> Rinnovi 2.0</a>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+      
+ 
+         <%--   <a  id="submit"  href="Rinnovi2/DashboardRinnovi2.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"></i> Rinnovi 2.0</a>--%>
 
+
+              
 
                 </div>
             </div>
@@ -134,6 +154,7 @@
             </div>
         </div>
 </div>
+    
     <script>
     Chart.register(ChartDataLabels);
         var barColors = ['rgba(255, 99, 132, 0.2)',

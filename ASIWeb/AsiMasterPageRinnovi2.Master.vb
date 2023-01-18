@@ -44,7 +44,7 @@ Public Class AsiMasterPageRinnovi2
         Dim idRinnovoM As Integer
         idRinnovoM = AsiModel.Rinnovi.NuovoRinnovo(Session("codice"))
         If idRinnovoM >= 1 Then
-            Response.Redirect("checkTesseramentoRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(idRinnovoM))
+            Response.Redirect("checkTesseramentoRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(idRinnovoM) & "&t=1")
         End If
 
     End Sub
