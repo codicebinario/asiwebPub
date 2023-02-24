@@ -119,15 +119,15 @@ function ServerException(mess) {
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <asp:UpdateProgress ID="UpdateProgress1" runat="server"
-					 DynamicLayout="false">
-	<ProgressTemplate>
-	  <div class="Progress">
-		 <div class="btn">loading...</div>
-		
-		</div>
-	</ProgressTemplate>
-</asp:UpdateProgress>
+    <asp:UpdateProgress runat="server" ID="PageUpdateProgress">
+        <ProgressTemplate>
+            <div class="posCentre alert alert-danger mb-2" role="alert">
+                Sto caricando la pagina richiesta..
+            </div>
+
+        </ProgressTemplate>
+    </asp:UpdateProgress>
+
     
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">

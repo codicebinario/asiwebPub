@@ -59,7 +59,7 @@ Public Class AsiMasterPageRinnovi2
     Protected Sub LinkArchivioRinnovi_Click(sender As Object, e As EventArgs) Handles LinkArchivioRinnovi.Click
         '    NuovaRichiesta()
 
-        Response.Redirect("DashboardRinnoviEvasi.aspx")
+        Response.Redirect("DashboardRinnoviEvasi2.aspx")
     End Sub
 
 

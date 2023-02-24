@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class upDichiarazione2
 
     '''<summary>
-    '''UpdateProgress1 control.
+    '''PageUpdateProgress control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
+    Protected WithEvents PageUpdateProgress As Global.System.Web.UI.UpdateProgress
 
     '''<summary>
     '''lblIntestazioneRinnovo control.

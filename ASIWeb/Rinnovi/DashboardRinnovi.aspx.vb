@@ -242,6 +242,9 @@ Public Class DashboardRinnovi
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
 
+
+
+
                     phDash.Controls.Add(hpUPPag)
                     phDash.Controls.Add(Verb)
                     '   phDash.Controls.Add(fotoCorsisti)
@@ -252,7 +255,7 @@ Public Class DashboardRinnovi
                     If foto = "..\img\noimg.jpg" Then
                         phDash.Controls.Add(New LiteralControl("<img src='" & foto & "' height='70' width='50' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'>"))
 
-                    Else
+                Else
                         Dim myImage As Image = FotoS(foto)
                         Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
                         '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")

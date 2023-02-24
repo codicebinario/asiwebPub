@@ -218,8 +218,27 @@ Public Class RichiestaRinnovo2
     End Sub
 
     Protected Sub lnkAvanti_Click(sender As Object, e As EventArgs) Handles lnkAvanti.Click
-        AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "151", Session("WebUserEnte"), "rinnovo")
-        Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+        Dim datiAlbo As New DatiCodiceFiscaleRinnovi
+
+        datiAlbo = getDatiCodiceFiscaleRinnovi(Session("idScelto"))
+
+        Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, CodiceEnteRichiedente)
+        If SameCode = 0 Then
+
+            '    AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "151", Session("WebUserEnte"), "rinnovo")
+
+
+            Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+
+        Else
+            Response.Redirect("upDichiarazione2.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+
+        End If
+
+
+
+
+
 
     End Sub
 End Class

@@ -85,7 +85,7 @@
  <div class="col-sm-12 mb-3 mb-md-0">
        <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Rinnovi Attivi</h3>
+    <h5 class="display-5">Rinnovi Attivi</h5>
     <p class="lead">
   <asp:Literal ID="litDenominazioneJumboDash" runat="server"></asp:Literal>
                
@@ -101,7 +101,11 @@
 
 </div>
 
- <div class="row d-flex justify-content-center">
+    
+
+
+
+    <div class="row d-flex justify-content-center">
    
 
      <asp:PlaceHolder ID="phDash" runat="server" Visible="false"></asp:PlaceHolder>

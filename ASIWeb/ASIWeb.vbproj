@@ -404,13 +404,17 @@
     <Content Include="PageNotFound.aspx" />
     <Content Include="passM.aspx" />
     <Content Include="richiestaTessere.aspx" />
+    <Content Include="Rinnovi2\CancellaRiga.aspx" />
     <Content Include="Rinnovi2\closeRinnovo.aspx" />
     <Content Include="Rinnovi2\checkTesseramentoRinnovi2.aspx" />
     <Content Include="Rinnovi2\DashBoardRinnovi2.aspx" />
+    <Content Include="Rinnovi2\DashboardRinnoviEvasi2.aspx" />
     <Content Include="Rinnovi2\RichiestaRinnovo12.aspx" />
     <Content Include="Rinnovi2\RichiestaRinnovo2.aspx" />
+    <Content Include="Rinnovi2\scaricaTesseraRinnovo2.aspx" />
     <Content Include="Rinnovi2\upDichiarazione2.aspx" />
     <Content Include="Rinnovi2\UpFotoRinnovo2.aspx" />
+    <Content Include="Rinnovi2\upLegRinnovi2.aspx" />
     <Content Include="Rinnovi2\WebForm15.aspx" />
     <Content Include="Rinnovi\checkTesseramentoRinnovi.aspx" />
     <Content Include="Rinnovi\DashboardRinnovi.aspx" />
@@ -1073,6 +1077,13 @@
       <DependentUpon>richiestaTessere.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi2\CancellaRiga.aspx.designer.vb">
+      <DependentUpon>CancellaRiga.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\CancellaRiga.aspx.vb">
+      <DependentUpon>CancellaRiga.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi2\closeRinnovo.aspx.designer.vb">
       <DependentUpon>closeRinnovo.aspx</DependentUpon>
     </Compile>
@@ -1094,6 +1105,13 @@
       <DependentUpon>DashBoardRinnovi2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi2\DashboardRinnoviEvasi2.aspx.designer.vb">
+      <DependentUpon>DashboardRinnoviEvasi2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\DashboardRinnoviEvasi2.aspx.vb">
+      <DependentUpon>DashboardRinnoviEvasi2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi2\RichiestaRinnovo12.aspx.designer.vb">
       <DependentUpon>RichiestaRinnovo12.aspx</DependentUpon>
     </Compile>
@@ -1108,6 +1126,13 @@
       <DependentUpon>RichiestaRinnovo2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi2\scaricaTesseraRinnovo2.aspx.designer.vb">
+      <DependentUpon>scaricaTesseraRinnovo2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\scaricaTesseraRinnovo2.aspx.vb">
+      <DependentUpon>scaricaTesseraRinnovo2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi2\upDichiarazione2.aspx.designer.vb">
       <DependentUpon>upDichiarazione2.aspx</DependentUpon>
     </Compile>
@@ -1120,6 +1145,13 @@
     </Compile>
     <Compile Include="Rinnovi2\UpFotoRinnovo2.aspx.vb">
       <DependentUpon>UpFotoRinnovo2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi2\upLegRinnovi2.aspx.designer.vb">
+      <DependentUpon>upLegRinnovi2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\upLegRinnovi2.aspx.vb">
+      <DependentUpon>upLegRinnovi2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Rinnovi2\WebForm15.aspx.designer.vb">

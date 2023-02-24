@@ -290,9 +290,9 @@ Public Class UpFotoRinnovo2
             tokenx = arrKeywords(1)
             id_att = arrKeywords(0)
             CaricaSuFM(tokenx, id_att, nomecaricato)
-
-           ' Response.Redirect("DashboardRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
-             Response.Redirect("DashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("ok"))
+            Session("visto") = "ok"
+            ' Response.Redirect("DashboardRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+            Response.Redirect("DashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("fo"))
 
 
 

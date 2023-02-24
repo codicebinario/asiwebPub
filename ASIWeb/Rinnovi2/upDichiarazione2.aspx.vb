@@ -42,6 +42,9 @@ Public Class upDichiarazione2
     Dim tokenZ As String = ""
     Dim CodiceEnteRichiedente As String = ""
     Dim codiceFiscale As String = ""
+    Dim idSelected As String = ""
+    Dim record_ID As String = ""
+    Dim codR As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -58,13 +61,18 @@ Public Class upDichiarazione2
         System.Threading.Thread.CurrentThread.CurrentCulture = cultureFormat
         System.Threading.Thread.CurrentThread.CurrentUICulture = cultureFormat
 
+        idSelected = deEnco.QueryStringDecode(Request.QueryString("idSelected"))
 
+        If Not String.IsNullOrEmpty(idSelected) Then
 
+            Session("idSelected") = idSelected
+
+        End If
 
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
-        Dim record_ID As String = ""
+
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         If Not String.IsNullOrEmpty(record_ID) Then
 
@@ -72,10 +80,12 @@ Public Class upDichiarazione2
 
         End If
 
+
+
         If IsNothing(Session("id_record")) Then
             Response.Redirect("../login.aspx")
         End If
-        Dim codR As String = ""
+
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
         If Not String.IsNullOrEmpty(codR) Then
 
@@ -182,10 +192,11 @@ Public Class upDichiarazione2
         '  Dim ds As DataSet
         Dim risposta As String = ""
         fmsP.SetLayout("webRinnoviRichiesta2")
-        Dim Request = fmsP.CreateEditRequest(IDRinnovo)
+        Dim Request = fmsP.CreateEditRequest(codR)
         Request.AddField("DichiarazioneEAOnFS", nomecaricato)
         Request.AddField("NoteDichiarazione", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
         Request.AddField("Codice_Status", "152")
+        Request.AddField("DichiarazioneEAInviata", "s")
         '  Request.AddScript("SistemaEncodingNoteDichiarazioneRinnovi", IDRinnovo)
 
         AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
@@ -313,7 +324,12 @@ Public Class upDichiarazione2
             'deleteFile(nomecaricato)
             '  Session("fase") = "2"
             '  Response.Redirect("dashboardB.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
-            Response.Redirect("dashboardRinnovi.aspx#" & Session("IDRinnovo"))
+            ' Response.Redirect("dashboardRinnovi2.aspx#" & Session("IDRinnovo"))
+            Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idSelected")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+
+
+
+
             '   Catch ex As Exception
 
             '      uploadedFiles.Text = "<b>Documento non caricato: </b><br/>"

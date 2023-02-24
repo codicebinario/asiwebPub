@@ -417,12 +417,12 @@ Public Class RichiestaRinnovo12
             Request.AddField("Rin_InviaA", "EA")
         End If
 
-        Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, CodiceEnteRichiedente)
-        If SameCode = 0 Then
-            Request.AddField("Codice_Status", "152")
-        Else
-            Request.AddField("Codice_Status", "151")
-        End If
+        '   Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, CodiceEnteRichiedente)
+        '  If SameCode = 0 Then
+        Request.AddField("Codice_Status", "152")
+        ' Else
+        'Request.AddField("Codice_Status", "151")
+        '   End If
 
 
 
@@ -440,11 +440,11 @@ Public Class RichiestaRinnovo12
 
 
 
-        If SameCode = 0 Then
-            AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
-        Else
-            AsiModel.LogIn.LogCambioStatus(IDRinnovo, "151", Session("WebUserEnte"), "rinnovo")
-        End If
+
+        AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
+        'Else
+        '    AsiModel.LogIn.LogCambioStatus(IDRinnovo, "151", Session("WebUserEnte"), "rinnovo")
+        'End If
 
 
         ' occorre scrivere il codice che aggiorna albo con i dati giusti

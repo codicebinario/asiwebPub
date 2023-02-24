@@ -121,13 +121,13 @@
 
         <div class="col">
 
-            <div class="jumbotron jumbotron-fluid rounded">
+           <%-- <div class="jumbotron jumbotron-fluid rounded">
                 <div class="container text-center">
               
 
                     <%--   <a class="btn btn-lg btn-custom " href="#" role="button">Ristampa</a>--%>
-                </div>
-            </div>
+              <%--  </div>
+            </div>--%>
 
         </div>
 

@@ -21,7 +21,7 @@ Public Class closeRinnovo
 
         Dim RequestP = fmsP.CreateEditRequest(record_ID)
         RequestP.AddField("CheckWeb", "s")
-
+        RequestP.AddField("CodiceStatus", "155")
         Try
             risposta = RequestP.Execute()
 
@@ -31,7 +31,7 @@ Public Class closeRinnovo
 
         End Try
 
-
+        AsiModel.Rinnovi.AggiornaStatusMoltia155(codR)
 
 
 
