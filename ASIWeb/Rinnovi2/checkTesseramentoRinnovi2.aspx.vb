@@ -54,6 +54,7 @@ Public Class checkTesseramentoRinnovi2
         If IsNothing(Session("codice")) Then
             Response.Redirect("../login.aspx")
         End If
+        lnkCheck.Attributes.Add("OnClick", String.Format("this.disabled = true; {0};", ClientScript.GetPostBackEventReference(lnkCheck, Nothing)))
 
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
@@ -159,13 +160,14 @@ Public Class checkTesseramentoRinnovi2
 
 
 
-                idrecord = CaricaDatiDocumentoRinnovo(codR, Session("codice"), Trim(txtCodiceFiscale.Text),
-DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
+                '   idrecord = CaricaDatiDocumentoRinnovo(codR, Session("codice"), Trim(txtCodiceFiscale.Text),
+                'DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
 
 
 
-                Response.Redirect("richiestaRinnovo2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
+                ' Response.Redirect("richiestaRinnovo2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
 
+                Response.Redirect("richiestaRinnovo2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&cf=" & deEnco.QueryStringEncode(Trim(txtCodiceFiscale.Text)))
 
 
             Else

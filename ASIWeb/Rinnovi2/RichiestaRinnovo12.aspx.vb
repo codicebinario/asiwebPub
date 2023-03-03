@@ -59,6 +59,7 @@ Public Class RichiestaRinnovo12
             Response.Redirect("../login.aspx")
         End If
 
+        lnkConcludi.Attributes.Add("OnClick", String.Format("this.disabled = true; {0};", ClientScript.GetPostBackEventReference(lnkConcludi, Nothing)))
 
         'If Session("procedi") <> "OK" Then
 
@@ -111,7 +112,7 @@ Public Class RichiestaRinnovo12
             DettaglioRinnovo = Rinnovi.PrendiValoriNuovoRinnovo2(Session("id_record"))
             Dim verificato As String = DettaglioRinnovo.RinnovoCF
             If verificato = "0" Then
-                Response.Redirect("DashboardRinnovi.aspx?ris=" & deEnco.QueryStringEncode("no"))
+                Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode("no"))
 
             End If
             Dim IDRinnovo As String = DettaglioRinnovo.IDRinnovo
@@ -415,6 +416,11 @@ Public Class RichiestaRinnovo12
         End If
         If chkEA.Checked Then
             Request.AddField("Rin_InviaA", "EA")
+            Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
+            Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
+            Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
+            Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
+
         End If
 
         '   Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, CodiceEnteRichiedente)

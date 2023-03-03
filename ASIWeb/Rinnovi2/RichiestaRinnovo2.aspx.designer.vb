@@ -86,11 +86,11 @@ Partial Public Class RichiestaRinnovo2
     Protected WithEvents lblScelta As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lnkAvanti control.
+    '''btnConcludi control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkAvanti As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents btnConcludi As Global.System.Web.UI.WebControls.Button
 End Class

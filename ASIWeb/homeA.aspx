@@ -74,9 +74,10 @@
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container text-center">
   
-  <a class="btn btn-lg btn-custom" href="Rinnovi/DashboardRinnovi.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"> </i>Rinnovi</a>
-    
-     
+<%--  <a class="btn btn-lg btn-custom" href="Rinnovi/DashboardRinnovi.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"> </i>Rinnovi</a>
+--%>
+      <asp:LinkButton CssClass="btn btn-lg btn-custom" ID="LinkButton1" runat="server"><i class="bi bi-wrench-adjustable-circle"> </i>Rinnovi 2.0</asp:LinkButton>
+
   </div>
 </div> 
     </div>
@@ -96,49 +97,9 @@
  
  </div>
 
-    <div class="row">
-
-        <div class="col">
-            <div class="jumbotron jumbotron-fluid rounded">
-                <div class="container text-center">
-                    <asp:UpdatePanel runat="server" ID="Panel">
-                        <ContentTemplate>
-                            <asp:LinkButton cssclass="btn btn-lg btn-custom" ID="LinkButton1" runat="server"><i class="bi bi-wrench-adjustable-circle"></i>Rinnovi 2.0</asp:LinkButton>
-                            
-
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-      
  
-         <%--   <a  id="submit"  href="Rinnovi2/DashboardRinnovi2.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"></i> Rinnovi 2.0</a>--%>
+      
 
-
-              
-
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-
-           <%-- <div class="jumbotron jumbotron-fluid rounded">
-                <div class="container text-center">
-              
-
-                    <%--   <a class="btn btn-lg btn-custom " href="#" role="button">Ristampa</a>--%>
-              <%--  </div>
-            </div>--%>
-
-        </div>
-
-    </div>
-
-
-
-
-
-
-</div>
 
 
 

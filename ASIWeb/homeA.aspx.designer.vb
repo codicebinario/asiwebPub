@@ -50,15 +50,6 @@ Partial Public Class homeA
     Protected WithEvents HiddenQuantiRinnoviAttivi As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''Panel control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Panel As Global.System.Web.UI.UpdatePanel
-
-    '''<summary>
     '''LinkButton1 control.
     '''</summary>
     '''<remarks>

@@ -151,7 +151,7 @@ Public Class DashBoardRinnovi2
                 'record_id = WebUtility.UrlEncode(deEnco.QueryStringEncode(WebUtility.UrlEncode(dr("id_record"))))
                 hpUPPag.PostBackUrl = "upLegRinnovi2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovoM"))))
 
-                hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("costoRinnovoM")) & " Euro"
+                hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("costoTotaleM")) & " Euro"
 
                 hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom  mb-1"
                 If (Data.FixNull(dr("CodiceStatus")) = "155" And Data.FixNull(dr("checkweb")) = "s") Then
@@ -217,10 +217,23 @@ Public Class DashBoardRinnovi2
                 Else
                     legendaStatus = " -  Status <b>&nbsp;" & Data.FixNull(dr("Descrizione_StatusWeb")) & "&nbsp;</b>"
                 End If
+                Dim prezzoDaPagare As String = ""
+                If (Data.FixNull(dr("CodiceStatus")) = "155" And Data.FixNull(dr("checkweb")) = "s") Then
+
+                    If quantiPerGruppo = 1 Then
+                        prezzoDaPagare = "Costo Rinnovo (" & Data.FixNull(dr("costoRinnovoM")) & ") + Costo Spedizione (" & Data.FixNull(dr("costoSpedizioneM")) & ") =<b>&nbsp;Costo Totale di " & Data.FixNull(dr("costoTotaleM")) & " Euro &nbsp;</b>"
+
+                    Else
+                        prezzoDaPagare = "Costo Rinnovi (" & Data.FixNull(dr("costoRinnovoM")) & ") + Costo Spedizione (" & Data.FixNull(dr("costoSpedizioneM")) & ") = <b>&nbsp;Costo Totale di " & Data.FixNull(dr("costoTotaleM")) & " Euro &nbsp;</b>"
+
+                    End If
+                Else
+                    prezzoDaPagare = ""
+                End If
 
 
 
-                phDash.Controls.Add(New LiteralControl("Gruppo rinnovi " & " <b>&nbsp;" & Data.FixNull(dr("IDRinnovoM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b> richieste" & legendaStatus))
+                phDash.Controls.Add(New LiteralControl("Gruppo rinnovi " & " <b>&nbsp;" & Data.FixNull(dr("IDRinnovoM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b> richieste" & legendaStatus & "&nbsp;-&nbsp;" & prezzoDaPagare))
                 phDash.Controls.Add(New LiteralControl("</button>"))
                 phDash.Controls.Add(New LiteralControl("</h2>"))
                 If Data.FixNull(dr("IDRinnovoM")) = open Then
@@ -323,11 +336,7 @@ Public Class DashBoardRinnovi2
                             Canc.Text = "<i class=""bi bi-file-x-fill""></i> </i>Cancella rinnovo"
                             Canc.PostBackUrl = "cancellaRiga.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr1("IDRinnovoM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr1("id_record")))
                             Canc.CssClass = "btn btn-success btn-sm btn-sei btn-custom  mb-1"
-                            'If Data.FixNull(dr1("Codice_Status")) = "151" Then
-                            '    Canc.Visible = True
-                            'Else
-                            Canc.Visible = True
-                            '   End If
+
 
 
 
@@ -401,14 +410,16 @@ Public Class DashBoardRinnovi2
                                 'inizio terza colonna
                                 phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
-
+                            If Data.FixNull(dr1("Codice_Status")) > 154 Then
+                                Canc.Visible = False
+                            Else
+                                Canc.Visible = True
                                 phDash.Controls.Add(Canc)
-
-
-
                                 phDash.Controls.Add(New LiteralControl("<br />"))
+                            End If
 
-                                phDash.Controls.Add(fotoCorsistiLnk)
+
+                            phDash.Controls.Add(fotoCorsistiLnk)
                                 phDash.Controls.Add(New LiteralControl("<br />"))
 
                                 If foto = "..\img\noimg.jpg" Then

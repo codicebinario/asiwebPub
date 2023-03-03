@@ -2554,10 +2554,10 @@ Public Class AsiModel
             Dim ds As DataSet
 
             Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-            fmsP.SetLayout("webRinnoviRichiesta")
+            fmsP.SetLayout("webRinnoviMaster")
             Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             ' RequestP.AddSearchField("pre_stato_web", "1")
-            RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
             'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
             ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
@@ -2570,12 +2570,12 @@ Public Class AsiModel
                 For Each dr In ds.Tables("main").Rows
 
 
-                    If Data.FixNull(dr("Codice_Status")) = "151" Or Data.FixNull(dr("Codice_Status")) = "152" _
-                Or Data.FixNull(dr("Codice_Status")) = "153" _
-                Or Data.FixNull(dr("Codice_Status")) = "154" Or Data.FixNull(dr("Codice_Status")) = "155" _
-                Or Data.FixNull(dr("Codice_Status")) = "156" Or Data.FixNull(dr("Codice_Status")) = "156" _
-                Or Data.FixNull(dr("Codice_Status")) = "157" _
-                Or Data.FixNull(dr("Codice_Status")) = "158" Or Data.FixNull(dr("Codice_Status")) = "159" Then
+                    If Data.FixNull(dr("CodiceStatus")) = "151" Or Data.FixNull(dr("CodiceStatus")) = "152" _
+                Or Data.FixNull(dr("CodiceStatus")) = "153" _
+                Or Data.FixNull(dr("CodiceStatus")) = "154" Or Data.FixNull(dr("CodiceStatus")) = "155" _
+                Or Data.FixNull(dr("CodiceStatus")) = "156" Or Data.FixNull(dr("CodiceStatus")) = "156" _
+                Or Data.FixNull(dr("CodiceStatus")) = "157" _
+                Or Data.FixNull(dr("CodiceStatus")) = "158" Or Data.FixNull(dr("CodiceStatus")) = "159" Then
 
                         counter1 += 1
 

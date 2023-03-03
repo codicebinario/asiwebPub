@@ -25,6 +25,8 @@ Imports System.EnterpriseServices.CompensatingResourceManager
 Imports System.Security.Policy
 Imports System.Windows
 Imports System.Runtime.InteropServices
+Imports System.Globalization
+Imports System.Threading
 
 Public Class RichiestaRinnovo2
     Inherits System.Web.UI.Page
@@ -56,6 +58,7 @@ Public Class RichiestaRinnovo2
         If IsNothing(Session("codice")) Then
             Response.Redirect("../login.aspx")
         End If
+        btnConcludi.Attributes.Add("OnClick", String.Format("this.disabled = true; {0};", ClientScript.GetPostBackEventReference(btnConcludi, Nothing)))
 
 
         'If Session("procedi") <> "OK" Then
@@ -79,14 +82,22 @@ Public Class RichiestaRinnovo2
             Response.Redirect("../login.aspx")
         End If
         Dim record_ID As String = ""
-        record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        If Not String.IsNullOrEmpty(record_ID) Then
+        'record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
+        'If Not String.IsNullOrEmpty(record_ID) Then
 
-            Session("id_record") = record_ID
+        '    Session("id_record") = record_ID
+
+        'End If
+        Dim cf As String = ""
+        cf = deEnco.QueryStringDecode(Request.QueryString("cf"))
+        If Not String.IsNullOrEmpty(cf) Then
+
+            Session("cf") = cf
 
         End If
 
-        If IsNothing(Session("id_record")) Then
+
+        If IsNothing(Session("cf")) Then
             Response.Redirect("../login.aspx")
         End If
         Dim codR As String = ""
@@ -95,46 +106,17 @@ Public Class RichiestaRinnovo2
 
 
             Session("IDRinnovo") = codR
-            Dim DettaglioRinnovo As New DatiNuovoRinnovo
 
-
-
-
-
-            DettaglioRinnovo = Rinnovi.PrendiValoriNuovoRinnovo2(record_ID)
-            Dim verificato As String = DettaglioRinnovo.RinnovoCF
-            If verificato = "0" Then
-                Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode("no"))
-
-            End If
-            Dim IDRinnovo As String = DettaglioRinnovo.IDRinnovo
-            CodiceEnteRichiedente = DettaglioRinnovo.CodiceEnteRichiedente
-            Dim DescrizioneEnteRichiedente As String = DettaglioRinnovo.DescrizioneEnteRichiedente
-            Dim TipoEnte As String = DettaglioRinnovo.TipoEnte
-            Dim CodiceStatus As String = DettaglioRinnovo.CodiceStatus
-            Dim DescrizioneStatus As String = DettaglioRinnovo.DescrizioneStatus
-            '      leggiDatiEsistenti(Session("codiceFiscale"))
-
-            HiddenIdRecord.Value = DettaglioRinnovo.IdRecord
-            HiddenIDRinnovo.Value = DettaglioRinnovo.IDRinnovo
-            codiceFiscale = DettaglioRinnovo.CodiceFiscale
-            Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
-
-            lblIntestazioneRinnovo.Text = "<strong>IDRinnovo: </strong>" & IDRinnovo &
-                "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
-                "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
-                "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
-                "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
         End If
 
         If Not Page.IsPostBack Then
 
             '  pnlFase1.Visible = False
-            rinnoviCF()
+            rinnoviCF(Session("cf"))
 
         End If
     End Sub
-    Sub rinnoviCF()
+    Sub rinnoviCF(cf As String)
 
         Dim ds As DataSet
         Dim codiceAffialiante As String = ""
@@ -142,7 +124,7 @@ Public Class RichiestaRinnovo2
         fmsP.SetLayout("WebAlbo")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice Fiscale", codiceFiscale, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
         RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
         RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
         RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
@@ -156,15 +138,11 @@ Public Class RichiestaRinnovo2
 
 
 
-            Dim cf As DataTable = ds.Tables("main")
+            '  Dim cf As DataTable = ds.Tables("main")
 
 
 
-            '  phDash.Visible = True
-            'Dim counter As Integer = 0
             Dim counter1 As Integer = 0
-            'Dim totale As Decimal = 0
-            '  For Each dr In ds.Tables("main").Rows
 
 
 
@@ -213,32 +191,114 @@ Public Class RichiestaRinnovo2
             idScelto = ddlCF.SelectedValue.ToString
             Session("idScelto") = idScelto
             ddlCF.ClearSelection()
-            lnkAvanti.Visible = True
+            'btnConcludi.Visible = True
         End If
     End Sub
+    Public Function CaricaDatiDocumentoRinnovo(codR As String, codiceEnte As String, codiceFiscale As String,
+                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As String, comuneNascita As String, datanascita As String) As Integer
 
-    Protected Sub lnkAvanti_Click(sender As Object, e As EventArgs) Handles lnkAvanti.Click
+        Dim idRecord As Integer = 0
+        Dim SettaggioCulture As CultureInfo = CultureInfo.CreateSpecificCulture("it-IT")
+        Thread.CurrentThread.CurrentCulture = SettaggioCulture
+        Thread.CurrentThread.CurrentUICulture = SettaggioCulture
+        Dim DataScadenzaPulita As String
+
+        DataScadenzaPulita = DateTime.Parse(Data.SonoDieci(dataScadenza), SettaggioCulture)
+
+        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        '  Dim ds As DataSet
+        Dim risposta As Integer = 0
+        fmsP.SetLayout("webRinnoviRichiesta2")
+
+        Dim Request = fmsP.CreateNewRecordRequest()
+
+        Request.AddField("IDRinnovoM", codR)
+        Request.AddField("Codice_Status", "0")
+
+
+        Request.AddField("Rin_CFVerificatoTessera", "1")
+        Request.AddField("Codice_Ente_Richiedente", codiceEnte)
+        Request.AddField("Rin_CodiceFiscale", codiceFiscale)
+        Request.AddField("Rin_NumeroTessera", codiceTessera)
+        Request.AddField("Rin_Nome", nome)
+        Request.AddField("Rin_Cognome", cognome)
+        'Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaData(dataScadenza))
+        Dim miaDataScadenza As DateTime
+        Dim miaDataScadenza2 As DateTime
+
+        Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaDataUK(DataScadenzaPulita))
+
+
+        Request.AddField("Rin_ComuneNascita", comuneNascita)
+        Request.AddField("Rin_DataNascita", Data.SonoDieci(datanascita))
+
+        risposta = Request.Execute()
+
+
+        Return risposta
+    End Function
+
+    Protected Sub btnConcludi_Click(sender As Object, e As EventArgs) Handles btnConcludi.Click
+
+        Dim idrecord As Integer
+        Dim DettaglioRinnovo As New DatiNuovoRinnovo
+        DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(Session("cf"))
+
+        idrecord = CaricaDatiDocumentoRinnovo(Session("IDRinnovo"), Session("codice"), Session("cf"),
+         DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
+
         Dim datiAlbo As New DatiCodiceFiscaleRinnovi
 
         datiAlbo = getDatiCodiceFiscaleRinnovi(Session("idScelto"))
 
-        Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, CodiceEnteRichiedente)
+        Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, Session("codice"))
         If SameCode = 0 Then
 
             '    AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "151", Session("WebUserEnte"), "rinnovo")
 
 
-            Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+            Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
 
         Else
-            Response.Redirect("upDichiarazione2.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+            Response.Redirect("upDichiarazione2.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
 
         End If
 
 
 
-
-
-
     End Sub
+    'Protected Sub lnkAvanti_Click(sender As Object, e As EventArgs) Handles lnkAvanti.Click
+
+
+
+
+    '    Dim idrecord As Integer
+    '    Dim DettaglioRinnovo As New DatiNuovoRinnovo
+    '    DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(Session("cf"))
+
+    '    idrecord = CaricaDatiDocumentoRinnovo(Session("IDRinnovo"), Session("codice"), Session("cf"),
+    ' DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
+
+    '    Dim datiAlbo As New DatiCodiceFiscaleRinnovi
+
+    '    datiAlbo = getDatiCodiceFiscaleRinnovi(Session("idScelto"))
+
+    '    Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, Session("codice"))
+    '    If SameCode = 0 Then
+
+    '        '    AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "151", Session("WebUserEnte"), "rinnovo")
+
+
+    '        Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
+
+    '    Else
+    '        Response.Redirect("upDichiarazione2.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
+
+    '    End If
+
+
+
+
+
+    ' End Sub
 End Class
