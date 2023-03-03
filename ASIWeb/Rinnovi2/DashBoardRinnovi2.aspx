@@ -67,7 +67,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<%--    <asp:UpdateProgress ID="UpdateProgress1" runat="server"
+    <%--<asp:UpdateProgress ID="UpdateProgress1" runat="server"
         DynamicLayout="false">
         <ProgressTemplate>
             <div class="Progress">

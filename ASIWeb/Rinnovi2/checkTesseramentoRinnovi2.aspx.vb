@@ -150,7 +150,7 @@ Public Class checkTesseramentoRinnovi2
 
 
             risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
-            DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(txtCodiceFiscale.Text)
+            '  DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(txtCodiceFiscale.Text)
             Session("visto") = "ok"
             If risultatoCheck = True Then
 

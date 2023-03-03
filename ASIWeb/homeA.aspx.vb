@@ -45,10 +45,11 @@ Public Class homeA
     End Sub
 
 
-    ' System.Threading.Thread.Sleep(5000)
+    '
 
 
     Protected Sub LinkButton1_Click(sender As Object, e As EventArgs) Handles LinkButton1.Click
+        ' System.Threading.Thread.Sleep(5000)
         Response.Redirect("Rinnovi2/DashboardRinnovi2.aspx")
     End Sub
 

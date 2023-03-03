@@ -191,6 +191,7 @@ Public Class RichiestaRinnovo2
             idScelto = ddlCF.SelectedValue.ToString
             Session("idScelto") = idScelto
             ddlCF.ClearSelection()
+            btnConcludi.Visible = True
             'btnConcludi.Visible = True
         End If
     End Sub

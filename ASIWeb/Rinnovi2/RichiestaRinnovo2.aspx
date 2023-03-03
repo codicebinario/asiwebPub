@@ -173,11 +173,11 @@
 					<%--	            <asp:Button ID="BtnAvanti"    runat="server" Text="Avanti" class="btn btn-primary"    />--%>
     <%--                            
                      <asp:LinkButton ID="lnkAvanti"  class="btn btn-primary" CausesValidation="false" runat="server"><i class="bi bi-fast-forward"> </i>Avanti</asp:LinkButton>--%>
-                                    <button type="button" class="btn btn-primary" onclick="<%=btnConcludi.ClientID %>.click()">
+                            <%--        <button type="button" id="fakeButton" visible="false" runat="server" class="btn btn-primary" onclick="<%=btnConcludi.ClientID %>.click()">
                                         <i class="bi bi-fast-forward"></i>Avanti
-                                    </button>   
+                                    </button> --%>  
                                     
-                                    <asp:Button ID="btnConcludi" OnClick="btnConcludi_Click" Style="display: none;"  CausesValidation="false" runat="server" Text="Avanti"></asp:Button>
+                                    <asp:Button ID="btnConcludi" class="btn btn-primary" Visible="false" CausesValidation="false" runat="server" Text="Avanti"></asp:Button>
 
 						</div>
 							</div>

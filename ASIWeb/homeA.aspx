@@ -116,7 +116,7 @@
         </div>
 </div>
     
-    <script>
+ </div>   <script>
     Chart.register(ChartDataLabels);
         var barColors = ['rgba(255, 99, 132, 0.2)',
             'rgba(75, 192, 192, 0.2)', 'rgba(201, 203, 207, 0.2)'];
