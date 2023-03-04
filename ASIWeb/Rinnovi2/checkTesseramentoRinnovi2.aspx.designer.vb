@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class checkTesseramentoRinnovi2
 
     '''<summary>
+    '''lnkDashboardTorna control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lnkDashboardTorna As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''lblIntestazioneRinnovo control.
     '''</summary>
     '''<remarks>
@@ -59,13 +68,13 @@ Partial Public Class checkTesseramentoRinnovi2
     Protected WithEvents RequiredFieldValidator10 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''lnkCheck control.
+    '''btnCheck control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkCheck As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents btnCheck As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''lblRisultato control.

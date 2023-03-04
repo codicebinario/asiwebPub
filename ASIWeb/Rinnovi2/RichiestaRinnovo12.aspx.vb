@@ -59,6 +59,10 @@ Public Class RichiestaRinnovo12
             Response.Redirect("../login.aspx")
         End If
 
+        If IsNothing(Session("IdRecordMaster")) Then
+            Response.Redirect("../login.aspx")
+        End If
+
         lnkConcludi.Attributes.Add("OnClick", String.Format("this.disabled = true; {0};", ClientScript.GetPostBackEventReference(lnkConcludi, Nothing)))
 
         'If Session("procedi") <> "OK" Then
@@ -128,7 +132,7 @@ Public Class RichiestaRinnovo12
             codiceFiscale = DettaglioRinnovo.CodiceFiscale
             Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
-            lblIntestazioneRinnovo.Text = "<strong>IDRinnovo: </strong>" & IDRinnovo &
+            lblIntestazioneRinnovo.Text = "" &
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
                 "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
@@ -435,6 +439,42 @@ Public Class RichiestaRinnovo12
         ' Try
         risposta = Request.Execute()
 
+        Dim rispostax As Integer
+        Dim fmsPx As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        fmsPx.SetLayout("webRinnoviMaster")
+        '    Dim Requestx = fmsP.CreateDeleteRequest(Session("IdRecordMaster"))
+        Dim Requestx = fmsPx.CreateEditRequest(Session("IdRecordMaster"))
+
+
+
+        Requestx.AddField("CodiceStatus", "152")
+        ' Try
+        rispostax = Requestx.Execute()
+        '  Catch ex As Exception
+
+        ' End Try
+
+        'Dim rispostaY As Integer
+
+        'fmsP.SetLayout("webRinnovoMaster")
+        ''    Dim Requestx = fmsP.CreateDeleteRequest(Session("IdRecordMaster"))
+        'Dim RequestY = fmsP.CreateEditRequest(Session("IdRecordMaster"))
+
+
+
+        'RequestY.AddField("CodiceStatus", "152")
+        'Try
+        '    rispostax = Requestx.Execute()
+        'Catch ex As Exception
+
+        'End Try
+
+
+
+
+        'Session("IdRecordMaster")
+
+
         ritorno = True
 
 
@@ -469,6 +509,7 @@ Public Class RichiestaRinnovo12
             If ritorno = True Then
                 Session("visto") = "ok"
                 Session("rinnovoAggiunto") = "OK"
+
                 Response.Redirect("dashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("ok"))
             ElseIf ritorno = False Then
                 Response.Redirect("dashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode("pr"))

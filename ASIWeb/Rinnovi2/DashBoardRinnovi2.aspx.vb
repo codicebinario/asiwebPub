@@ -63,6 +63,9 @@ Public Class DashBoardRinnovi2
                     ElseIf ris = "no" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo senza verifica tessera.<br />Procedere con una nuova richiesta ' ).set('resizable', true).resizeTo('20%', 200);", True)
                         Session("rinnovoAggiunto") = Nothing
+                    ElseIf ris = "xx" Then
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo senza verifica tessera.<br />Procedere con una nuova richiesta ' ).set('resizable', true).resizeTo('20%', 200);", True)
+                        Session("rinnovoAggiunto") = Nothing
                     End If
                     Session("visto") = Nothing
                 End If
@@ -87,24 +90,24 @@ Public Class DashBoardRinnovi2
         open = Request.QueryString("open")
         rinnovi()
     End Sub
-    Sub rinnovi2()
+    'Sub rinnovi2()
 
-        Dim ds As DataSet
+    '    Dim ds As DataSet
 
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webRinnoviRichiesta2")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
-        ds = RequestP.Execute()
+    '    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+    '    fmsP.SetLayout("webRinnoviRichiesta2")
+    '    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+    '    ' RequestP.AddSearchField("pre_stato_web", "1")
+    '    RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+    '    RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+    '    RequestP.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
+    '    ds = RequestP.Execute()
 
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-            'rpDash.DataSource = ds.Tables("main")
-            'rpDash.DataBind()
-        End If
-    End Sub
+    '    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+    '        'rpDash.DataSource = ds.Tables("main")
+    '        'rpDash.DataBind()
+    '    End If
+    'End Sub
 
     Sub rinnovi()
 
@@ -119,7 +122,8 @@ Public Class DashBoardRinnovi2
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("CodiceEnteRichiedente", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("CodiceStatus", 160, Enumerations.SearchOption.lessThan)
+        ' RequestP.AddSearchField("CodiceStatus", 160, Enumerations.SearchOption.lessThan)
+        RequestP.AddSearchField("CodiceStatus", "1...159")
         RequestP.AddSortField("IDRinnovoM", Enumerations.Sort.Descend)
         '   RequestP.AddSortField("CodiceStatus", Enumerations.Sort.Ascend)
 
@@ -274,6 +278,7 @@ Public Class DashBoardRinnovi2
                 Dim RequestP1 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
                 ' RequestP.AddSearchField("pre_stato_web", "1")
                 RequestP1.AddSearchField("IDRinnovoM", Data.FixNull(dr("IDRinnovoM")), Enumerations.SearchOption.equals)
+                RequestP1.AddSearchField("Codice_Status", "1...159")
                 RequestP1.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
                 RequestP1.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
                 ds1 = RequestP1.Execute()
@@ -286,12 +291,12 @@ Public Class DashBoardRinnovi2
                     'Dim record_id As String
                     For Each dr1 In ds1.Tables("main").Rows
 
-                        If Data.FixNull(dr1("Codice_Status")) = "151" Or Data.FixNull(dr1("Codice_Status")) = "152" Or Data.FixNull(dr1("Codice_Status")) = "153" _
-                Or Data.FixNull(dr1("Codice_Status")) = "154" Or Data.FixNull(dr1("Codice_Status")) = "155" _
-                Or Data.FixNull(dr1("Codice_Status")) = "156" Or Data.FixNull(dr1("Codice_Status")) = "156" Or Data.FixNull(dr1("Codice_Status")) = "157" _
-                Or Data.FixNull(dr1("Codice_Status")) = "158" Or Data.FixNull(dr1("Codice_Status")) = "159" Then
+                        '        If Data.FixNull(dr1("Codice_Status")) = "151" Or Data.FixNull(dr1("Codice_Status")) = "152" Or Data.FixNull(dr1("Codice_Status")) = "153" _
+                        'Or Data.FixNull(dr1("Codice_Status")) = "154" Or Data.FixNull(dr1("Codice_Status")) = "155" _
+                        'Or Data.FixNull(dr1("Codice_Status")) = "156" Or Data.FixNull(dr1("Codice_Status")) = "156" Or Data.FixNull(dr1("Codice_Status")) = "157" _
+                        'Or Data.FixNull(dr1("Codice_Status")) = "158" Or Data.FixNull(dr1("Codice_Status")) = "159" Then
 
-                            counter1 += 1
+                        counter1 += 1
 
                             If String.IsNullOrWhiteSpace(Data.FixNull(dr1("ASI_foto"))) Then
                                 foto = "..\img\noimg.jpg"
@@ -459,7 +464,8 @@ Public Class DashBoardRinnovi2
                                 phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                            End If
+                        ' End If
+                        'dd
                     Next
 
                 End If

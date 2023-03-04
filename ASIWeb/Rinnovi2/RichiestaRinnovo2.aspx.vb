@@ -179,22 +179,22 @@ Public Class RichiestaRinnovo2
 
 
 
-    Protected Sub lnkCF_Click(sender As Object, e As EventArgs) Handles lnkCF.Click
-        'Dim message As RadioButtonList = CType(phDash.FindControl("CFPresenti"), RadioButtonList)
-        If Page.IsValid Then
+    'Protected Sub lnkCF_Click(sender As Object, e As EventArgs) Handles lnkCF.Click
+    '    'Dim message As RadioButtonList = CType(phDash.FindControl("CFPresenti"), RadioButtonList)
+    '    If Page.IsValid Then
 
 
-            lblScelta.Visible = True
-            lblScelta.Text = "<small><strong>Hai selezionato per il rinnovo:</strong> <br />" & ddlCF.SelectedItem.Text & "</small>"
+    '        lblScelta.Visible = True
+    '        lblScelta.Text = "<small><strong>Hai selezionato per il rinnovo:</strong> <br />" & ddlCF.SelectedItem.Text & "</small>"
 
-            Dim idScelto As String = ""
-            idScelto = ddlCF.SelectedValue.ToString
-            Session("idScelto") = idScelto
-            ddlCF.ClearSelection()
-            btnConcludi.Visible = True
-            'btnConcludi.Visible = True
-        End If
-    End Sub
+    '        Dim idScelto As String = ""
+    '        idScelto = ddlCF.SelectedValue.ToString
+    '        Session("idScelto") = idScelto
+    '        ddlCF.ClearSelection()
+    '        btnConcludi.Visible = True
+    '        'btnConcludi.Visible = True
+    '    End If
+    'End Sub
     Public Function CaricaDatiDocumentoRinnovo(codR As String, codiceEnte As String, codiceFiscale As String,
                                              nome As String, cognome As String, codiceTessera As String, dataScadenza As String, comuneNascita As String, datanascita As String) As Integer
 
@@ -267,6 +267,23 @@ Public Class RichiestaRinnovo2
 
 
 
+    End Sub
+
+    Protected Sub btnCF_Click(sender As Object, e As EventArgs) Handles btnCF.Click
+        'Dim message As RadioButtonList = CType(phDash.FindControl("CFPresenti"), RadioButtonList)
+        If Page.IsValid Then
+
+
+            lblScelta.Visible = True
+            lblScelta.Text = "<small><strong>Hai selezionato per il rinnovo:</strong> <br />" & ddlCF.SelectedItem.Text & "</small>"
+
+            Dim idScelto As String = ""
+            idScelto = ddlCF.SelectedValue.ToString
+            Session("idScelto") = idScelto
+            ddlCF.ClearSelection()
+            btnConcludi.Visible = True
+            'btnConcludi.Visible = True
+        End If
     End Sub
     'Protected Sub lnkAvanti_Click(sender As Object, e As EventArgs) Handles lnkAvanti.Click
 

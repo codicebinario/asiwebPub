@@ -42,8 +42,12 @@ Public Class AsiMasterPageRinnovi2
     End Sub
     Protected Sub lnkNuovoRinnovo_Click(sender As Object, e As EventArgs) Handles lnkNuovoRinnovo.Click
         Dim idRinnovoM As Integer
+        Dim idRecordM As Integer
         idRinnovoM = AsiModel.Rinnovi.NuovoRinnovo(Session("codice"))
+
         If idRinnovoM >= 1 Then
+            idRecordM = AsiModel.Rinnovi.CercaIDRecordRinnovoM(idRinnovoM)
+            Session("IdRecordMaster") = idRecordM
             Response.Redirect("checkTesseramentoRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(idRinnovoM) & "&t=1")
         End If
 

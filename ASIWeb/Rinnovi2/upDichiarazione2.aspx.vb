@@ -112,8 +112,8 @@ Public Class upDichiarazione2
             codiceFiscale = DettaglioRinnovo.CodiceFiscale
             Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
-            lblIntestazioneRinnovo.Text = "<strong>IDRinnovo: </strong>" & IDRinnovo &
-                "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
+            lblIntestazioneRinnovo.Text = "" &
+                "<strong> - Codice Fiscale: </strong>" & UCase(datiCF.CodiceFiscale) &
                 "<strong> - N.Tessera: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
@@ -197,7 +197,7 @@ Public Class upDichiarazione2
         Request.AddField("NoteDichiarazione", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
         Request.AddField("Codice_Status", "152")
         Request.AddField("DichiarazioneEAInviata", "s")
-        '  Request.AddScript("SistemaEncodingNoteDichiarazioneRinnovi", IDRinnovo)
+        Request.AddScript("SistemaEncodingNoteDichiarazioneRinnovi", IDRinnovo)
 
         AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
 

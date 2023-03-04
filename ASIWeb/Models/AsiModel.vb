@@ -1269,7 +1269,7 @@ Public Class AsiModel
         End Function
         Public Shared Function quanteRichiestePerGruppo(idRinnovoM As Integer) As Integer
             Dim ritorno As Integer = 0
-
+            Dim counter1 As Integer = 0
             Dim ds As DataSet
 
             Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
@@ -1278,40 +1278,40 @@ Public Class AsiModel
 
             RequestP.AddSearchField("idRinnovoM", idRinnovoM, Enumerations.SearchOption.equals)
             '  RequestP.AddSearchField("idRinnovo", idRinnovo, Enumerations.SearchOption.equals)
-
+            RequestP.AddSearchField("Codice_Status", "1...159")
 
             ds = RequestP.Execute()
 
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-                Dim counter1 As Integer = 0
-                For Each dr In ds.Tables("main").Rows
+                counter1 = ds.Tables("main").Rows.Count
+                'For Each dr In ds.Tables("main").Rows
 
 
 
-                    If Data.FixNull(dr("Codice_Status")) <> "0" Then
-                        counter1 += 1
+                '    'If Data.FixNull(dr("Codice_Status")) <> "0" Then
+                '    '    counter1 += 1
 
 
-                    End If
+                '    'End If
 
-                Next
-                If counter1 >= 1 Then
-                    ritorno = counter1
-                Else
-                    ritorno = 0
-                End If
+                ''Next
+                'If counter1 >= 1 Then
+                '    ritorno = counter1
+                'Else
+                '    ritorno = 0
+                'End If
 
             Else
 
                 ' non si sono records
                 ' ritorno = 0
-
+                counter1 = 0
 
             End If
 
-
-            Return ritorno
+            ' ritorno =
+            Return counter1
 
         End Function
 
@@ -1636,7 +1636,7 @@ Public Class AsiModel
             fms.SetLayout("webRinnoviRichiesta2")
             Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("IDRinnovoM", IDRinnovoM, Enumerations.SearchOption.equals)
-            RequestA.AddSearchField("Codice_Status", 0, Enumerations.SearchOption.biggerThan)
+            RequestA.AddSearchField("Codice_Status", "1...159")
 
             Try
                 ds = RequestA.Execute()
@@ -1769,6 +1769,33 @@ Public Class AsiModel
             Return DatiRinnovo
         End Function
 
+        Public Shared Function CercaIDRecordRinnovoM(IDRinnovoM As Integer) As Integer
+
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            Dim ds As DataSet
+            Dim idrecord As Integer
+
+
+            fmsP.SetLayout("webRinnoviMaster")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestP.AddSearchField("IDRinnovoM", IDRinnovoM, Enumerations.SearchOption.equals)
+
+            ds = RequestP.Execute()
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    idrecord = Data.FixNull(dr("idRecord"))
+
+                Next
+
+
+            End If
+
+
+            Return idrecord
+
+        End Function
         Public Shared Function NuovoRinnovo(codiceEnteRichiedente As Integer) As Integer
 
 
@@ -2550,7 +2577,7 @@ Public Class AsiModel
         Public Shared Function quantiRinnoviAttivi(codice As String) As Integer
 
             Dim ritorno As Integer = 0
-
+            Dim counter1 As Integer = 0
             Dim ds As DataSet
 
             Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
@@ -2558,6 +2585,7 @@ Public Class AsiModel
             Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             ' RequestP.AddSearchField("pre_stato_web", "1")
             RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("CodiceStatus", "1...159")
             'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
             ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
@@ -2566,36 +2594,36 @@ Public Class AsiModel
             ds = RequestP.Execute()
 
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-                Dim counter1 As Integer = 0
-                For Each dr In ds.Tables("main").Rows
+
+                '    For Each dr In ds.Tables("main").Rows
 
 
-                    If Data.FixNull(dr("CodiceStatus")) = "151" Or Data.FixNull(dr("CodiceStatus")) = "152" _
-                Or Data.FixNull(dr("CodiceStatus")) = "153" _
-                Or Data.FixNull(dr("CodiceStatus")) = "154" Or Data.FixNull(dr("CodiceStatus")) = "155" _
-                Or Data.FixNull(dr("CodiceStatus")) = "156" Or Data.FixNull(dr("CodiceStatus")) = "156" _
-                Or Data.FixNull(dr("CodiceStatus")) = "157" _
-                Or Data.FixNull(dr("CodiceStatus")) = "158" Or Data.FixNull(dr("CodiceStatus")) = "159" Then
+                '    If Data.FixNull(dr("CodiceStatus")) = "151" Or Data.FixNull(dr("CodiceStatus")) = "152" _
+                'Or Data.FixNull(dr("CodiceStatus")) = "153" _
+                'Or Data.FixNull(dr("CodiceStatus")) = "154" Or Data.FixNull(dr("CodiceStatus")) = "155" _
+                'Or Data.FixNull(dr("CodiceStatus")) = "156" Or Data.FixNull(dr("CodiceStatus")) = "156" _
+                'Or Data.FixNull(dr("CodiceStatus")) = "157" _
+                'Or Data.FixNull(dr("CodiceStatus")) = "158" Or Data.FixNull(dr("CodiceStatus")) = "159" Then
 
-                        counter1 += 1
+                counter1 = ds.Tables("main").Rows.Count
 
-                    Else
+                '  Else
 
 
-                    End If
+                '
 
-                Next
-                If counter1 >= 1 Then
-                    ritorno = counter1
-                Else
-                    ritorno = 0
-                End If
+                '   Next
+                'If counter1 >= 1 Then
+                '    ritorno = counter1
+                'Else
+                '    ritorno = 0
+                'End If
 
             Else
                 '  ritorno = counter1
-
+                counter1 = 0
             End If
-            Return ritorno
+            Return counter1
 
         End Function
     End Class

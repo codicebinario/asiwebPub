@@ -98,8 +98,7 @@
       </div>
     <br />--%>
 
-<br />
-    
+
 	 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  UpdateMode="Always"> 
           <Triggers>
         
@@ -137,20 +136,20 @@
 </div>
                </div>
           </div>
-<br /><br />
+<br />
       <div class="col-sm-12">
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
                                    
-						          <%--  <asp:Button ID="btnCF"  runat="server" Text="Scegli" class="btn btn-primary"    />--%>
+						            <asp:Button ID="btnCF"  runat="server" Text="Scegli" class="btn btn-primary"    />
 
-                                     <asp:LinkButton ID="lnkCF" class="btn btn-primary" runat="server"><i class="bi bi-check-all"></i>Scegli</asp:LinkButton>    
-                                   
+                                  <%--   <asp:LinkButton ID="lnkCF" class="btn btn-primary" runat="server"><i class="bi bi-check-all"></i>Scegli</asp:LinkButton>    
+                                   --%>
 						</div>
 							</div>
 							
-				</div></div><br />
+				</div></div>
        <div class="col-sm-12">
 					  <div class="form-check">
                 <div class="form-check">
