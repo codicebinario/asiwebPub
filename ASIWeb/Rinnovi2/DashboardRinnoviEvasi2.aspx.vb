@@ -155,8 +155,10 @@ Public Class DashboardRinnoviEvasi2
                     'phDash10.Controls.Add(New LiteralControl("Qualifica: <small>" & Data.FixNull(dr("Asi_Qualifica")) & "</small><br />"))
                     phDash10.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Asi_CodiceFiscale")) & "</small><br />"))
                     phDash10.Controls.Add(New LiteralControl("Tess. ASI: <small>" & Data.FixNull(dr("Asi_CodiceTessera")) & "</small><br />"))
-                    phDash10.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Tess. Tecnico: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
                     phDash10.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenza"))) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Nuovo Tess. Tecnico: <small><b>" & Data.FixNull(dr("Asi_CodiceIscrizioneNuovo")) & "</b></small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Nuova Data Scadenza: <small><b>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenzaNuovo"))) & "</b></small><br />"))
 
                     phDash10.Controls.Add(New LiteralControl("-------------------------------<br />"))
                     phDash10.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Asi_Sport")) & "</small><br />"))
@@ -419,8 +421,10 @@ Public Class DashboardRinnoviEvasi2
 
                         phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Asi_CodiceFiscale")) & "</small><br />"))
                         phDash.Controls.Add(New LiteralControl("Tess. ASI: <small>" & Data.FixNull(dr("Asi_CodiceTessera")) & "</small><br />"))
-                        phDash.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
+                        phDash.Controls.Add(New LiteralControl("Tess. Tecnico: <small>" & Data.FixNull(dr("Asi_CodiceIscrizione")) & "</small><br />"))
                         phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenza"))) & "</small><br />"))
+                        phDash.Controls.Add(New LiteralControl("Nuovo Tess. Tecnico: <small><b>" & Data.FixNull(dr("Asi_CodiceIscrizioneNuovo")) & "</b></small><br />"))
+                        phDash.Controls.Add(New LiteralControl("Nuova Data Scadenza: <small><b>" & Data.SonoDieci(Data.FixNull(dr("Asi_DataScadenzaNuovo"))) & "</b></small><br />"))
 
                         phDash.Controls.Add(New LiteralControl("-------------------------------<br />"))
                         phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Asi_Sport")) & "</small><br />"))

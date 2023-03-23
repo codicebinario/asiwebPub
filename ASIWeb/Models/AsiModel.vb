@@ -221,7 +221,7 @@ Public Class AsiModel
         Public Shared Property Codice As String
         Public Shared Property TipoEnte As String
         Public Shared Property WebUserEnte As String
-
+        Public Shared Property EquiparazioneSaltaDiploma As String
         Public Shared Property IdRecord As String
         Public Shared Property HasToBeChanged As String
 
@@ -354,7 +354,7 @@ Public Class AsiModel
                         TipoEnte = Data.FixNull(dr("tipo_ente"))
                         Codice = Data.FixNull(dr("codice"))
                         IdRecord = Data.FixNull(dr("Record_ID"))
-
+                        EquiparazioneSaltaDiploma = Data.FixNull(dr("EquiparazioneSaltaDiploma"))
                         HasToBeChanged = Data.FixNull(dr("Web_HasToChanged"))
                     Next
 
@@ -2032,9 +2032,68 @@ Public Class AsiModel
             Return DettaglioEquiparazione
         End Function
 
+        Public Shared Function NuovaEquiparazioneFolder(codiceEnteRichiedente As Integer) As Integer
 
 
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            Dim ds As DataSet
+            Dim idrecord As Integer
+            Dim idEquiparazioneM As Integer
+            fmsP.SetLayout("webEquiparazioniMaster")
+            Dim Request = fmsP.CreateNewRecordRequest()
 
+            Request.AddField("CodiceEnteRichiedente", codiceEnteRichiedente)
+            Request.AddField("CodiceStatus", "0")
+
+
+            idrecord = Request.Execute()
+
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestP.AddSearchField("idrecord", idrecord, Enumerations.SearchOption.equals)
+
+            ds = RequestP.Execute()
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    idEquiparazioneM = Data.FixNull(dr("IDEquiparazioneM"))
+
+                Next
+
+
+            End If
+
+
+            Return idEquiparazioneM
+
+        End Function
+
+        Public Shared Function CercaIDRecordEquiparazioneM(IDEquiparazioneM As Integer) As Integer
+
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            Dim ds As DataSet
+            Dim idrecord As Integer
+
+
+            fmsP.SetLayout("webEquiparazioniMaster")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestP.AddSearchField("IDEquiparazioneM", IDEquiparazioneM, Enumerations.SearchOption.equals)
+
+            ds = RequestP.Execute()
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    idrecord = Data.FixNull(dr("idRecord"))
+
+                Next
+
+
+            End If
+
+
+            Return idrecord
+
+        End Function
     End Class
 
     Public Class Corso
@@ -2634,9 +2693,10 @@ Public Class AsiModel
             Public IndirizzoConsegnaEA As String
             Public ComuneEA As String
             Public CapEA As String
-            Public ProvinciaEA As String
+        Public ProvinciaEA As String
+        Public TelefonoEA As String
 
-        End Class
+    End Class
 
         Public Shared Function leggiIndirizzoSpedizioneEA(user As String, pass As String) As List(Of IndirizzoEA)
             Dim fms As FMSAxml = Nothing
@@ -2667,7 +2727,8 @@ Public Class AsiModel
                                 .IndirizzoConsegnaEA = Data.FixNull(dr("SpedizioneIndirizzo")),
                                 .CapEA = Data.FixNull(dr("SpedizioneCap")),
                                 .ComuneEA = Data.FixNull(dr("SpedizioneComune")),
-                                .ProvinciaEA = Data.FixNull(dr("SpedizioneProvincia"))
+                                .ProvinciaEA = Data.FixNull(dr("SpedizioneProvincia")),
+                                .TelefonoEA = Data.FixNull(dr("telefono"))
                                                                                              })
             Next
 

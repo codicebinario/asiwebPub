@@ -11,25 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class UpFotoRinnovo2
+Partial Public Class richiestaEquiparazione2
 
     '''<summary>
-    '''lnkDashboardTorna control.
+    '''lblIntestazioneEquiparazione control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkDashboardTorna As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''lblIntestazioneRinnovo control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblIntestazioneRinnovo As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblIntestazioneEquiparazione As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''HiddenIdRecord control.
@@ -41,58 +32,40 @@ Partial Public Class UpFotoRinnovo2
     Protected WithEvents HiddenIdRecord As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''HiddenIDRinnovo control.
+    '''HiddenIDEquiparazione control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenIDRinnovo As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''Label3 control.
+    '''lblnomef control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblnomef As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''inputfile control.
+    '''pnlFase1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents inputfile As Global.System.Web.UI.WebControls.FileUpload
+    Protected WithEvents pnlFase1 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''RequiredFieldValidator1 control.
+    '''txtNote control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''results control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''RegularExpressionValidator1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
+    Protected WithEvents txtNote As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lnkButton1 control.
@@ -104,11 +77,29 @@ Partial Public Class UpFotoRinnovo2
     Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''Label1 control.
+    '''uploadProgress control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents uploadProgress As Global.OboutInc.FileUpload.FileUploadProgress
+
+    '''<summary>
+    '''uploadedFiles control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents uploadedFiles As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''btnFase2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnFase2 As Global.System.Web.UI.WebControls.Button
 End Class

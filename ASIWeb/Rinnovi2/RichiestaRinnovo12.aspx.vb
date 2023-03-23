@@ -59,9 +59,9 @@ Public Class RichiestaRinnovo12
             Response.Redirect("../login.aspx")
         End If
 
-        If IsNothing(Session("IdRecordMaster")) Then
-            Response.Redirect("../login.aspx")
-        End If
+        'If IsNothing(Session("IdRecordMaster")) Then
+        '    Response.Redirect("../login.aspx")
+        'End If
 
         lnkConcludi.Attributes.Add("OnClick", String.Format("this.disabled = true; {0};", ClientScript.GetPostBackEventReference(lnkConcludi, Nothing)))
 
@@ -335,7 +335,7 @@ Public Class RichiestaRinnovo12
             End If
 
             txtCapConsegna.Text = txtCapResidenza.Text
-
+            txtTelefono.Text = txtTelefonoCellulare.Text
 
 
         End If
@@ -410,13 +410,11 @@ Public Class RichiestaRinnovo12
         Request.AddField("Rin_ProvinciaResidenza", ddlProvinciaResidenza.SelectedItem.Text)
         If chkStampaCartacea.Checked = True Then
             Request.AddField("Rin_StampaCartaceo", "Si")
-
             Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
             Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
             Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
             Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
-
-
+            Request.AddField("Rin_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
         End If
         If chkEA.Checked Then
             Request.AddField("Rin_InviaA", "EA")
@@ -424,6 +422,7 @@ Public Class RichiestaRinnovo12
             Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
             Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
             Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
+            Request.AddField("Rin_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
 
         End If
 
@@ -439,7 +438,13 @@ Public Class RichiestaRinnovo12
         ' Try
         risposta = Request.Execute()
 
-        Dim rispostax As Integer
+
+        If Not IsNothing(Session("IdRecordMaster")) Then
+
+
+
+
+            Dim rispostax As Integer
         Dim fmsPx As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         fmsPx.SetLayout("webRinnoviMaster")
         '    Dim Requestx = fmsP.CreateDeleteRequest(Session("IdRecordMaster"))
@@ -448,8 +453,9 @@ Public Class RichiestaRinnovo12
 
 
         Requestx.AddField("CodiceStatus", "152")
-        ' Try
-        rispostax = Requestx.Execute()
+            ' Try
+            rispostax = Requestx.Execute()
+        End If
         '  Catch ex As Exception
 
         ' End Try
@@ -537,7 +543,7 @@ Public Class RichiestaRinnovo12
                     txtCapConsegna.Text = item.CapEA
                     txtComuneConsegna.Text = item.ComuneEA
                     txtProvinciaConsegna.Text = item.ProvinciaEA
-
+                    txtTelefono.Text = item.TelefonoEA
 
 
                 Next

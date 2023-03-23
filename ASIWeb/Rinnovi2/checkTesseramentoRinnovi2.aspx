@@ -4,7 +4,10 @@
 	  <link rel="stylesheet" href="../css/alertify.min.css" />
 	 <link rel="stylesheet" href="../css/themes/default.min.css" />
 	  <script type="text/javascript" src="../Scripts/alertify.js"></script>
-	   <style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <style>
 	.custom-file-input.selected:lang(en)::after {
 	  content: "" !important;
 	}
@@ -60,9 +63,27 @@
   </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Controllo Tesseramento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>
+              Questa è la prima pagina del veloce processo del rinnovo. In questa fase si effettua il controllo
+				del codice fiscale a fini assicurativi sul contenitore tesseramenti.
+            </p>
+			<p>
+				Se il tesserato appartiene ad un altro Ente, sarà richiesto di caricare la documentazione di cambio EA. Se si è
+				a conoscenza di questa evenienza, è meglio preparare il documento (formato PDF) da caricare e poi tornare al processo.
+			</p>
+           
+        </div>
+    </div>
 	 <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-	<h3 class="display-5">Controllo Tesseramento</h3>
+      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Controllo Tesseramento (info)
+      </a></h6>
 	<p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
 

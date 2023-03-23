@@ -97,8 +97,30 @@
  
  </div>
 
- 
-      
+
+    <div class="row">
+
+        <div class="col">
+            <div class="jumbotron jumbotron-fluid rounded">
+                <div class="container text-center">
+
+                    <%--  <a class="btn btn-lg btn-custom" href="Rinnovi/DashboardRinnovi.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"> </i>Rinnovi</a>
+                    --%>
+                    <asp:LinkButton CssClass="btn btn-lg btn-custom" ID="LinkButton2" runat="server"><i class="bi bi-wrench-adjustable-circle"> </i>Equiparazioni 2.0</asp:LinkButton>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+
+         
+
+        </div>
+
+    </div>
+
+
 
 
 

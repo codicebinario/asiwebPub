@@ -222,6 +222,9 @@
     <Content Include="AsiMasterPageMain.Master" />
     <Content Include="AsiMasterPageRinnovi.Master" />
     <Content Include="Css\customEquiparazione.css" />
+    <Content Include="Equiparazioni2\checkTesseramento2.aspx" />
+    <Content Include="Equiparazioni2\DashboardEqui2.aspx" />
+    <Content Include="Equiparazioni2\richiestaEquiparazione2.aspx" />
     <Content Include="Equiparazioni\annullaEquiparazione.aspx" />
     <Content Include="Equiparazioni\annullaEquiparazioneMotivo.aspx" />
     <Content Include="Equiparazioni\archivioEquiValutati.aspx" />
@@ -404,6 +407,7 @@
     <Content Include="PageNotFound.aspx" />
     <Content Include="passM.aspx" />
     <Content Include="richiestaTessere.aspx" />
+    <Content Include="Rinnovi2\CancellaGruppo.aspx" />
     <Content Include="Rinnovi2\CancellaRiga.aspx" />
     <Content Include="Rinnovi2\closeRinnovo.aspx" />
     <Content Include="Rinnovi2\checkTesseramentoRinnovi2.aspx" />
@@ -505,6 +509,7 @@
     <Content Include="AsiMasterPageGestioneAlbo.Master" />
     <Content Include="Albo\json.json" />
     <Content Include="AsiMasterPageRinnovi2.Master" />
+    <Content Include="AsiMasterPageEqui2.Master" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -642,6 +647,13 @@
       <DependentUpon>AsiMasterPageEqui.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="AsiMasterPageEqui2.Master.designer.vb">
+      <DependentUpon>AsiMasterPageEqui2.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AsiMasterPageEqui2.Master.vb">
+      <DependentUpon>AsiMasterPageEqui2.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="AsiMasterPageGestioneAlbo.Master.designer.vb">
       <DependentUpon>AsiMasterPageGestioneAlbo.Master</DependentUpon>
     </Compile>
@@ -669,6 +681,27 @@
     <Compile Include="AsiMasterPageRinnovi2.Master.vb">
       <DependentUpon>AsiMasterPageRinnovi2.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\checkTesseramento2.aspx.designer.vb">
+      <DependentUpon>checkTesseramento2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\checkTesseramento2.aspx.vb">
+      <DependentUpon>checkTesseramento2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\DashboardEqui2.aspx.designer.vb">
+      <DependentUpon>DashboardEqui2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\DashboardEqui2.aspx.vb">
+      <DependentUpon>DashboardEqui2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\richiestaEquiparazione2.aspx.designer.vb">
+      <DependentUpon>richiestaEquiparazione2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\richiestaEquiparazione2.aspx.vb">
+      <DependentUpon>richiestaEquiparazione2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni\annullaEquiparazione.aspx.designer.vb">
       <DependentUpon>annullaEquiparazione.aspx</DependentUpon>
@@ -1076,6 +1109,13 @@
     <Compile Include="richiestaTessere.aspx.vb">
       <DependentUpon>richiestaTessere.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi2\CancellaGruppo.aspx.designer.vb">
+      <DependentUpon>CancellaGruppo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\CancellaGruppo.aspx.vb">
+      <DependentUpon>CancellaGruppo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Rinnovi2\CancellaRiga.aspx.designer.vb">
       <DependentUpon>CancellaRiga.aspx</DependentUpon>

@@ -310,7 +310,7 @@ Public Class dashboardB
 
                     hpUPPag.ID = "hpPag_" & counter1
                     hpUPPag.Attributes.Add("runat", "server")
-                    hpUPPag.Text = "<i class=""bi bi-wallet2""> </i>Invia Pagamento di " & Data.FixNull(dr("TotaleCosti")) & " €"
+                    hpUPPag.Text = "<i class=""bi bi-wallet2""> </i>Invia Pagamento di " & Data.FixNull(dr("TotaleCosti")) & " Euro"
                     hpUPPag.PostBackUrl = "upLegCorsi.aspx?s=0&codR=" &
                         WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
                         "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))

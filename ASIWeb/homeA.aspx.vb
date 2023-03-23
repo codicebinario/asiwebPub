@@ -53,6 +53,10 @@ Public Class homeA
         Response.Redirect("Rinnovi2/DashboardRinnovi2.aspx")
     End Sub
 
+    Protected Sub LinkButton2_Click(sender As Object, e As EventArgs) Handles LinkButton2.Click
+        Response.Redirect("Equiparazioni2/DashboardEqui2.aspx")
+    End Sub
+
 
     'Function quantiAttivi(codice As String) As Integer
 

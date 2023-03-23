@@ -11,59 +11,68 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class homeA
+Partial Public Class checkTesseramento2
 
     '''<summary>
-    '''PageUpdateProgress control.
+    '''lblIntestazioneEquiparazione control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents PageUpdateProgress As Global.System.Web.UI.UpdateProgress
+    Protected WithEvents lblIntestazioneEquiparazione As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''HiddenQuantiCorsiAttivi control.
+    '''HiddenIdRecord control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenQuantiCorsiAttivi As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents HiddenIdRecord As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''HiddenQuanteEquiparazioniAttive control.
+    '''HiddenIDEquiparazione control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenQuanteEquiparazioniAttive As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''HiddenQuantiRinnoviAttivi control.
+    '''txtCodiceFiscale control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenQuantiRinnoviAttivi As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents txtCodiceFiscale As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''LinkButton1 control.
+    '''RequiredFieldValidator10 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkButton1 As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents RequiredFieldValidator10 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''LinkButton2 control.
+    '''lnkCheck control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkButton2 As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lnkCheck As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''lblRisultato control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblRisultato As Global.System.Web.UI.WebControls.Label
 End Class

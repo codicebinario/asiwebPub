@@ -20,9 +20,15 @@
     <style>
 
         .photo-img:hover {
-    transform:scale(1.05);
+    transform:scale(2);
+
+  }
+    .celladue {
+        border-bottom: 1pt solid #ff000d;
+      }
+  
    
-}
+
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -60,7 +66,7 @@
                                   
     <div class="col-sm-12">
 
-        <table class="table table-hover">
+        <table class="table  table-hover small">
   <thead>
     <tr>
    <%--   <th scope="col">#</th>--%>
@@ -69,7 +75,7 @@
       <th scope="col">Email</th>
      <th scope="col">C.F.</th>
          <th scope="col">N.Tessera ASI</th>
-      <th scope="col">Indirizzo Spedizione</th>
+  <%--    <th scope="col">Indirizzo Spedizione</th>--%>
     <th scope="col">Foto</th>
          <th scope="col">Tessera</th>
          <th scope="col">Diploma</th>

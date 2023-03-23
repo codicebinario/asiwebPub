@@ -135,7 +135,8 @@ function ServerException(mess) {
     <br />
               
           <%--    <ASP:LinkButton ID="LinkButton1" runat="server" text="Cancella il caricamento" onClientClick="Cancel();" /><br/>--%>
-  <br/>  <fup:FileUploadProgress
+  <br/>
+  <fup:FileUploadProgress
    
      ID="uploadProgress"
      

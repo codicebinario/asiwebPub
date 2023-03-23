@@ -5,7 +5,10 @@
        <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
-       <style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <style>
     .custom-file-input.selected:lang(en)::after {
       content: "" !important;
     }
@@ -60,19 +63,25 @@
   
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-       <asp:UpdateProgress ID="UpdateProgress1" runat="server"
-					 DynamicLayout="false">
-	<ProgressTemplate>
-	  <div class="Progress">
-		 <div class="btn">loading...</div>
-		
-		</div>
-	</ProgressTemplate>
-</asp:UpdateProgress>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Caricamento foto rinnovo</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>
+               Questa è la pagina di caricamento della foto da apporre sul tesserino. La foto deve essere esclusivamente
+                in formato jpg.
+            </p>
+         
+        </div>
+    </div>
     
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Caricamento foto Rinnovo</h3>
+
+      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Caricamento foto rinnovo (info)
+      </a></h6>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
              
@@ -126,7 +135,7 @@
            	<div class="errore" id="results"  runat="server"><br /></div>
              <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"  ControlToValidate="inputfile"
             ErrorMessage="il file deve essere in formato jpg" 
-            ValidationExpression="(.*?)\.(jpg|JPG)$" Display="Dynamic" CssClass="errore"></asp:RegularExpressionValidator>
+            ValidationExpression="(.*?)\.(jpg|JPG|jpeg|JPEG)$" Display="Dynamic" CssClass="errore"></asp:RegularExpressionValidator>
      </div>
         <br />
  <div class="col-sm-12">

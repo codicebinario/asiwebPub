@@ -158,7 +158,7 @@ Public Class DashBoardRinnovi2
                 hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("costoTotaleM")) & " Euro"
 
                 hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom  mb-1"
-                If (Data.FixNull(dr("CodiceStatus")) = "155" And Data.FixNull(dr("checkweb")) = "s") Then
+                If ((Data.FixNull(dr("CodiceStatus")) = "155" Or Data.FixNull(dr("CodiceStatus")) = "158" Or Data.FixNull(dr("CodiceStatus")) = "159") And Data.FixNull(dr("checkweb")) = "s") Then
                     hpUPPag.Visible = True
                 Else
                     hpUPPag.Visible = False
@@ -214,9 +214,20 @@ Public Class DashBoardRinnovi2
 
                 End If
                 quantiPerGruppo = AsiModel.Rinnovi.quanteRichiestePerGruppo(dr("IDRinnovoM"))
+
+                Dim leggendaRinnovi As String = ""
+
+                If quantiPerGruppo = 1 Then
+
+                    leggendaRinnovi = "rinnovo"
+                Else
+                    leggendaRinnovi = "rinnovi"
+                End If
+
+
                 Dim legendaStatus As String = ""
 
-                If Data.FixNull(dr("CodiceStatus")) = 0 Then
+                If Data.FixNull(dr("CodiceStatus")) <= 152 Then
                     legendaStatus = ""
                 Else
                     legendaStatus = " -  Status <b>&nbsp;" & Data.FixNull(dr("Descrizione_StatusWeb")) & "&nbsp;</b>"
@@ -237,7 +248,7 @@ Public Class DashBoardRinnovi2
 
 
 
-                phDash.Controls.Add(New LiteralControl("Gruppo rinnovi " & " <b>&nbsp;" & Data.FixNull(dr("IDRinnovoM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b> richieste" & legendaStatus & "&nbsp;-&nbsp;" & prezzoDaPagare))
+                phDash.Controls.Add(New LiteralControl("Codice richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDRinnovoM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;" & prezzoDaPagare))
                 phDash.Controls.Add(New LiteralControl("</button>"))
                 phDash.Controls.Add(New LiteralControl("</h2>"))
                 If Data.FixNull(dr("IDRinnovoM")) = open Then
@@ -284,7 +295,7 @@ Public Class DashBoardRinnovi2
                 ds1 = RequestP1.Execute()
 
                 If Not IsNothing(ds1) AndAlso ds1.Tables("main").Rows.Count > 0 Then
-
+                    Dim tessera As String
                     Dim counter1 As Integer = 0
                     'Dim totale As Decimal = 0
                     'Dim codR As String
@@ -298,13 +309,19 @@ Public Class DashBoardRinnovi2
 
                         counter1 += 1
 
-                            If String.IsNullOrWhiteSpace(Data.FixNull(dr1("ASI_foto"))) Then
-                                foto = "..\img\noimg.jpg"
-                            Else
-                                foto = "https://93.63.195.98" & Data.FixNull(dr1("ASI_foto"))
-                            End If
+                        If String.IsNullOrWhiteSpace(Data.FixNull(dr1("ASI_foto"))) Then
+                            foto = "..\img\noimg.jpg"
+                        Else
+                            foto = "https://93.63.195.98" & Data.FixNull(dr1("ASI_foto"))
+                        End If
 
-                            Dim fotoCorsistiLnk As New LinkButton
+                        If String.IsNullOrWhiteSpace(Data.FixNull(dr1("tessera"))) Then
+                            tessera = "..\img\noPdf.jpg"
+                        Else
+                            tessera = "https://93.63.195.98" & Data.FixNull(dr1("tessera"))
+                        End If
+
+                        Dim fotoCorsistiLnk As New LinkButton
                             fotoCorsistiLnk.ID = "Fot_" & counter1
                             fotoCorsistiLnk.Attributes.Add("runat", "server")
                             fotoCorsistiLnk.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Foto Opzionale"
@@ -376,11 +393,21 @@ Public Class DashBoardRinnovi2
                             phDash.Controls.Add(New LiteralControl("Tess. ASI: <small class=""text-uppercase"">" & Data.FixNull(dr1("Asi_CodiceTessera")) & "</small><br />"))
                             phDash.Controls.Add(New LiteralControl("Tess.Tecnico: <small class=""text-uppercase"">" & Data.FixNull(dr1("Asi_CodiceIscrizione")) & "</small><br />"))
                             phDash.Controls.Add(New LiteralControl("Data Scadenza: <small class=""text-uppercase"">" & Data.SonoDieci(Data.FixNull(dr1("Asi_DataScadenza"))) & "</small><br />"))
+                        phDash.Controls.Add(New LiteralControl("Cartaceo: <small class=""text-uppercase"">" & Data.FixNull(dr1("Rin_StampaCartaceo")) & "</small><br />"))
+                        Dim spedizione As String = ""
+                        If Data.FixNull(dr1("Rin_StampaCartaceo")) = "Si" Then
+                            If Data.FixNull(dr1("Rin_InviaA")) = "EA" Then
+                                spedizione = " Spedizione:<small class=""text-uppercase""> EA - Rinnovo:" & Data.FixNull(dr1("Rin_CostoRinnovo")) & " Euro</small>"
+                            Else
+                                spedizione = " Spedizione: residenza - Rinnovo:" & Data.FixNull(dr1("Rin_CostoRinnovo")) & " Euro</small>"
+
+                            End If
+                        End If
+                        phDash.Controls.Add(New LiteralControl(spedizione))
 
 
-
-                            'fine prima colonna
-                            phDash.Controls.Add(New LiteralControl("</div>"))
+                        'fine prima colonna
+                        phDash.Controls.Add(New LiteralControl("</div>"))
 
                             'inizio seconda colonna
                             phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left moltopiccolo"">"))
@@ -415,30 +442,54 @@ Public Class DashBoardRinnovi2
                                 'inizio terza colonna
                                 phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
 
-                            If Data.FixNull(dr1("Codice_Status")) > 154 Then
-                                Canc.Visible = False
-                            Else
-                                Canc.Visible = True
-                                phDash.Controls.Add(Canc)
-                                phDash.Controls.Add(New LiteralControl("<br />"))
+                        If Data.FixNull(dr1("Codice_Status")) > 154 Then
+                            Canc.Visible = False
+                        Else
+                            Canc.Visible = True
+                            phDash.Controls.Add(Canc)
+                            phDash.Controls.Add(New LiteralControl("<br />"))
+                        End If
+
+                        If tessera = "..\img\noPdf.jpg" Then
+                            '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
+
+
+                        Else
+
+                            If Data.FixNull(dr1("Codice_Status")) >= 158 Then
+
+
+
+                                phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-sei btn-custom  mb-1 "" target=""_blank"" href='scaricaTesseraRinnovo2.aspx?codR=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr1("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr1("id_record")) & "&nomeFilePC=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr1("StringaNomeFile"))) & "&nominativo=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr1("Asi_Cognome")) & "_" & Data.FixNull(dr1("Asi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))
                             End If
 
+                        End If
 
+                        If Data.FixNull(dr1("Codice_Status")) < 156 Then
                             phDash.Controls.Add(fotoCorsistiLnk)
-                                phDash.Controls.Add(New LiteralControl("<br />"))
 
-                                If foto = "..\img\noimg.jpg" Then
-                                    phDash.Controls.Add(New LiteralControl("<img src='" & foto & "' height='70' width='50' alt='" & Data.FixNull(dr1("Asi_Nome")) & " " & Data.FixNull(dr1("Asi_Cognome")) & "'>"))
+                        End If
 
-                                Else
-                                    Dim myImage As Image = FotoS(foto)
-                                    Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
-                                    '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
-                                    phDash.Controls.Add(New LiteralControl("<img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & Data.FixNull(dr1("Asi_Nome")) & " " & Data.FixNull(dr1("Asi_Cognome")) & "'>"))
+                        phDash.Controls.Add(New LiteralControl("<br />"))
 
-                                End If
-                                'fine terza colonna
-                                phDash.Controls.Add(New LiteralControl("</div>"))
+                        If foto = "..\img\noimg.jpg" Then
+                            phDash.Controls.Add(New LiteralControl("<img src='" & foto & "' height='70' width='50' alt='" & Data.FixNull(dr1("Asi_Nome")) & " " & Data.FixNull(dr1("Asi_Cognome")) & "'>"))
+
+                        Else
+                            Dim myImage As Image = FotoS(foto)
+                            Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
+                            '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
+                            phDash.Controls.Add(New LiteralControl("<img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & Data.FixNull(dr1("Asi_Nome")) & " " & Data.FixNull(dr1("Asi_Cognome")) & "'>"))
+
+                        End If
+
+
+
+                        'fine terza colonna
+                        phDash.Controls.Add(New LiteralControl("</div>"))
 
                                 'inzio quarta colonna
                                 'phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-2  text-left"">"))

@@ -222,26 +222,34 @@ Public Class corsisti
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & email & "</td>"))
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & codiceFiscale & "</td>"))
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & NumeroTesseraAsi & "</td>"))
-                plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & IndirizzoSpedizione & " " & CapSpedizione &
-                                                                  "<br /> " & ComuneSpedizione & " " & ProvinciaSpedizione & "</td>"))
+
 
 
 
 
                 If foto = "..\img\noimg.jpg" Then
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='35' width='25' alt='" & nome & " " & cognome & "'></td>"))
 
                 Else
                     Dim myImage As Image = FotoS(foto)
                     Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
                     '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img  src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img class=""photo-img""  src='data:image/Jpeg;base64," & base64 & "' height='35' width='25' alt='" & nome & " " & cognome & "'></td>"))
 
                 End If
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""btn btn-success btn-sm btn-due"" href='upCorsista.aspx?skip=" & skip & "&pag=" & pag & "&codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&id=" & deEnco.QueryStringEncode(id) & "'>Carica Foto</a></td>"))
 
 
                 plTabellaCorsisti.Controls.Add(New LiteralControl("</tr>"))
+                plTabellaCorsisti.Controls.Add(New LiteralControl("</tr>"))
+
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<tr>"))
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td class=""celladue"" colspan=""7"">" & IndirizzoSpedizione & " " & CapSpedizione &
+                                                                  " " & ComuneSpedizione & " " & ProvinciaSpedizione & "</td>"))
+
+
+                plTabellaCorsisti.Controls.Add(New LiteralControl("</tr>"))
+
             Next
 
             'If pag = 1 Then

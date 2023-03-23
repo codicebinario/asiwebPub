@@ -44,6 +44,7 @@ Public Class login
                 Session("tipoEnte") = AsiModel.LogIn.TipoEnte()
                 Session("codice") = AsiModel.LogIn.Codice()
                 Session("HasToBeChanged") = AsiModel.LogIn.HasToBeChanged()
+                Session("EquiparazioneSaltaDiploma") = AsiModel.LogIn.EquiparazioneSaltaDiploma()
                 Session("idRecordLogin") = AsiModel.LogIn.IdRecord()
                 AsiModel.AnnullaRichiesteSenzaRighe(Session("codice"))
 

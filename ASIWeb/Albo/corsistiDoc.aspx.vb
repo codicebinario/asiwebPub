@@ -27,12 +27,13 @@ Imports Image = System.Drawing.Image
 
 Public Class corsistiDoc
     Inherits System.Web.UI.Page
-    Dim webserver As String = ConfigurationManager.AppSettings("webserver")
+
+    ReadOnly webserver As String = ConfigurationManager.AppSettings("webserver")
     Dim utente As String = ConfigurationManager.AppSettings("utente")
     Dim porta As String = ConfigurationManager.AppSettings("porta")
     Dim pass As String = ConfigurationManager.AppSettings("pass")
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
-    Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
+    Dim cultureFormat As New System.Globalization.CultureInfo("it-IT")
     Dim deEnco As New Ed()
     Const MassimoPeso As Integer = 3102400
     Const FileType As String = "image/*"
@@ -178,7 +179,7 @@ Public Class corsistiDoc
 
         Dim RequestPTot = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestPTot.AddSearchField("IDCorso", Session("IDCorso"), Enumerations.SearchOption.equals)
-        RequestPTot.AddSearchField("Corsista_OK_KO", "KO", Enumerations.SearchOption.equals)
+        RequestPTot.AddSearchField("Corsista_OK_KO", "OK", Enumerations.SearchOption.equals)
         dsTot = RequestPTot.Execute()
 
         If Not IsNothing(dsTot) AndAlso dsTot.Tables("main").Rows.Count > 0 Then
@@ -257,24 +258,24 @@ Public Class corsistiDoc
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & email & "</td>"))
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & codiceFiscale & "</td>"))
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & NumeroTesseraAsi & "</td>"))
-                plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & IndirizzoSpedizione & " " & CapSpedizione &
-                                                                  "<br /> " & ComuneSpedizione & " " & ProvinciaSpedizione & "</td>"))
+                'plTabellaCorsisti.Controls.Add(New LiteralControl("<td>" & IndirizzoSpedizione & " " & CapSpedizione &
+                '                                                  "<br /> " & ComuneSpedizione & " " & ProvinciaSpedizione & "</td>"))
 
 
                 If foto = "..\img\noimg.jpg" Then
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='35' width='25' alt='" & nome & " " & cognome & "'></td>"))
 
                 Else
                     Dim myImage As Image = FotoS(foto)
                     Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
                     '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img class='photo-img' src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img class='photo-img' src='data:image/Jpeg;base64," & base64 & "' height='35' width='25' alt='" & nome & " " & cognome & "'></td>"))
 
                 End If
 
                 If tessera = "..\img\noPdf.jpg" Then
                     '  plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & nome & " " & cognome & "'></td>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<td><img  src='" & tessera & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
 
 
                 Else
@@ -313,11 +314,19 @@ Public Class corsistiDoc
 
 
                 plTabellaCorsisti.Controls.Add(New LiteralControl("</tr>"))
+
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<tr>"))
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td class=""celladue"" colspan=""8"">" & IndirizzoSpedizione & " " & CapSpedizione &
+                                                                  " " & ComuneSpedizione & " " & ProvinciaSpedizione & "</td>"))
+
+
+                plTabellaCorsisti.Controls.Add(New LiteralControl("</tr>"))
+
             Next
 
             'If pag = 1 Then
             '    pag = 1
-            'ElseMoret
+            'Else
             '    pag += 1
 
             'End If
@@ -339,12 +348,12 @@ Public Class corsistiDoc
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>---</td>"))
             Else
 
-                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""link-primary"" href='corsistiKO.aspx?pag=" & pag - 1 & "&codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&skip=" & skip - pagine & "'>indietro</a></td>"))
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""link-primary"" href='corsistiDoc.aspx?pag=" & pag - 1 & "&codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&skip=" & skip - pagine & "'>indietro</a></td>"))
             End If
             If pagiAvanti(skip + pagine, quantiTot) = False Then
                 plTabellaCorsisti.Controls.Add(New LiteralControl("<td>---</td>"))
             Else
-                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""link-primary"" href='corsistiKO.aspx?pag=" & pag + 1 & "&codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&skip=" & skip + pagine & "'>avanti</a></td>"))
+                plTabellaCorsisti.Controls.Add(New LiteralControl("<td><a class=""link-primary"" href='corsistiDoc.aspx?pag=" & pag + 1 & "&codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&skip=" & skip + pagine & "'>avanti</a></td>"))
 
             End If
             plTabellaCorsisti.Controls.Add(New LiteralControl("<td></td>"))
@@ -380,7 +389,7 @@ Public Class corsistiDoc
         Dim pictureURL As String = urlFoto
 
         Dim wClient As WebClient = New WebClient()
-        Dim nc As NetworkCredential = New NetworkCredential("enteweb", "web01")
+        Dim nc As New NetworkCredential("enteweb", "web01")
         wClient.Credentials = nc
         Dim response As Stream = wClient.OpenRead(pictureURL)
         Dim temp = Image.FromStream(response)
