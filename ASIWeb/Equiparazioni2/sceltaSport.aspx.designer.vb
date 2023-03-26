@@ -11,79 +11,79 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class richiestaEquiparazione2
+Partial Public Class sceltaSport
 
     '''<summary>
-    '''lblIntestazioneEquiparazione control.
+    '''UpdatePanel1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblIntestazioneEquiparazione As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
-    '''HiddenIdRecord control.
+    '''ddlSport control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenIdRecord As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents ddlSport As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''HiddenIDEquiparazione control.
+    '''ddlDisciplina control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents ddlDisciplina As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lblnomef control.
+    '''ddlSpecialita control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblnomef As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents ddlSpecialita As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''pnlSaltaDiploma control.
+    '''RequiredFieldValidator4 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlSaltaDiploma As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents RequiredFieldValidator4 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''chkSaltaDiploma control.
+    '''RequiredFieldValidator6 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkSaltaDiploma As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents RequiredFieldValidator6 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''pnlFase1 control.
+    '''RequiredFieldValidator1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlFase1 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''txtNote control.
+    '''CustomValidator1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtNote As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents CustomValidator1 As Global.System.Web.UI.WebControls.CustomValidator
 
     '''<summary>
     '''lnkButton1 control.
@@ -93,31 +93,4 @@ Partial Public Class richiestaEquiparazione2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''uploadProgress control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents uploadProgress As Global.OboutInc.FileUpload.FileUploadProgress
-
-    '''<summary>
-    '''uploadedFiles control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents uploadedFiles As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''btnFase2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnFase2 As Global.System.Web.UI.WebControls.Button
 End Class

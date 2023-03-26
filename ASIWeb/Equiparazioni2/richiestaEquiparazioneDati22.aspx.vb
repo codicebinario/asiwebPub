@@ -22,7 +22,7 @@ Imports System.Net.Security
 Imports System.Net
 Imports System.Globalization
 
-Public Class richiestaEquiparazioneDati2
+Public Class richiestaEquiparazioneDati22
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
     Dim utente As String = ConfigurationManager.AppSettings("utente")
@@ -114,7 +114,7 @@ Public Class richiestaEquiparazioneDati2
 
 
             Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
+            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
             Dim verificato As String = DettaglioEquiparazione.EquiCF
 
             If verificato = "0" Then
@@ -132,9 +132,13 @@ Public Class richiestaEquiparazioneDati2
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
             codiceFiscale = DettaglioEquiparazione.CodiceFiscale
+
+            ddlSport.Text = DettaglioEquiparazione.Sport
+            ddlSpecialita.Text = DettaglioEquiparazione.Specialita
+            ddlDisciplina.Text = DettaglioEquiparazione.Disciplina
             Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
 
-            lblIntestazioneEquiparazione.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione &
+            lblIntestazioneEquiparazione.Text =
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
                 "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
@@ -146,12 +150,7 @@ Public Class richiestaEquiparazioneDati2
 
 
         End If
-        If Not Page.IsPostBack Then
 
-            '  pnlFase1.Visible = False
-
-
-        End If
         If Not Page.IsPostBack Then
 
             'If MostraMonteOreFormazione = "1" Then
@@ -160,70 +159,13 @@ Public Class richiestaEquiparazioneDati2
 
 
             'End If
-            If Session("tipoEnte") <> "Settori" Then
 
-                Dim ds As DataSet
-
-                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-                fmsP.SetLayout("webSportDNet")
-                Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
-
-                RequestP.AddSortField("Sport", Enumerations.Sort.Ascend)
-
-                ds = RequestP.Execute()
-
-                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-                    Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sport_ID", "Sport")
-
-                    ddlSport.DataSource = SingleSport
-
-                    ddlSport.DataTextField = "Sport"
-                    ddlSport.DataValueField = "Sport_ID"
-
-                    ddlSport.DataBind()
-
-                    ddlSport.Items.Insert(0, New ListItem("##", "##"))
-
-
-                End If
-
-
-            ElseIf Session("tipoEnte") = "Settori" Then
-                Dim ds As DataSet
-
-                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-                fmsP.SetLayout("webDisciplineSportSettoriDNet")
-                Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-                RequestP.AddSearchField("Settore_Richiedente", Session("denominazione"), Enumerations.SearchOption.equals)
-
-                RequestP.AddSortField("Sport", Enumerations.Sort.Ascend)
-
-                ds = RequestP.Execute()
-
-                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-                    Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sport_ID", "Sport")
-
-                    ddlSport.DataSource = SingleSport
-
-                    ddlSport.DataTextField = "Sport"
-                    ddlSport.DataValueField = "Sport_ID"
-
-                    ddlSport.DataBind()
-
-                    ddlSport.Items.Insert(0, New ListItem("##", "##"))
-
-
-                End If
-
-            End If
 
 
             QualificheCorsi()
-                LivelliCorsi()
+            LivelliCorsi()
 
-            End If
+        End If
 
     End Sub
 
@@ -311,162 +253,15 @@ Public Class richiestaEquiparazioneDati2
     End Sub
 
 
-    Protected Sub ddlSport_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlSport.SelectedIndexChanged
 
 
 
-        Dim selezionato As String = ddlSport.SelectedItem.Value
-        Dim ds1 As DataSet
 
-        Dim fmsP1 As FMSAxml = AsiModel.Conn.Connect()
-        fmsP1.SetLayout("webDisciplineSportSettoriDNet")
 
-        '
 
-        If Session("tipoEnte") = "Settori" Then
 
-            Dim RequestP1 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP1.AddSearchField("Sport_ID", selezionato, Enumerations.SearchOption.equals)
-            ' RequestP1.AddSearchField("Settore_ID", 0, Enumerations.SearchOption.biggerThan)
-            RequestP1.AddSortField("Disciplina_ID", Enumerations.Sort.Ascend)
 
-            ds1 = RequestP1.Execute()
 
-
-            If Not IsNothing(ds1) AndAlso ds1.Tables("main").Rows.Count > 0 Then
-
-
-                Dim Disciplina As DataTable = ds1.Tables("main").DefaultView.ToTable(True, "Disciplina_ID", "Disciplina")
-
-                ddlDisciplina.DataSource = Disciplina
-
-                ddlDisciplina.DataTextField = "Disciplina"
-                ddlDisciplina.DataValueField = "Disciplina_ID"
-
-                ddlDisciplina.DataBind()
-                ddlDisciplina.Items.Remove(0)
-                ddlDisciplina.Items.Insert(0, New ListItem("##", "##"))
-                ddlSpecialita.Items.Clear()
-
-            End If
-        Else
-
-            Dim RequestP1 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP1.AddSearchField("Sport_ID", selezionato, Enumerations.SearchOption.equals)
-
-            RequestP1.AddSortField("Disciplina_ID", Enumerations.Sort.Ascend)
-
-            ds1 = RequestP1.Execute()
-
-            If Not IsNothing(ds1) AndAlso ds1.Tables("main").Rows.Count > 0 Then
-
-
-                Dim Disciplina As DataTable = ds1.Tables("main").DefaultView.ToTable(True, "Disciplina_ID", "Disciplina")
-
-                ddlDisciplina.DataSource = Disciplina
-
-                ddlDisciplina.DataTextField = "Disciplina"
-                ddlDisciplina.DataValueField = "Disciplina_ID"
-
-                ddlDisciplina.DataBind()
-                ddlDisciplina.Items.Remove(0)
-                ddlDisciplina.Items.Insert(0, New ListItem("##", "##"))
-                ddlSpecialita.Items.Clear()
-
-            End If
-
-        End If
-
-
-
-    End Sub
-
-    Protected Sub ddlDisciplina_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlDisciplina.SelectedIndexChanged
-
-
-        Dim selezionato As String = ddlDisciplina.SelectedItem.Value
-        Dim ds2 As DataSet
-        Dim dr As DataRow
-        Dim fmsP2 As FMSAxml = AsiModel.Conn.Connect()
-        fmsP2.SetLayout("webCorsiSport")
-
-        If Session("tipoEnte") = "Settori" Then
-
-            Dim RequestP2 = fmsP2.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP2.AddSearchField("Disciplina_ID", selezionato, Enumerations.SearchOption.equals)
-
-            RequestP2.AddSortField("Specialita_ID", Enumerations.Sort.Ascend)
-
-            ds2 = RequestP2.Execute()
-
-            If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
-
-                Dim Specialita As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "Specialita_ID", "Specialita")
-                ddlSpecialita.Enabled = True
-                ddlSpecialita.DataSource = Specialita
-
-                ddlSpecialita.DataTextField = "Specialita"
-                ddlSpecialita.DataValueField = "Specialita_ID"
-
-                ddlSpecialita.DataBind()
-                ' ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
-                ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
-            Else
-                ddlSpecialita.Enabled = False
-            End If
-
-            CustomValidator1.Enabled = True
-
-
-
-        Else
-            Dim RequestP2 = fmsP2.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP2.AddSearchField("Disciplina_ID", selezionato, Enumerations.SearchOption.equals)
-            RequestP2.AddSortField("Specialita_ID", Enumerations.Sort.Ascend)
-
-            ds2 = RequestP2.Execute()
-
-            If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
-
-                Dim Specialita As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "Specialita_ID", "Specialita")
-                ddlSpecialita.Enabled = True
-                ddlSpecialita.DataSource = Specialita
-
-                ddlSpecialita.DataTextField = "Specialita"
-                ddlSpecialita.DataValueField = "Specialita_ID"
-
-                ddlSpecialita.DataBind()
-                ' ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
-                ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
-            Else
-                ddlSpecialita.Enabled = False
-            End If
-
-
-
-
-
-        End If
-    End Sub
-
-
-
-
-
-    'Protected Sub btnFase4_Click(sender As Object, e As EventArgs) Handles btnFase4.Click
-    '    If Page.IsValid Then
-
-    '        CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
-
-    '        Session("fase") = "4"
-    '        Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
-
-
-    '        Session("equiparazioneaggiunta") = "OK"
-    '        Response.Redirect("dashboardE.aspx?ris=" & deEnco.QueryStringEncode("ok"))
-
-    '    End If
-    'End Sub
 
     Public Function CaricaDatiDocumentoCorso(codR As String, IDEquiparazione As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
@@ -478,16 +273,11 @@ Public Class richiestaEquiparazioneDati2
         Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         '  Dim ds As DataSet
         Dim risposta As String = ""
-        fmsP.SetLayout("webEquiparazioniRichiesta")
+        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
         Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
 
 
-        Request.AddField("Equi_Sport_Interessato", ddlSport.SelectedItem.Text)
-        Request.AddField("Equi_Sport_Interessato_ID", ddlSport.SelectedItem.Value)
-        Request.AddField("Equi_Disciplina_Interessata", ddlDisciplina.SelectedItem.Text)
-        Request.AddField("Equi_Disciplina_Interessata_ID", ddlDisciplina.SelectedItem.Value)
-        Request.AddField("Equi_Specialita", ddlSpecialita.SelectedItem.Text)
-        Request.AddField("Equi_Specialita_ID", ddlSpecialita.SelectedItem.Value)
+
         Request.AddField("Equi_Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
         Request.AddField("Equi_Livello", ddlLivello.SelectedItem.Text)
         If chkDaFederazione.Checked = True Then
@@ -506,7 +296,7 @@ Public Class richiestaEquiparazioneDati2
 
 
         AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "102", Session("WebUserEnte"), "equiparazione")
-        Response.Redirect("dashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("ok"))
+        Response.Redirect("dashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ok"))
         'Catch ex As Exception
 
         'End Try
@@ -534,17 +324,7 @@ Public Class richiestaEquiparazioneDati2
 
     End Function
 
-    Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
-        If ddlSpecialita.SelectedItem.Text = "ND" Or Not String.IsNullOrEmpty(ddlSpecialita.SelectedItem.Text) Or Not String.IsNullOrWhiteSpace(ddlSpecialita.SelectedItem.Text) Then
-            args.IsValid = True
-        Else
 
-
-            args.IsValid = False
-
-
-        End If
-    End Sub
 
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
         If Page.IsValid Then
@@ -552,11 +332,11 @@ Public Class richiestaEquiparazioneDati2
             CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
 
             Session("fase") = "4"
-            Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+            ' Response.Redirect("richiestaEquiparazioneDati22.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
 
 
-            Session("equiparazioneaggiunta") = "OK"
-            Response.Redirect("dashboardE.aspx?ris=" & deEnco.QueryStringEncode("ok"))
+            'Session("equiparazioneaggiunta") = "OK"
+            'Response.Redirect("dashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ok"))
 
         End If
     End Sub

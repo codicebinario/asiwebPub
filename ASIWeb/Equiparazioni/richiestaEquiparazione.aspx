@@ -127,7 +127,7 @@ function ServerException(mess) {
     
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Nuova Equiparazione</h3>
+    <h3 class="display-5">Nuova Equiparazione: caricamento foto equiparazione</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
             <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>     

@@ -11,7 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class richiestaEquiparazione2
+Partial Public Class richiestaEquiparazioneFoto2
+
+    '''<summary>
+    '''UpdateProgress1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
 
     '''<summary>
     '''lblIntestazioneEquiparazione control.
@@ -50,40 +59,58 @@ Partial Public Class richiestaEquiparazione2
     Protected WithEvents lblnomef As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''pnlSaltaDiploma control.
+    '''Label3 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlSaltaDiploma As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''chkSaltaDiploma control.
+    '''inputfile control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkSaltaDiploma As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents inputfile As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-    '''pnlFase1 control.
+    '''chkSalta control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlFase1 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents chkSalta As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''txtNote control.
+    '''results control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtNote As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''RequiredFieldValidator1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''RegularExpressionValidator1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
 
     '''<summary>
     '''lnkButton1 control.
@@ -95,29 +122,11 @@ Partial Public Class richiestaEquiparazione2
     Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''uploadProgress control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents uploadProgress As Global.OboutInc.FileUpload.FileUploadProgress
-
-    '''<summary>
-    '''uploadedFiles control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents uploadedFiles As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''btnFase2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnFase2 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 End Class

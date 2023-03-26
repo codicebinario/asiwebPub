@@ -42,6 +42,8 @@ Public Class richiestaEquiparazione2
     Dim qualeStatus As String = ""
     Dim nomecaricato As String = ""
     Dim tokenZ As String = ""
+    Dim codR As String
+    Dim record_ID As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -49,15 +51,6 @@ Public Class richiestaEquiparazione2
         If IsNothing(Session("codice")) Then
             Response.Redirect("../login.aspx")
         End If
-
-
-        'If Session("procedi") <> "OK" Then
-
-        '    Response.Redirect("checkTesseramento.aspx")
-
-        'End If
-
-        '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
         cultureFormat.NumberFormat.CurrencyDecimalDigits = 2
         cultureFormat.NumberFormat.CurrencyGroupSeparator = String.Empty
@@ -65,36 +58,38 @@ Public Class richiestaEquiparazione2
         System.Threading.Thread.CurrentThread.CurrentCulture = cultureFormat
         System.Threading.Thread.CurrentThread.CurrentUICulture = cultureFormat
 
-
-
-
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
         Dim cf As String = ""
         cf = deEnco.QueryStringDecode(Request.QueryString("cf"))
         If Not String.IsNullOrEmpty(cf) Then
-
             Session("cf") = cf
-
         End If
-
 
         If IsNothing(Session("cf")) Then
             Response.Redirect("../login.aspx")
         End If
-        'Dim record_ID As String = ""
-        'record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        'If Not String.IsNullOrEmpty(record_ID) Then
 
-        '    Session("id_record") = record_ID
+        record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
+        If Not String.IsNullOrEmpty(record_ID) Then
 
-        'End If
+            Session("id_record") = record_ID
 
-        'If IsNothing(Session("id_record")) Then
-        '    Response.Redirect("../login.aspx")
-        'End If
-        Dim codR As String = ""
+        End If
+
+        If IsNothing(Session("id_record")) Then
+            Response.Redirect("../login.aspx")
+        End If
+
+        If Session("EquiparazioneSaltaDiploma") = "S" Then
+
+            pnlSaltaDiploma.Visible = True
+        Else
+            pnlSaltaDiploma.Visible = False
+
+        End If
+
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
         If Not String.IsNullOrEmpty(codR) Then
 
@@ -106,10 +101,10 @@ Public Class richiestaEquiparazione2
 
 
 
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
+            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
             Dim verificato As String = DettaglioEquiparazione.EquiCF
             If verificato = "0" Then
-                Response.Redirect("DashboardEqui.aspx2?ris=" & deEnco.QueryStringEncode("no"))
+                Response.Redirect("DashboardEqui2.aspx2?ris=" & deEnco.QueryStringEncode("no"))
 
             End If
             Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
@@ -243,7 +238,45 @@ Public Class richiestaEquiparazione2
     '    End If
 
     'End Sub
-    Public Function CaricaDatiDiplomaEquiparazione(codR As String, IDEquiparazione As String, nomecaricato As String) As String
+    Public Function CaricaDatiDiplomaEquiparazione(codR As String, record_ID As String, nomecaricato As String) As String
+
+
+        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        '  Dim ds As DataSet
+        Dim risposta As String = ""
+        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+        Dim Request = fmsP.CreateEditRequest(record_ID)
+        Request.AddField("NomeFileDiplomaFS", nomecaricato)
+        Request.AddField("NoteUploadDiploma", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+        Request.AddField("Equi_Fase", "1")
+        Request.AddField("Codice_Status", "101")
+        Request.AddScript("SistemaEncodingNoteUpload_DiplomaEqui2", record_ID)
+
+        risposta = Request.Execute()
+        AsiModel.LogIn.LogCambioStatus(record_ID, "101", Session("WebUserEnte"), "equiparazione")
+
+
+        Dim token = PrendiToken()
+
+        Return codR & "_|_" & token
+    End Function
+    Protected Sub chkSaltaDiploma_CheckedChanged(sender As Object, e As EventArgs) Handles chkSaltaDiploma.CheckedChanged
+
+
+        If chkSaltaDiploma.Checked = True Then
+
+
+            'RequiredFieldValidator1.Enabled = False
+            'RegularExpressionValidator1.Enabled = False
+            nomecaricato = "caricamento saltato"
+            CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
+            ' Response.Redirect("richiestaEquiparazioneFoto2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(2))
+            Response.Redirect("richiestaEquiparazioneFoto2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(2))
+
+
+        End If
+    End Sub
+    Public Function CaricaDatiDocumentoCorso(id As String, codR As String, nomecaricato As String) As String
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
 
@@ -253,39 +286,23 @@ Public Class richiestaEquiparazione2
         Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         '  Dim ds As DataSet
         Dim risposta As String = ""
-        fmsP.SetLayout("webEquiparazioniRichiesta")
-        Dim Request = fmsP.CreateEditRequest(codR)
+        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+        Dim Request = fmsP.CreateEditRequest(id)
         Request.AddField("NomeFileDiplomaFS", nomecaricato)
-        Request.AddField("NoteUploadDiploma", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
-        Request.AddField("Equi_Fase", "1")
-        Request.AddField("Codice_Status", "101")
-        Request.AddScript("SistemaEncodingNoteUpload_DiplomaEqui", IDEquiparazione)
-        'If qualeStatus = "3" Then
-        '    Request1.AddField("Status_ID", "4")
-        'Else
-        '    Request1.AddField("Status_ID", "12")
-        'End If
-        '    Try
+        Request.AddField("Equi_Fase", "2")
+        'Try    
         risposta = Request.Execute()
-        AsiModel.LogIn.LogCambioStatus(IDEquiparazione, "101", Session("WebUserEnte"), "equiparazione")
-
-        'If qualeStatus = "3" Then
-        '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
-        'Else
-        '    AsiModel.LogIn.LogCambioStatus(codR, "12", Session("WebUserEnte"))
-        'End If
 
 
 
-        'Catch ex As Exception
+        '  Catch ex As Exception
 
-        'End Try
+        '     End Try
 
         Dim token = PrendiToken()
 
-        Return codR & "_|_" & token
+        Return id & "_|_" & token
     End Function
-
     Public Function PrendiToken() As String
         Dim urlsign As String = "https://93.63.195.98/fmi/data/vLatest/databases/Asi/sessions"
         Dim auth As String = ""
@@ -341,7 +358,7 @@ Public Class richiestaEquiparazione2
         '    Try
 
 
-        Dim clientUP As New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webEquiparazioniRichiesta/records/" & id & "/containers/DiplomaEquiparazione/1")
+        Dim clientUP As New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webEquiparazioniRichiestaMolti/records/" & id & "/containers/DiplomaEquiparazione/1")
         clientUP.Timeout = -1
         Dim Requestx = New RestRequest(Method.POST)
         Requestx.AddHeader("Content-Type", "application/json")
@@ -373,7 +390,7 @@ Public Class richiestaEquiparazione2
     End Function
     Protected Sub btnFase2_Click(sender As Object, e As EventArgs) Handles btnFase2.Click
         Session("fase") = "2"
-        Response.Redirect("richiestaEquiparazioneFoto.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
+        Response.Redirect("richiestaEquiparazioneFoto2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
     End Sub
 
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
@@ -441,7 +458,7 @@ Public Class richiestaEquiparazione2
                 ' btnFase2.Visible = True
                 'deleteFile(nomecaricato)
                 Session("fase") = "2"
-                Response.Redirect("richiestaEquiparazioneFoto.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(2))
+                Response.Redirect("richiestaEquiparazioneFoto2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(2))
 
             Catch ex As Exception
 

@@ -76,6 +76,8 @@ Public Class checkTesseramento2
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
 
 
+
+
         If Page.IsPostBack Then
 
             '  pnlFase1.Visible = False
@@ -87,7 +89,7 @@ Public Class checkTesseramento2
 
 
     Public Function CaricaDatiDocumentoEquiparazione(codR As String, codiceFiscale As String,
-                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As Date) As Integer
+                                             nome As String, cognome As String, codiceTessera As String, dataScadenza As Date, codiceEnteRichiedente As String) As Integer
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
         Dim idRecord As Integer = 0
         Dim DataScadenzaSistemata As String
@@ -102,9 +104,9 @@ Public Class checkTesseramento2
 
         Dim Request = fmsP.CreateNewRecordRequest()
 
-        Request.AddField("EquiparazioneM", codR)
+        Request.AddField("IDEquiparazioneM", codR)
         Request.AddField("Codice_Status", "0")
-
+        Request.AddField("Codice_Ente_Richiedente", codiceEnteRichiedente)
 
         idRecord = Request.Execute()
 
@@ -156,47 +158,53 @@ Public Class checkTesseramento2
     Protected Sub lnkCheck_Click(sender As Object, e As EventArgs) Handles lnkCheck.Click
         If Page.IsValid Then
 
-
-            Dim risultatoCheck As Boolean
-            Dim dataOggi As Date = Today.Date
-            Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
-
-            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-
-
-            risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
-            DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
-            Session("visto") = "ok"
-            If risultatoCheck = True Then
-
-                '   Response.Write("ok")
-                Session("procedi") = "OK"
-                Session("codiceFiscale") = Trim(txtCodiceFiscale.Text)
+            If Not String.IsNullOrEmpty(codR) Then
 
 
 
-                CaricaDatiDocumentoEquiparazione(codR, Trim(txtCodiceFiscale.Text),
-                DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazione.CodiceTessera, DettaglioEquiparazione.DataScadenza)
+
+                Dim risultatoCheck As Boolean
+                Dim dataOggi As Date = Today.Date
+                Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+
+                Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+
+
+                risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
+                DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
+                Session("visto") = "ok"
+                If risultatoCheck = True Then
+
+                    '   Response.Write("ok")
+                    Session("procedi") = "OK"
+                    Session("codiceFiscale") = Trim(txtCodiceFiscale.Text)
+
+                    Dim record_ID As String = ""
+
+
+                    record_ID = CaricaDatiDocumentoEquiparazione(codR, Trim(txtCodiceFiscale.Text),
+                    DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazione.CodiceTessera, DettaglioEquiparazione.DataScadenza, Session("codice"))
 
 
 
-                Response.Redirect("richiestaEquiparazione2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&cf=" & deEnco.QueryStringEncode(Trim(txtCodiceFiscale.Text)))
+                    Response.Redirect("richiestaEquiparazione2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(record_ID) & "&cf=" & deEnco.QueryStringEncode(Trim(txtCodiceFiscale.Text)))
 
 
 
-            Else
+                Else
 
-                'Response.Write("ko")
+                    'Response.Write("ko")
 
-                Session("procedi") = "KO"
-                Response.Redirect("DashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+                    Session("procedi") = "KO"
+                    Response.Redirect("DashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+
+
+                End If
+
+
 
 
             End If
-
-
-
-
         End If
     End Sub
 End Class

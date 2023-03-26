@@ -1217,6 +1217,10 @@ Public Class AsiModel
         Public DataScadenza As Date
         Public trovato As Boolean
         Public PagamentoTotale As Decimal
+        Public Sport As String
+        Public Disciplina As String
+        Public Specialita As String
+
 
 
     End Class
@@ -1972,6 +1976,62 @@ Public Class AsiModel
             Return DatiEquiparazione
 
         End Function
+
+        Public Shared Function PrendiValoriNuovaEquiparazione2(IDEquiparazione As String) As DatiNuovaEquiparazione
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiEquiparazione As New DatiNuovaEquiparazione
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDEquiparazioneM", IDEquiparazione, Enumerations.SearchOption.equals)
+
+
+            '   Try
+            ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                        DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                    DatiEquiparazione.IDEquiparazione = Data.FixNull(dr("idrecord"))
+                    DatiEquiparazione.DescrizioneStatus = Data.FixNull(dr("Descrizione_StatusWeb"))
+                        DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                        DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                    DatiEquiparazione.IdRecord = Data.FixNull(dr("Idrecord"))
+                    DatiEquiparazione.EquiCF = Data.FixNull(dr("Equi_CFVerificatoTessera"))
+                        DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
+                        DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
+                        DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
+                        DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
+                    DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
+                    DatiEquiparazione.Sport = Data.FixNull(dr("Equi_Sport_Interessato"))
+                    DatiEquiparazione.Disciplina = Data.FixNull(dr("Equi_Disciplina_Interessata"))
+                    DatiEquiparazione.Specialita = Data.FixNull(dr("Equi_Specialita"))
+                    '   DatiEquiparazione.PagamentoTotale = Data.FixNull(dr("QuotaPagamento"))
+                    '    DatiEquiparazione.MostraMonteOreFormazione = Data.FixNull(dr("MonteOreFormazioneFlag"))
+                Next
+
+
+
+                End If
+
+
+
+            '  Catch ex As Exception
+
+            ' End Try
+
+            Return DatiEquiparazione
+
+        End Function
+
         Public Shared Function CaricaDatiTesseramento(codiceFiscale As String) As DatiNuovaEquiparazione
             '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
@@ -2032,7 +2092,8 @@ Public Class AsiModel
             Return DettaglioEquiparazione
         End Function
 
-        Public Shared Function NuovaEquiparazioneFolder(codiceEnteRichiedente As Integer) As Integer
+        Public Shared Function NuovaEquiparazioneFolder(codiceEnteRichiedente As Integer, Equi_Sport_Interessato_ID As Integer,
+                                                        Equi_Disciplina_Interessata_ID As Integer, Equi_Specialita_ID As Integer) As Integer
 
 
             Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
@@ -2044,6 +2105,19 @@ Public Class AsiModel
 
             Request.AddField("CodiceEnteRichiedente", codiceEnteRichiedente)
             Request.AddField("CodiceStatus", "0")
+
+            'sport inizio
+            Request.AddField("Equi_Sport_Interessato_ID", Equi_Sport_Interessato_ID)
+
+            'disciplina inizio
+            Request.AddField("Equi_Disciplina_Interessata_ID", Equi_Disciplina_Interessata_ID)
+
+
+            'specialità inizio
+            Request.AddField("Equi_Specialita_ID", Equi_Specialita_ID)
+
+
+
 
 
             idrecord = Request.Execute()
@@ -2077,7 +2151,7 @@ Public Class AsiModel
 
             fmsP.SetLayout("webEquiparazioniMaster")
             Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP.AddSearchField("IDEquiparazioneM", IDEquiparazioneM, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("EquiparazioneM", IDEquiparazioneM, Enumerations.SearchOption.equals)
 
             ds = RequestP.Execute()
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then

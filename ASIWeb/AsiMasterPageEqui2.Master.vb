@@ -21,27 +21,27 @@ Public Class AsiMasterPageEqui2
             Dim quantiAttiviVal As Integer = quantiAttivi(Session("codice"))
             Dim quantiValutatiVal As Integer = quantiValutati(Session("codice"))
             ' If quantiAttiviVal >= 1 Then
-            LinkEquiAttive.Text = "<i class=""bi bi-arrow-down-circle""> </i>Equip. Attive <span class=""badge badge-light""> " & quantiAttiviVal & "</span>"
+            LinkEquiAttive.Text = "<i class=""bi bi-arrow-down-circle""> </i>Equip. Attive <span class=""badge badge-light text-dark""> " & quantiAttiviVal & "</span>"
 
 
             ' End If
 
             '  If quantiEvasival >= 1 Then
             '   LinkSettore.Visible = True
-            LinkArchivioEqui.Text = "<i class=""bi bi-arrow-down-circle""> </i>Equip. Evase <span class=""badge badge-light""> " & quantiEvasival & "</span>"
+            LinkArchivioEqui.Text = "<i class=""bi bi-arrow-down-circle""> </i>Equip. Evase <span class=""badge badge-light text-dark""> " & quantiEvasival & "</span>"
 
             '  End If
 
             If quantiDaValutare(Session("codice")) >= 1 Then
                 LinkSettore.Visible = True
-                LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Equip. da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
+                LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Equip. da Valutare <span class=""badge badge-light text-dark""> " & quantiVal & "</span>"
             Else
                 LinkSettore.Visible = False
             End If
 
             If quantiValutati(Session("codice")) >= 1 Then
                 LinkSettoreValutati.Visible = True
-                LinkSettoreValutati.Text = "<i class=""bi bi-arrows-angle-expand""> </i>Equip. Valutate <span class=""badge badge-light""> " & quantiValutatiVal & "</span>"
+                LinkSettoreValutati.Text = "<i class=""bi bi-arrows-angle-expand""> </i>Equip. Valutate <span class=""badge badge-light text-dark""> " & quantiValutatiVal & "</span>"
 
             Else
                 LinkSettoreValutati.Visible = False
@@ -76,18 +76,19 @@ Public Class AsiMasterPageEqui2
     Protected Sub lnkNuovaEquiparazione_Click(sender As Object, e As EventArgs) Handles lnkNuovaEquiparazione.Click
         '  NuovaEquiparazione()
         '     ?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("Codice_Richiesta"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("Record_ID"))
-        Dim idEquiparazioneM As Integer
-        Dim idRecordM As Integer
-        idEquiparazioneM = AsiModel.Equiparazione.NuovaEquiparazioneFolder(Session("codice"))
+        'Dim idEquiparazioneM As Integer
+        '  Dim idRecordM As Integer
+        '   idEquiparazioneM = AsiModel.Equiparazione.NuovaEquiparazioneFolder(Session("codice"))
 
-        If idEquiparazioneM >= 1 Then
-            idRecordM = AsiModel.Equiparazione.CercaIDRecordEquiparazioneM(idEquiparazioneM)
-            Session("IdRecordMaster") = idRecordM
-            Response.Redirect("checkTesseramento2.aspx?codR=" & deEnco.QueryStringEncode(idEquiparazioneM) & "&t=1")
-            ' Response.Redirect("checkTesseramento2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&t=1")
+        '   If idEquiparazioneM >= 1 Then
+        '   idRecordM = AsiModel.Equiparazione.CercaIDRecordEquiparazioneM(idEquiparazioneM)
+        '  Session("IdRecordMaster") = idRecordM
+        '  Response.Redirect("sceltaSport.aspx?codR=" & deEnco.QueryStringEncode(idEquiparazioneM) & "&t=1")
+        ' Response.Redirect("checkTesseramento2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&t=1")
+        Response.Redirect("sceltaSport.aspx")
 
 
-        End If
+        '   End If
 
 
 

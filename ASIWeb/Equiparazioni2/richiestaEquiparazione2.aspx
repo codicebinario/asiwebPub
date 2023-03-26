@@ -6,7 +6,10 @@
       <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
-       <style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <style>
     .custom-file-input.selected:lang(en)::after {
       content: "" !important;
     }
@@ -91,33 +94,7 @@ function ServerException(mess) {
 
          }
         
-         //$('#customFileInput').on('change', function () {
-         //    var numb = $(this)[0].files[0].size / 1024 / 1024;
-         //    numb = numb.toFixed(2);
-         //    if (numb > 2) {
-         //        alert('to big, maximum is 2MiB. You file size is: ' + numb + ' MiB');
-         //    } else {
-         //        alert('it okey, your file has ' + numb + 'MiB')
-         //    }
-         //});
-         //function Upload() {
-         //    var fileUpload = document.getElementById("customFileInput");
-         //    if (typeof (fileUpload.files) != "undefined") {
-         //        var size = parseFloat(fileUpload.files[0].size / 1024).toFixed(2);
-         //        alert(size + " KB.");
-         //        if (size > 52000000) {
-         //            return true;
-         //        }
-         //        else {
-
-         //            return false;
-         //        }
-
-         //    } else {
-         //        alert("This browser does not support HTML5.");
-         //    }
-         //}
-
+      
 
      </script>
 
@@ -127,7 +104,8 @@ function ServerException(mess) {
     
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Nuova Equiparazione</h3>
+      <h6 class="fs-5 text-white text-decoration-none">Nuova Equiparazione</h6>
+   
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
             <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>     
@@ -166,7 +144,27 @@ function ServerException(mess) {
                       <h5>Fase 1: Caricamento Diploma Equiparazione</h5>
 
                       <hr />
-<div class="alert alert-danger" role="alert">
+                      <asp:Panel runat="server" ID="pnlSaltaDiploma">
+                      <div class="col-sm-12">
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <div class="form-group">
+
+                                      <div class="alert alert-danger" role="alert">
+                                          <asp:CheckBox AutoPostBack="true" CssClass="success" ID="chkSaltaDiploma" CausesValidation="false" runat="server" />
+                                          <strong>Salta il caricamento diploma: </strong>se si vuole procedere senza caricare il diploma, metti il check-box ed attendi. 
+  
+                                      </div>
+                             </div>
+                              </div>
+
+                          </div>
+                      </div>
+                      <br />
+                      <br />  
+                     </asp:Panel>
+
+                      <div class="alert alert-danger" role="alert">
  Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
 </div>
                 
@@ -210,6 +208,7 @@ function ServerException(mess) {
         
         </div>   
                  <div>
+
                 <asp:LinkButton ID="lnkButton1" class="btn btn-primary ml-2" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
 </div>
       <div class="input-group-append">

@@ -82,9 +82,9 @@ Public Class checkTesseramento
         If Not String.IsNullOrEmpty(codR) Then
 
 
-            Session("IDEquiparazione") = codR
+            Session("IDEquiparazioneM") = codR
             Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazione"))
+            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione(Session("IDEquiparazioneM"))
             Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
             Dim CodiceEnteRichiedente As String = DettaglioEquiparazione.CodiceEnteRichiedente
             Dim DescrizioneEnteRichiedente As String = DettaglioEquiparazione.DescrizioneEnteRichiedente

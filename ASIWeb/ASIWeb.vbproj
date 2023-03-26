@@ -225,6 +225,10 @@
     <Content Include="Equiparazioni2\checkTesseramento2.aspx" />
     <Content Include="Equiparazioni2\DashboardEqui2.aspx" />
     <Content Include="Equiparazioni2\richiestaEquiparazione2.aspx" />
+    <Content Include="Equiparazioni2\richiestaEquiparazioneDati12.aspx" />
+    <Content Include="Equiparazioni2\richiestaEquiparazioneDati22.aspx" />
+    <Content Include="Equiparazioni2\richiestaEquiparazioneFoto2.aspx" />
+    <Content Include="Equiparazioni2\sceltaSport.aspx" />
     <Content Include="Equiparazioni\annullaEquiparazione.aspx" />
     <Content Include="Equiparazioni\annullaEquiparazioneMotivo.aspx" />
     <Content Include="Equiparazioni\archivioEquiValutati.aspx" />
@@ -701,6 +705,34 @@
     </Compile>
     <Compile Include="Equiparazioni2\richiestaEquiparazione2.aspx.vb">
       <DependentUpon>richiestaEquiparazione2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\richiestaEquiparazioneDati12.aspx.designer.vb">
+      <DependentUpon>richiestaEquiparazioneDati12.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\richiestaEquiparazioneDati12.aspx.vb">
+      <DependentUpon>richiestaEquiparazioneDati12.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\richiestaEquiparazioneDati22.aspx.designer.vb">
+      <DependentUpon>richiestaEquiparazioneDati22.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\richiestaEquiparazioneDati22.aspx.vb">
+      <DependentUpon>richiestaEquiparazioneDati22.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\richiestaEquiparazioneFoto2.aspx.designer.vb">
+      <DependentUpon>richiestaEquiparazioneFoto2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\richiestaEquiparazioneFoto2.aspx.vb">
+      <DependentUpon>richiestaEquiparazioneFoto2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\sceltaSport.aspx.designer.vb">
+      <DependentUpon>sceltaSport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\sceltaSport.aspx.vb">
+      <DependentUpon>sceltaSport.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni\annullaEquiparazione.aspx.designer.vb">
