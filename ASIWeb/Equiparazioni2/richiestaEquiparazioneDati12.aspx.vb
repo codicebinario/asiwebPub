@@ -50,11 +50,11 @@ Public Class richiestaEquiparazioneDati12
 
 
         '      Dim fase As String = Request.QueryString("fase")
-        Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
-        If Not String.IsNullOrEmpty(fase) Then
+        'Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
+        'If Not String.IsNullOrEmpty(fase) Then
 
-            Session("fase") = fase
-        End If
+        '    Session("fase") = fase
+        'End If
 
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -137,11 +137,11 @@ Public Class richiestaEquiparazioneDati12
 
         End If
 
-        If fase = 3 Then
-            lblnomef.Text = "Foto correttamente caricata "
+        'If fase = 3 Then
+        '  lblnomef.Text = "Foto correttamente caricata "
 
 
-        End If
+        '   End If
 
         If Not Page.IsPostBack Then
 
@@ -353,7 +353,7 @@ Public Class richiestaEquiparazioneDati12
 
 
 
-        Request.AddField("Equi_Fase", "3")
+        ' Request.AddField("Equi_Fase", "3")
         '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
         '   Try
@@ -375,8 +375,8 @@ Public Class richiestaEquiparazioneDati12
 
             CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
 
-            Session("fase") = "3"
-            Response.Redirect("richiestaEquiparazioneDati22.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&fase=" & deEnco.QueryStringEncode(3))
+            'Session("fase") = "3"
+            Response.Redirect("richiestaEquiparazioneDati22.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
 
         End If
     End Sub

@@ -41,15 +41,6 @@ Partial Public Class richiestaEquiparazione2
     Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''lblnomef control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblnomef As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''pnlSaltaDiploma control.
     '''</summary>
     '''<remarks>

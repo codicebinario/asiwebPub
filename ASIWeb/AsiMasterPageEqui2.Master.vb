@@ -106,7 +106,7 @@ Public Class AsiMasterPageEqui2
     Protected Sub LinkArchivioEqui_Click(sender As Object, e As EventArgs) Handles LinkArchivioEqui.Click
         '    NuovaRichiesta()
 
-        Response.Redirect("DashboardEquiEvasi.aspx")
+        Response.Redirect("DashboardEquiEvasi2.aspx")
     End Sub
 
 
@@ -141,7 +141,7 @@ Public Class AsiMasterPageEqui2
 
 
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        RequestP.AddSearchField("id_record", Session("id_record"), Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("idrecord", Session("id_record"), Enumerations.SearchOption.equals)
 
         ds = RequestP.Execute()
         If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
@@ -150,7 +150,7 @@ Public Class AsiMasterPageEqui2
                 '  AsiModel.DatiNuovoCorso. = Data.FixNull(dr("IDCorso"))
 
                 '    Session("record_ID") = Data.FixNull(dr("Record_ID"))
-                Session("IDEquiparazione") = Data.FixNull(dr("IDEquiparazione"))
+                Session("IDEquiparazione") = Data.FixNull(dr("IDrecord"))
 
             Next
 
@@ -200,10 +200,11 @@ Public Class AsiMasterPageEqui2
         Dim ds As DataSet
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniRichiesta")
+        fmsP.SetLayout("webEquiparazioniMaster")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("CodiceStatus", "0...114")
         '  RequestP.AddSearchField("Codice_Status", "115")
         ' RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
@@ -218,20 +219,10 @@ Public Class AsiMasterPageEqui2
             For Each dr In ds.Tables("main").Rows
 
 
+                counter1 += 1
 
 
-                If Data.FixNull(dr("Codice_Status")) = "101" Or Data.FixNull(dr("Codice_Status")) = "102" _
-                Or Data.FixNull(dr("Codice_Status")) = "103" Or Data.FixNull(dr("Codice_Status")) = "104" _
-                Or Data.FixNull(dr("Codice_Status")) = "105" Or Data.FixNull(dr("Codice_Status")) = "106" _
-                Or Data.FixNull(dr("Codice_Status")) = "107" Or Data.FixNull(dr("Codice_Status")) = "108" _
-                Or Data.FixNull(dr("Codice_Status")) = "109" Or Data.FixNull(dr("Codice_Status")) = "110" _
-                Or Data.FixNull(dr("Codice_Status")) = "111" _
-                Or Data.FixNull(dr("Codice_Status")) = "112" Or Data.FixNull(dr("Codice_Status")) = "113" _
-                Or Data.FixNull(dr("Codice_Status")) = "114" Then
-                    counter1 += 1
 
-
-                End If
 
             Next
             If counter1 >= 1 Then
@@ -259,7 +250,7 @@ Public Class AsiMasterPageEqui2
         Dim ds As DataSet
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniRichiesta")
+        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
@@ -278,11 +269,11 @@ Public Class AsiMasterPageEqui2
 
 
 
-                If Data.FixNull(dr("Codice_Status")) = "115" Then
-                    counter1 += 1
+
+                counter1 += 1
 
 
-                End If
+
 
             Next
             If counter1 >= 1 Then
@@ -311,10 +302,11 @@ Public Class AsiMasterPageEqui2
         Dim ds As DataSet
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniRichiesta")
+        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Codice_Status", "106...107")
         '    RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         '   RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
 
@@ -329,11 +321,11 @@ Public Class AsiMasterPageEqui2
 
 
 
-                If Data.FixNull(dr("Codice_Status")) = "106" Or Data.FixNull(dr("Codice_Status")) = "107" Then
-                    counter1 += 1
+                ' If Data.FixNull(dr("Codice_Status")) = "106" Or Data.FixNull(dr("Codice_Status")) = "107" Then
+                counter1 += 1
 
 
-                End If
+                '   End If
 
             Next
             If counter1 >= 1 Then
@@ -360,12 +352,13 @@ Public Class AsiMasterPageEqui2
         Dim ds As DataSet
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniRichiesta")
+        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Codice_Status", "115")
         RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+        RequestP.AddSortField("IDRecord", Enumerations.Sort.Descend)
 
 
 
@@ -377,11 +370,10 @@ Public Class AsiMasterPageEqui2
 
 
 
-                If Data.FixNull(dr("Codice_Status")) = "105" Then
-                    counter1 += 1
+                counter1 += 1
 
 
-                End If
+
 
             Next
             If counter1 >= 1 Then
@@ -398,14 +390,14 @@ Public Class AsiMasterPageEqui2
 
     End Function
     Protected Sub LinkSettore_Click(sender As Object, e As EventArgs) Handles LinkSettore.Click
-        Response.Redirect("dashboardV.aspx")
+        Response.Redirect("dashboardV2.aspx")
     End Sub
 
     Protected Sub LinkSettoreValutati_Click(sender As Object, e As EventArgs) Handles LinkSettoreValutati.Click
-        Response.Redirect("archivioEquiValutati.aspx")
+        Response.Redirect("archivioEquiValutati2.aspx")
     End Sub
 
     Protected Sub LinkEquiAttive_Click(sender As Object, e As EventArgs) Handles LinkEquiAttive.Click
-        Response.Redirect("DashboardEqui.aspx")
+        Response.Redirect("DashboardEqui2.aspx")
     End Sub
 End Class

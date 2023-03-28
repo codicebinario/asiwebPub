@@ -672,7 +672,10 @@ Public Class richiestaCorsoF3
             'Request.AddField("Settore_Approvazione", Data.PrendiStringaT(Server.HtmlEncode(txtSettoreApprovante.Text)))
             Request.AddField("Fase", "3")
             Request.AddField("Codice_status", "54")
-            Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
+            ' Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
+            ' Request.AddScript("PreparaMailInvioDT", Session("IDCorso"))
+            Request.AddScript("RunWebMailInvioDT", Session("IDCorso"))
+
             Session("visto") = "ok"
             Try
 

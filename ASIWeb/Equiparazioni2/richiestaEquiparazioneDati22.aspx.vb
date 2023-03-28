@@ -53,11 +53,11 @@ Public Class richiestaEquiparazioneDati22
 
 
         ' Dim fase As String = Request.QueryString("fase")
-        Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
-        If Not String.IsNullOrEmpty(fase) Then
+        'Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
+        'If Not String.IsNullOrEmpty(fase) Then
 
-            Session("fase") = fase
-        End If
+        '    Session("fase") = fase
+        'End If
 
 
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
@@ -145,11 +145,11 @@ Public Class richiestaEquiparazioneDati22
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
 
         End If
-        If fase = 4 Then
-            lblnomef.Text = "Dati Anagrafici 3 caricati"
+        '   If fase = 4 Then
+        '   lblnomef.Text = "Dati Anagrafici 3 caricati"
 
 
-        End If
+        '   End If
 
         If Not Page.IsPostBack Then
 
@@ -283,20 +283,20 @@ Public Class richiestaEquiparazioneDati22
         If chkDaFederazione.Checked = True Then
             Request.AddField("Equi_DaFederazione", "si")
         End If
-        Request.AddField("Codice_status", "102")
+        Request.AddField("Codice_status", "101")
         'Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
         Session("visto") = "ok"
 
 
-        Request.AddField("Equi_Fase", "4")
-        '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+        ' Request.AddField("Equi_Fase", "4")
+        'ìRequest.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
         '   Try
         risposta = Request.Execute()
 
 
-        AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "102", Session("WebUserEnte"), "equiparazione")
-        Response.Redirect("dashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ok"))
+        AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "101", Session("WebUserEnte"), "equiparazione")
+        Response.Redirect("dashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ok") & "&open=" & codR)
         'Catch ex As Exception
 
         'End Try
@@ -331,7 +331,7 @@ Public Class richiestaEquiparazioneDati22
 
             CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
 
-            Session("fase") = "4"
+            '   Session("fase") = "4"
             ' Response.Redirect("richiestaEquiparazioneDati22.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
 
 

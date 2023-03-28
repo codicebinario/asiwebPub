@@ -45,11 +45,11 @@ Public Class richiestaEquiparazioneFoto2
     Dim pag As Integer = 0
     Dim skip As Integer = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
-        If Not String.IsNullOrEmpty(fase) Then
+        'Dim fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
+        'If Not String.IsNullOrEmpty(fase) Then
 
-            Session("fase") = fase
-        End If
+        '    Session("fase") = fase
+        'End If
 
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -126,11 +126,11 @@ Public Class richiestaEquiparazioneFoto2
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
 
         End If
-        If fase = 2 Then
-            lblnomef.Text = "Diploma correttamente caricato"
+        'If fase = 2 Then
+        ' lblnomef.Text = "Diploma correttamente caricato"
 
 
-        End If
+        ' End If
         If Page.IsPostBack Then
 
             '  pnlFase1.Visible = False
@@ -270,7 +270,7 @@ Public Class richiestaEquiparazioneFoto2
         fmsP.SetLayout("webEquiparazioniRichiestaMolti")
         Dim Request = fmsP.CreateEditRequest(id)
         Request.AddField("NomeFileFotoFS", nomecaricato)
-        Request.AddField("Equi_Fase", "2")
+        ' Request.AddField("Equi_Fase", "2")
         Try
             risposta = Request.Execute()
 
@@ -327,7 +327,7 @@ Public Class richiestaEquiparazioneFoto2
             'RegularExpressionValidator1.Enabled = False
             nomecaricato = "caricamento saltato"
             CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
-            Response.Redirect("richiestaEquiparazioneDati12.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(3))
+            Response.Redirect("richiestaEquiparazioneDati12.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
         End If
     End Sub
 
@@ -384,7 +384,7 @@ Public Class richiestaEquiparazioneFoto2
             id_att = arrKeywords(0)
             CaricaSuFM(tokenx, id_att, nomecaricato)
 
-            Response.Redirect("richiestaEquiparazioneDati12.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(3))
+            Response.Redirect("richiestaEquiparazioneDati12.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
 
 
 

@@ -215,16 +215,6 @@ Public Class richiestaEquiparazioneDati1
 
 
 
-        'txtIndirizzoResidenza.Text = datiCodiceFiscale.Indirizzo
-        'txtComuneResidenza.Text = datiCodiceFiscale.Comune
-        'txtCapResidenza.Text = datiCodiceFiscale.Cap
-        'txtProvinciaResidenza.Text = datiCodiceFiscale.Provincia
-
-
-
-
-
-
     End Sub
 
     'Protected Sub ddlProvinciaConsegna_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlProvinciaConsegna.SelectedIndexChanged

@@ -50,13 +50,13 @@ Partial Public Class richiestaEquiparazioneFoto2
     Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''lblnomef control.
+    '''chkSalta control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblnomef As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents chkSalta As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''Label3 control.
@@ -77,13 +77,13 @@ Partial Public Class richiestaEquiparazioneFoto2
     Protected WithEvents inputfile As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-    '''chkSalta control.
+    '''lnkButton1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkSalta As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''results control.
@@ -111,15 +111,6 @@ Partial Public Class richiestaEquiparazioneFoto2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
-
-    '''<summary>
-    '''lnkButton1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''Label1 control.

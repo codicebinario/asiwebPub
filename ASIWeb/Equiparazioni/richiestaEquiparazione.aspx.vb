@@ -133,102 +133,13 @@ Public Class richiestaEquiparazione
 
         datiCodiceFiscale = getDatiCodiceFiscale(cf)
 
-        'txtCognome.Text = datiCodiceFiscale.Cognome
-        'txtNome.Text = datiCodiceFiscale.Nome
-        'txtCodiceFiscale.Text = datiCodiceFiscale.CodiceFiscale
-        'txtDataNascita.Text = datiCodiceFiscale.DataNascita.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-        'txtComuneNascita.Text = datiCodiceFiscale.LuogoNascita
-        'txtCodiceTessera.Text = datiCodiceFiscale.CodiceTessera
-        'txtDataScadenza.Text = datiCodiceFiscale.DataScadenza.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-
-
-
-
         Return datiCodiceFiscale
 
 
     End Function
 
 
-    'Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-    '    If uploadProgress.Files.Count > 0 Then
 
-    '        '****************************************************
-    '        Dim files As OboutFileCollection = uploadProgress.Files
-    '        Dim i As Integer
-
-    '        uploadedFiles.Text = ""
-    '        Try
-
-    '            For i = 0 To files.Count - 1 Step 1
-    '                Dim file As OboutPostedFile = files(i)
-
-
-
-    '                Dim whereToSave As String = "../file_storage_equi/"
-
-    '                tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-    '                ext = Path.GetExtension((file.FileName))
-    '                nomefileReale = Path.GetFileName(file.FileName)
-    '                nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
-
-
-
-
-
-    '                '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
-
-    '                file.SaveAs(MapPath(whereToSave + nomecaricato))
-
-
-
-
-    '                If uploadedFiles.Text.Length = 0 Then
-
-
-    '                    Button1.Enabled = False
-    '                    uploadedFiles.Text = ""
-
-    '                    uploadedFiles.Text = "<b>Diploma caricato con successo: " & nomecaricato & "</b><br/>"
-
-
-
-
-    '                End If
-
-
-
-    '            Next
-
-    '            Dim tokenx As String = ""
-    '            Dim id_att As String = ""
-    '            Dim tuttoRitorno As String = ""
-
-    '            tuttoRitorno = CaricaDatiDiplomaEquiparazione(HiddenIdRecord.Value, HiddenIDEquiparazione.Value, nomecaricato)
-    '            txtNote.Text = ""
-    '            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-    '            tokenx = arrKeywords(1)
-    '            id_att = arrKeywords(0)
-
-    '            CaricaSuFM(tokenx, id_att, nomecaricato)
-    '            '   pnlFase1.Visible = False
-    '            ' btnFase2.Visible = True
-    '            'deleteFile(nomecaricato)
-    '            Session("fase") = "2"
-    '            Response.Redirect("richiestaEquiparazioneFoto.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(2))
-
-    '        Catch ex As Exception
-
-    '            uploadedFiles.Text = "<b>Diploma non caricato: </b><br/>"
-
-
-    '        End Try
-
-    '    Else
-    '        uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
-    '    End If
-
-    'End Sub
     Public Function CaricaDatiDiplomaEquiparazione(codR As String, IDEquiparazione As String, nomecaricato As String) As String
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 

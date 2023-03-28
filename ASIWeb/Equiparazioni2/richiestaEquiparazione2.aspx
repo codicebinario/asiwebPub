@@ -108,8 +108,8 @@ function ServerException(mess) {
    
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-            <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"> </i>Torna alla pagina precedente</a>     
-    </p>
+     <%--   <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due"><i class="bi bi-skip-backward-btn"></i>Torna alla pagina precedente</a>
+    --%></p>
     
   </div></div>
       <div class="col-sm-12">
@@ -123,7 +123,7 @@ function ServerException(mess) {
 							</div>
 							
 				</div></div>	
-       <div class="col-sm-12">
+      <%-- <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
                   <div class="form-group">
@@ -134,8 +134,26 @@ function ServerException(mess) {
 
           </div>
       </div>
-    <br /><br />
+    <br /><br />--%>
+    <asp:Panel runat="server" ID="pnlSaltaDiploma">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+
+                        <div class="alert alert-danger" role="alert">
+                            <asp:CheckBox AutoPostBack="true" CssClass="success" ID="chkSaltaDiploma" CausesValidation="false" runat="server" />
+                            <strong>Salta il caricamento diploma: </strong>se si vuole procedere senza caricare il diploma, metti il check-box ed attendi. 
   
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br />
+       
+    </asp:Panel>
 
       <div class="col-sm-12">
           <div class="row">
@@ -144,25 +162,7 @@ function ServerException(mess) {
                       <h5>Fase 1: Caricamento Diploma Equiparazione</h5>
 
                       <hr />
-                      <asp:Panel runat="server" ID="pnlSaltaDiploma">
-                      <div class="col-sm-12">
-                          <div class="row">
-                              <div class="col-sm-12">
-                                  <div class="form-group">
-
-                                      <div class="alert alert-danger" role="alert">
-                                          <asp:CheckBox AutoPostBack="true" CssClass="success" ID="chkSaltaDiploma" CausesValidation="false" runat="server" />
-                                          <strong>Salta il caricamento diploma: </strong>se si vuole procedere senza caricare il diploma, metti il check-box ed attendi. 
-  
-                                      </div>
-                             </div>
-                              </div>
-
-                          </div>
-                      </div>
-                      <br />
-                      <br />  
-                     </asp:Panel>
+                      
 
                       <div class="alert alert-danger" role="alert">
  Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.

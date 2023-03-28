@@ -104,52 +104,6 @@ Public Class checkTesseramento
         End If
     End Sub
 
-    '    Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
-    '        If Page.IsValid Then
-
-
-    '            Dim risultatoCheck As Boolean
-    '            Dim dataOggi As Date = Today.Date
-    '            Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
-
-    '            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-
-
-    '            risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
-    '            DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
-    '            Session("visto") = "ok"
-    '            If risultatoCheck = True Then
-
-    '                '   Response.Write("ok")
-    '                Session("procedi") = "OK"
-    '                Session("codiceFiscale") = Trim(txtCodiceFiscale.Text)
-
-
-
-    '                CaricaDatiDocumentoEquiparazione(Session("IDEquiparazione"), Session("id_record"), Trim(txtCodiceFiscale.Text),
-    'DettaglioEquiparazione.Nome, DettaglioEquiparazione.Cognome, DettaglioEquiparazione.CodiceTessera, DettaglioEquiparazione.DataScadenza)
-
-
-
-    '                Response.Redirect("richiestaEquiparazione.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
-
-
-
-    '            Else
-
-    '                'Response.Write("ko")
-
-    '                Session("procedi") = "KO"
-    '                Response.Redirect("DashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("ko"))
-
-
-    '            End If
-
-
-
-
-    '        End If
-    '    End Sub
 
     Public Function CaricaDatiDocumentoEquiparazione(codR As String, IDEquiparazione As String, codiceFiscale As String,
                                              nome As String, cognome As String, codiceTessera As String, dataScadenza As Date) As Boolean

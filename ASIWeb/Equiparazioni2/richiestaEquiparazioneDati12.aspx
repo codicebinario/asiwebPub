@@ -54,7 +54,7 @@
  
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-          <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due"><i class="bi bi-sign-stop-fill"> </i>Interrompi Equiparazione.</a>        
+<%--          <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due"><i class="bi bi-sign-stop-fill"> </i>Interrompi Equiparazione.</a>        --%>
     </p>
   </div></div>
       <div class="col-sm-12">
@@ -69,7 +69,7 @@
 							
 				</div></div>	
        
-    <br /><br />
+<%--    <br /><br />
 	  <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
@@ -81,7 +81,7 @@
 
           </div>
       </div>
-    <br /><br />
+    <br /><br />--%>
   
 
    
@@ -89,7 +89,7 @@
           <div class="row">
               <div class="col-sm-12">
                   <div class="form-group">
-                      <h5>Fase 3: Dati Anagrafici</h5>
+                      <h5>Dati Anagrafici</h5>
                       <hr />
                   </div>
               </div>

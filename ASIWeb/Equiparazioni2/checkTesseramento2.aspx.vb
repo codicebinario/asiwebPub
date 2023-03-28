@@ -47,6 +47,7 @@ Public Class checkTesseramento2
     Dim tokenZ As String = ""
     Dim t As Integer = 0
     Dim codR As Integer
+    Dim type As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -63,7 +64,7 @@ Public Class checkTesseramento2
         System.Threading.Thread.CurrentThread.CurrentCulture = cultureFormat
         System.Threading.Thread.CurrentThread.CurrentUICulture = cultureFormat
 
-
+        type = Request.QueryString("type")
 
 
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then

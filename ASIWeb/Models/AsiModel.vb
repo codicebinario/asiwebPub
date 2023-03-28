@@ -1289,36 +1289,57 @@ Public Class AsiModel
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
                 counter1 = ds.Tables("main").Rows.Count
-                'For Each dr In ds.Tables("main").Rows
 
-
-
-                '    'If Data.FixNull(dr("Codice_Status")) <> "0" Then
-                '    '    counter1 += 1
-
-
-                '    'End If
-
-                ''Next
-                'If counter1 >= 1 Then
-                '    ritorno = counter1
-                'Else
-                '    ritorno = 0
-                'End If
 
             Else
 
-                ' non si sono records
-                ' ritorno = 0
+
                 counter1 = 0
 
             End If
 
-            ' ritorno =
+
             Return counter1
 
         End Function
+        Shared Function AggiornaStatusEquiparazioniMoltia102(IdEquiparazione As Integer)
+            Dim idrecord As Integer = 0
+            Dim risposta As Integer = 0
+            Dim ds As DataSet = Nothing
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
 
+            fmsP.SetLayout("webEquiparazioneRichiestaMolti")
+            Dim dsx As DataSet = Nothing
+            Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsx.SetLayout("webEquiparazioneRichiestaMolti")
+
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("idEquiparazioneM", IdEquiparazione, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        idrecord = dr("idRecord")
+
+                        Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                        Request1.AddField("codice_status", "102")
+                        risposta = Request1.Execute()
+                    Next
+                End If
+
+            Catch ex As Exception
+                idrecord = 0
+            End Try
+
+            Return idrecord
+        End Function
         Shared Function AggiornaStatusMoltia155(IdRinnovo As Integer)
             Dim idrecord As Integer = 0
             Dim risposta As Integer = 0
@@ -1925,6 +1946,109 @@ Public Class AsiModel
             Return ds
 
         End Function
+        Public Shared Function QuanteEquiparazioniPerGruppoEA(IDEquiparazioneM As Integer) As Integer
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim DatiRinnovo As New DatiNuovoRinnovo
+            Dim quanti As Integer = 0
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviRichiestaMolti")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDEquiparazioneM", IDEquiparazioneM, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("dichiarazioneEAInviata", "n", Enumerations.SearchOption.equals)
+            '  RequestA.AddSearchField("Rin_InviaA", "EA", Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice_Status", "151", Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                    quanti = ds.Tables("main").Rows.Count
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return quanti
+        End Function
+
+        Public Shared Function quanteRichiestePerGruppo(IdEquiparazioneM As Integer) As Integer
+            Dim ritorno As Integer = 0
+            Dim counter1 As Integer = 0
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+
+            RequestP.AddSearchField("idEquiparazioneM", IdEquiparazioneM, Enumerations.SearchOption.equals)
+            '  RequestP.AddSearchField("idRinnovo", idRinnovo, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Status", "1...114")
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                counter1 = ds.Tables("main").Rows.Count
+
+
+            Else
+
+
+                counter1 = 0
+
+            End If
+
+
+            Return counter1
+
+        End Function
+
+
+        Public Shared Function QuanteEquiparazioniPerGruppo(IDEquiparazioneM As Integer) As Integer
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            'Dim DatiRinnovo As New DatiNuovoRinnovo
+            Dim quanti As Integer = 0
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDEquiparazioneM", IDEquiparazioneM, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice_Status", "1...114")
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                    quanti = ds.Tables("main").Rows.Count
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return quanti
+        End Function
+
+
+
         Public Shared Function PrendiValoriNuovaEquiparazione(IDEquiparazione As String) As DatiNuovaEquiparazione
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing

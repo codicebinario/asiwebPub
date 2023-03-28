@@ -101,7 +101,7 @@
      
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-                <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due"><i class="bi bi-sign-stop-fill"> </i>Interrompi il caricamento corso.</a>       
+          <%--      <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due"><i class="bi bi-sign-stop-fill"> </i>Interrompi il caricamento corso.</a>       --%>
     </p>
     
   </div></div>
@@ -117,7 +117,7 @@
 							
 				</div></div>
     
-    <div class="col-sm-12">
+   <%-- <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
                   <div class="form-group">
@@ -128,9 +128,27 @@
 
           </div>
       </div>
-    <br /><br />
+    <br /><br />--%>
 
- 
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+
+                    <div class="alert alert-danger" role="alert">
+                        <asp:CheckBox AutoPostBack="true" CssClass="success" ID="chkSalta" CausesValidation="false" runat="server" />
+                        <strong>Salta il caricamento foto: </strong>se si vuole procedere senza caricare la foto, metti il check-box ed attendi. 
+  
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />
   
 
 
@@ -152,35 +170,28 @@
   
       
        <div class="col-sm-12">
-
+           <div class="row">
+               <div class="col-sm-8">
          	<asp:label id="Label3" runat="server"><b>Carica la foto della persona per l'equiparazione</b></asp:label>
 				
            <div class="custom-file mb-3">
        <asp:FileUpload ID="inputfile" class="custom-file-input" runat="server" name="filename"/>
+          
       <label class="custom-file-label" for="inputfile">Scegli la foto</label>
+   
+               
+           </div>
+<div class="col-sm-4">
+     <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
+
+
     </div>
-
-           <div class="col-sm-12">
-          <div class="row">
-              <div class="col-sm-12">
-                  <div class="form-group">
-
-<div class="alert alert-danger" role="alert">  <asp:CheckBox AutoPostBack="true" CssClass="success" ID="chkSalta" CausesValidation="false"  runat="server" />
- <strong>Salta il caricamento foto: </strong> se si vuole procedere senza caricare la foto, metti il check-box ed attendi. 
-  
-</div>
-
-     
-
-     </div>
-              </div>
-
-          </div>
-      </div>
-    <br />
+                   </div></div>
+ 
+        
 
 
-           		<div class="errore" id="results"  runat="server"><br /></div>
+   <div class="col-sm-12 errore" id="results" runat="server"><br /></div>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" 
                             ErrorMessage="carica la foto" 
                             ControlToValidate="inputfile" CssClass="errore"></asp:RequiredFieldValidator>
@@ -189,12 +200,8 @@
             ErrorMessage="il file deve essere in formato jpg" 
             ValidationExpression="(.*?)\.(jpg|JPG)$" Display="Dynamic" CssClass="errore"></asp:RegularExpressionValidator>
      </div>
-        <br />
- <div class="col-sm-12">
-<asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
+      
 
-<%--    <asp:Button ID="BtnUp" class="btn btn-primary" runat="server" Text="Carica" />--%>
-    </div>
 
 
      

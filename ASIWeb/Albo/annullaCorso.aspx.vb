@@ -21,7 +21,7 @@ Public Class annullaCorso
 
         Dim RequestP = fmsP.CreateEditRequest(record_ID)
         RequestP.AddField("Codice_Status", "99")
-
+        RequestP.AddScript("RunWebAnnullaCorsoDT", codiceCorso)
         Try
             risposta = RequestP.Execute()
             AsiModel.LogIn.LogCambioStatus(codiceCorso, "99", Session("WebUserEnte"), "corso")

@@ -222,13 +222,25 @@
     <Content Include="AsiMasterPageMain.Master" />
     <Content Include="AsiMasterPageRinnovi.Master" />
     <Content Include="Css\customEquiparazione.css" />
+    <Content Include="Equiparazioni2\annullaEquiparazione2.aspx" />
+    <Content Include="Equiparazioni2\annullaEquiparazioneMotivo2.aspx" />
+    <Content Include="Equiparazioni2\archivioEquiValutati2.aspx" />
     <Content Include="Equiparazioni2\checkTesseramento2.aspx" />
+    <Content Include="Equiparazioni2\closeEquiparazione2.aspx" />
     <Content Include="Equiparazioni2\DashboardEqui2.aspx" />
+    <Content Include="Equiparazioni2\DashboardEquiEvasi2.aspx" />
+    <Content Include="Equiparazioni2\dashboardV2.aspx" />
     <Content Include="Equiparazioni2\richiestaEquiparazione2.aspx" />
     <Content Include="Equiparazioni2\richiestaEquiparazioneDati12.aspx" />
     <Content Include="Equiparazioni2\richiestaEquiparazioneDati22.aspx" />
     <Content Include="Equiparazioni2\richiestaEquiparazioneFoto2.aspx" />
+    <Content Include="Equiparazioni2\scaricaDiplomaEqui2.aspx" />
+    <Content Include="Equiparazioni2\scaricaDiplomaEquiparazioneN2.aspx" />
+    <Content Include="Equiparazioni2\scaricaTesseraEquiparazioneN2.aspx" />
     <Content Include="Equiparazioni2\sceltaSport.aspx" />
+    <Content Include="Equiparazioni2\upLegEquiparazioni2.aspx" />
+    <Content Include="Equiparazioni2\valutaEquiparazione2.aspx" />
+    <Content Include="Equiparazioni2\vediDocumentazione2.aspx" />
     <Content Include="Equiparazioni\annullaEquiparazione.aspx" />
     <Content Include="Equiparazioni\annullaEquiparazioneMotivo.aspx" />
     <Content Include="Equiparazioni\archivioEquiValutati.aspx" />
@@ -686,6 +698,27 @@
       <DependentUpon>AsiMasterPageRinnovi2.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Equiparazioni2\annullaEquiparazione2.aspx.designer.vb">
+      <DependentUpon>annullaEquiparazione2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\annullaEquiparazione2.aspx.vb">
+      <DependentUpon>annullaEquiparazione2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\annullaEquiparazioneMotivo2.aspx.designer.vb">
+      <DependentUpon>annullaEquiparazioneMotivo2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\annullaEquiparazioneMotivo2.aspx.vb">
+      <DependentUpon>annullaEquiparazioneMotivo2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\archivioEquiValutati2.aspx.designer.vb">
+      <DependentUpon>archivioEquiValutati2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\archivioEquiValutati2.aspx.vb">
+      <DependentUpon>archivioEquiValutati2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Equiparazioni2\checkTesseramento2.aspx.designer.vb">
       <DependentUpon>checkTesseramento2.aspx</DependentUpon>
     </Compile>
@@ -693,11 +726,32 @@
       <DependentUpon>checkTesseramento2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Equiparazioni2\closeEquiparazione2.aspx.designer.vb">
+      <DependentUpon>closeEquiparazione2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\closeEquiparazione2.aspx.vb">
+      <DependentUpon>closeEquiparazione2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Equiparazioni2\DashboardEqui2.aspx.designer.vb">
       <DependentUpon>DashboardEqui2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Equiparazioni2\DashboardEqui2.aspx.vb">
       <DependentUpon>DashboardEqui2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\DashboardEquiEvasi2.aspx.designer.vb">
+      <DependentUpon>DashboardEquiEvasi2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\DashboardEquiEvasi2.aspx.vb">
+      <DependentUpon>DashboardEquiEvasi2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\dashboardV2.aspx.designer.vb">
+      <DependentUpon>dashboardV2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\dashboardV2.aspx.vb">
+      <DependentUpon>dashboardV2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni2\richiestaEquiparazione2.aspx.designer.vb">
@@ -728,11 +782,53 @@
       <DependentUpon>richiestaEquiparazioneFoto2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Equiparazioni2\scaricaDiplomaEqui2.aspx.designer.vb">
+      <DependentUpon>scaricaDiplomaEqui2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\scaricaDiplomaEqui2.aspx.vb">
+      <DependentUpon>scaricaDiplomaEqui2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\scaricaDiplomaEquiparazioneN2.aspx.designer.vb">
+      <DependentUpon>scaricaDiplomaEquiparazioneN2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\scaricaDiplomaEquiparazioneN2.aspx.vb">
+      <DependentUpon>scaricaDiplomaEquiparazioneN2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\scaricaTesseraEquiparazioneN2.aspx.designer.vb">
+      <DependentUpon>scaricaTesseraEquiparazioneN2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\scaricaTesseraEquiparazioneN2.aspx.vb">
+      <DependentUpon>scaricaTesseraEquiparazioneN2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Equiparazioni2\sceltaSport.aspx.designer.vb">
       <DependentUpon>sceltaSport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Equiparazioni2\sceltaSport.aspx.vb">
       <DependentUpon>sceltaSport.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\upLegEquiparazioni2.aspx.designer.vb">
+      <DependentUpon>upLegEquiparazioni2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\upLegEquiparazioni2.aspx.vb">
+      <DependentUpon>upLegEquiparazioni2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\valutaEquiparazione2.aspx.designer.vb">
+      <DependentUpon>valutaEquiparazione2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\valutaEquiparazione2.aspx.vb">
+      <DependentUpon>valutaEquiparazione2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\vediDocumentazione2.aspx.designer.vb">
+      <DependentUpon>vediDocumentazione2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\vediDocumentazione2.aspx.vb">
+      <DependentUpon>vediDocumentazione2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni\annullaEquiparazione.aspx.designer.vb">
