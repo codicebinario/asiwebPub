@@ -17,8 +17,10 @@ Public Class AsiMasterPageEqui2
 
         If Not Page.IsPostBack Then
             Dim quantiVal As Integer = quantiDaValutare(Session("codice"))
+
             Dim quantiEvasival As Integer = quantiEvasi(Session("codice"))
             Dim quantiAttiviVal As Integer = quantiAttivi(Session("codice"))
+            Dim quantiRespintiVal As Integer = quantiRespinti(Session("codice"))
             Dim quantiValutatiVal As Integer = quantiValutati(Session("codice"))
             ' If quantiAttiviVal >= 1 Then
             LinkEquiAttive.Text = "<i class=""bi bi-arrow-down-circle""> </i>Equip. Attive <span class=""badge badge-light text-dark""> " & quantiAttiviVal & "</span>"
@@ -29,6 +31,7 @@ Public Class AsiMasterPageEqui2
             '  If quantiEvasival >= 1 Then
             '   LinkSettore.Visible = True
             LinkArchivioEqui.Text = "<i class=""bi bi-arrow-down-circle""> </i>Equip. Evase <span class=""badge badge-light text-dark""> " & quantiEvasival & "</span>"
+            LinkRifiutatiDT.Text = "<i class=""bi bi-arrow-down-circle""> </i>Equip. Respinte <span class=""badge badge-light text-dark""> " & quantiRespintiVal & "</span>"
 
             '  End If
 
@@ -109,6 +112,13 @@ Public Class AsiMasterPageEqui2
         Response.Redirect("DashboardEquiEvasi2.aspx")
     End Sub
 
+    Protected Sub LinkRifiutatiDT_Click(sender As Object, e As EventArgs) Handles LinkRifiutatiDT.Click
+        '    NuovaRichiesta()
+
+        Response.Redirect("DashboardEquiRifiutate.aspx")
+    End Sub
+
+
 
 
 
@@ -127,7 +137,7 @@ Public Class AsiMasterPageEqui2
 
 
         Session("id_record") = Request.Execute()
-
+        'Session("codr") = Session("id_record")
 
 
 
@@ -204,7 +214,7 @@ Public Class AsiMasterPageEqui2
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("CodiceStatus", "0...114")
+        RequestP.AddSearchField("CodiceStatus", "101...114.5")
         '  RequestP.AddSearchField("Codice_Status", "115")
         ' RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
@@ -217,9 +227,12 @@ Public Class AsiMasterPageEqui2
 
             Dim counter1 As Integer = 0
             For Each dr In ds.Tables("main").Rows
+                If dr("codiceStatus") <> 104 Then
+
+                    counter1 += 1
+                End If
 
 
-                counter1 += 1
 
 
 
@@ -243,7 +256,57 @@ Public Class AsiMasterPageEqui2
         Return ritorno
 
     End Function
+    Function quantiRespinti(codice As String) As Integer
+        Dim ritorno As Integer = 0
 
+        Dim ds As DataSet
+
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        fmsP.SetLayout("webEquiparazioniMaster")
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("CodiceStatus", "104")
+        '  RequestP.AddSearchField("Codice_Status", "115")
+        ' RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+
+
+
+        ds = RequestP.Execute()
+
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+            Dim counter1 As Integer = 0
+            For Each dr In ds.Tables("main").Rows
+
+                counter1 += 1
+
+
+
+
+
+
+
+            Next
+            If counter1 >= 1 Then
+                ritorno = counter1
+            Else
+                ritorno = 0
+            End If
+
+        Else
+
+            ' non si sono records
+            'ritorno = False
+
+
+        End If
+
+
+        Return ritorno
+
+    End Function
     Function quantiEvasi(codice As String) As Integer
         Dim ritorno As Integer = 0
 
@@ -356,7 +419,7 @@ Public Class AsiMasterPageEqui2
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("Codice_Status", "115")
+        RequestP.AddSearchField("Codice_Status", "105")
         RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         RequestP.AddSortField("IDRecord", Enumerations.Sort.Descend)
 

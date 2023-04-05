@@ -274,10 +274,10 @@ Public Class DashBoardRinnovi2
 
                 End If
                 phDash.Controls.Add(New LiteralControl("<p>"))
-                If (Data.FixNull(dr("CodiceStatus")) = "155") Then
-                    phDash.Controls.Add(hpUPPag)
+                'If (Data.FixNull(dr("CodiceStatus")) = "155") Then
+                phDash.Controls.Add(hpUPPag)
 
-                End If
+                '  End If
                 phDash.Controls.Add(New LiteralControl("</p>"))
                 ' corpo del contenuto del panel
                 '  phDash.Controls.Add(New LiteralControl(Data.FixNull(dr("IDRinnovoM"))))

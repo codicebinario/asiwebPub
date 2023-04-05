@@ -16,7 +16,7 @@
         
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Lista Partecipanti al Corso KO</h3>
+    <h3 class="display-5">Lista Partecipanti al Corso non valida</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
        

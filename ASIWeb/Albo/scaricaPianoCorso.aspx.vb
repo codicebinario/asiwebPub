@@ -25,6 +25,8 @@ Imports System.Net.Security
 Imports System.Net
 Imports Image = System.Drawing.Image
 Imports RestSharp.Authenticators
+Imports System.Security.Policy
+
 Public Class scaricaPianoCorso
 
     Inherits System.Web.UI.Page
@@ -47,13 +49,14 @@ Public Class scaricaPianoCorso
 
         Select Case s
             Case 1
-                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico(1)", codiceCorso, extension)
+
+                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/" & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico(1)", codiceCorso, extension)
 
             Case 2
-                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico2(1)", codiceCorso, extension)
+                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/" & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico2(1)", codiceCorso, extension)
 
             Case 3
-                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico3(1)", codiceCorso, extension)
+                pdf = FotoS("https://crm.asinazionale.it/fmi/xml/cnt/" & nomeFilePC & "?-db=Asi&-lay=webCorsiRichiesta&-recid=" & codiceCorso & "&-field=Programma_Tecnico_Didattico3(1)", codiceCorso, extension)
 
 
         End Select
@@ -88,6 +91,8 @@ Public Class scaricaPianoCorso
     End Sub
 
     Public Function FotoS(urlFoto As String, codiceCorso As String, extension As String)
+
+
 
         Dim pictureURL As String = urlFoto
 

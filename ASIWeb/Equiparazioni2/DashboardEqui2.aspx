@@ -37,6 +37,7 @@
          .moltopiccolo {
       font-size:small;
   }
+ 
         .piccolo{
 
  font-size: small;
@@ -140,15 +141,7 @@
             </p>
         </div>
     </div>
-             <asp:UpdateProgress ID="UpdateProgress1" runat="server"
-					 DynamicLayout="false">
-	<ProgressTemplate>
-	  <div class="Progress">
-		 <div class="btn">loading...</div>
-		
-		</div>
-	</ProgressTemplate>
-</asp:UpdateProgress>
+         
     <div class="row">
         <div class="col-sm-12 mb-3 mb-md-0">
             <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">

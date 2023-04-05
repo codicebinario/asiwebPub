@@ -27,7 +27,9 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
       <style>
         
-
+              .moltopiccolo {
+      font-size:small;
+  }
 
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -186,7 +188,12 @@
 
                </li>
 
-         
+
+          <li class="nav-item">
+              <asp:LinkButton ID="LinkRifiutatiDT" CssClass="nav-link" Visible="true" CausesValidation="false" runat="server"><i class="bi bi-arrows-angle-expand"> </i>Equip. Respinte</asp:LinkButton>
+
+          </li>
+
 
 
           <li class="nav-item">       

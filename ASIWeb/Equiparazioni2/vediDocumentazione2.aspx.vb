@@ -111,7 +111,7 @@ Public Class vediDocumentazione2
 
 
             Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
+            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("id_record"))
 
 
             Dim verificato As String = DettaglioEquiparazione.EquiCF
@@ -260,7 +260,7 @@ Public Class vediDocumentazione2
 
     End Function
 
-    Protected Sub lnkTorna_Click(sender As Object, e As EventArgs) Handles lnkTorna.Click
-        Response.Redirect("dashboardEqui2.aspx?open=" & codR)
-    End Sub
+    'Protected Sub lnkTorna_Click(sender As Object, e As EventArgs) Handles lnkTorna.Click
+    '    Response.Redirect("dashboardEqui2.aspx?open=" & codR)
+    'End Sub
 End Class

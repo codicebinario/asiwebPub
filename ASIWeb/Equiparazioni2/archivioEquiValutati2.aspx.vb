@@ -119,7 +119,7 @@ Public Class archivioEquiValutati2
 
                     phDash.Controls.Add(New LiteralControl("Equiparazione:  "))
                     phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
-                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDEquiparazione")) & ">" & Data.FixNull(dr("IDEquiparazione")) & "</a>"))
+                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDRecord")) & ">" & Data.FixNull(dr("IDRecord")) & "</a>"))
                     phDash.Controls.Add(New LiteralControl())
 
                     phDash.Controls.Add(New LiteralControl("</span><br />"))

@@ -130,7 +130,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-								 <label for="txtNome">Codice Fiscale [*] </label>
+								 <label for="txtNome">Codice Fiscale oppure Numero Richiesta [*] </label>
                                     <asp:textbox id="txtCodiceFiscale" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
 							
 					</div>
@@ -165,7 +165,7 @@
 								<div class="form-group">
 
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" 
-										CssClass="errore" ErrorMessage="Codice Fiscale " ControlToValidate="txtCodiceFiscale" 
+										CssClass="errore" ErrorMessage="Codice Fiscale oppure Numero Richiesta " ControlToValidate="txtCodiceFiscale" 
 										EnableClientScript="true"></asp:RequiredFieldValidator>
   
 									</div>

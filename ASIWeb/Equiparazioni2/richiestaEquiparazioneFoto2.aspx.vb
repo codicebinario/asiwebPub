@@ -29,11 +29,13 @@ Public Class richiestaEquiparazioneFoto2
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
     Dim deEnco As New Ed()
-    Const MassimoPeso As Integer = 512000
+    Const MassimoPeso As Integer = 3102400
     Const FileType As String = "image/*"
     ' in pixel
-    Const massimaaltezza As Integer = 140
-    Const massinalarghezza As Integer = 100
+    Const massimaaltezza As Integer = 1400
+    Const massinalarghezza As Integer = 1000
+    Const minimaAltezza As Integer = 140
+    Const minimaLarghezza As Integer = 100
 
     Dim ext As String = " "
     Dim nomefileReale As String = " "
@@ -101,7 +103,7 @@ Public Class richiestaEquiparazioneFoto2
 
 
             Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
+            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("id_record"))
             Dim verificato As String = DettaglioEquiparazione.EquiCF
             If verificato = "0" Then
                 Response.Redirect("DashboardEqui.aspx?ris=" & deEnco.QueryStringEncode("no"))
@@ -342,7 +344,7 @@ Public Class richiestaEquiparazioneFoto2
         ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
             results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
 
-        ElseIf img.Width < massinalarghezza OrElse img.Height < massimaaltezza Then
+        ElseIf img.Width < minimaLarghezza OrElse img.Height < minimaAltezza Then
 
             results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
 
@@ -353,7 +355,7 @@ Public Class richiestaEquiparazioneFoto2
 
         ElseIf img.Width > massinalarghezza OrElse img.Height > massimaaltezza Then
             'Response.Write(maggiore)
-            ' results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+            results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
         Else
             Dim rapporto As Integer
             rapporto = img.Height / 140

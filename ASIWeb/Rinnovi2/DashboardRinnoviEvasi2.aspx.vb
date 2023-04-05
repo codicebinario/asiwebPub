@@ -22,6 +22,7 @@ Public Class DashboardRinnoviEvasi2
 
 
         Dim ris As String = Request.QueryString("ris")
+        Dim tipo As String = Request.QueryString("tipo")
 
         If Not Page.IsPostBack Then
 
@@ -37,7 +38,7 @@ Public Class DashboardRinnoviEvasi2
 
 
                 ElseIf ris = "ko" Then
-                    Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Nessun rinnovo evaso con questo codice fiscale ' ).set('resizable', true).resizeTo('20%', 200);", True)
+                    Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Nessun rinnovo evaso con" & DettaglioTipo(tipo) & " ' ).set('resizable', true).resizeTo('20%', 200);", True)
 
                 ElseIf ris = "no" Then
                     Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Equiparazione senza verifica tessera.<br />Procedere con una nuova richiesta ' ).set('resizable', true).resizeTo('20%', 200);", True)
@@ -69,6 +70,18 @@ Public Class DashboardRinnoviEvasi2
         End If
 
     End Sub
+    Function DettaglioTipo(valore As String) As String
+        Dim risultato As String
+        If valore = "cF" Then
+            risultato = " questo codice fiscale"
+        ElseIf valore = "nR" Then
+            risultato = " questa numero richiesta"
+        Else
+            risultato = " questo ente"
+        End If
+        Return risultato
+    End Function
+
     Sub rinnovi()
 
         Dim ds As DataSet
@@ -139,6 +152,7 @@ Public Class DashboardRinnoviEvasi2
                     'phDash10.Controls.Add(New LiteralControl())
 
                     'phDash10.Controls.Add(New LiteralControl("</span><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Codice Richiesta: <small><b>" & Data.FixNull(dr("IDRinnovoM")) & "</b></small><br />"))
 
 
                     phDash10.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "</small><br />"))
@@ -346,19 +360,47 @@ Public Class DashboardRinnoviEvasi2
 
     Protected Sub LinkButton1_Click(sender As Object, e As EventArgs) Handles LinkButton1.Click
         If Page.IsValid Then
+            Dim codiceFiscaleInserito As String
+            Dim numeroRichiestaInserita As Integer
+            Dim tipoInserito As String
+            If Integer.TryParse(Trim(txtCodiceFiscale.Text), vbNull) Then
+                numeroRichiestaInserita = Trim(txtCodiceFiscale.Text)
+                tipoInserito = "nR"
+            Else
+                tipoInserito = "cF"
+                codiceFiscaleInserito = Trim(txtCodiceFiscale.Text)
+            End If
+
+
+
 
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing
             Dim DatiRinnovo As New DatiNuovoRinnovo
             Dim tessera As String
+
+
+
             fms = Conn.Connect()
 
             '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
             '     fmsB.SetDatabase(Database)
             fms.SetLayout("webRinnoviRichiesta2")
             Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestA.AddSearchField("Asi_CodiceFiscale", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
+
+
+            If tipoInserito = "cF" Then
+                RequestA.AddSearchField("Asi_CodiceFiscale", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
+            Else
+                RequestA.AddSearchField("IDRinnovoM", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
+
+            End If
+
+
             RequestA.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+
+
+
             RequestA.AddSearchField("Codice_Status", 160, Enumerations.SearchOption.biggerOrEqualThan)
             Dim Counter1 = 0
 
@@ -404,6 +446,10 @@ Public Class DashboardRinnoviEvasi2
                         'phDash.Controls.Add(New LiteralControl())
 
                         'phDash.Controls.Add(New LiteralControl("</span><br />"))
+
+                        phDash.Controls.Add(New LiteralControl("Codice Richiesta: <small><b>" & Data.FixNull(dr("IDRinnovoM")) & "</b></small><br />"))
+
+
 
 
                         phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "</small><br />"))
@@ -494,7 +540,7 @@ Public Class DashboardRinnoviEvasi2
                     'Response.Write("ko")
                     phDash.Visible = False
                     Session("procedi") = "KO"
-                    Response.Redirect("DashboardRinnoviEvasi2.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+                    Response.Redirect("DashboardRinnoviEvasi2.aspx?tipo=" & tipoInserito & "&ris=" & deEnco.QueryStringEncode("ko"))
                 End If
 
             Catch ex As Exception

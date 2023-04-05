@@ -50,15 +50,6 @@ Partial Public Class homeA
     Protected WithEvents HiddenQuantiRinnoviAttivi As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''LinkButton1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents LinkButton1 As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
     '''LinkButton2 control.
     '''</summary>
     '''<remarks>
@@ -66,4 +57,13 @@ Partial Public Class homeA
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents LinkButton2 As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''LinkButton1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkButton1 As Global.System.Web.UI.WebControls.LinkButton
 End Class

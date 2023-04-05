@@ -175,11 +175,7 @@ function ServerException(mess) {
         <label class="custom-file-label" for="customFileInput">Carica l'elenco</label>
      
         </div>   
-              <div>
-                  <hr />
-                  <b>Live Preview</b>
-                  <br />
-              </div>  
+             
      <%-- <div class="input-group-append">--%>
        <%-- <button class="btn btn-primary" type="button" id="customFileInput1">Upload</button>--%>
             <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary ml-2"/>

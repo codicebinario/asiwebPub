@@ -1,7 +1,15 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageEqui2.Master" CodeBehind="DashboardEquiEvasi2.aspx.vb" Inherits="ASIWeb.DashboardEquiEvasi2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <style>
+    <link rel="stylesheet" href="../css/alertify.min.css" />
+    <link rel="stylesheet" href="../css/themes/default.min.css" />
+    <script type="text/javascript" src="../Scripts/alertify.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
+    <style>
+            .moltopiccolo {
+      font-size:small;
+  }
         .card-title{
     font-size:0.8rem;
     text-overflow: ellipsis;
@@ -74,20 +82,13 @@
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:UpdateProgress ID="UpdateProgress1" runat="server"
-					 DynamicLayout="false">
-	<ProgressTemplate>
-	  <div class="Progress">
-		 <div class="btn">loading...</div>
-		
-		</div>
-	</ProgressTemplate>
-</asp:UpdateProgress>
+
     <div class="row">
- <div class="col-sm-12 mb-3 mb-md-0">
+ <div class="col-sm-12 mb-3  mt-0mb-md-0">
        <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Equiparazioni Evase</h3>
+
+      <h6 class="fs-5 text-white text-decoration-none">Equiparazioni Evase</h6>
     <p class="lead">
   <asp:Literal ID="litDenominazioneJumboDash" runat="server"></asp:Literal>
                
@@ -109,7 +110,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-								 <label for="txtNome">Codice Fiscale [*] </label>
+                                    <label for="txtNome">Codice Fiscale oppure Numero Richiesta [*] </label>
                                     <asp:textbox id="txtCodiceFiscale" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
 							
 					</div>
@@ -117,7 +118,7 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 							 <label for="txtNomexxxxxxxxxxx">--- </label><br />
-                                    <%-- <asp:Button ID="btnCheck" runat="server" Text="Trova" class="btn btn-primary"    />--%>
+                             
 <asp:LinkButton ID="lnkCheck" runat="server" CssClass="btn btn-primary"><i class="bi bi-person-badge"> </i>Trova</asp:LinkButton>
 								
 								</div>
@@ -142,9 +143,9 @@
 							<div class="col-sm-6">
 								<div class="form-group">
 
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" 
-										CssClass="errore" ErrorMessage="Codice Fiscale " ControlToValidate="txtCodiceFiscale" 
-										EnableClientScript="true"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server"
+                                        CssClass="errore" ErrorMessage="Codice Fiscale oppure Numero Richiesta " ControlToValidate="txtCodiceFiscale"
+                                        EnableClientScript="true"></asp:RequiredFieldValidator>
   
 									</div>
 							</div>

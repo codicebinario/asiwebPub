@@ -298,7 +298,7 @@ Public Class upLegEquiparazioni2
         Request11.Execute()
 
 
-        Dim record_id As String = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_ID(codR) ' per aggiornare status
+        Dim record_id As String = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDEquiMaster(codR) ' per aggiornare status
 
         Dim fmsP1 As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         '  Dim ds As DataSet

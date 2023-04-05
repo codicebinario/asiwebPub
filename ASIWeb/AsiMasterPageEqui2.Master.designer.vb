@@ -113,6 +113,15 @@ Partial Public Class AsiMasterPageEqui2
     Protected WithEvents LinkSettoreValutati As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''LinkRifiutatiDT control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkRifiutatiDT As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''lnkNuovaEquiparazione control.
     '''</summary>
     '''<remarks>

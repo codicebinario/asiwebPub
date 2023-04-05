@@ -138,63 +138,7 @@ Public Class checkTesseramentoRinnovi2
         Return idRecord
     End Function
 
-    'Protected Sub lnkCheck_Click(sender As Object, e As EventArgs) Handles lnkCheck.Click
-    '    If Page.IsValid Then
 
-    '        Dim idrecord As Integer
-    '        Dim risultatoCheck As Boolean
-    '        Dim dataOggi As Date = Today.Date
-    '        Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
-
-    '        Dim DettaglioRinnovo As New DatiNuovoRinnovo
-
-
-    '        risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
-    '        '  DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(txtCodiceFiscale.Text)
-    '        Session("visto") = "ok"
-    '        If risultatoCheck = True Then
-
-    '            '   Response.Write("ok")
-    '            Session("procedi") = "OK"
-    '            Session("codiceFiscale") = Trim(txtCodiceFiscale.Text)
-
-
-
-    '            '   idrecord = CaricaDatiDocumentoRinnovo(codR, Session("codice"), Trim(txtCodiceFiscale.Text),
-    '            'DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
-
-
-
-    '            ' Response.Redirect("richiestaRinnovo2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
-
-    '            Response.Redirect("richiestaRinnovo2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&cf=" & deEnco.QueryStringEncode(Trim(txtCodiceFiscale.Text)))
-
-
-    '        Else
-
-    '            'Response.Write("ko")
-    '            If t = 1 Then
-    '                ' cancella il gruppo
-    '                idrecord = AsiModel.Rinnovi.PrendiIDrecordMaster(codR)
-    '                If idrecord > 0 Then
-
-    '                    AsiModel.Rinnovi.CancellaGruppo(idrecord)
-    '                End If
-
-
-
-    '            End If
-    '            Session("procedi") = "KO"
-    '            Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("ko"))
-
-
-    '        End If
-
-
-
-
-    '    End If
-    'End Sub
 
     Protected Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
         If Page.IsValid Then

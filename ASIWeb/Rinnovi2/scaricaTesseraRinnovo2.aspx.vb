@@ -44,7 +44,7 @@ Public Class scaricaTesseraRinnovo2
         Dim nominativo As String = deEnco.QueryStringDecode(Request.QueryString("nominativo"))
         Dim url As String
 
-        url = "https://crm.asinazionale.it/fmi/xml/cnt/ " & nomeFilePC & "?-db=Asi&-lay=webRinnoviRichiesta2&-recid=" & record_ID & "&-field=Tessera(1)"
+        url = "https://crm.asinazionale.it/fmi/xml/cnt/" & nomeFilePC & "?-db=Asi&-lay=webRinnoviRichiesta2&-recid=" & record_ID & "&-field=Tessera(1)"
 
         pdf = FotoS(url, nominativo)
 

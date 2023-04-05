@@ -48,7 +48,8 @@ Public Class dashboardV2
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+        RequestP.AddSortField("IDEquiparazioneM", Enumerations.Sort.Descend)
+
         RequestP.AddSortField("IDrecord", Enumerations.Sort.Descend)
 
 
@@ -99,7 +100,7 @@ Public Class dashboardV2
                     Ann.ID = "ann_" & counter1
                     Ann.Attributes.Add("runat", "server")
                     Ann.Text = "<i class=""bi bi-bookmark-check""> </i>Valuta Equiparazione"
-                    Ann.PostBackUrl = "valutaEquiparazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                    Ann.PostBackUrl = "valutaEquiparazione2.aspx?IdEquiparazioneM=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDrecord")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
                     Ann.CssClass = "btn btn-success btn-sm btn-uno btn-custom mb-2"
                     '    Ann.Attributes.Add("OnClick", "if(!myValuta())return false;")
 
@@ -135,12 +136,12 @@ Public Class dashboardV2
                     phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
 
                     phDash.Controls.Add(New LiteralControl("Equiparazione:  "))
                     phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
-                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDEquiparazione")) & ">" & Data.FixNull(dr("IDEquiparazione")) & "</a>"))
-                    phDash.Controls.Add(New LiteralControl())
+                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDRecord")) & ">" & Data.FixNull(dr("IDRecord")) & "</a>"))
+                    phDash.Controls.Add(New LiteralControl(" della Richiesta: " & Data.FixNull(dr("IDEquiparazioneM"))))
 
                     phDash.Controls.Add(New LiteralControl("</span><br />"))
 
@@ -157,7 +158,7 @@ Public Class dashboardV2
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left"">"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left moltopiccolo"">"))
 
                     phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
 
@@ -174,7 +175,7 @@ Public Class dashboardV2
 
 
                     Else
-                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEqui.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
+                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEqui2.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRecord"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileDiplomaFS"))) & "&nominativo=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
 
@@ -182,16 +183,6 @@ Public Class dashboardV2
                     End If
 
 
-                    'Dim PianoCorso As New LinkButton
-
-                    'PianoCorso.ID = "vediPianoCorso_" & counter1
-                    'PianoCorso.Attributes.Add("runat", "server")
-                    'PianoCorso.Text = "<i class=""bi bi-box-arrow-down""> </i>Scarica Diploma"
-                    ''  PianoCorso.PostBackUrl = "scaricaPianoCorso.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(dr("NomeFileOnFS"))
-                    'PianoCorso.PostBackUrl = "scaricaDiplomaEqui.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazione"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" & deEnco.QueryStringEncode(nomeFile))
-
-                    'PianoCorso.CssClass = "btn btn-success btn-sm btn-due btn-custom mb-2"
-                    ' PianoCorso.Attributes.Add("OnClick", "if(!myValuta())return false;")
 
 
 
@@ -212,12 +203,10 @@ Public Class dashboardV2
                     phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
 
 
-                    phDash.Controls.Add(New LiteralControl())
 
-                    phDash.Controls.Add(New LiteralControl("</span><br />"))
 
 
                     phDash.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))

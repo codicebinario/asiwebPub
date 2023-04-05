@@ -44,6 +44,7 @@ Public Class upDichiarazione2
     Dim codiceFiscale As String = ""
     Dim idSelected As String = ""
     Dim record_ID As String = ""
+    Dim IDRinnovoM As Integer
     Dim codR As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
@@ -100,6 +101,7 @@ Public Class upDichiarazione2
 
             End If
             Dim IDRinnovo As String = DettaglioRinnovo.IDRinnovo
+            IDRinnovoM = DettaglioRinnovo.IDRinnovoM
             CodiceEnteRichiedente = DettaglioRinnovo.CodiceEnteRichiedente
             Dim DescrizioneEnteRichiedente As String = DettaglioRinnovo.DescrizioneEnteRichiedente
             Dim TipoEnte As String = DettaglioRinnovo.TipoEnte
@@ -199,12 +201,12 @@ Public Class upDichiarazione2
         Request.AddField("DichiarazioneEAInviata", "s")
         Request.AddScript("SistemaEncodingNoteDichiarazioneRinnovi", IDRinnovo)
 
-        AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
+
 
         Try
             risposta = Request.Execute()
 
-
+            AsiModel.LogIn.LogCambioStatus(IDRinnovoM, "152", Session("WebUserEnte"), "rinnovo")
 
 
         Catch ex As Exception

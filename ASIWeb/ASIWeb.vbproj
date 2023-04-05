@@ -227,6 +227,7 @@
     <Content Include="Equiparazioni2\archivioEquiValutati2.aspx" />
     <Content Include="Equiparazioni2\checkTesseramento2.aspx" />
     <Content Include="Equiparazioni2\closeEquiparazione2.aspx" />
+    <Content Include="Equiparazioni2\DashboardEquiRifiutate.aspx" />
     <Content Include="Equiparazioni2\DashboardEqui2.aspx" />
     <Content Include="Equiparazioni2\DashboardEquiEvasi2.aspx" />
     <Content Include="Equiparazioni2\dashboardV2.aspx" />
@@ -731,6 +732,13 @@
     </Compile>
     <Compile Include="Equiparazioni2\closeEquiparazione2.aspx.vb">
       <DependentUpon>closeEquiparazione2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\DashboardEquiRifiutate.aspx.designer.vb">
+      <DependentUpon>DashboardEquiRifiutate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\DashboardEquiRifiutate.aspx.vb">
+      <DependentUpon>DashboardEquiRifiutate.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni2\DashboardEqui2.aspx.designer.vb">

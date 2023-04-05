@@ -106,7 +106,7 @@ Public Class richiestaEquiparazioneDati12
 
 
             Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
+            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("id_record"))
 
 
             Dim verificato As String = DettaglioEquiparazione.EquiCF
@@ -333,22 +333,29 @@ Public Class richiestaEquiparazioneDati12
         Request.AddField("Equi_ProvinciaResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlProvinciaResidenza.SelectedItem.Text)))
         Request.AddField("Equi_ComuneResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlComuneResidenza.SelectedItem.Text)))
         Request.AddField("Equi_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
-        Request.AddField("Equi_IndirizzoConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text))))
-        Request.AddField("Equi_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
-        Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
-        Request.AddField("Equi_CapConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text))))
 
-        If chkEA.Checked Then
-            Request.AddField("Equi_InviaA", "EA")
-        End If
 
         If chkStampaCartacea.Checked = True Then
             Request.AddField("Equi_StampaCartaceo", "si")
+            Request.AddField("Equi_IndirizzoConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text))))
+            Request.AddField("Equi_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
+            Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
+            Request.AddField("Equi_CapConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text))))
+
+
+
+
+            If chkEA.Checked Then
+                Request.AddField("Equi_InviaA", "EA")
+            Else
+                Request.AddField("Equi_InviaA", "T")
+            End If
+            If chkStampaDiploma.Checked = True Then
+                Request.AddField("Equi_StampaDiploma", "si")
+            End If
         End If
 
-        If chkStampaDiploma.Checked = True Then
-            Request.AddField("Equi_StampaDiploma", "si")
-        End If
+
 
 
 

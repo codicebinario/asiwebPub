@@ -46,6 +46,7 @@ Public Class richiestaEquiparazioneDati22
     Dim record_ID As String = ""
     Dim codiceFiscale As String
     Dim MostraMonteOreFormazione As String
+    Dim IdEquiparazione As Integer
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
 
@@ -114,7 +115,7 @@ Public Class richiestaEquiparazioneDati22
 
 
             Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
+            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("id_record"))
             Dim verificato As String = DettaglioEquiparazione.EquiCF
 
             If verificato = "0" Then
@@ -132,7 +133,7 @@ Public Class richiestaEquiparazioneDati22
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
             codiceFiscale = DettaglioEquiparazione.CodiceFiscale
-
+            IDEquiparazione = DettaglioEquiparazione.IdEquiparazioneM
             ddlSport.Text = DettaglioEquiparazione.Sport
             ddlSpecialita.Text = DettaglioEquiparazione.Specialita
             ddlDisciplina.Text = DettaglioEquiparazione.Disciplina
@@ -295,7 +296,25 @@ Public Class richiestaEquiparazioneDati22
         risposta = Request.Execute()
 
 
+
         AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "101", Session("WebUserEnte"), "equiparazione")
+
+        'Dim fmsPP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        ''  Dim ds As DataSet
+        'Dim rispostaP As String = ""
+        'fmsPP.SetLayout("webEquiparazioniMaster")
+        'Dim RequestPP = fmsPP.CreateEditRequest(IDEquiparazione)
+
+
+
+        'RequestPP.AddField("CodiceStatus", 101)
+
+
+
+        ''   Try
+        'risposta = RequestPP.Execute()
+
+
         Response.Redirect("dashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ok") & "&open=" & codR)
         'Catch ex As Exception
 

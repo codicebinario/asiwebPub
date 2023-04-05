@@ -25,7 +25,7 @@ Public Class closeRinnovo
         Try
             risposta = RequestP.Execute()
 
-
+            AsiModel.LogIn.LogCambioStatus(codR, "155", Session("WebUserEnte"), "Rinnovo")
 
         Catch ex As Exception
 

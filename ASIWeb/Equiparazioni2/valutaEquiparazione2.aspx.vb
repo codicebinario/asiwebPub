@@ -39,6 +39,8 @@ Public Class valutaEquiparazione2
     Dim dbb As String = ConfigurationManager.AppSettings("dbb")
     Dim codR As String = ""
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
+    Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+    Dim IdEquiparazioneMM As Integer = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -60,6 +62,12 @@ Public Class valutaEquiparazione2
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
+
+        IdEquiparazioneMM = deEnco.QueryStringDecode(Request.QueryString("IdEquiparazioneM"))
+        If IsNothing(IdEquiparazioneMM) Then
+            Response.Redirect("../login.aspx")
+        End If
+
         Dim record_ID As String = ""
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
         If Not String.IsNullOrEmpty(record_ID) Then
@@ -79,7 +87,7 @@ Public Class valutaEquiparazione2
 
 
             Session("IDEquiparazione") = codR
-            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+
 
             DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
             Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
@@ -95,6 +103,7 @@ Public Class valutaEquiparazione2
             Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
             Dim codiceTessera As String = DettaglioEquiparazione.CodiceTessera
             Dim dataScadenza As String = DettaglioEquiparazione.DataScadenza
+
             idEqui = DettaglioEquiparazione.IDEquiparazione
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
@@ -108,55 +117,15 @@ Public Class valutaEquiparazione2
 
     End Sub
 
-    'Protected Sub btnValuta_Click(sender As Object, e As EventArgs) Handles btnValuta.Click
-    '    If Page.IsValid Then
-
-    '        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-    '        '  Dim ds As DataSet
-    '        Dim risposta As String = ""
-    '        fmsP.SetLayout("webEquiparazioniRichiesta")
-    '        Dim Request = fmsP.CreateEditRequest(Session("id_record"))
-
-    '        Dim valutazione As String = ddlValutazione.SelectedItem.Value
-
-    '        If valutazione = "S" Then
-    '            Request.AddField("Codice_Status", "106")
-    '        ElseIf valutazione = "N" Then
-    '            Request.AddField("Codice_Status", "107")
-
-    '        End If
-
-    '        Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
-    '        'Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
-    '        'script per gestione caratteri speciali da inserire.
-    '        Try
-
-
-    '            risposta = Request.Execute()
-    '            If valutazione = "S" Then
-    '                AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione")
-    '            ElseIf valutazione = "N" Then
-    '                AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione")
-
-    '            End If
-    '        Catch ex As Exception
-
-    '        End Try
-    '        Response.Redirect("archivioEquiValutati.aspx#" & codR)
-
-    '    End If
-
-
-    'End Sub
 
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
         If Page.IsValid Then
-
+            Dim idEquiparazioneM = DettaglioEquiparazione.IdEquiparazioneM
             Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
             '  Dim ds As DataSet
             Dim risposta As String = ""
             fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-            Dim Request = fmsP.CreateEditRequest(Session("idrecord"))
+            Dim Request = fmsP.CreateEditRequest(Session("id_record"))
 
             Dim valutazione As String = ddlValutazione.SelectedItem.Value
             Dim dirittiSegreteria As String = ddlDirittiSegreteria.SelectedItem.Value
@@ -172,25 +141,40 @@ Public Class valutaEquiparazione2
             Request.AddField("Equi_DirittiSegreteria", dirittiSegreteria)
             'Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
             'script per gestione caratteri speciali da inserire.
-            Try
+            Dim quantiEsitoRichiesto = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 105)
 
 
-                risposta = Request.Execute()
-                If valutazione = "S" Then
+
+            risposta = Request.Execute()
+
+                Dim quantiEsitoOk = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 106)
+                Dim quantiEsitoKo = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 107)
+
+            Dim record_id As Integer = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDEquiMaster(idEquiparazioneM) ' per aggiornare status
+
+            If quantiEsitoKo >= 1 Then
+                ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 107)
+            Else
+                ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 106)
+            End If
+
+
+
+
+
+            If valutazione = "S" Then
                     AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione")
                 ElseIf valutazione = "N" Then
                     AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione")
 
                 End If
-            Catch ex As Exception
 
-            End Try
-            Response.Redirect("archivioEquiValutati2.aspx#" & codR)
+                Response.Redirect("archivioEquiValutati2.aspx#" & codR)
 
         End If
     End Sub
 
     Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
-        Response.Redirect("dashboardB.aspx#" & codR)
+        Response.Redirect("dashboardV2.aspx#" & codR)
     End Sub
 End Class

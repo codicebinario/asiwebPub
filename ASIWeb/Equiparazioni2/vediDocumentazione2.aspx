@@ -29,11 +29,11 @@
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
        
-     <asp:LinkButton class="nav-link text-white" ID="lnkTorna" CausesValidation="false" runat="server">Torna alla pagina precedente</asp:LinkButton>
-    
+   <%--  <asp:LinkButton class="nav-link text-white" ID="lnkTorna" CausesValidation="false" runat="server">Torna alla pagina precedente</asp:LinkButton>
+    --%>
             
-         <%--  <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>   
-      --%>
+           <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>   
+      
             
     </p>
     

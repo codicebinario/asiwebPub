@@ -223,7 +223,7 @@ Public Class dashboardV
                     If Not String.IsNullOrWhiteSpace(nomeFile) Then
 
                         phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" href='scaricaPianoCorso.aspx?s=1&codR=" &
-                                                           dr("IDCorso") & "&nomeFilePC=" &
+                                                           dr("ID_Record") & "&nomeFilePC=" &
                                                            nomeFile & "'><i class=""bi bi-download""> </i>Piano Corso</a>"))
 
 
@@ -232,7 +232,7 @@ Public Class dashboardV
                     If Not String.IsNullOrWhiteSpace(nomeFile2) Then
 
                         phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" href='scaricaPianoCorso.aspx?s=2&codR=" &
-                                                           dr("IDCorso") & "&nomeFilePC=" &
+                                                           dr("ID_Record") & "&nomeFilePC=" &
                                                            nomeFile2 & "'><i class=""bi bi-download""> </i>Altro Documento</a>"))
 
 
@@ -243,7 +243,7 @@ Public Class dashboardV
                     If Not String.IsNullOrWhiteSpace(nomeFile3) Then
 
                         phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" href='scaricaPianoCorso.aspx?s=3&codR=" &
-                                                           dr("IDCorso") & "&nomeFilePC=" &
+                                                           dr("ID_Record") & "&nomeFilePC=" &
                                                            nomeFile3 & "'><i class=""bi bi-download""> </i>Altro Documento</a>"))
 
 

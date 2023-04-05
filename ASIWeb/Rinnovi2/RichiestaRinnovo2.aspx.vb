@@ -179,22 +179,6 @@ Public Class RichiestaRinnovo2
 
 
 
-    'Protected Sub lnkCF_Click(sender As Object, e As EventArgs) Handles lnkCF.Click
-    '    'Dim message As RadioButtonList = CType(phDash.FindControl("CFPresenti"), RadioButtonList)
-    '    If Page.IsValid Then
-
-
-    '        lblScelta.Visible = True
-    '        lblScelta.Text = "<small><strong>Hai selezionato per il rinnovo:</strong> <br />" & ddlCF.SelectedItem.Text & "</small>"
-
-    '        Dim idScelto As String = ""
-    '        idScelto = ddlCF.SelectedValue.ToString
-    '        Session("idScelto") = idScelto
-    '        ddlCF.ClearSelection()
-    '        btnConcludi.Visible = True
-    '        'btnConcludi.Visible = True
-    '    End If
-    'End Sub
     Public Function CaricaDatiDocumentoRinnovo(codR As String, codiceEnte As String, codiceFiscale As String,
                                              nome As String, cognome As String, codiceTessera As String, dataScadenza As String, comuneNascita As String, datanascita As String) As Integer
 
@@ -285,38 +269,5 @@ Public Class RichiestaRinnovo2
             'btnConcludi.Visible = True
         End If
     End Sub
-    'Protected Sub lnkAvanti_Click(sender As Object, e As EventArgs) Handles lnkAvanti.Click
 
-
-
-
-    '    Dim idrecord As Integer
-    '    Dim DettaglioRinnovo As New DatiNuovoRinnovo
-    '    DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(Session("cf"))
-
-    '    idrecord = CaricaDatiDocumentoRinnovo(Session("IDRinnovo"), Session("codice"), Session("cf"),
-    ' DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
-
-    '    Dim datiAlbo As New DatiCodiceFiscaleRinnovi
-
-    '    datiAlbo = getDatiCodiceFiscaleRinnovi(Session("idScelto"))
-
-    '    Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, Session("codice"))
-    '    If SameCode = 0 Then
-
-    '        '    AsiModel.LogIn.LogCambioStatus(Session("IDRinnovo"), "151", Session("WebUserEnte"), "rinnovo")
-
-
-    '        Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
-
-    '    Else
-    '        Response.Redirect("upDichiarazione2.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
-
-    '    End If
-
-
-
-
-
-    ' End Sub
 End Class

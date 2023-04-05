@@ -25,7 +25,7 @@ Public Class closeEquiparazione2
         Try
             risposta = RequestP.Execute()
 
-
+            AsiModel.LogIn.LogCambioStatus(codR, "102", Session("WebUserEnte"), "equiparazione")
 
         Catch ex As Exception
 

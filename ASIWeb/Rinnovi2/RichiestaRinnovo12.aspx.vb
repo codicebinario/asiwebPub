@@ -409,6 +409,7 @@ Public Class RichiestaRinnovo12
         Request.AddField("Rin_ComuneResidenza", ddlComuneResidenza.SelectedItem.Text)
         Request.AddField("Rin_ProvinciaResidenza", ddlProvinciaResidenza.SelectedItem.Text)
         If chkStampaCartacea.Checked = True Then
+
             Request.AddField("Rin_StampaCartaceo", "Si")
             Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
             Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
@@ -418,17 +419,19 @@ Public Class RichiestaRinnovo12
         End If
         If chkEA.Checked Then
             Request.AddField("Rin_InviaA", "EA")
-            Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
-            Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
-            Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
-            Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
-            Request.AddField("Rin_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
-
+            'Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
+            'Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
+            'Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
+            'Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
+            'Request.AddField("Rin_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
+        Else
+            Request.AddField("Rin_InviaA", "T")
         End If
+
 
         '   Dim SameCode As Integer = String.Compare(datiAlbo.codiceEnteEx, CodiceEnteRichiedente)
         '  If SameCode = 0 Then
-        Request.AddField("Codice_Status", "152")
+        '  Request.AddField("Codice_Status", "152")
         ' Else
         'Request.AddField("Codice_Status", "151")
         '   End If
@@ -455,6 +458,7 @@ Public Class RichiestaRinnovo12
         Requestx.AddField("CodiceStatus", "152")
             ' Try
             rispostax = Requestx.Execute()
+            AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
         End If
         '  Catch ex As Exception
 
@@ -493,7 +497,7 @@ Public Class RichiestaRinnovo12
 
 
 
-        AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
+
         'Else
         '    AsiModel.LogIn.LogCambioStatus(IDRinnovo, "151", Session("WebUserEnte"), "rinnovo")
         'End If

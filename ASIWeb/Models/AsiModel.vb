@@ -837,6 +837,67 @@ Public Class AsiModel
 
         End Function
 
+        Public Shared Function AggiornaStatusMasterEquiparazine(idrecord As Integer, status As Integer) As Integer
+            Dim risposta As Integer
+            Dim fmsP1 As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP1.SetLayout("webEquiparazioniMaster")
+            Dim Request1 = fmsP1.CreateEditRequest(idrecord)
+
+            'If qualeStatus = "3" Then
+            Request1.AddField("CodiceStatus", status)
+            'Else
+            '    Request1.AddField("Status_ID", "12")
+            'End If
+
+            risposta = Request1.Execute()
+
+
+
+        End Function
+
+
+
+        Public Shared Function GetRecord_IDEquiMaster(codR As String) As String
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniMaster")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IdEquiparazioneM", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        Record_Id = Data.FixNull(dr("Idrecord"))
+
+
+                    Next
+
+
+
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return Record_Id
+
+
+        End Function
         Public Shared Function GetRecord_ID(codR As String) As String
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing
@@ -1220,6 +1281,7 @@ Public Class AsiModel
         Public Sport As String
         Public Disciplina As String
         Public Specialita As String
+        Public IdEquiparazioneM As String
 
 
 
@@ -1229,6 +1291,7 @@ Public Class AsiModel
 
         Public IdRecord As String
         Public IDRinnovo As String
+        Public IDRinnovoM As String
         Public CodiceEnteRichiedente As String
         Public DescrizioneStatus As String
         Public CodiceStatus As String
@@ -1309,12 +1372,12 @@ Public Class AsiModel
             Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
             '  Dim ds As DataSet
 
-            fmsP.SetLayout("webEquiparazioneRichiestaMolti")
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
             Dim dsx As DataSet = Nothing
             Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
             '  Dim ds As DataSet
 
-            fmsx.SetLayout("webEquiparazioneRichiestaMolti")
+            fmsx.SetLayout("webEquiparazioniRichiestaMolti")
 
             Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("idEquiparazioneM", IdEquiparazione, Enumerations.SearchOption.equals)
@@ -1579,8 +1642,8 @@ Public Class AsiModel
             RequestA.AddSearchField("id_record", IdRecord, Enumerations.SearchOption.equals)
 
 
-            Try
-                ds = RequestA.Execute()
+            '     Try
+            ds = RequestA.Execute()
 
 
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
@@ -1595,10 +1658,11 @@ Public Class AsiModel
                         DatiRinnovo.IdRecord = Data.FixNull(dr("Id_record"))
                         DatiRinnovo.RinnovoCF = Data.FixNull(dr("Rin_CFVerificatoTessera"))
                         DatiRinnovo.CodiceFiscale = Data.FixNull(dr("Rin_CodiceFiscale"))
-                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_CodiceTessera"))
-                        DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
-                        DatiRinnovo.Cognome = Data.FixNull(dr("Rin_CognomeE"))
+                    DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_NumeroTessera"))
+                    DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
+                        DatiRinnovo.Cognome = Data.FixNull(dr("Rin_Cognome"))
                         DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
+                        DatiRinnovo.IDRinnovoM = Data.FixNull(dr("IDRinnovoM"))
                     Next
 
 
@@ -1607,9 +1671,9 @@ Public Class AsiModel
 
 
 
-            Catch ex As Exception
+            '   Catch ex As Exception
 
-            End Try
+            '  End Try
 
             Return DatiRinnovo
         End Function
@@ -1980,6 +2044,40 @@ Public Class AsiModel
 
             Return quanti
         End Function
+        Public Shared Function quanteRichiesteValutazioneEsito(IdEquiparazioneM As Integer, status As Integer) As Integer
+            Dim ritorno As Integer = 0
+            Dim counter1 As Integer = 0
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+
+            RequestP.AddSearchField("idEquiparazioneM", IdEquiparazioneM, Enumerations.SearchOption.equals)
+            '  RequestP.AddSearchField("idRinnovo", idRinnovo, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Status", status)
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                counter1 = ds.Tables("main").Rows.Count
+
+
+            Else
+
+
+                counter1 = 0
+
+            End If
+
+
+            Return counter1
+
+        End Function
+
+
+
 
         Public Shared Function quanteRichiestePerGruppo(IdEquiparazioneM As Integer) As Integer
             Dim ritorno As Integer = 0
@@ -2084,6 +2182,7 @@ Public Class AsiModel
                         DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
                         DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
                         DatiEquiparazione.PagamentoTotale = Data.FixNull(dr("QuotaPagamento"))
+                        '  DatiEquiparazione.IdEquiparazioneM = Data.FixNull(dr("IdEquiparazioneM"))
                         '    DatiEquiparazione.MostraMonteOreFormazione = Data.FixNull(dr("MonteOreFormazioneFlag"))
                     Next
 
@@ -2112,7 +2211,7 @@ Public Class AsiModel
             '     fmsB.SetDatabase(Database)
             fms.SetLayout("webEquiparazioniRichiestaMolti")
             Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestA.AddSearchField("IDEquiparazioneM", IDEquiparazione, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("IDRecord", IDEquiparazione, Enumerations.SearchOption.equals)
 
 
             '   Try
@@ -2138,6 +2237,7 @@ Public Class AsiModel
                     DatiEquiparazione.Sport = Data.FixNull(dr("Equi_Sport_Interessato"))
                     DatiEquiparazione.Disciplina = Data.FixNull(dr("Equi_Disciplina_Interessata"))
                     DatiEquiparazione.Specialita = Data.FixNull(dr("Equi_Specialita"))
+                    DatiEquiparazione.IdEquiparazioneM = Data.FixNull(dr("IdEquiparazioneM"))
                     '   DatiEquiparazione.PagamentoTotale = Data.FixNull(dr("QuotaPagamento"))
                     '    DatiEquiparazione.MostraMonteOreFormazione = Data.FixNull(dr("MonteOreFormazioneFlag"))
                 Next
@@ -2228,7 +2328,7 @@ Public Class AsiModel
             Dim Request = fmsP.CreateNewRecordRequest()
 
             Request.AddField("CodiceEnteRichiedente", codiceEnteRichiedente)
-            Request.AddField("CodiceStatus", "0")
+            Request.AddField("CodiceStatus", "101")
 
             'sport inizio
             Request.AddField("Equi_Sport_Interessato_ID", Equi_Sport_Interessato_ID)
@@ -2780,10 +2880,10 @@ Public Class AsiModel
             Dim ds As DataSet
 
             Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-            fmsP.SetLayout("webEquiparazioniRichiesta")
+            fmsP.SetLayout("webEquiparazioniMaster")
             Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             ' RequestP.AddSearchField("pre_stato_web", "1")
-            RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
             'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
             ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
@@ -2796,14 +2896,14 @@ Public Class AsiModel
                 For Each dr In ds.Tables("main").Rows
 
 
-                    If Data.FixNull(dr("Codice_Status")) = "101" Or Data.FixNull(dr("Codice_Status")) = "102" _
-                Or Data.FixNull(dr("Codice_Status")) = "103" Or Data.FixNull(dr("Codice_Status")) = "104" _
-                Or Data.FixNull(dr("Codice_Status")) = "105" Or Data.FixNull(dr("Codice_Status")) = "106" _
-                Or Data.FixNull(dr("Codice_Status")) = "107" Or Data.FixNull(dr("Codice_Status")) = "108" _
-                Or Data.FixNull(dr("Codice_Status")) = "109" Or Data.FixNull(dr("Codice_Status")) = "110" _
-                Or Data.FixNull(dr("Codice_Status")) = "111" _
-                Or Data.FixNull(dr("Codice_Status")) = "112" Or Data.FixNull(dr("Codice_Status")) = "113" _
-                Or Data.FixNull(dr("Codice_Status")) = "114" Then
+                    If Data.FixNull(dr("CodiceStatus")) = "101" Or Data.FixNull(dr("CodiceStatus")) = "102" _
+                Or Data.FixNull(dr("CodiceStatus")) = "103" _
+                Or Data.FixNull(dr("CodiceStatus")) = "105" Or Data.FixNull(dr("CodiceStatus")) = "106" _
+                Or Data.FixNull(dr("CodiceStatus")) = "107" Or Data.FixNull(dr("CodiceStatus")) = "108" _
+                Or Data.FixNull(dr("CodiceStatus")) = "109" Or Data.FixNull(dr("CodiceStatus")) = "110" _
+                Or Data.FixNull(dr("CodiceStatus")) = "111" _
+                Or Data.FixNull(dr("CodiceStatus")) = "112" Or Data.FixNull(dr("CodiceStatus")) = "113" _
+                Or Data.FixNull(dr("CodiceStatus")) = "114" Or Data.FixNull(dr("CodiceStatus")) = "114.5" Then
                         counter1 += 1
                     Else
 
@@ -2843,7 +2943,7 @@ Public Class AsiModel
             ' RequestP.AddSearchField("pre_stato_web", "1")
             RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
             RequestP.AddSearchField("CodiceStatus", "1...159")
-            'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+            'RequestP.AddSortField("CodiceStatus", Enumerations.Sort.Ascend)
             ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
 

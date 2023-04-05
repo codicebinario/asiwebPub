@@ -101,7 +101,7 @@ Public Class richiestaEquiparazione2
 
 
 
-            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
+            DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("id_record"))
             Dim verificato As String = DettaglioEquiparazione.EquiCF
             If verificato = "0" Then
                 Response.Redirect("DashboardEqui2.aspx2?ris=" & deEnco.QueryStringEncode("no"))
