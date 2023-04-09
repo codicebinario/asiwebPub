@@ -84,6 +84,8 @@ Public Class scaricaTessereS
                 ds.Tables(0).Columns.Remove("IDRecord")
                 ds.Tables(0).Columns.Remove("CodiceEnteAffiliante")
                 ds.Tables(0).Columns.Remove("valido")
+                ds.Tables(0).Columns.Remove("Tessera")
+                ds.Tables(0).Columns.Remove("TesseraNomeFile")
                 Dim dsNuovo As DataSet = New DataSet("Tessere")
                 dsNuovo.Tables.Add(ds.Tables(0).Copy)
 
@@ -107,35 +109,38 @@ Public Class scaricaTessereS
                 dsNuovo.Tables(0).Columns(17).ColumnName = "Provincia_Residenza"
                 dsNuovo.Tables(0).Columns(18).ColumnName = "Codice_Iscrizione"
                 dsNuovo.Tables(0).Columns(19).ColumnName = "Disciplina"
+                dsNuovo.Tables(0).Columns(20).ColumnName = "Dicitura_Qualifica_DT"
+                dsNuovo.Tables(0).Columns(21).ColumnName = "Data_Rilascio"
 
                 Dim dt As DataTable = dsNuovo.Tables.Item(0)
 
                 dt.Columns("ID_Records").SetOrdinal(0)
                 dt.Columns("Codice_Fiscale").SetOrdinal(1)
-                dt.Columns("Scadenza").SetOrdinal(2)
-                dt.Columns("Cognome").SetOrdinal(3)
-                dt.Columns("Nome").SetOrdinal(4)
-                dt.Columns("Email").SetOrdinal(5)
-                dt.Columns("Tessera_ASI").SetOrdinal(6)
-                dt.Columns("Codice_Iscrizione").SetOrdinal(7)
-                dt.Columns("Qualifica").SetOrdinal(8)
-                dt.Columns("Sport").SetOrdinal(9)
-                dt.Columns("Disciplina").SetOrdinal(10)
-                dt.Columns("Specialita").SetOrdinal(11)
-                dt.Columns("Livello_grado").SetOrdinal(12)
-                dt.Columns("Data_Nascita").SetOrdinal(13)
-                dt.Columns("Comune_Nascita").SetOrdinal(14)
-                dt.Columns("Indirizzo_Residenza").SetOrdinal(15)
-                dt.Columns("Comune_Residenza").SetOrdinal(16)
-                dt.Columns("Cap_Residenza").SetOrdinal(17)
-                dt.Columns("Provincia_Residenza").SetOrdinal(18)
-                dt.Columns("Telefono").SetOrdinal(19)
-
+                dt.Columns("Cognome").SetOrdinal(2)
+                dt.Columns("Nome").SetOrdinal(3)
+                dt.Columns("Email").SetOrdinal(4)
+                dt.Columns("Data_Nascita").SetOrdinal(5)
+                dt.Columns("Comune_Nascita").SetOrdinal(6)
+                dt.Columns("Indirizzo_Residenza").SetOrdinal(7)
+                dt.Columns("Comune_Residenza").SetOrdinal(8)
+                dt.Columns("Provincia_Residenza").SetOrdinal(9)
+                dt.Columns("Cap_Residenza").SetOrdinal(10)
+                dt.Columns("Telefono").SetOrdinal(11)
+                dt.Columns("Tessera_ASI").SetOrdinal(12)
+                dt.Columns("Data_Rilascio").SetOrdinal(13)
+                dt.Columns("Codice_Iscrizione").SetOrdinal(14)
+                dt.Columns("Scadenza").SetOrdinal(15)
+                dt.Columns("Livello_grado").SetOrdinal(16)
+                dt.Columns("Sport").SetOrdinal(17)
+                dt.Columns("Disciplina").SetOrdinal(18)
+                dt.Columns("Specialita").SetOrdinal(19)
+                dt.Columns("Qualifica").SetOrdinal(20)
+                dt.Columns("Dicitura_Qualifica_DT").SetOrdinal(21)
 
 
 
                 SaveDataSetAsExcel(dsNuovo, dove, File)
-                System.Threading.Thread.Sleep(4000)
+                '   System.Threading.Thread.Sleep(4000)
 
                 FotoS(dove, File)
 
@@ -207,11 +212,14 @@ Public Class scaricaTessereS
 
                 For Each dsrow As DataRow In table.Rows
                     Dim newRow As Row = New Row()
-
                     For Each col As String In columns
                         Dim cell As Cell = New Cell()
                         cell.DataType = CellValues.String
-                        cell.CellValue = New CellValue(dsrow(col).ToString())
+                        If col = "Data_Rilascio" Or col = "Data_Nascita" Or col = "Scadenza" Then
+                            cell.CellValue = New CellValue(Left(dsrow(col).ToString(), 10))
+                        Else
+                            cell.CellValue = New CellValue(dsrow(col).ToString())
+                        End If
                         newRow.AppendChild(cell)
                     Next
 

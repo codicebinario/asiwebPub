@@ -22,8 +22,8 @@
     <h3 class="display-5">Lista Partecipanti al Corso</h3>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
- <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkTornaDashboard" CausesValidation="false" runat="server">Corsi Attivi</asp:LinkButton>
-        <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
+ <%--<asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkTornaDashboard" CausesValidation="false" runat="server">Corsi Attivi</asp:LinkButton>
+ --%>       <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Termina caricamento foto</a>
     </p>
     
   </div></div>

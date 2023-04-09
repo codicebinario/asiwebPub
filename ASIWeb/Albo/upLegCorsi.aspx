@@ -70,7 +70,7 @@ function ServerException(mess) {
          <div class="col-6 pb-0">
         <p>
             
-              <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Termima Caricamento</asp:LinkButton>
+              <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Termina Caricamento</asp:LinkButton>
 
     
                  

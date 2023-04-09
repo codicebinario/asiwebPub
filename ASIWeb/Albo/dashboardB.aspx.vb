@@ -76,6 +76,7 @@ Public Class dashboardB
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+        RequestP.AddSortField("Data_Richiesta", Enumerations.Sort.Descend)
         RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
@@ -119,7 +120,7 @@ Public Class dashboardB
 
                     fotoCorsistiKO.ID = "Fot_" & counter1
                     fotoCorsistiKO.Attributes.Add("runat", "server")
-                    fotoCorsistiKO.Text = "<i class=""bi bi-bar-chart-steps""> </i>Corsisti KO"
+                    fotoCorsistiKO.Text = "<i class=""bi bi-bar-chart-steps""> </i>Corsisti non valido"
                     fotoCorsistiKO.PostBackUrl = "corsistiKO.aspx?codR=" &
                         WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
                         "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record"))) &
