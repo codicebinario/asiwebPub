@@ -164,7 +164,7 @@ Public Class checkTesseramento2
 
 
 
-                Dim risultatoCheck As Boolean
+                Dim risultatoCheck As Integer
                 Dim dataOggi As Date = Today.Date
                 Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
 
@@ -172,9 +172,13 @@ Public Class checkTesseramento2
 
 
                 risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
+                '1 tessera valida e non scaduto 
+                '2 tessera valida ma scaduta
+                '3 tessera non trovata
+                '4 errore generico di connessione
                 DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
                 Session("visto") = "ok"
-                If risultatoCheck = True Then
+                If risultatoCheck = 1 Then
 
                     '   Response.Write("ok")
                     Session("procedi") = "OK"
@@ -195,9 +199,23 @@ Public Class checkTesseramento2
                 Else
 
                     'Response.Write("ko")
+                    '1 tessera valida e non scaduto 
+                    '2 tessera valida ma scaduta
+                    '3 tessera non trovata
+                    '4 errore generico di connessione
+                    'Session("procedi") = "KO"
+                    Select Case risultatoCheck
+                        Case 2
+                            Response.Redirect("DashboardEqui2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("valScad"))
+                        Case 3
+                            Response.Redirect("DashboardEqui2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("notFound"))
+                        Case 4
+                            Response.Redirect("DashboardEqui2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("erroreGen"))
 
-                    Session("procedi") = "KO"
-                    Response.Redirect("DashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ko"))
+                    End Select
+
+
+                    '    Response.Redirect("DashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ko"))
 
 
                 End If

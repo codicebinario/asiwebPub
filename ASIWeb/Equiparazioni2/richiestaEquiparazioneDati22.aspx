@@ -170,7 +170,8 @@
 								<div class="form-group">
 								 <label for="ddlSport">Sport </label>
                            <%--  <asp:dropdownlist id="ddlSport" runat="server" Cssclass="form-control input-sm" AutoPostBack="true"></asp:dropdownlist>
-	                      --%>      <asp:Label runat="server" CssClass="form-control input-sm" ID="ddlSport"></asp:Label>
+	                      --%>      
+                                    <asp:Label runat="server" CssClass="form-control input-sm bg-secondary text-white" ID="ddlSport"></asp:Label>
                     		</div>
 							</div>
 							<div class="col-sm-4">
@@ -178,7 +179,7 @@
 									<label for="ddlDisciplina">Disciplina</label>
                            <%--  <asp:dropdownlist id="ddlDisciplina" runat="server" Cssclass="form-control input-sm" AutoPostBack="true"></asp:dropdownlist>
 	--%>
-                                    <asp:Label runat="server" CssClass="form-control input-sm" ID="ddlDisciplina"></asp:Label>
+                                    <asp:Label runat="server" CssClass="form-control input-sm bg-secondary text-white" ID="ddlDisciplina"></asp:Label>
 								
 								</div>
 							</div>
@@ -187,7 +188,7 @@
 									<label for="txtCognome">Specialità</label>
                             <%--<asp:dropdownlist id="ddlSpecialita" runat="server" Cssclass="form-control input-sm"></asp:dropdownlist>
 	--%>
-                                    <asp:Label runat="server" CssClass="form-control input-sm" ID="ddlSpecialita"></asp:Label>
+                                    <asp:Label runat="server" CssClass="form-control input-sm bg-secondary text-white" ID="ddlSpecialita"></asp:Label>
 								
 								</div>
 							</div>

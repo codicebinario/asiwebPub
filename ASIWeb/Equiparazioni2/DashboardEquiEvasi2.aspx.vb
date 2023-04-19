@@ -114,9 +114,16 @@ Public Class DashboardEquiEvasi2
             Dim tessera As String
             Dim nominativo As String
             Dim diploma As String
-
-
+            Dim rompiStatus As Integer
+            Dim cambiato As String
             For Each dr In ds.Tables("main").Rows
+
+                If rompiStatus = Data.FixNull(dr("IDEquiparazioneM")) Then
+                    cambiato = ""
+                Else
+                    cambiato = "ok"
+                End If
+
                 If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaAsiText"))) Then
                     diploma = "..\img\noPdf.jpg"
                 Else
@@ -134,7 +141,7 @@ Public Class DashboardEquiEvasi2
                 VediDocumentazione.CausesValidation = False
                 VediDocumentazione.ID = "VediDoc_" & counter1
                 VediDocumentazione.Attributes.Add("runat", "server")
-                VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Diploma e Foto"
+                VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Documentazione Presentata"
                 VediDocumentazione.PostBackUrl = "vediDocumentazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
                 VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
 
@@ -147,6 +154,22 @@ Public Class DashboardEquiEvasi2
                 End If
 
                 phDash10.Visible = True
+
+                phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
+                If cambiato = "ok" Then
+
+
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
+                    phDash10.Controls.Add(New LiteralControl("<span>Richiesta " & Data.FixNull(dr("IDEquiparazioneM")) & "</span>"))
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+                End If
+
+
+
+
+
+                phDash10.Controls.Add(New LiteralControl("</div>"))
+
                 phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
                 'accordion card
                 phDash10.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
@@ -249,6 +272,7 @@ Public Class DashboardEquiEvasi2
 
                 '  End If
 
+                rompiStatus = Data.FixNull(dr("IDEquiparazioneM"))
             Next
 
 
@@ -373,7 +397,7 @@ Public Class DashboardEquiEvasi2
                         VediDocumentazione.CausesValidation = False
                         VediDocumentazione.ID = "VediDoc_" & counter1
                         VediDocumentazione.Attributes.Add("runat", "server")
-                        VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Diploma e Foto"
+                        VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Documentazione Presentata"
                         VediDocumentazione.PostBackUrl = "vediDocumentazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
                         VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
                         '  Annulla.OnClientClick = "return confirm(""ciappa"");"

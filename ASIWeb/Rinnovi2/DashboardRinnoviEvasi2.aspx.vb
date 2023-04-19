@@ -110,11 +110,16 @@ Public Class DashboardRinnoviEvasi2
             Dim totale As Decimal = 0
             Dim tessera As String
             Dim nominativo As String
-
+            Dim rompiStatus As Integer
+            Dim cambiato As String
 
 
             For Each dr In ds.Tables("main").Rows
-
+                If rompiStatus = Data.FixNull(dr("IDRinnovoM")) Then
+                    cambiato = ""
+                Else
+                    cambiato = "ok"
+                End If
 
 
                 If Data.FixNull(dr("Codice_Status")) = "160" Or Data.FixNull(dr("Codice_Status")) = "161" Then
@@ -130,6 +135,13 @@ Public Class DashboardRinnoviEvasi2
 
                     phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
 
+                    If cambiato = "ok" Then
+
+
+                        phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
+                        phDash10.Controls.Add(New LiteralControl("<span>Richiesta " & Data.FixNull(dr("IDRinnovoM")) & "</span>"))
+                        phDash10.Controls.Add(New LiteralControl("</div>"))
+                    End If
 
 
                     'accordion card
@@ -230,7 +242,7 @@ Public Class DashboardRinnoviEvasi2
 
                 End If
                 ' End If
-
+                rompiStatus = Data.FixNull(dr("IDRinnovoM"))
             Next
 
         End If
@@ -503,7 +515,7 @@ Public Class DashboardRinnoviEvasi2
 
 
                         Else
-                            phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom "" target=""_blank"" href='scaricaTesseraRinnovo.aspx?codR=" _
+                            phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom "" target=""_blank"" href='scaricaTesseraRinnovo2.aspx?codR=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("id_record")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("StringaNomeFile"))) & "&nominativo=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("Asi_Cognome")) & "_" & Data.FixNull(dr("Asi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))

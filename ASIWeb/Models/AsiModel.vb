@@ -330,11 +330,11 @@ Public Class AsiModel
             Dim ds As DataSet = Nothing
             Dim accesso As Boolean = False
             Dim IpAddress As String
-            '  Try
-            fms = Conn.Connect()
-            '  Catch ex As Exception
+            Try
+                fms = Conn.Connect()
+            Catch ex As Exception
 
-            '  End Try
+            End Try
 
 
             '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
@@ -429,7 +429,33 @@ Public Class AsiModel
             Return ritorno
 
         End Function
+        Public Shared Function LogCambioStatus(CodiceRichiesta As String, Status_ID As String, User As String, tipo As String, idRecord As Integer) As Boolean
+            '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
+            Dim ritorno As Boolean = False
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            ' Dim ds As DataSet
 
+
+            fmsP.SetLayout("Log_Status_Richiesta")
+            Dim Request = fmsP.CreateNewRecordRequest()
+            Request.AddField("Codice_Richiesta", CodiceRichiesta)
+            Request.AddField("User_Cambio_Status", User)
+
+            Request.AddField("Status_ID", Status_ID)
+            Request.AddField("tipo", tipo)
+            Request.AddField("IdRecordEquiparazione", idRecord)
+
+
+            Try
+                Request.Execute()
+                ritorno = True
+            Catch ex As Exception
+                ritorno = False
+            End Try
+
+            Return ritorno
+
+        End Function
         Public Shared Function LogAccessi(CodiceEnte As String, User As String) As Boolean
             '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
             Dim ritorno As Boolean = False
@@ -535,10 +561,10 @@ Public Class AsiModel
     ''' </summary>
     ''' <param name="codiceFiscale"></param>
     ''' <returns></returns>
-    Public Shared Function controllaCodiceFiscale(codiceFiscale As String, data As String)
+    Public Shared Function controllaCodiceFiscale(codiceFiscale As String, data As String) As Integer
         Dim fms As FMSAxml = Nothing
         Dim ds As DataSet = Nothing
-        Dim ritorno As Boolean = False
+        Dim ritorno As Integer = 0
         Dim dataScadenza As DateTime
         fms = Conn.Connect()
         Dim it As DateTime = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
@@ -550,42 +576,41 @@ Public Class AsiModel
         fms.SetLayout("webCheckCF")
         Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
-        ' RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
+        '   RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
 
 
-        '  Try
+        Try
 
-        ds = RequestA.Execute()
-
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-            For Each dr In ds.Tables("main").Rows
-
-                '   dataScadenza = dr("DataScadenza")
-
-                'If CDate(it) <= CDate(dr("DataScadenza")) Then
-                If it <= dr("Data Scadenza") Then
+            ds = RequestA.Execute()
 
 
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
 
-                    ritorno = True
+                    '   dataScadenza = dr("DataScadenza")
 
-                End If
+                    'If CDate(it) <= CDate(dr("DataScadenza")) Then
+                    If it <= dr("Data Scadenza") Then
+                        'tessera valida e non scaduto
+                        ritorno = 1
+                    Else
+                        'tessera valida ma scaduta
+                        ritorno = 2
+                    End If
+                Next
 
-
-
-            Next
-
-        Else
-            ritorno = False
+            Else
+                'tessera non trovata
+                ritorno = 3
             End If
 
 
 
 
-        '  Catch ex As Exception
-        '  ritorno = False
-        ' End Try
+        Catch ex As Exception
+            'errore generico di connessione
+            ritorno = 4
+        End Try
         Return ritorno
     End Function
 
@@ -878,14 +903,8 @@ Public Class AsiModel
 
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                     For Each dr In ds.Tables("main").Rows
-
                         Record_Id = Data.FixNull(dr("Idrecord"))
-
-
                     Next
-
-
-
                 End If
 
 
@@ -1441,8 +1460,139 @@ Public Class AsiModel
 
             Return idrecord
         End Function
+        Shared Function AggiornaStatusEquiMoltia1145(IdCord As Integer)
+            Dim idrecord As Integer = 0
+            Dim risposta As Integer = 0
+            Dim ds As DataSet = Nothing
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim dsx As DataSet = Nothing
+            Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsx.SetLayout("webEquiparazioniRichiestaMolti")
+
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("idEquiparazioneM", IdCord, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
 
 
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        idrecord = dr("idRecord")
+
+                        If dr("codice_status") = 104 Or dr("codice_status") = 104.5 Then
+
+                        Else
+                            Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                            Request1.AddField("codice_status", "114.5")
+                            risposta = Request1.Execute()
+                        End If
+
+
+                    Next
+                End If
+
+            Catch ex As Exception
+                idrecord = 0
+            End Try
+
+            Return idrecord
+        End Function
+        Shared Function AggiornaStatusEquiMoltia113(IdCord As Integer)
+            Dim idrecord As Integer = 0
+            Dim risposta As Integer = 0
+            Dim ds As DataSet = Nothing
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim dsx As DataSet = Nothing
+            Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsx.SetLayout("webEquiparazioniRichiestaMolti")
+
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("idEquiparazioneM", IdCord, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        idrecord = dr("idRecord")
+
+                        If dr("codice_status") = 104 Or dr("codice_status") = 104.5 Then
+
+                        Else
+                            Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                            Request1.AddField("codice_status", "113")
+                            risposta = Request1.Execute()
+                        End If
+
+
+                    Next
+                End If
+
+            Catch ex As Exception
+                idrecord = 0
+            End Try
+
+            Return idrecord
+        End Function
+
+        Shared Function AggiornaStatusEquiMoltia112(IdCord As Integer)
+            Dim idrecord As Integer = 0
+            Dim risposta As Integer = 0
+            Dim ds As DataSet = Nothing
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim dsx As DataSet = Nothing
+            Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsx.SetLayout("webEquiparazioniRichiestaMolti")
+
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("idEquiparazioneM", IdCord, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        idrecord = dr("idRecord")
+
+                        If dr("codice_status") = 104 Or dr("codice_status") = 104.5 Then
+
+                        Else
+                            Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                            Request1.AddField("codice_status", "112")
+                            risposta = Request1.Execute()
+                        End If
+
+
+                    Next
+                End If
+
+            Catch ex As Exception
+                idrecord = 0
+            End Try
+
+            Return idrecord
+        End Function
         Shared Function AggiornaStatusMoltia156(IdRinnovo As Integer)
             Dim idrecord As Integer = 0
             Dim risposta As Integer = 0
@@ -1481,8 +1631,120 @@ Public Class AsiModel
 
             Return idrecord
         End Function
+        Shared Function AggiornaStatusMoltia158(IdRinnovo As Integer)
+            Dim idrecord As Integer = 0
+            Dim risposta As Integer = 0
+            Dim ds As DataSet = Nothing
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim dsx As DataSet = Nothing
+            Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsx.SetLayout("webRinnoviRichiesta2")
+
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
 
 
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        idrecord = dr("id_Record")
+
+                        Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                        Request1.AddField("codice_status", "158")
+                        risposta = Request1.Execute()
+                    Next
+                End If
+
+            Catch ex As Exception
+                idrecord = 0
+            End Try
+
+            Return idrecord
+        End Function
+        Shared Function AggiornaStatusMoltia157(IdRinnovo As Integer)
+            Dim idrecord As Integer = 0
+            Dim risposta As Integer = 0
+            Dim ds As DataSet = Nothing
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim dsx As DataSet = Nothing
+            Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsx.SetLayout("webRinnoviRichiesta2")
+
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        idrecord = dr("id_Record")
+
+                        Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                        Request1.AddField("codice_status", "157")
+                        risposta = Request1.Execute()
+                    Next
+                End If
+
+            Catch ex As Exception
+                idrecord = 0
+            End Try
+
+            Return idrecord
+        End Function
+        Shared Function AggiornaStatusMoltia159(IdRinnovo As Integer)
+            Dim idrecord As Integer = 0
+            Dim risposta As Integer = 0
+            Dim ds As DataSet = Nothing
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim dsx As DataSet = Nothing
+            Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+
+            fmsx.SetLayout("webRinnoviRichiesta2")
+
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        idrecord = dr("id_Record")
+
+                        Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                        Request1.AddField("codice_status", "159")
+                        risposta = Request1.Execute()
+                    Next
+                End If
+
+            Catch ex As Exception
+                idrecord = 0
+            End Try
+
+            Return idrecord
+        End Function
         Shared Function PrendiIDrecordMaster(IdRinnovo As Integer)
             Dim idrecord As Integer = 0
 
@@ -2044,6 +2306,44 @@ Public Class AsiModel
 
             Return quanti
         End Function
+
+        Public Shared Function quanteRichiesteValutazione105(IdEquiparazioneM As Integer, status As Integer) As Integer
+            Dim ritorno As Integer = 0
+            Dim counter1 As Integer = 0
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+
+            RequestP.AddSearchField("idEquiparazioneM", IdEquiparazioneM, Enumerations.SearchOption.equals)
+            '  RequestP.AddSearchField("idRinnovo", idRinnovo, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Status", status)
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                counter1 = ds.Tables("main").Rows.Count
+
+
+            Else
+
+
+                counter1 = 0
+
+            End If
+
+
+            Return counter1
+
+        End Function
+
+
+
+
+
+
         Public Shared Function quanteRichiesteValutazioneEsito(IdEquiparazioneM As Integer, status As Integer) As Integer
             Dim ritorno As Integer = 0
             Dim counter1 As Integer = 0

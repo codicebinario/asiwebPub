@@ -151,6 +151,15 @@ Public Class dashboardV2
                     phDash.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Data Scadenza: <small>" & Data.SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
 
+                    'Dim dataMan As DateTime = Data.FixNull(dr("DataOraTrasmessoSettore"))
+                    'Dim dataGiorni = dataMan.AddDays(5)
+
+                    'Response.Write(dataGiorni - dataMan)
+
+
+                    phDash.Controls.Add(New LiteralControl("Data Trasmissione: <small>" & Data.FixNull(dr("DataOraTrasmessoSettore")) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">Scad. val.: <small>" & Data.FixNull(dr("ScadenzaSettoreQuantoMancaOre")) & "</small></span><br />"))
+
                     phDash.Controls.Add(New LiteralControl())
 
                     ' phDash.Controls.Add(New LiteralControl("</span>"))
@@ -177,7 +186,7 @@ Public Class dashboardV2
                     Else
                         phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEqui2.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRecord"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileDiplomaFS"))) & "&nominativo=" _
-                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Documentazione Presentata</a>"))
 
 
                     End If

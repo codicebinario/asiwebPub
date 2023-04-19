@@ -44,6 +44,16 @@ Public Class DashBoardRinnovi2
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo non caricata nel sistema<br />CF inesistente o riferito ad una tessera scaduta! ' ).set('resizable', true).resizeTo('20%', 200);", True)
                         Session("rinnovoAggiunto") = Nothing
 
+                    ElseIf ris = "valScad" Then
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo non caricata nel sistema.<br />Tesseramento associativo scaduto! ' ).set('resizable', true).resizeTo('20%', 200);", True)
+                        Session("rinnovoAggiunto") = Nothing
+                    ElseIf ris = "notFound" Then
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo non caricata nel sistema.<br />Tesseramento associativo non trovato!<br />Chiedere verifica CF. ' ).set('resizable', true).resizeTo('20%', 200);", True)
+                        Session("rinnovoAggiunto") = Nothing
+                    ElseIf ris = "erroreGen" Then
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo non caricata nel sistema<br />Errore di Connessione!' ).set('resizable', true).resizeTo('20%', 200);", True)
+                        Session("rinnovoAggiunto") = Nothing
+
                     ElseIf ris = "fo" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Fotografia caricata<br />' ).set('resizable', true).resizeTo('20%', 200);", True)
                         Session("rinnovoAggiunto") = Nothing
@@ -56,6 +66,16 @@ Public Class DashBoardRinnovi2
                     ElseIf ris = "casi" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Rinnovo cancellato<br /> ' ).set('resizable', true).resizeTo('20%', 200);", True)
                         Session("rinnovoAggiunto") = Nothing
+                    ElseIf ris = "noCF" Then
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Impossibile andare avanti. Codice Fiscale non esistente in Albo!<br />Contattare ASI per risolvere il problema. Scrivi ad albo@asinazionale.it ' ).set('resizable', true).resizeTo('20%', 300);", True)
+                        Session("rinnovoAggiunto") = Nothing
+                    ElseIf ris = "toNorma" Then
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Impossibile andare avanti. Codice Fiscale esistente ma dati da normalizzare in Albo!<br />Contattare ASI per risolvere il problema. Scrivi ad albo@asinazionale.it ' ).set('resizable', true).resizeTo('20%', 300);", True)
+                        Session("rinnovoAggiunto") = Nothing
+                    ElseIf ris = "noEA" Then
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Impossibile andare avanti. Codice Fiscale esistente ma Ente Affiliante non indicato nella precedente iscrizione!<br />Contattare ASI per risolvere il problema. Scrivi ad albo@asinazionale.it ' ).set('resizable', true).resizeTo('20%', 300);", True)
+                        Session("rinnovoAggiunto") = Nothing
+
 
                     ElseIf ris = "koCFAlbo" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Impossibile andare avanti. Dati Albo da normalizzare.<br />Codice Fiscale e/o Codice Ente Affiliante inesistenti in Albo!<br />Contattare ASI per risolvere il problema. Scrivi ad albo@asinazionale.it ' ).set('resizable', true).resizeTo('20%', 300);", True)
@@ -153,15 +173,32 @@ Public Class DashBoardRinnovi2
                 hpUPPag.Attributes.Add("runat", "server")
                 'codR = WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))))
                 'record_id = WebUtility.UrlEncode(deEnco.QueryStringEncode(WebUtility.UrlEncode(dr("id_record"))))
-                hpUPPag.PostBackUrl = "upLegRinnovi2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovoM"))))
+                hpUPPag.PostBackUrl = "upLegRinnovi2.aspx?s=0&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovoM"))))
 
                 hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("costoTotaleM")) & " Euro"
 
                 hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom  mb-1"
-                If ((Data.FixNull(dr("CodiceStatus")) = "155" Or Data.FixNull(dr("CodiceStatus")) = "158" Or Data.FixNull(dr("CodiceStatus")) = "159") And Data.FixNull(dr("checkweb")) = "s") Then
+                If ((Data.FixNull(dr("CodiceStatus")) = "155") And Data.FixNull(dr("checkweb")) = "s") Then
                     hpUPPag.Visible = True
                 Else
                     hpUPPag.Visible = False
+                End If
+
+                Dim hpUPPag158 As New LinkButton
+
+                hpUPPag158.ID = "hpPag_" & counter2
+                hpUPPag158.Attributes.Add("runat", "server")
+                'codR = WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))))
+                'record_id = WebUtility.UrlEncode(deEnco.QueryStringEncode(WebUtility.UrlEncode(dr("id_record"))))
+                hpUPPag158.PostBackUrl = "upLegRinnovi2.aspx?s=158&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovoM"))))
+
+                hpUPPag158.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("costoTotaleM")) & " Euro"
+
+                hpUPPag158.CssClass = "btn btn-success btn-sm btn-sette btn-custom  mb-1"
+                If ((Data.FixNull(dr("CodiceStatus")) = "158") And Data.FixNull(dr("checkweb")) = "s") Then
+                    hpUPPag158.Visible = True
+                Else
+                    hpUPPag158.Visible = False
                 End If
 
 
@@ -276,6 +313,8 @@ Public Class DashBoardRinnovi2
                 phDash.Controls.Add(New LiteralControl("<p>"))
                 'If (Data.FixNull(dr("CodiceStatus")) = "155") Then
                 phDash.Controls.Add(hpUPPag)
+                phDash.Controls.Add(hpUPPag158)
+
 
                 '  End If
                 phDash.Controls.Add(New LiteralControl("</p>"))

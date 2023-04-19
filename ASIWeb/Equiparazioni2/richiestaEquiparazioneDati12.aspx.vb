@@ -212,13 +212,8 @@ Public Class richiestaEquiparazioneDati12
         txtComuneNascita.Text = datiCodiceFiscale.LuogoNascita
         txtCodiceTessera.Text = datiCodiceFiscale.CodiceTessera
         txtDataScadenza.Text = datiCodiceFiscale.DataScadenza.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+        txtIndirizzoResidenza.Text = datiCodiceFiscale.Indirizzo
 
-
-
-        'txtIndirizzoResidenza.Text = datiCodiceFiscale.Indirizzo
-        'txtComuneResidenza.Text = datiCodiceFiscale.Comune
-        'txtCapResidenza.Text = datiCodiceFiscale.Cap
-        'txtProvinciaResidenza.Text = datiCodiceFiscale.Provincia
 
 
 
@@ -341,7 +336,7 @@ Public Class richiestaEquiparazioneDati12
             Request.AddField("Equi_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
             Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
             Request.AddField("Equi_CapConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text))))
-
+            Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
 
 
 
@@ -413,7 +408,7 @@ Public Class richiestaEquiparazioneDati12
 
             txtCapConsegna.Text = txtCapResidenza.Text
 
-
+            txtTelefono.Text = txtTelefonoCellulare.Text
 
         End If
 
@@ -437,7 +432,7 @@ Public Class richiestaEquiparazioneDati12
                     txtCapConsegna.Text = item.CapEA
                     txtComuneConsegna.Text = item.ComuneEA
                     txtProvinciaConsegna.Text = item.ProvinciaEA
-
+                    txtTelefono.Text = item.TelefonoEA
 
 
                 Next

@@ -144,7 +144,7 @@ Public Class checkTesseramentoRinnovi2
         If Page.IsValid Then
 
             Dim idrecord As Integer
-            Dim risultatoCheck As Boolean
+            Dim risultatoCheck As Integer
             Dim dataOggi As Date = Today.Date
             Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
 
@@ -152,9 +152,14 @@ Public Class checkTesseramentoRinnovi2
 
 
             risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
+            '1 tessera valida e non scaduto 
+            '2 tessera valida ma scaduta
+            '3 tessera non trovata
+            '4 errore generico di connessione
+
             '  DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(txtCodiceFiscale.Text)
             Session("visto") = "ok"
-            If risultatoCheck = True Then
+            If risultatoCheck = 1 Then
 
                 '   Response.Write("ok")
                 Session("procedi") = "OK"
@@ -186,8 +191,22 @@ Public Class checkTesseramentoRinnovi2
 
 
                 End If
+
                 Session("procedi") = "KO"
-                Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("ko"))
+                '1 tessera valida e non scaduto 
+                '2 tessera valida ma scaduta
+                '3 tessera non trovata
+                '4 errore generico di connessione
+                Select Case risultatoCheck
+                    Case 2
+                        Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("valScad"))
+                    Case 3
+                        Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("notFound"))
+                    Case 4
+                        Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("erroreGen"))
+
+                End Select
+                '  Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("ko"))
 
 
             End If

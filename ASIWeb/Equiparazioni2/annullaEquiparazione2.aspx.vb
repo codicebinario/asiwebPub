@@ -24,7 +24,7 @@ Public Class annullaEquiparazione2
 
         Try
             risposta = RequestP.Execute()
-            AsiModel.LogIn.LogCambioStatus(codiceEquiparazione, "119", Session("WebUserEnte"), "equiparazione")
+            AsiModel.LogIn.LogCambioStatus(codiceEquiparazione, "119", Session("WebUserEnte"), "equiparazione", record_ID)
             '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
             Session("annullaEquiparazione") = "ok"
 

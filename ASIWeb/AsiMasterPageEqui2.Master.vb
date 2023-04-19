@@ -262,11 +262,11 @@ Public Class AsiMasterPageEqui2
         Dim ds As DataSet
 
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniMaster")
+        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("CodiceStatus", "104")
+        RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Codice_Status", "104")
         '  RequestP.AddSearchField("Codice_Status", "115")
         ' RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)

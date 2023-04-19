@@ -42,6 +42,7 @@ Public Class upLegRinnovi2
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
     Dim CodiceEnteRichiedente As String = ""
     Dim codicefiscale As String = ""
+    Dim s As Integer = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -80,7 +81,7 @@ Public Class upLegRinnovi2
         'End If
         'Dim corx = Request.QueryString("codR")
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
-
+        s = Request.QueryString("s")
         If Not String.IsNullOrEmpty(codR) Then
             Session("codR") = codR
 
@@ -189,7 +190,7 @@ Public Class upLegRinnovi2
         '    Try
 
 
-        Dim clientUP As New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webRinnoviAllegati2/records/" & id_att & "/containers/Ricevuta_Pagamento/1")
+        Dim clientUP As New RestClient("https://93.63.195.98/fmi/data/vLatest/databases/Asi/layouts/webRinnoviAllegati2/records/" & id_att & "/containers/Ricevuta_Pagamento_ext/1")
         clientUP.Timeout = -1
         Dim Requestx = New RestRequest(Method.POST)
         Requestx.AddHeader("Content-Type", "application/json")
@@ -275,20 +276,28 @@ Public Class upLegRinnovi2
         fmsP1.SetLayout("webRinnoviMaster")
         Dim Request1 = fmsP1.CreateEditRequest(record_id)
 
-        'If qualeStatus = "3" Then
-        Request1.AddField("CodiceStatus", "156")
-        'Else
-        '    Request1.AddField("Status_ID", "12")
-        'End If
+        If s = 158 Then
+            Request1.AddField("CodiceStatus", "159")
+        Else
+            Request1.AddField("CodiceStatus", "157")
+        End If
+
+
+
         'Try
         risposta = Request1.Execute()
-        AsiModel.LogIn.LogCambioStatus(Session("codR"), "156", Session("WebUserEnte"), "rinnovo")
-        AsiModel.Rinnovi.AggiornaStatusMoltia156(Session("codR"))
-        'If qualeStatus = "3" Then
-        '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
-        'Else
-        '    AsiModel.LogIn.LogCambioStatus(codR, "12", Session("WebUserEnte"))
-        'End If
+
+        If s = 158 Then
+            AsiModel.LogIn.LogCambioStatus(Session("codR"), "159", Session("WebUserEnte"), "rinnovo")
+            AsiModel.Rinnovi.AggiornaStatusMoltia159(Session("codR"))
+
+        Else
+            AsiModel.LogIn.LogCambioStatus(Session("codR"), "157", Session("WebUserEnte"), "rinnovo")
+            AsiModel.Rinnovi.AggiornaStatusMoltia157(Session("codR"))
+        End If
+
+
+
 
 
 

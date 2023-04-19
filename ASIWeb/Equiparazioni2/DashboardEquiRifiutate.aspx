@@ -146,7 +146,7 @@
         <div class="col-sm-12 mb-3 mb-md-0">
             <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
                 <div class="container">
-                    <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Equiparazioni Attive (info)
+                    <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Equiparazioni Respinte (info)
                     </a></h6>
                     <p class="lead">
                         <asp:Literal ID="litDenominazioneJumboDash" runat="server"></asp:Literal>
@@ -176,18 +176,18 @@
 </div>
 
     <script>
-        if (location.hash !== null && location.hash !== "") {
-            //alert("ciao");
-            //alert(location.hash);
-            //  $(location.hash + ".collapse").collapse("show");
-            //$(".collapse44").collapse("show");
-            //$(".collapse44").collapse("toggle");
-            //$(".collapse44").addClass("show");
-            document.addEventListener("DOMContentLoaded", function (event) {
-                var home_link = document.getElementById('collapse44');
-                home_link.className = home_link.className + ' active';
-            });
-        };
+        //if (location.hash !== null && location.hash !== "") {
+        //    //alert("ciao");
+        //    //alert(location.hash);
+        //    //  $(location.hash + ".collapse").collapse("show");
+        //    //$(".collapse44").collapse("show");
+        //    //$(".collapse44").collapse("toggle");
+        //    //$(".collapse44").addClass("show");
+        //    document.addEventListener("DOMContentLoaded", function (event) {
+        //        var home_link = document.getElementById('collapse44');
+        //        home_link.className = home_link.className + ' active';
+        //    });
+        //};
         
     </script>
    

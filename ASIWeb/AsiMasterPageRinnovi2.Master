@@ -157,6 +157,8 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" href="DashboardRinnovi2.aspx" accesskey="A"><i class="bi bi-arrow-up-circle"> </i>Rinnovi Attivi</a>
+      <%--      <asp:LinkButton ID="LinkEquiAttive" CssClass="nav-link" CausesValidation="false" runat="server"><i class="bi bi-arrow-up-circle"> </i>Equip. Attive</asp:LinkButton>--%>
+
         </li>
           
        

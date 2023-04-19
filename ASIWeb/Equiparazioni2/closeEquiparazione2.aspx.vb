@@ -22,6 +22,8 @@ Public Class closeEquiparazione2
         Dim RequestP = fmsP.CreateEditRequest(record_ID)
         RequestP.AddField("CheckWeb", "s")
         RequestP.AddField("CodiceStatus", "102")
+        RequestP.AddScript("RunWebMailInvioDTEquip", codR)
+
         Try
             risposta = RequestP.Execute()
 

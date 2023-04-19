@@ -92,184 +92,185 @@ Public Class DashboardRifiutate
 
 
         Dim deEnco As New Ed()
-        Dim heading As String = "heading"
-        Dim collapse As String = "collapse"
-        Dim quantiPerGruppo As Integer = 0
-        Dim ds As DataSet
+        'Dim heading As String = "heading"
+        'Dim collapse As String = "collapse"
+        'Dim quantiPerGruppo As Integer = 0
+        'Dim ds As DataSet
 
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniMaster")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("CodiceEnteRichiedente", Session("codice"), Enumerations.SearchOption.equals)
-        ' RequestP.AddSearchField("CodiceStatus", 160, Enumerations.SearchOption.lessThan)
-        RequestP.AddSearchField("CodiceStatus", "104")
-        RequestP.AddSortField("IDEquiparazioneM", Enumerations.Sort.Descend)
-        '   RequestP.AddSortField("CodiceStatus", Enumerations.Sort.Ascend)
+        'Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        'fmsP.SetLayout("webEquiparazioniMaster")
+        'Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        '' RequestP.AddSearchField("pre_stato_web", "1")
+        'RequestP.AddSearchField("CodiceEnteRichiedente", Session("codice"), Enumerations.SearchOption.equals)
+        '' RequestP.AddSearchField("CodiceStatus", 160, Enumerations.SearchOption.lessThan)
+        'RequestP.AddSearchField("CodiceStatus", "104")
+        'RequestP.AddSortField("IDEquiparazioneM", Enumerations.Sort.Descend)
+        ''   RequestP.AddSortField("CodiceStatus", Enumerations.Sort.Ascend)
 
-        ds = RequestP.Execute()
-
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-            phDash.Visible = True
-            'Dim counter As Integer = 0
-            Dim counter2 As Integer = 0
-            'Dim totale As Decimal = 0
-            phDash.Controls.Add(New LiteralControl("<div class=""accordion"" id=""accordionDash"">"))
-
-            For Each dr In ds.Tables("main").Rows
-
-                Dim quantiPerProgetto As Integer = AsiModel.Equiparazione.QuanteEquiparazioniPerGruppo(dr("IDEquiparazioneM"))
-                '  Dim quantiPerProgettoEA As Integer = AsiModel.Rinnovi.QuantiRinnoviPerGruppoEA(dr("IDEquipaezioneM"))
-                Dim quantiPerProgettoEA As Integer = 0
-
-                counter2 += 1
+        'ds = RequestP.Execute()
 
 
+        'If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+        phDash.Visible = True
+        '    'Dim counter As Integer = 0
+        '    Dim counter2 As Integer = 0
+        '    'Dim totale As Decimal = 0
+        '    phDash.Controls.Add(New LiteralControl("<div class=""accordion"" id=""accordionDash"">"))
 
-                Dim hpUPPag As New LinkButton
+        'For Each dr In ds.Tables("main").Rows
 
-                hpUPPag.ID = "hpPag_" & counter2
-                hpUPPag.Attributes.Add("runat", "server")
-                'codR = WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))))
-                'record_id = WebUtility.UrlEncode(deEnco.QueryStringEncode(WebUtility.UrlEncode(dr("id_record"))))
-                hpUPPag.PostBackUrl = "upLegEquiparazioni2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))))
+        '        Dim quantiPerProgetto As Integer = AsiModel.Equiparazione.QuanteEquiparazioniPerGruppo(dr("IDEquiparazioneM"))
+        '        '  Dim quantiPerProgettoEA As Integer = AsiModel.Rinnovi.QuantiRinnoviPerGruppoEA(dr("IDEquipaezioneM"))
+        '        Dim quantiPerProgettoEA As Integer = 0
 
-                hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("costoEquiM")) & " Euro"
-
-                hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom  mb-1"
-                'If ((Data.FixNull(dr("CodiceStatus")) = "111" Or Data.FixNull(dr("CodiceStatus")) = "114") And Data.FixNull(dr("checkweb")) = "s") Then
-                '    hpUPPag.Visible = True
-                'Else
-                '    hpUPPag.Visible = False
-                'End If
-                hpUPPag.Visible = False
-
-                Dim addEquiparazione As New LinkButton
-                addEquiparazione.ID = "Rin_" & counter2
-                addEquiparazione.Attributes.Add("runat", "server")
-                addEquiparazione.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Aggiungi Equiparazione"
-
-                addEquiparazione.PostBackUrl = "checkTesseramento2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&type=same"
-                ' fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & Data.FixNull(dr("IDRinnovo")) & "&record_ID=" & dr("id_record")
-
-                addEquiparazione.CssClass = "btn btn-success btn-sm  btn-custom  mb-1  mr-1"
-
-                'If (Data.FixNull(dr("checkweb")) = "n") Then
-                '    addEquiparazione.Visible = True
-                'Else
-                '    
-                'End If
-                addEquiparazione.Visible = False
-                Dim Chiudi As New LinkButton
-                Chiudi.ID = "Clo_" & counter2
-                Chiudi.Attributes.Add("runat", "server")
-                Chiudi.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Termina questo gruppo"
-
-                Chiudi.PostBackUrl = "closeEquiparazione2.aspx?idrecord=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("idrecord")))) & "&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))))
-                ' fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & Data.FixNull(dr("IDRinnovo")) & "&record_ID=" & dr("id_record")
-
-                Chiudi.CssClass = "btn btn-success btn-sm  btn-custom  mb-1"
-
-                'If quantiPerProgetto > 0 Then
-                '    Chiudi.Visible = True
-                'Else
-                '    Chiudi.Visible = False
-                'End If
-                Chiudi.Visible = False
-                phDash.Controls.Add(New LiteralControl("<div Class=""accordion-item"">"))
-
-                phDash.Controls.Add(New LiteralControl("<h2 Class=""accordion-header"" id=""" & heading & "_" & Data.FixNull(dr("IDEquiparazioneM")) & """>"))
-                If Data.FixNull(dr("IDEquiparazioneM")) = open Then
-                    phDash.Controls.Add(New LiteralControl("<button Class=""accordion-button moltopiccolo"" type=""button"" data-bs-toggle=""collapse"" data-bs-target=""#collapse" & Data.FixNull(dr("IDEquiparazioneM")) & """ aria-expanded=""False"" aria-controls=""collapse" & Data.FixNull(dr("IDEquiparazioneM")) & """>"))
-
-                Else
-                    phDash.Controls.Add(New LiteralControl("<button Class=""accordion-button collapsed moltopiccolo"" type=""button"" data-bs-toggle=""collapse"" data-bs-target=""#collapse" & Data.FixNull(dr("IDEquiparazioneM")) & """ aria-expanded=""False"" aria-controls=""collapse" & Data.FixNull(dr("IDEquiparazioneM")) & """>"))
-
-                End If
-
-                quantiPerGruppo = AsiModel.Equiparazione.quanteRichiestePerGruppo(dr("IDEquiparazioneM"))
-
-
-                Dim leggendaRinnovi As String = ""
-
-                If quantiPerGruppo = 1 Then
-
-                    leggendaRinnovi = "equiparazione"
-                Else
-                    leggendaRinnovi = "equiparazioni"
-                End If
-
-                Dim legendaStatus As String = ""
+        '        counter2 += 1
 
 
 
-                legendaStatus = " -  Status <b>&nbsp;" & Data.FixNull(dr("Descrizione_StatusWeb")) & " </b>- Motivo:" & Data.FixNull(dr("NoteValutazioneDT"))
+        '        Dim hpUPPag As New LinkButton
+
+        '        hpUPPag.ID = "hpPag_" & counter2
+        '        hpUPPag.Attributes.Add("runat", "server")
+        '        'codR = WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovo"))))
+        '        'record_id = WebUtility.UrlEncode(deEnco.QueryStringEncode(WebUtility.UrlEncode(dr("id_record"))))
+        '        hpUPPag.PostBackUrl = "upLegEquiparazioni2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))))
+
+        '        hpUPPag.Text = "<i class=""bi bi-wallet""> </i>Invia Pagamento di: " & Data.FixNull(dr("costoEquiM")) & " Euro"
+
+        'hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom  mb-1"
+        '        'If ((Data.FixNull(dr("CodiceStatus")) = "111" Or Data.FixNull(dr("CodiceStatus")) = "114") And Data.FixNull(dr("checkweb")) = "s") Then
+        '        '    hpUPPag.Visible = True
+        '        'Else
+        '        '    hpUPPag.Visible = False
+        '        'End If
+        '        hpUPPag.Visible = False
+
+        '        Dim addEquiparazione As New LinkButton
+        '        addEquiparazione.ID = "Rin_" & counter2
+        '        addEquiparazione.Attributes.Add("runat", "server")
+        '        addEquiparazione.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Aggiungi Equiparazione"
+
+        '        addEquiparazione.PostBackUrl = "checkTesseramento2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&type=same"
+        '        ' fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & Data.FixNull(dr("IDRinnovo")) & "&record_ID=" & dr("id_record")
+
+        '        addEquiparazione.CssClass = "btn btn-success btn-sm  btn-custom  mb-1  mr-1"
+
+        'If (Data.FixNull(dr("checkweb")) = "n") Then
+        '    addEquiparazione.Visible = True
+        'Else
+        '    
+        'End If
+        'addEquiparazione.Visible = False
+        '        Dim Chiudi As New LinkButton
+        '        Chiudi.ID = "Clo_" & counter2
+        '        Chiudi.Attributes.Add("runat", "server")
+        '        Chiudi.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Termina questo gruppo"
+
+        '        Chiudi.PostBackUrl = "closeEquiparazione2.aspx?idrecord=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("idrecord")))) & "&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))))
+        '        ' fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & Data.FixNull(dr("IDRinnovo")) & "&record_ID=" & dr("id_record")
+
+        '        Chiudi.CssClass = "btn btn-success btn-sm  btn-custom  mb-1"
+
+        'If quantiPerProgetto > 0 Then
+        '    Chiudi.Visible = True
+        'Else
+        '    Chiudi.Visible = False
+        'End If
+        'Chiudi.Visible = False
+        '        phDash.Controls.Add(New LiteralControl("<div Class=""accordion-item"">"))
+
+        '        phDash.Controls.Add(New LiteralControl("<h2 Class=""accordion-header"" id=""" & heading & "_" & Data.FixNull(dr("IDEquiparazioneM")) & """>"))
+        '        If Data.FixNull(dr("IDEquiparazioneM")) = open Then
+        '            phDash.Controls.Add(New LiteralControl("<button Class=""accordion-button moltopiccolo"" type=""button"" data-bs-toggle=""collapse"" data-bs-target=""#collapse" & Data.FixNull(dr("IDEquiparazioneM")) & """ aria-expanded=""False"" aria-controls=""collapse" & Data.FixNull(dr("IDEquiparazioneM")) & """>"))
+
+        '        Else
+        '            phDash.Controls.Add(New LiteralControl("<button Class=""accordion-button collapsed moltopiccolo"" type=""button"" data-bs-toggle=""collapse"" data-bs-target=""#collapse" & Data.FixNull(dr("IDEquiparazioneM")) & """ aria-expanded=""False"" aria-controls=""collapse" & Data.FixNull(dr("IDEquiparazioneM")) & """>"))
+
+        '        End If
+
+        '        quantiPerGruppo = AsiModel.Equiparazione.quanteRichiestePerGruppo(dr("IDEquiparazioneM"))
 
 
+        '        Dim leggendaRinnovi As String = ""
+
+        '        If quantiPerGruppo = 1 Then
+
+        '            leggendaRinnovi = "equiparazione"
+        '        Else
+        '            leggendaRinnovi = "equiparazioni"
+        'End If
+
+        '        Dim legendaStatus As String = ""
+
+
+
+        '        legendaStatus = " -  Status <b>&nbsp;" & Data.FixNull(dr("Descrizione_StatusWeb")) & " </b>- Motivo:" & Data.FixNull(dr("NoteValutazioneDT"))
 
 
 
 
-                '         legendaStatus = " -  Status <b>&nbsp;" & Data.FixNull(dr("Descrizione_StatusWeb")) & "&nbsp;</b>"
-
-                Dim prezzoDaPagare As String = ""
-                If (Data.FixNull(dr("CodiceStatus")) = "111" And Data.FixNull(dr("checkweb")) = "s") Then
-
-                    If quantiPerGruppo = 1 Then
-                        prezzoDaPagare = "Costo Equiparazione (" & Data.FixNull(dr("costoEquiM")) & ") + Costo Spedizione (" & Data.FixNull(dr("costoSpedizioneM")) & ") =<b>&nbsp;Costo Totale di " & Data.FixNull(dr("costoTotaleM")) & " Euro &nbsp;</b>"
-
-                    Else
-                        prezzoDaPagare = "Costo Equiparazioni (" & Data.FixNull(dr("costoEquiM")) & ") + Costo Spedizione (" & Data.FixNull(dr("costoSpedizioneM")) & ") = <b>&nbsp;Costo Totale di " & Data.FixNull(dr("costoTotaleM")) & " Euro &nbsp;</b>"
-
-                    End If
-                Else
-                    prezzoDaPagare = ""
-                End If
 
 
-                phDash.Controls.Add(New LiteralControl("Codice richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDEquiparazioneM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " : [<strong>" & Data.FixNull(dr("Equi_Sport_Interessato")) & " - " & Data.FixNull(dr("Equi_Disciplina_Interessata")) & togliND(Data.FixNull(dr("Equi_Specialita"))) & "</strong>] - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;" & prezzoDaPagare))
-                phDash.Controls.Add(New LiteralControl("</button>"))
-                phDash.Controls.Add(New LiteralControl("</h2>"))
-                If Data.FixNull(dr("IDEquiparazioneM")) = open Then
-                    phDash.Controls.Add(New LiteralControl("<div id=""" & collapse & Data.FixNull(dr("IDEquiparazioneM")) & """ class=""accordion-collapse collapse show"" aria-labelledby=""heading_" & Data.FixNull(dr("IDEquiparazioneM")) & """ data-bs-parent=""#accordionDash"">"))
+        '        '         legendaStatus = " -  Status <b>&nbsp;" & Data.FixNull(dr("Descrizione_StatusWeb")) & "&nbsp;</b>"
 
-                Else
-                    phDash.Controls.Add(New LiteralControl("<div id=""" & collapse & Data.FixNull(dr("IDEquiparazioneM")) & """ class=""accordion-collapse collapse"" aria-labelledby=""heading_" & Data.FixNull(dr("IDEquiparazioneM")) & """ data-bs-parent=""#accordionDash"">"))
+        'Dim prezzoDaPagare As String = ""
+        '        If (Data.FixNull(dr("CodiceStatus")) = "111" And Data.FixNull(dr("checkweb")) = "s") Then
 
-                End If
+        '            If quantiPerGruppo = 1 Then
+        '                prezzoDaPagare = "Costo Equiparazione (" & Data.FixNull(dr("costoEquiM")) & ") + Costo Spedizione (" & Data.FixNull(dr("costoSpedizioneM")) & ") =<b>&nbsp;Costo Totale di " & Data.FixNull(dr("costoTotaleM")) & " Euro &nbsp;</b>"
 
-                phDash.Controls.Add(New LiteralControl("<div class=""accordion-body"">"))
-                If dr("CheckWeb") = "n" Then
-                    phDash.Controls.Add(New LiteralControl("<p>"))
-                    phDash.Controls.Add(addEquiparazione)
+        '            Else
+        '                prezzoDaPagare = "Costo Equiparazioni (" & Data.FixNull(dr("costoEquiM")) & ") + Costo Spedizione (" & Data.FixNull(dr("costoSpedizioneM")) & ") = <b>&nbsp;Costo Totale di " & Data.FixNull(dr("costoTotaleM")) & " Euro &nbsp;</b>"
 
-
-                    phDash.Controls.Add(Chiudi)
+        '            End If
+        '        Else
+        '            prezzoDaPagare = ""
+        'End If
 
 
+        '        phDash.Controls.Add(New LiteralControl("Codice richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDEquiparazioneM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " : [<strong>" & Data.FixNull(dr("Equi_Sport_Interessato")) & " - " & Data.FixNull(dr("Equi_Disciplina_Interessata")) & togliND(Data.FixNull(dr("Equi_Specialita"))) & "</strong>] - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;" & prezzoDaPagare))
+        '        phDash.Controls.Add(New LiteralControl("</button>"))
+        '        phDash.Controls.Add(New LiteralControl("</h2>"))
+        '        If Data.FixNull(dr("IDEquiparazioneM")) = open Then
+        '            phDash.Controls.Add(New LiteralControl("<div id=""" & collapse & Data.FixNull(dr("IDEquiparazioneM")) & """ class=""accordion-collapse collapse show"" aria-labelledby=""heading_" & Data.FixNull(dr("IDEquiparazioneM")) & """ data-bs-parent=""#accordionDash"">"))
+
+        '        Else
+        '            phDash.Controls.Add(New LiteralControl("<div id=""" & collapse & Data.FixNull(dr("IDEquiparazioneM")) & """ class=""accordion-collapse collapse"" aria-labelledby=""heading_" & Data.FixNull(dr("IDEquiparazioneM")) & """ data-bs-parent=""#accordionDash"">"))
+
+        '        End If
+
+        '        phDash.Controls.Add(New LiteralControl("<div class=""accordion-body"">"))
+        '        If dr("CheckWeb") = "n" Then
+        '            phDash.Controls.Add(New LiteralControl("<p>"))
+        '            phDash.Controls.Add(addEquiparazione)
 
 
-                    phDash.Controls.Add(New LiteralControl("</p>"))
+        'phDash.Controls.Add(Chiudi)
 
-                End If
 
-                phDash.Controls.Add(New LiteralControl("<p>"))
-                If (Data.FixNull(dr("CodiceStatus")) = "111") Then
-                    phDash.Controls.Add(hpUPPag)
 
-                End If
-                phDash.Controls.Add(New LiteralControl("</p>"))
 
-                Dim ds1 As DataSet
+        '            phDash.Controls.Add(New LiteralControl("</p>"))
+
+        '        End If
+
+        '        phDash.Controls.Add(New LiteralControl("<p>"))
+        '        If (Data.FixNull(dr("CodiceStatus")) = "111") Then
+        '            phDash.Controls.Add(hpUPPag)
+
+        '        End If
+        'phDash.Controls.Add(New LiteralControl("</p>"))
+
+        Dim ds1 As DataSet
 
                 Dim fmsP1 As FMSAxml = AsiModel.Conn.Connect()
                 fmsP1.SetLayout("webEquiparazioniRichiestaMolti")
                 Dim RequestP1 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
-                ' RequestP.AddSearchField("pre_stato_web", "1")
-                RequestP1.AddSearchField("IDEquiparazioneM", Data.FixNull(dr("IDEquiparazioneM")), Enumerations.SearchOption.equals)
-                RequestP1.AddSearchField("Codice_Status", "104")
-                RequestP1.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        '  RequestP1.AddSearchField("IDEquiparazioneM", Data.FixNull(dr1("IDEquiparazioneM")), Enumerations.SearchOption.equals)
+        RequestP1.AddSearchField("Codice_Ente_Richiedente", Session("codice"))
+        RequestP1.AddSearchField("Codice_Status", "104")
+        RequestP1.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
                 RequestP1.AddSortField("IDRecord", Enumerations.Sort.Descend)
 
 
@@ -601,11 +602,11 @@ Public Class DashboardRifiutate
 
                 phDash.Controls.Add(New LiteralControl("</div>"))
 
-            Next
+        '    Next
 
 
-            phDash.Controls.Add(New LiteralControl("</div>"))
-        End If
+        '    phDash.Controls.Add(New LiteralControl("</div>"))
+        'End If
 
     End Sub
     Function SonoDieci(valore As String) As String

@@ -69,9 +69,9 @@ function ServerException(mess) {
          <div class="col-6 pb-0">
         <p>
             
-              <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Equiparazioni Attive</asp:LinkButton>
+              <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Termina caricamento</asp:LinkButton>
     
-                 <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>
+             <%--    <a href="javascript:history.back()" class="btn btn-success btn-sm btn-due">Torna alla pagina precedente</a>--%>
         </p>
        
              </div>

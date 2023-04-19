@@ -116,8 +116,102 @@ Public Class RichiestaRinnovo2
 
         End If
     End Sub
-    Sub rinnoviCF(cf As String)
 
+    Function TestEnteAffiliante(cf As String) As Boolean
+        Dim risposta As Boolean = False
+        Dim ds As DataSet
+        Dim codiceAffialiante As String = ""
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        fmsP.SetLayout("WebAlbo")
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
+        'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
+        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+        Try
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                risposta = True
+            Else
+                risposta = False
+            End If
+        Catch ex As Exception
+            risposta = False
+        End Try
+        Return risposta
+    End Function
+    Function TestVar(cf As String) As Boolean
+        Dim risposta As Boolean = False
+        Dim ds As DataSet
+        Dim codiceAffialiante As String = ""
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        fmsP.SetLayout("WebAlbo")
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+        '  RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
+        'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
+        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+        Try
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                risposta = True
+            Else
+                risposta = False
+            End If
+        Catch ex As Exception
+            risposta = False
+        End Try
+        Return risposta
+    End Function
+    Function TestCf(cf As String) As Boolean
+        Dim risposta As Boolean = False
+        Dim ds As DataSet
+        Dim codiceAffialiante As String = ""
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        fmsP.SetLayout("WebAlbo")
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
+        '  RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+        '  RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
+        'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
+        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+        Try
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                risposta = True
+            Else
+                risposta = False
+            End If
+        Catch ex As Exception
+            risposta = False
+        End Try
+        Return risposta
+    End Function
+
+
+    Sub rinnoviCF(cf As String)
+        Dim risultato As String = ""
+        Dim rispostaCF As Boolean = False
+        Dim rispostaVar As Boolean = False
+        Dim rispostaEA As Boolean = False
+        Dim nota As String = ""
         Dim ds As DataSet
         Dim codiceAffialiante As String = ""
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
@@ -134,17 +228,7 @@ Public Class RichiestaRinnovo2
 
         If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-
-
-
-
-            '  Dim cf As DataTable = ds.Tables("main")
-
-
-
             Dim counter1 As Integer = 0
-
-
 
             counter1 += 1
             '  Response.Write("cf: " & Data.FixNull(dr("codice fiscale")) & "<br />")
@@ -160,17 +244,29 @@ Public Class RichiestaRinnovo2
             ddlCF.DataValueField = "IDRecord"
             ddlCF.DataBind()
 
-
-
-
-
             counter1 += 1
             '  Next
         Else
+            rispostaCF = TestCf(cf)
+            If rispostaCF = True Then
+                rispostaVar = TestVar(cf)
+                If rispostaVar = True Then
+                    rispostaEA = TestEnteAffiliante(cf)
 
+                    If rispostaEA = False Then
+                        nota = "noEA"
+                    End If
+                Else
+                    nota = "toNorma"
+                End If
+            Else
+                nota = "noCF"
+            End If
+
+            risultato = ""
 
             Session("procedi") = "KO"
-            Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode("koCFAlbo"))
+            Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode(nota))
 
 
         End If

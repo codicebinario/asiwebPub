@@ -40,7 +40,23 @@
 
                color:red;
            }
- 
+ .section-divider {
+  height: 0;
+  border-top: 1px solid #DDD;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.section-divider > span {
+  color: #3498db;
+  background: #FAFAFA;
+  display: inline-block;
+  position: relative;
+  padding: 0 17px;
+  top: -11px;
+  font-size: 15px;
+}
     </style>
 
         <script>

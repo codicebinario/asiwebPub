@@ -147,31 +147,39 @@ Public Class valutaEquiparazione2
 
             risposta = Request.Execute()
 
-                Dim quantiEsitoOk = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 106)
-                Dim quantiEsitoKo = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 107)
+
+            Dim quantiValutazioni105 = AsiModel.Equiparazione.quanteRichiesteValutazione105(idEquiparazioneM, 105)
+            Dim quantiEsitoOk = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 106)
+            Dim quantiEsitoKo = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 107)
 
             Dim record_id As Integer = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDEquiMaster(idEquiparazioneM) ' per aggiornare status
 
-            If quantiEsitoKo >= 1 Then
-                ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 107)
+            If quantiValutazioni105 = 0 Then
+
+                If quantiEsitoKo >= 1 Then
+                    ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 107)
+                    '  AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+                Else
+                    ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 106)
+                    ' AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+                End If
             Else
-                ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 106)
+
             End If
 
 
 
 
-
             If valutazione = "S" Then
-                    AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione")
-                ElseIf valutazione = "N" Then
-                    AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione")
+                AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+            ElseIf valutazione = "N" Then
+                AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione", Session("id_record"))
 
-                End If
+            End If
 
                 Response.Redirect("archivioEquiValutati2.aspx#" & codR)
 
-        End If
+            End If
     End Sub
 
     Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click

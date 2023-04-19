@@ -43,6 +43,7 @@ Public Class upLegEquiparazioni2
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
     Dim CodiceEnteRichiedente As String = ""
     Dim codicefiscale As String = ""
+    Dim s As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -64,17 +65,18 @@ Public Class upLegEquiparazioni2
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
-        Dim record_ID As String = ""
-        record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        If Not String.IsNullOrEmpty(record_ID) Then
+        s = Request.QueryString("s")
+        'Dim record_ID As String = ""
+        'record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
+        'If Not String.IsNullOrEmpty(record_ID) Then
 
-            Session("id_record") = record_ID
+        '    Session("id_record") = record_ID
 
-        End If
+        'End If
 
-        If IsNothing(Session("id_record")) Then
-            Response.Redirect("../login.aspx")
-        End If
+        'If IsNothing(Session("id_record")) Then
+        '    Response.Redirect("../login.aspx")
+        'End If
 
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
         If Not String.IsNullOrEmpty(codR) Then
@@ -117,7 +119,7 @@ Public Class upLegEquiparazioni2
 
 
 
-        If QuantiAllegati(idEqui) = "no" Then
+        If QuantiAllegati(Session("codR")) = "no" Then
 
             Button1.Enabled = False
             uploadedFiles.Text = ""
@@ -171,7 +173,7 @@ Public Class upLegEquiparazioni2
         Dim quanti As Integer = 0
         Dim risposta As String = ""
 
-        fmsP.SetLayout("webEquiAllegati")
+        fmsP.SetLayout("webEquiAllegati2")
 
         Dim request = fmsP.CreateFindRequest()
 
@@ -245,7 +247,7 @@ Public Class upLegEquiparazioni2
         Dim ResponseUP As IRestResponse = clientUP.Execute(Requestx)
 
 
-        If QuantiAllegati2(HiddenIDEquiparazione.Value) = "no" Then
+        If QuantiAllegati2(Session("codR")) = "no" Then
             Button1.Enabled = False
             uploadedFiles.Text = ""
 
@@ -307,24 +309,38 @@ Public Class upLegEquiparazioni2
         Dim Request1 = fmsP1.CreateEditRequest(record_id)
 
         'If qualeStatus = "3" Then
-        Request1.AddField("Codice_Status", "112")
+
+        If s = 114 Then
+            Request1.AddField("CodiceStatus", "114.5")
+        Else
+            Request1.AddField("CodiceStatus", "113")
+        End If
+
         'Else
         '    Request1.AddField("Status_ID", "12")
         'End If
-        Try
-            risposta = Request1.Execute()
-            AsiModel.LogIn.LogCambioStatus(Session(codR), "112", Session("WebUserEnte"), "equiparazione")
-            'If qualeStatus = "3" Then
-            '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
-            'Else
-            '    AsiModel.LogIn.LogCambioStatus(codR, "12", Session("WebUserEnte"))
-            'End If
+        '   Try
+        risposta = Request1.Execute()
 
-            deleteFile(nomecaricato)
+        If s = 114 Then
+            AsiModel.LogIn.LogCambioStatus(codR, "114.5", Session("WebUserEnte"), "equiparazione")
+            AsiModel.Rinnovi.AggiornaStatusEquiMoltia1145(Session("codR"))
+        Else
+            AsiModel.LogIn.LogCambioStatus(codR, "113", Session("WebUserEnte"), "equiparazione")
+            AsiModel.Rinnovi.AggiornaStatusEquiMoltia113(Session("codR"))
+        End If
 
-        Catch ex As Exception
+        'If qualeStatus = "3" Then
+        '    AsiModel.LogIn.LogCambioStatus(codR, "4", Session("WebUserEnte"))
+        'Else
+        '    AsiModel.LogIn.LogCambioStatus(codR, "12", Session("WebUserEnte"))
+        'End If
 
-        End Try
+        ' deleteFile(nomecaricato)
+
+        '  Catch ex As Exception
+
+        '  End Try
 
         Dim token = PrendiToken()
 
@@ -368,7 +384,7 @@ Public Class upLegEquiparazioni2
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
 
-        If QuantiAllegati2(HiddenIDEquiparazione.Value) = "no" Then
+        If QuantiAllegati2(Session("codR")) = "no" Then
 
             Button1.Enabled = False
             uploadedFiles.Text = ""
@@ -403,7 +419,7 @@ Public Class upLegEquiparazioni2
                     tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
                     ext = Path.GetExtension((file.FileName))
                     nomefileReale = Path.GetFileName(file.FileName)
-                    nomecaricato = HiddenIDEquiparazione.Value & "_" + tokenZ + ext
+                    nomecaricato = Session("codR") & "_" + tokenZ + ext
 
 
 
@@ -457,7 +473,7 @@ Public Class upLegEquiparazioni2
                 Dim id_att As String = ""
                 Dim tuttoRitorno As String = ""
 
-                tuttoRitorno = NuovaRichiestaAllegato(HiddenIDEquiparazione.Value, nomecaricato)
+                tuttoRitorno = NuovaRichiestaAllegato(Session("codR"), nomecaricato)
                 txtNote.Text = ""
                 Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
                 tokenx = arrKeywords(1)
@@ -511,6 +527,6 @@ Public Class upLegEquiparazioni2
     End Function
 
     Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
-        Response.Redirect("dashboardEqui2.aspx#" & codR)
+        Response.Redirect("dashboardEqui2.aspx?open=" & Session("codR"))
     End Sub
 End Class

@@ -486,7 +486,43 @@
                              
                 </div>
 
-	
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="txtCognome">Numero Telefono</label>
+                        <asp:TextBox ID="txtTelefono" CssClass="form-control" runat="server" MaxLength="250"></asp:TextBox>
+
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" Display="Dynamic"
+                            CssClass="errore" ErrorMessage="numero telefono" ControlToValidate="txtTelefono"
+                            EnableClientScript="true"></asp:RequiredFieldValidator>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
 	
 	</asp:Panel>
 

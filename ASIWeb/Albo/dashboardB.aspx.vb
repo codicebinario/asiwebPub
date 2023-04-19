@@ -200,20 +200,20 @@ Public Class dashboardB
                     Ann.CssClass = "btn btn-success btn-sm btn-quattro btn-custom mb-2"
                     '  Ann.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
 
-                    If (Data.FixNull(dr("Codice_Status")) = "54" _
-                Or Data.FixNull(dr("Codice_Status")) = "57" Or Data.FixNull(dr("Codice_Status")) = "70" _
-                Or Data.FixNull(dr("Codice_Status")) = "63" Or Data.FixNull(dr("Codice_Status")) = "64" _
-                Or Data.FixNull(dr("Codice_Status")) = "65" Or Data.FixNull(dr("Codice_Status")) = "66" _
-                Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "68" _
-                Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
-                Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78"
-                ) And Data.FixNull(dr("corsoAnnullabile")) = "s" Then
+                    '    If (Data.FixNull(dr("Codice_Status")) = "54" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "57" Or Data.FixNull(dr("Codice_Status")) = "70" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "63" Or Data.FixNull(dr("Codice_Status")) = "64" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "65" Or Data.FixNull(dr("Codice_Status")) = "66" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "68" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78"
+                    ') And Data.FixNull(dr("corsoAnnullabile")) = "s" Then
 
-                        '  Or Data.FixNull(dr("Codice_Status")) = "82"
-                        Ann.Visible = True
-                    Else
-                        Ann.Visible = False
-                    End If
+                    '        '  Or Data.FixNull(dr("Codice_Status")) = "82"
+                    '        Ann.Visible = True
+                    '    Else
+                    '        Ann.Visible = False
+                    '    End If
 
 
                     'If ((Data.FixNull(dr("Codice_Status")) >= "54") And Data.FixNull(dr("Codice_Status")) <= "82" And Data.FixNull(dr("corsoAnnullabile")) = "s") Then
@@ -331,7 +331,7 @@ Public Class dashboardB
                         WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
                         "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
                     hpUPPag82.CssClass = "btn btn-success btn-sm btn-sette btn-custom mb-2"
-                    If (Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "85") And Data.FixNull(dr("fase")) = "3" Then
+                    If (Data.FixNull(dr("Codice_Status")) = "82") And Data.FixNull(dr("fase")) = "3" Then
                         hpUPPag82.Visible = True
                     Else
                         hpUPPag82.Visible = False
