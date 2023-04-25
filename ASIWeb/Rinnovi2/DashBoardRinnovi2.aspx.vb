@@ -270,7 +270,7 @@ Public Class DashBoardRinnovi2
                     legendaStatus = " -  Status <b>&nbsp;" & Data.FixNull(dr("Descrizione_StatusWeb")) & "&nbsp;</b>"
                 End If
                 Dim prezzoDaPagare As String = ""
-                If (Data.FixNull(dr("CodiceStatus")) = "155" And Data.FixNull(dr("checkweb")) = "s") Then
+                If ((Data.FixNull(dr("CodiceStatus")) = "155" Or Data.FixNull(dr("CodiceStatus")) = "158" Or Data.FixNull(dr("CodiceStatus")) = "159") And Data.FixNull(dr("checkweb")) = "s") Then
 
                     If quantiPerGruppo = 1 Then
                         prezzoDaPagare = "Costo Rinnovo (" & Data.FixNull(dr("costoRinnovoM")) & ") + Costo Spedizione (" & Data.FixNull(dr("costoSpedizioneM")) & ") =<b>&nbsp;Costo Totale di " & Data.FixNull(dr("costoTotaleM")) & " Euro &nbsp;</b>"
@@ -285,7 +285,7 @@ Public Class DashBoardRinnovi2
 
 
 
-                phDash.Controls.Add(New LiteralControl("Codice richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDRinnovoM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;" & prezzoDaPagare))
+                phDash.Controls.Add(New LiteralControl("Codice richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDRinnovoM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;"))
                 phDash.Controls.Add(New LiteralControl("</button>"))
                 phDash.Controls.Add(New LiteralControl("</h2>"))
                 If Data.FixNull(dr("IDRinnovoM")) = open Then
@@ -315,6 +315,7 @@ Public Class DashBoardRinnovi2
                 phDash.Controls.Add(hpUPPag)
                 phDash.Controls.Add(hpUPPag158)
 
+                phDash.Controls.Add(New LiteralControl("<span class=""moltopiccolo""> - " & prezzoDaPagare & "</span>"))
 
                 '  End If
                 phDash.Controls.Add(New LiteralControl("</p>"))
@@ -341,11 +342,6 @@ Public Class DashBoardRinnovi2
                     'Dim record_id As String
                     For Each dr1 In ds1.Tables("main").Rows
 
-                        '        If Data.FixNull(dr1("Codice_Status")) = "151" Or Data.FixNull(dr1("Codice_Status")) = "152" Or Data.FixNull(dr1("Codice_Status")) = "153" _
-                        'Or Data.FixNull(dr1("Codice_Status")) = "154" Or Data.FixNull(dr1("Codice_Status")) = "155" _
-                        'Or Data.FixNull(dr1("Codice_Status")) = "156" Or Data.FixNull(dr1("Codice_Status")) = "156" Or Data.FixNull(dr1("Codice_Status")) = "157" _
-                        'Or Data.FixNull(dr1("Codice_Status")) = "158" Or Data.FixNull(dr1("Codice_Status")) = "159" Then
-
                         counter1 += 1
 
                         If String.IsNullOrWhiteSpace(Data.FixNull(dr1("ASI_foto"))) Then
@@ -359,6 +355,11 @@ Public Class DashBoardRinnovi2
                         Else
                             tessera = "https://93.63.195.98" & Data.FixNull(dr1("tessera"))
                         End If
+
+
+
+
+
 
                         Dim fotoCorsistiLnk As New LinkButton
                             fotoCorsistiLnk.ID = "Fot_" & counter1

@@ -3,6 +3,7 @@ Imports ASIWeb.Ed
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports System.Net
+Imports ASIWeb.AsiModel
 
 Public Class AsiMasterPageRinnovi2
     Inherits System.Web.UI.MasterPage
@@ -17,6 +18,10 @@ Public Class AsiMasterPageRinnovi2
 
         If Not Page.IsPostBack Then
 
+            Dim quantiEvasival As Integer = quantiEvasi(Session("codice"))
+            Dim quantiAttiviVal As Integer = quantiAttivi(Session("codice"))
+            LinkRinnoviAttivi.Text = "<i class=""bi bi-arrow-down-circle""> </i>Rinnovi Attive <span class=""badge badge-light text-dark""> " & quantiAttiviVal & "</span>"
+            LinkArchivioRinnovi.Text = "<i class=""bi bi-arrow-down-circle""> </i>Rinnovi Evasi <span class=""badge badge-light text-dark""> " & quantiEvasival & "</span>"
 
 
             If Not IsNothing(Session("denominazione")) Then
@@ -28,7 +33,106 @@ Public Class AsiMasterPageRinnovi2
         End If
 
     End Sub
+    Function quantiAttivi(codice As String) As Integer
+        Dim ritorno As Integer = 0
 
+        Dim ds As DataSet
+
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        fmsP.SetLayout("webRinnoviMaster")
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("CodiceStatus", "150...159")
+        '  RequestP.AddSearchField("Codice_Status", "115")
+        ' RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+
+
+
+        ds = RequestP.Execute()
+
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+            Dim counter1 As Integer = 0
+            For Each dr In ds.Tables("main").Rows
+
+
+
+                counter1 += 1
+
+
+
+
+            Next
+            If counter1 >= 1 Then
+                ritorno = counter1
+            Else
+                ritorno = 0
+            End If
+
+        Else
+
+            ' non si sono records
+            'ritorno = False
+
+
+        End If
+
+
+        Return ritorno
+
+    End Function
+    Function quantiEvasi(codice As String) As Integer
+        Dim ritorno As Integer = 0
+
+        Dim ds As DataSet
+
+        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        fmsP.SetLayout("webRinnoviRichiesta2")
+        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+        ' RequestP.AddSearchField("pre_stato_web", "1")
+        RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Codice_Status", "160")
+        ' RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+
+
+
+        ds = RequestP.Execute()
+
+        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+            Dim counter1 As Integer = 0
+            For Each dr In ds.Tables("main").Rows
+
+
+
+
+                counter1 += 1
+
+
+
+
+            Next
+            If counter1 >= 1 Then
+                ritorno = counter1
+            Else
+                ritorno = 0
+            End If
+
+        Else
+
+            ' non si sono records
+            'ritorno = False
+
+
+        End If
+
+
+        Return ritorno
+
+    End Function
     Protected Sub lnkOut_Click(sender As Object, e As EventArgs) Handles lnkOut.Click
         Session("auth") = "0"
         Session("auth") = Nothing
@@ -151,6 +255,12 @@ Public Class AsiMasterPageRinnovi2
         Return auth
 
     End Function
+
+
+
+    Protected Sub LinkRinnoviAttivi_Click(sender As Object, e As EventArgs)
+        Response.Redirect("DashboardRinnovi2.aspx")
+    End Sub
     'Function quantiValutati(codice As String) As Boolean
     '    Dim ritorno As Boolean = False
 

@@ -325,14 +325,6 @@ Public Class DashboardEqui2
                                 diploma = "https://93.63.195.98" & Data.FixNull(dr1("DiplomaAsiText"))
                             End If
 
-                            'If String.IsNullOrWhiteSpace(Data.FixNull(dr("TesseraEquiparazioneText"))) Then
-                            '    tessera = "..\img\noPdf.jpg"
-                            'Else
-                            '    tessera = "https://93.63.195.98" & Data.FixNull(dr("TesseraEquiparazioneText"))
-                            'End If
-
-
-
 
                             If String.IsNullOrWhiteSpace(Data.FixNull(dr1("FotoEquiparazione"))) Then
                                 foto = "..\img\noimg.jpg"
@@ -347,60 +339,6 @@ Public Class DashboardEqui2
                             End If
 
 
-                            'Dim btnFase2 As New LinkButton
-
-                            'btnFase2.ID = "btnFase2_" & counter1
-                            'btnFase2.Attributes.Add("runat", "server")
-                            'btnFase2.Text = "<i class=""bi bi-terminal""> </i>Completa l'Equiparazione"
-                            'btnFase2.PostBackUrl = "richiestaEquiparazioneFoto2.aspx?fase=" & WebUtility.UrlEncode(deEnco.QueryStringEncode("1")) & "&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr1("IDRecord")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr1("idrecord")))
-                            'btnFase2.CssClass = "btn btn-success btn-sm btn-uno btn-custom mb-2"
-                            ''btnFase2.Visible = True
-                            ''btnFase3.Visible = False
-                            ''hpUP.Visible = False
-
-                            'If (Data.FixNull(dr1("Codice_Status")) = "101" And Data.FixNull(dr1("Equi_Fase")) = "1") Then
-                            '    btnFase2.Visible = True
-                            'Else
-                            '    btnFase2.Visible = False
-                            'End If
-
-
-                            'Dim btnFase3 As New LinkButton
-
-                            'btnFase3.ID = "btnFase3_" & counter1
-                            'btnFase3.Attributes.Add("runat", "server")
-                            'btnFase3.Text = "<i class=""bi bi-terminal""> </i>Completa l'Equiparazione"
-                            'btnFase3.PostBackUrl = "richiestaEquiparazioneDati12.aspx?fase=" & WebUtility.UrlEncode(deEnco.QueryStringEncode("2")) & "&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr1("IDRecord")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr1("idrecord")))
-                            'btnFase3.CssClass = "btn btn-success btn-sm btn-due btn-custom mb-2"
-                            ''btnFase3.Visible = True
-                            ''btnFase3.Visible = False
-                            ''hpUP.Visible = False
-
-                            'If (Data.FixNull(dr1("Codice_Status")) = "101" And Data.FixNull(dr1("Equi_Fase")) = "2") Then
-                            '    btnFase3.Visible = True
-                            'Else
-                            '    btnFase3.Visible = False
-                            'End If
-
-                            'Dim btnFase4 As New LinkButton
-
-                            'btnFase4.ID = "btnFase4_" & counter1
-                            'btnFase4.Attributes.Add("runat", "server")
-                            'btnFase4.Text = "<i class=""bi bi-terminal""> </i>Completa l'Equiparazione"
-                            'btnFase4.PostBackUrl = "richiestaEquiparazioneDati22.aspx?fase=" & WebUtility.UrlEncode(deEnco.QueryStringEncode("3")) & "&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr1("IDRecord")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr1("idrecord")))
-                            'btnFase4.CssClass = "btn btn-success btn-sm btn-tre btn-custom mb-2"
-                            ''btnFase4.Visible = True
-                            ''btnFase4.Visible = False
-                            ''hpUP.Visible = False
-
-                            'If (Data.FixNull(dr1("Codice_Status")) = "101" And Data.FixNull(dr1("Equi_Fase")) = "3") Then
-                            '    btnFase4.Visible = True
-                            'Else
-                            '    btnFase4.Visible = False
-                            'End If
-
-
-                            'colore assegnato
                             Dim AnnPrimaFase As New LinkButton
 
                             AnnPrimaFase.ID = "annPF_" & counter1
@@ -414,16 +352,6 @@ Public Class DashboardEqui2
                             Else
                                 AnnPrimaFase.Visible = False
                             End If
-
-                            'colore assegnato
-                            'Dim Ann As New LinkButton
-
-                            'Ann.ID = "ann_" & counter1
-                            'Ann.Attributes.Add("runat", "server")
-                            'Ann.Text = "<i class=""bi bi-file-earmark-x""> </i>Annulla Equiparazione"
-                            'Ann.PostBackUrl = "annullaEquiparazioneMotivo2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr1("IDEquiparazioneM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr1("idrecord")))
-                            'Ann.CssClass = "btn btn-success btn-sm btn-quattro btn-custom mb-2"
-                            'Ann.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
 
 
                             Dim VediDocumentazione As New LinkButton
@@ -473,12 +401,6 @@ Public Class DashboardEqui2
                             End If
 
 
-                            'phDash.Controls.Add(New LiteralControl("Equiparazione:  "))
-                            'phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr1("Codice_Status"))) & ">"))
-                            'phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr1("IDRecord")) & ">" & Data.FixNull(dr1("IDRecord")) & "</a>"))
-                            'phDash.Controls.Add(New LiteralControl())
-
-                            'phDash.Controls.Add(New LiteralControl("</span><br />"))
 
 
                             phDash.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr1("Equi_Nome")) & " " & Data.FixNull(dr1("Equi_Cognome")) & "</small><br />"))
@@ -493,7 +415,7 @@ Public Class DashboardEqui2
 
                             phDash.Controls.Add(New LiteralControl())
 
-                            ' phDash.Controls.Add(New LiteralControl("</span>"))
+
 
                             phDash.Controls.Add(New LiteralControl("</div>"))
 
@@ -536,9 +458,7 @@ Public Class DashboardEqui2
                             '    phDash.Controls.Add(Ann)
                             'End If
 
-                            'phDash.Controls.Add(btnFase2)
-                            'phDash.Controls.Add(btnFase3)
-                            'phDash.Controls.Add(btnFase4)
+
                             phDash.Controls.Add(VediDocumentazione)
                             'phDash.Controls.Add(hpUP)
                             'phDash.Controls.Add(Verb)

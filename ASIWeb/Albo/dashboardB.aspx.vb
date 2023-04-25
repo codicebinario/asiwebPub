@@ -76,6 +76,7 @@ Public Class dashboardB
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Codice_Status", "51...85")
         RequestP.AddSortField("Data_Richiesta", Enumerations.Sort.Descend)
         RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
@@ -95,15 +96,17 @@ Public Class dashboardB
             'Dim totale As Decimal = 0
             For Each dr In ds.Tables("main").Rows
                 Dim oldStatus As String = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
-                If Data.FixNull(dr("Codice_Status")) = "51" Or Data.FixNull(dr("Codice_Status")) = "54" _
-                Or Data.FixNull(dr("Codice_Status")) = "57" Or Data.FixNull(dr("Codice_Status")) = "70" _
-                Or Data.FixNull(dr("Codice_Status")) = "63" Or Data.FixNull(dr("Codice_Status")) = "64" _
-                Or Data.FixNull(dr("Codice_Status")) = "65" Or Data.FixNull(dr("Codice_Status")) = "66" _
-                Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "68" _
-                Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
-                Or Data.FixNull(dr("Codice_Status")) = "73" Or Data.FixNull(dr("Codice_Status")) = "83" _
-                Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "85" Or Data.FixNull(dr("Codice_Status")) = "78" _
-                Or Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "81" Then
+                If Not Data.FixNull(dr("Codice_Status")) = "84" Then
+
+                    '    If Data.FixNull(dr("Codice_Status")) <> "60" Or Data.FixNull(dr("Codice_Status")) = "84" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "57" Or Data.FixNull(dr("Codice_Status")) = "70" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "63" Or Data.FixNull(dr("Codice_Status")) = "64" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "65" Or Data.FixNull(dr("Codice_Status")) = "66" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "68" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "73" Or Data.FixNull(dr("Codice_Status")) = "83" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "85" Or Data.FixNull(dr("Codice_Status")) = "78" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "81" Then
 
 
                     counter1 += 1
@@ -223,12 +226,12 @@ Public Class dashboardB
                     '    End If
                     Dim Duplica As New LinkButton
                     Duplica.ID = "Duplica" & counter1
-                    duplica.Attributes.Add("runat", "server")
-                    duplica.Text = "<i class=""bi bi-front""> </i>Duplica Corso"
-                    duplica.PostBackUrl = "Duplica.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                    Duplica.Attributes.Add("runat", "server")
+                    Duplica.Text = "<i class=""bi bi-front""> </i>Duplica Corso"
+                    Duplica.PostBackUrl = "Duplica.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
                         "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record"))) & "&oldStatus=" &
                         WebUtility.UrlEncode(deEnco.QueryStringEncode(oldStatus))
-                    duplica.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
+                    Duplica.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
                     If Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78" _
                     Or Data.FixNull(dr("Codice_Status")) = "81" Or Data.FixNull(dr("Codice_Status")) = "82" _
                     Or Data.FixNull(dr("Codice_Status")) = "83" Or Data.FixNull(dr("Codice_Status")) = "84" _
@@ -376,22 +379,39 @@ Public Class dashboardB
 
 
                     phDash.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
-
-
-
                     'accordion card
-                    phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
+                    If Data.FixNull(dr("Codice_Status") = 60) Then
+                        phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded bg-danger moltopiccolo text-white"">"))
+                    Else
+                        phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded "">"))
+
+                    End If
+
+
+
+
                     'accordion heder
                     phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
 
                     ' inizio prima riga
+                    If Data.FixNull(dr("Codice_Status") = 60) Then
+                        phDash.Controls.Add(New LiteralControl("<div Class=""row moltopiccolo text-white"">"))
+                    Else
+                        phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                    End If
 
+                    If Data.FixNull(dr("Codice_Status") = 60) Then
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo text-white"">"))
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-5 text-left"">"))
+                    Else
+
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
+
+                    End If
+                    '  phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-5 text-left"">"))
 
                     phDash.Controls.Add(New LiteralControl("Corso:  "))
 
@@ -406,7 +426,16 @@ Public Class dashboardB
                     phDash.Controls.Add(New LiteralControl("</span>"))
                     phDash.Controls.Add(New LiteralControl("</div>"))
 
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3  text-left"">"))
+                    If Data.FixNull(dr("Codice_Status") = 60) Then
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left moltopiccolo text-white"">"))
+
+                    Else
+
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left moltopiccolo"">"))
+
+                    End If
+
+                    '  phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3  text-left"">"))
 
                     phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
 
@@ -476,7 +505,14 @@ Public Class dashboardB
 
                         phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
 
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left"">"))
+                        If Data.FixNull(dr("Codice_Status") = 60) Then
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left moltopiccolo text-white"">"))
+
+                        Else
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left moltopiccolo"">"))
+
+                        End If
 
                         phDash.Controls.Add(New LiteralControl("<h6>Nome Corso: <span><small>" & Data.FixNull(dr("Titolo_Corso")) & "</small></h6><span />"))
 
@@ -510,7 +546,14 @@ Public Class dashboardB
 
                         phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
 
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-8 text-left"">"))
+                        If Data.FixNull(dr("Codice_Status") = 60) Then
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-8 text-left moltopiccolo text-white"">"))
+
+                        Else
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-8 text-left moltopiccolo"">"))
+
+                        End If
 
                         phDash.Controls.Add(New LiteralControl("<h6>Indirizzo: <span><small> " & Data.FixNull(dr("Indirizzo_Svolgimento")) & " " & Data.FixNull(dr("Cap_Svolgimento")) & " " & Data.FixNull(dr("Comune_Svolgimento")) & " " & Data.FixNull(dr("PR_Svolgimento")) & "</small></h6><span />"))
 

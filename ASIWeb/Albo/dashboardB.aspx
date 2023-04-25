@@ -22,6 +22,9 @@
 
  font-size: small;
         }
+          .moltopiccolo {
+      font-size:small;
+  }
            a:target {
 
            

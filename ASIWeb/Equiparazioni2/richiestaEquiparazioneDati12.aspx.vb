@@ -63,6 +63,28 @@ Public Class richiestaEquiparazioneDati12
             Response.Redirect("../login.aspx")
         End If
 
+        If Session("EquiparazioneModificaDataEmissione") = "S" Then
+
+            pnlModificaDataEmissione.Visible = True
+            pnlDataEmissione.Visible = False
+        Else
+            pnlModificaDataEmissione.Visible = False
+            pnlDataEmissione.Visible = True
+        End If
+
+
+        Dim dataCorrente As Date = Now.ToShortDateString
+        Dim annoCorrente As Integer = Now.Year
+        Dim meseCorrente As Integer = Now.Month
+        Dim giornoCorrente As Integer = Now.Day
+        Dim dataInizio As Date
+        Dim dataFine As Date
+        dataInizio = "01-01-" & annoCorrente
+        dataFine = "31-12-" & annoCorrente
+        Calendar1.DateMin = dataInizio
+        Calendar1.DateMax = dataFine
+
+
 
         'If IsNothing(Session("codiceFiscale")) Then
         '    Response.Redirect("../login.aspx")
@@ -213,8 +235,8 @@ Public Class richiestaEquiparazioneDati12
         txtCodiceTessera.Text = datiCodiceFiscale.CodiceTessera
         txtDataScadenza.Text = datiCodiceFiscale.DataScadenza.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
         txtIndirizzoResidenza.Text = datiCodiceFiscale.Indirizzo
-
-
+        txtDataEmissione.Text = Now.ToShortDateString
+        '      txtDataEmissioneModificabile.Text = Now.ToShortDateString
 
 
 
@@ -444,5 +466,18 @@ Public Class richiestaEquiparazioneDati12
 
         End If
 
+    End Sub
+
+
+
+    Protected Sub CustomValidator2_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        Dim annoCorrente = Now.Year()
+        Dim annoInserito = Right(txtDataEmissioneModificabile.Text, 4)
+
+        If annoCorrente = annoInserito Then
+            args.IsValid = True
+        Else
+            args.IsValid = False
+        End If
     End Sub
 End Class

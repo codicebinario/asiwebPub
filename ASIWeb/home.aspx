@@ -24,7 +24,7 @@
   <div class="row">
      
     <div class="col">
-        <div class="jumbotron jumbotron-fluid rounded">
+        <div class="jumbotron jumbotron-fluid">
   <div class="container text-center">
    
    
@@ -34,7 +34,7 @@
     </div>
       </div>
   <div class="col">
-           <div class="jumbotron jumbotron-fluid rounded">
+           <div class="jumbotron jumbotron-fluid">
   <div class="container text-center">
     
   

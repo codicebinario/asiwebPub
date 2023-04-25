@@ -41,6 +41,78 @@ Partial Public Class richiestaEquiparazioneDati12
     Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''pnlModificaDataEmissione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlModificaDataEmissione As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''txtDataEmissioneModificabile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataEmissioneModificabile As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Calendar1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Calendar1 As Global.OboutInc.Calendar2.Calendar
+
+    '''<summary>
+    '''MaskedEditExtender2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MaskedEditExtender2 As Global.AjaxControlToolkit.MaskedEditExtender
+
+    '''<summary>
+    '''rqDataInizio control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rqDataInizio As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''CustomValidator2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CustomValidator2 As Global.System.Web.UI.WebControls.CustomValidator
+
+    '''<summary>
+    '''pnlDataEmissione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlDataEmissione As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''txtDataEmissione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataEmissione As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtNome control.
     '''</summary>
     '''<remarks>

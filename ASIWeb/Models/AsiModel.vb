@@ -222,6 +222,7 @@ Public Class AsiModel
         Public Shared Property TipoEnte As String
         Public Shared Property WebUserEnte As String
         Public Shared Property EquiparazioneSaltaDiploma As String
+        Public Shared Property EquiparazioneModificaDataEmissione As String
         Public Shared Property IdRecord As String
         Public Shared Property HasToBeChanged As String
 
@@ -355,6 +356,7 @@ Public Class AsiModel
                         Codice = Data.FixNull(dr("codice"))
                         IdRecord = Data.FixNull(dr("Record_ID"))
                         EquiparazioneSaltaDiploma = Data.FixNull(dr("EquiparazioneSaltaDiploma"))
+                        EquiparazioneModificaDataEmissione = Data.FixNull(dr("EquiparazioneModificaDataEmissione"))
                         HasToBeChanged = Data.FixNull(dr("Web_HasToChanged"))
                     Next
 
@@ -3074,6 +3076,7 @@ Public Class AsiModel
             Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             ' RequestP.AddSearchField("pre_stato_web", "1")
             RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Status", "84", Enumerations.SearchOption.equals)
             'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
             ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
@@ -3085,17 +3088,18 @@ Public Class AsiModel
                 Dim counter1 As Integer = 0
                 For Each dr In ds.Tables("main").Rows
 
+                    'If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "99" _
+                    'Or Data.FixNull(dr("Codice_Status")) = "60" Then
 
 
-                    If Data.FixNull(dr("Codice_Status")) = "84" Or Data.FixNull(dr("Codice_Status")) = "99" _
-                    Or Data.FixNull(dr("Codice_Status")) = "60" Then
-                        counter1 += 1
-                    Else
+                    'If Data.FixNull(dr("Codice_Status")) = "84" Then
+                    counter1 += 1
+                    'Else
 
 
 
 
-                    End If
+                    ' End If
 
                 Next
                 If counter1 >= 1 Then
@@ -3128,6 +3132,7 @@ Public Class AsiModel
             Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             ' RequestP.AddSearchField("pre_stato_web", "1")
             RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Status", "51...85")
             'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
             ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
@@ -3137,26 +3142,60 @@ Public Class AsiModel
 
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                 Dim counter1 As Integer = 0
+
+                For Each dr In ds.Tables("main").Rows
+
+                    If (Not Data.FixNull(dr("Codice_Status")) = "84" And Not Data.FixNull(dr("Codice_Status")) = "60") Then
+
+                        counter1 += 1
+
+                    End If
+                Next
+                If counter1 >= 1 Then
+                    ritorno = counter1
+                Else
+                    ritorno = 0
+                End If
+
+            Else
+                '  ritorno = counter1
+
+            End If
+            Return ritorno
+
+        End Function
+        Public Shared Function quantiCorsiRespinti(codice As String) As Integer
+
+            Dim ritorno As Integer = 0
+
+            Dim ds As DataSet
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webCorsiRichiesta")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice_Ente_Richiedente", codice, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Status", "60", Enumerations.SearchOption.equals)
+            'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+            ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
+
+
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                Dim counter1 As Integer = 0
+
                 For Each dr In ds.Tables("main").Rows
 
 
-
-                    If Data.FixNull(dr("Codice_Status")) = "51" Or Data.FixNull(dr("Codice_Status")) = "54" _
-                Or Data.FixNull(dr("Codice_Status")) = "57" Or Data.FixNull(dr("Codice_Status")) = "70" _
-                Or Data.FixNull(dr("Codice_Status")) = "63" Or Data.FixNull(dr("Codice_Status")) = "64" _
-                Or Data.FixNull(dr("Codice_Status")) = "65" Or Data.FixNull(dr("Codice_Status")) = "66" _
-                Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "68" _
-                Or Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72" _
-                Or Data.FixNull(dr("Codice_Status")) = "73" Or Data.FixNull(dr("Codice_Status")) = "83" _
-                Or Data.FixNull(dr("Codice_Status")) = "75" Or Data.FixNull(dr("Codice_Status")) = "78" _
-                Or Data.FixNull(dr("Codice_Status")) = "82" Or Data.FixNull(dr("Codice_Status")) = "85" Or Data.FixNull(dr("Codice_Status")) = "81" Then
-                        counter1 += 1
-                    Else
+                    counter1 += 1
 
 
 
 
-                    End If
+
+
 
                 Next
                 If counter1 >= 1 Then

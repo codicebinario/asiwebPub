@@ -15,13 +15,21 @@ Public Class AsiMasterPageAlbo
         If Not Page.IsPostBack Then
             Dim quantiVal As Integer = ContatoriEvasi.quantiDaValutare(Session("codice"))
             Dim quantiValutati As Integer = ContatoriEvasi.quantiValutati(Session("codice"))
-            Dim quantiCorsiAttivi As Integer = ContatoriAttivi.quantiCorsiAttivi(Session("codice"))
+               Dim quantiCorsiAttivi As Integer = ContatoriAttivi.quantiCorsiAttivi(Session("codice"))
+            Dim quantiCorsiRespinti As Integer = ContatoriAttivi.quantiCorsiRespinti(Session("codice"))
             Dim quantiCorsiEvasi As Integer = ContatoriEvasi.quantiCorsiEvasi(Session("codice"))
             ' LinkArchivio
-            If quantiCorsiAttivi >= 1 Then
-                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light""> " & quantiCorsiAttivi & "</span>"
+            Dim cisonocorsiRespinti As String = ""
+            If quantiCorsiRespinti >= 1 Then
+                cisonocorsiRespinti = " - respinti (" & quantiCorsiRespinti & ")"
             Else
-                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light"">0</span>"
+                cisonocorsiRespinti = ""
+            End If
+
+            If quantiCorsiAttivi >= 1 Then
+                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light""> " & quantiCorsiAttivi & cisonocorsiRespinti & "</span>"
+            Else
+                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light"">0" & cisonocorsiRespinti & "</span>"
 
             End If
 
