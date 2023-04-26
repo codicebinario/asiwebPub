@@ -20,7 +20,7 @@ Public Class AsiMasterPageRinnovi2
 
             Dim quantiEvasival As Integer = quantiEvasi(Session("codice"))
             Dim quantiAttiviVal As Integer = quantiAttivi(Session("codice"))
-            LinkRinnoviAttivi.Text = "<i class=""bi bi-arrow-down-circle""> </i>Rinnovi Attive <span class=""badge badge-light text-dark""> " & quantiAttiviVal & "</span>"
+            LinkRinnoviAttivi.Text = "<i class=""bi bi-arrow-down-circle""> </i>Rinnovi Attivi <span class=""badge badge-light text-dark""> " & quantiAttiviVal & "</span>"
             LinkArchivioRinnovi.Text = "<i class=""bi bi-arrow-down-circle""> </i>Rinnovi Evasi <span class=""badge badge-light text-dark""> " & quantiEvasival & "</span>"
 
 

@@ -223,6 +223,7 @@ Public Class AsiModel
         Public Shared Property WebUserEnte As String
         Public Shared Property EquiparazioneSaltaDiploma As String
         Public Shared Property EquiparazioneModificaDataEmissione As String
+        Public Shared Property CorsoModificaDataEmissione As String
         Public Shared Property IdRecord As String
         Public Shared Property HasToBeChanged As String
 
@@ -357,6 +358,7 @@ Public Class AsiModel
                         IdRecord = Data.FixNull(dr("Record_ID"))
                         EquiparazioneSaltaDiploma = Data.FixNull(dr("EquiparazioneSaltaDiploma"))
                         EquiparazioneModificaDataEmissione = Data.FixNull(dr("EquiparazioneModificaDataEmissione"))
+                        CorsoModificaDataEmissione = Data.FixNull(dr("CorsiModificaDataEmissione"))
                         HasToBeChanged = Data.FixNull(dr("Web_HasToChanged"))
                     Next
 
@@ -3223,7 +3225,7 @@ Public Class AsiModel
             Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             ' RequestP.AddSearchField("pre_stato_web", "1")
             RequestP.AddSearchField("CodiceEnteRichiedente", codice, Enumerations.SearchOption.equals)
-            'RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+            RequestP.AddSearchField("CodiceStatus", "101...114.5")
             ' RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
 
@@ -3235,18 +3237,14 @@ Public Class AsiModel
                 For Each dr In ds.Tables("main").Rows
 
 
-                    If Data.FixNull(dr("CodiceStatus")) = "101" Or Data.FixNull(dr("CodiceStatus")) = "102" _
-                Or Data.FixNull(dr("CodiceStatus")) = "103" _
-                Or Data.FixNull(dr("CodiceStatus")) = "105" Or Data.FixNull(dr("CodiceStatus")) = "106" _
-                Or Data.FixNull(dr("CodiceStatus")) = "107" Or Data.FixNull(dr("CodiceStatus")) = "108" _
-                Or Data.FixNull(dr("CodiceStatus")) = "109" Or Data.FixNull(dr("CodiceStatus")) = "110" _
-                Or Data.FixNull(dr("CodiceStatus")) = "111" _
-                Or Data.FixNull(dr("CodiceStatus")) = "112" Or Data.FixNull(dr("CodiceStatus")) = "113" _
-                Or Data.FixNull(dr("CodiceStatus")) = "114" Or Data.FixNull(dr("CodiceStatus")) = "114.5" Then
-                        counter1 += 1
-                    Else
 
-                    End If
+
+
+
+                    If dr("codiceStatus") <> 104 Then
+
+                            counter1 += 1
+                        End If
 
 
 
@@ -3254,8 +3252,8 @@ Public Class AsiModel
 
 
 
-                Next
-                If counter1 >= 1 Then
+                    Next
+                    If counter1 >= 1 Then
                     ritorno = counter1
                 Else
                     ritorno = 0

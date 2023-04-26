@@ -20,6 +20,7 @@ Imports RestSharp
 Imports System.Collections.Generic
 Imports System.Net.Security
 Imports System.Net
+Imports System.ComponentModel.DataAnnotations
 
 Public Class richiestaCorsoF2
     Inherits System.Web.UI.Page
@@ -49,8 +50,18 @@ Public Class richiestaCorsoF2
         Dim mese As Integer = Now.Month()
         Dim anno As Integer = Now.Year()
 
-        Calendar3.DateMin = Now.Year() & "/01/01"
-        Calendar3.DateMax = Now.Year & "/12/31"
+        Dim dataCorrente As Date = Now.ToShortDateString
+        Dim annoCorrente As Integer = Now.Year
+        Dim meseCorrente As Integer = Now.Month
+        Dim giornoCorrente As Integer = Now.Day
+        Dim dataInizio As Date
+        Dim dataFine As Date
+        dataInizio = "01-01-" & annoCorrente
+        dataFine = "31-12-" & annoCorrente
+        Calendar3.DateMin = dataInizio
+        Calendar3.DateMax = dataFine
+
+
         'DateFirstMonth = "2022-08-26"
         'DateMax = "2022-09-13" DateMin="2022-08-26"
         Dim fase As String = Request.QueryString("fase")
@@ -213,8 +224,25 @@ Public Class richiestaCorsoF2
         giorno = oDateA.Day
         anno = oDateA.Year
         mese = oDateA.Month
+        Dim annoattuale As Integer = Now.Year
 
-        Request.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
+        If Session("CorsoModificaDataEmissione") = "S" Then
+            If mese = 12 Then
+                Request.AddField("Svolgimento_A_Data", "01/01/" & annoattuale + 1)
+            Else
+                'Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
+                Request.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
+            End If
+        Else
+
+            If mese = 12 Then
+                Request.AddField("Svolgimento_A_Data", "01/01/" & annoattuale + 1)
+            Else
+                'Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
+                Request.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
+            End If
+
+        End If
 
 
         Dim dataEmissione = txtDataEmissione.Text
@@ -229,8 +257,15 @@ Public Class richiestaCorsoF2
 
 
 
+
+
+
             Request.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
         End If
+
+
+
+
 
 
         Request.AddField("OreCorso", txtOreCorso.Text)
@@ -347,19 +382,51 @@ Public Class richiestaCorsoF2
     End Sub
 
     Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
-        If String.IsNullOrEmpty(txtDataEmissione.Text) Then
-            args.IsValid = True
-        Else
 
-            Dim annoCorrente = Now.Year()
-            Dim annoInserito = Right(txtDataEmissione.Text, 4)
+        Dim dataFine As Date = txtDataFine.Text
+        Dim dataEmissione As Date = txtDataEmissione.Text
 
-            If annoCorrente = annoInserito Then
+        If dataEmissione < dataFine Then
+            If Session("CorsoModificaDataEmissione") = "S" Then
                 args.IsValid = True
             Else
                 args.IsValid = False
             End If
+
+
+
+        Else
+            Dim annoCorrente = Now.Year()
+            Dim annoInserito = Right(txtDataFine.Text, 4)
+
+            If annoCorrente = annoInserito Then
+
+                args.IsValid = True
+
+
+
+            Else
+                If Session("CorsoModificaDataEmissione") = "S" Then
+                    args.IsValid = True
+                Else
+
+                    args.IsValid = False
+                    CustomValidator1.ErrorMessage = "Inserire una data dell'anno corrente"
+                End If
+
+
+                '    avvisoData.Text = "Inserire data anno corrente"
+            End If
+
+
         End If
 
+
+
+
+
+
     End Sub
+
+
 End Class

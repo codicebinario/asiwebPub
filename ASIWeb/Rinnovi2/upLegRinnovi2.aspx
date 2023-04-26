@@ -80,7 +80,7 @@ function ServerException(mess) {
     </div>
       <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Invio del documento pagamento (info)
+      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">IInvio del documento pagamento Rinnovo (info)
       </a></h6>
   
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>

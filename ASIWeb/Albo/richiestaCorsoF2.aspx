@@ -350,72 +350,14 @@
                 </div>
 
 
-	   <div class="col-sm-12">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-								 <label for="txtNome">Data Emissione - [dd-MM-yyyy] &nbsp;</label>
-                                    <asp:textbox id="txtDataEmissione" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
-					
-                                    
-                                 
-			<obout:Calendar ID="Calendar3"  runat="server"  
-									TextBoxId="txtDataEmissione" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif" 
-									 DatePickerMode="True"   MonthWidth="200" MonthHeight="140"
-									
-								 Visible="true" 	StyleFolder="../calendar/styles/default"     >
-															
-								</obout:Calendar>
-								   <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender2"
-                        MaskType="Date"
-                        runat="server"
-                        CultureName="it-IT"
-                        Mask="99/99/9999"
-                        MessageValidatorTip="true"
-                        UserDateFormat="DayMonthYear"
-                        OnFocusCssClass="MaskedEditFocus"
-                        OnInvalidCssClass="MaskedEditError"
-                        ErrorTooltipEnabled="True"
-                        TargetControlID="txtDataEmissione" />           
-                          
-                                </div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									
-								</div>
-							</div>
-						
-                         
-                        
-                        </div>
-                             
-                </div>
-	<div class="col-sm-12">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group"> 
-									
-									
-		<asp:CustomValidator ID="CustomValidator1" ControlToValidate="txtDataEmissione" Enabled="true" Display="Dynamic" runat="server" ErrorMessage="Inserire una data dell'anno corrente" CssClass="errore"></asp:CustomValidator>
-								
-             
-	       
-						</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-					  
- 
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
+        <Triggers>
 
-
-
-
-					</div>
-								
-								</div>
-							</div>
-						</div>
+            <%--   <asp:AsyncPostBackTrigger ControlID="ddlProvinciaResidenza" />--%>
+            <%--	  	 <asp:AsyncPostBackTrigger  ControlID="ddlProvinciaConsegna"/>--%>
+            <%--  <asp:PostBackTrigger  ControlID="ddlProvincia"  />--%>
+        </Triggers>
+        <ContentTemplate>
            
 
           <div class="col-sm-12">
@@ -427,11 +369,10 @@
 					
                                     
                                  
-			<obout:Calendar ID="Calendar1"  runat="server"  
-									TextBoxId="txtDataInizio" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif" 
-									 DatePickerMode="True"   MonthWidth="200" MonthHeight="140"
-									
-								 Visible="true" 	StyleFolder="../calendar/styles/default"     >
+			<obout:Calendar ID="Calendar1" runat="server" 
+                TextBoxId="txtDataInizio" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif"
+                DatePickerMode="True" MonthWidth="200" MonthHeight="140"
+                Visible="true" StyleFolder="../calendar/styles/default">
 															
 								</obout:Calendar>
 
@@ -457,15 +398,15 @@
 								<div class="form-group">
 									<label for="txtCognome">Data Fine - [dd-MM-yyyy] [*]</label>
                                     	<asp:textbox id="txtDataFine" runat="server" Cssclass="form-control"   maxlength="250" ></asp:textbox>
-						<obout:Calendar ID="Calendar2"  runat="server"   BeginDateCalendarId="Calendar1"
+						<obout:Calendar ID="Calendar2"   runat="server"    BeginDateCalendarId="Calendar1"
 									 
 									TextBoxId="txtDataFine" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif" 
-									 DatePickerMode="True"   MonthWidth="200" MonthHeight="140"
+									 DatePickerMode="True"    MonthWidth="200" MonthHeight="140"
 									
 									 Visible="true" 	StyleFolder="../calendar/styles/default" >
 															
 								</obout:Calendar>
-								   <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender1"
+								   <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender1" 
                         MaskType="Date"
                         runat="server"
                         CultureName="it-IT"
@@ -489,7 +430,8 @@
               <div class="col-sm-12">
 						<div class="row">
 							<div class="col-sm-6">
-								<div class="form-group">  <asp:RequiredFieldValidator ID="rqDataInizio" runat="server" ControlToValidate="txtDataInizio"  ErrorMessage="Data Inizio"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
+								<div class="form-group"> 
+                                    <asp:RequiredFieldValidator ID="rqDataInizio" runat="server" ControlToValidate="txtDataInizio"  ErrorMessage="Data Inizio"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
 		
              
 	       
@@ -509,6 +451,70 @@
 								</div>
 							</div>
 						</div>
+    
+
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="txtNome">Data Emissione - [dd-MM-yyyy] &nbsp;</label>
+                    <asp:TextBox ID="txtDataEmissione" CssClass="form-control" runat="server" MaxLength="250"></asp:TextBox>
+
+
+
+                    <obout:Calendar ID="Calendar3" runat="server"
+                        TextBoxId="txtDataEmissione" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif"
+                        DatePickerMode="True" MonthWidth="200" MonthHeight="140" 
+                        Visible="true" StyleFolder="../calendar/styles/default">
+                    </obout:Calendar>
+                    <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender2"
+                        MaskType="Date"
+                        runat="server"
+                        CultureName="it-IT"
+                        Mask="99/99/9999"
+                        MessageValidatorTip="true"
+                        UserDateFormat="DayMonthYear"
+                        OnFocusCssClass="MaskedEditFocus"
+                        OnInvalidCssClass="MaskedEditError"
+                        ErrorTooltipEnabled="True"
+                        TargetControlID="txtDataEmissione" />
+
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtDataEmissione" ErrorMessage="Data Emissione" Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
+
+
+                    <asp:CustomValidator ID="CustomValidator1" ControlToValidate="txtDataEmissione" Enabled="true" Display="Dynamic" runat="server" ErrorMessage="Inserire una data dell'anno corrente" CssClass="errore"></asp:CustomValidator>
+
+
+
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+        </ContentTemplate>
+
+    </asp:UpdatePanel>
 
       <%--   <div class="col-sm-12">
 						<div class="row">

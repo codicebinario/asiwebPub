@@ -85,7 +85,6 @@ Public Class richiestaEquiparazioneDati12
         Calendar1.DateMax = dataFine
 
 
-
         'If IsNothing(Session("codiceFiscale")) Then
         '    Response.Redirect("../login.aspx")
         'End If
@@ -236,7 +235,7 @@ Public Class richiestaEquiparazioneDati12
         txtDataScadenza.Text = datiCodiceFiscale.DataScadenza.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
         txtIndirizzoResidenza.Text = datiCodiceFiscale.Indirizzo
         txtDataEmissione.Text = Now.ToShortDateString
-        '      txtDataEmissioneModificabile.Text = Now.ToShortDateString
+        txtDataEmissioneM.Text = Now.ToShortDateString
 
 
 
@@ -350,6 +349,32 @@ Public Class richiestaEquiparazioneDati12
         Request.AddField("Equi_ProvinciaResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlProvinciaResidenza.SelectedItem.Text)))
         Request.AddField("Equi_ComuneResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlComuneResidenza.SelectedItem.Text)))
         Request.AddField("Equi_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
+
+        If Session("EquiparazioneModificaDataEmissione") = "S" Then
+            Dim dataSelezionata As Date = txtDataEmissioneM.Text
+            Dim annoAttuale As Integer = Now.Year
+            Dim mese As Integer = dataSelezionata.Month
+            Dim anno As Integer = dataSelezionata.Year
+            If mese = 12 Then
+                Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+            Else
+                Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
+            End If
+
+
+        Else
+            Dim dataSelezionata As Date = txtDataEmissione.Text
+            Dim annoAttuale As Integer = Now.Year
+            Dim mese As Integer = dataSelezionata.Month
+            Dim anno As Integer = dataSelezionata.Year
+            If mese = 12 Then
+                Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+            Else
+                Request.AddField("Data_Emissione", Data.SistemaDataUK(txtDataEmissione.Text))
+            End If
+        End If
+
+
 
 
         If chkStampaCartacea.Checked = True Then
@@ -470,14 +495,26 @@ Public Class richiestaEquiparazioneDati12
 
 
 
-    Protected Sub CustomValidator2_ServerValidate(source As Object, args As ServerValidateEventArgs)
-        Dim annoCorrente = Now.Year()
-        Dim annoInserito = Right(txtDataEmissioneModificabile.Text, 4)
+    Protected Sub validator33_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles validator33.ServerValidate
 
-        If annoCorrente = annoInserito Then
-            args.IsValid = True
-        Else
+        If String.IsNullOrEmpty(txtDataEmissioneM.Text) Then
             args.IsValid = False
+
+        Else
+            Dim annoCorrente = Now.Year()
+            Dim annoInserito = Right(txtDataEmissioneM.Text, 4)
+
+            If annoCorrente = annoInserito Then
+                args.IsValid = True
+                avvisoData.Text = ""
+            Else
+                args.IsValid = False
+                validator33.ErrorMessage = "Inserire una data dell'anno corrente"
+                '    avvisoData.Text = "Inserire data anno corrente"
+            End If
+
+
         End If
+
     End Sub
 End Class

@@ -41,6 +41,15 @@ Partial Public Class richiestaEquiparazioneDati12
     Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''UpdatePanel2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UpdatePanel2 As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
     '''pnlModificaDataEmissione control.
     '''</summary>
     '''<remarks>
@@ -50,13 +59,22 @@ Partial Public Class richiestaEquiparazioneDati12
     Protected WithEvents pnlModificaDataEmissione As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''txtDataEmissioneModificabile control.
+    '''txtDataEmissioneM control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtDataEmissioneModificabile As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtDataEmissioneM As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''avvisoData control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents avvisoData As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Calendar1 control.
@@ -86,13 +104,13 @@ Partial Public Class richiestaEquiparazioneDati12
     Protected WithEvents rqDataInizio As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''CustomValidator2 control.
+    '''validator33 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents CustomValidator2 As Global.System.Web.UI.WebControls.CustomValidator
+    Protected WithEvents validator33 As Global.System.Web.UI.WebControls.CustomValidator
 
     '''<summary>
     '''pnlDataEmissione control.

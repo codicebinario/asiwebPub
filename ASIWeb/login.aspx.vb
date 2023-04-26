@@ -47,6 +47,8 @@ Public Class login
                 Session("EquiparazioneSaltaDiploma") = AsiModel.LogIn.EquiparazioneSaltaDiploma()
                 Session("idRecordLogin") = AsiModel.LogIn.IdRecord()
                 Session("EquiparazioneModificaDataEmissione") = AsiModel.LogIn.EquiparazioneModificaDataEmissione()
+                Session("CorsoModificaDataEmissione") = AsiModel.LogIn.CorsoModificaDataEmissione()
+
                 AsiModel.AnnullaRichiesteSenzaRighe(Session("codice"))
 
                 If Session("HasToBeChanged") = "1" Then

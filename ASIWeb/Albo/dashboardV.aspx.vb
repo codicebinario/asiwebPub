@@ -309,6 +309,8 @@ Public Class dashboardV
                         phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left"">"))
 
                         phDash.Controls.Add(New LiteralControl("<h6>Comitato richiedente: <span><small>" & Data.FixNull(dr("Codice_Ente_Richiedente")) & "_" & Data.FixNull(dr("Descrizione_Ente_Richiedente")) & "</small></h6><span />"))
+                        phDash.Controls.Add(New LiteralControl("Data Trasmissione: <small>" & Data.FixNull(dr("DataOraInvioSettore")) & "</small><br />"))
+                        phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">Scad. val.: <small>" & Data.FixNull(dr("ScadenzaSettoreQuantoMancaOre")) & "</small></span><br />"))
 
 
                         phDash.Controls.Add(New LiteralControl("</div>"))
