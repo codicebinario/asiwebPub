@@ -1413,10 +1413,13 @@ Public Class AsiModel
                     For Each dr In ds.Tables("main").Rows
 
                         idrecord = dr("idRecord")
+                        If dr("codice_status") = "101" Then
 
-                        Dim Request1 = fmsx.CreateEditRequest(idrecord)
+
+                            Dim Request1 = fmsx.CreateEditRequest(idrecord)
                         Request1.AddField("codice_status", "102")
-                        risposta = Request1.Execute()
+                            risposta = Request1.Execute()
+                        End If
                     Next
                 End If
 
@@ -1493,9 +1496,13 @@ Public Class AsiModel
                         If dr("codice_status") = 104 Or dr("codice_status") = 104.5 Then
 
                         Else
-                            Dim Request1 = fmsx.CreateEditRequest(idrecord)
-                            Request1.AddField("codice_status", "114.5")
-                            risposta = Request1.Execute()
+                            If Not dr("codice_status") = "119" Then
+
+
+                                Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                                Request1.AddField("codice_status", "114.5")
+                                risposta = Request1.Execute()
+                            End If
                         End If
 
 
@@ -1537,9 +1544,14 @@ Public Class AsiModel
                         If dr("codice_status") = 104 Or dr("codice_status") = 104.5 Then
 
                         Else
-                            Dim Request1 = fmsx.CreateEditRequest(idrecord)
-                            Request1.AddField("codice_status", "113")
-                            risposta = Request1.Execute()
+                            If Not dr("codice_status") = "119" Then
+
+
+
+                                Dim Request1 = fmsx.CreateEditRequest(idrecord)
+                                Request1.AddField("codice_status", "113")
+                                risposta = Request1.Execute()
+                            End If
                         End If
 
 

@@ -403,7 +403,7 @@ Public Class RichiestaRinnovo12
         Request.AddField("Asi_CodiceIscrizione", datiAlbo.codiceIscrizione)
         Request.AddField("ASI_CodiceEnteEx", datiAlbo.codiceEnteEx)
         Request.AddField("ASI_NomeEnteEx", datiAlbo.nomeEnteEx)
-
+        Request.AddField("Codice_Status", "152")
         Request.AddField("Rin_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
         Request.AddField("Rin_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
         Request.AddField("Rin_ComuneResidenza", ddlComuneResidenza.SelectedItem.Text)

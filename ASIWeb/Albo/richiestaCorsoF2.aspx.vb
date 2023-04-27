@@ -391,6 +391,7 @@ Public Class richiestaCorsoF2
                 args.IsValid = True
             Else
                 args.IsValid = False
+                CustomValidator1.ErrorMessage = "La data emissione deve essere successiva alla data fine corso"
             End If
 
 

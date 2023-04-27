@@ -13,30 +13,62 @@ Public Class annullaEquiparazione2
 
         Dim codiceEquiparazione As String = deEnco.QueryStringDecode(Request.QueryString("codR"))
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
+
+
+        If Not String.IsNullOrEmpty(record_ID) Then
+
+
+            Dim risposta As Integer = 0
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+
+            Dim RequestP = fmsP.CreateDeleteRequest(record_ID)
+            '   RequestP.AddField("Codice_Status", "99")
+
+            Try
+                risposta = RequestP.Execute()
+                '   AsiModel.LogIn.LogCambioStatus(codiceCorso, "99", Session("WebUserEnte"), "corso")
+                '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
+                '   Session("annullaCorso") = "ok"
+
+            Catch ex As Exception
+            End Try
+            '    Session("visto") = "ok"
+            '    Response.Redirect("DashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("casi"))
+            'Else
+            'Session("visto") = "ok"
+            'Response.Redirect("dashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("cano"))
+
+        End If
+
+
+
+
         '  Dim IDRecord As String = deEnco.QueryStringDecode(Request.QueryString("id"))
-        Dim risposta As Integer = 0
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+        'Dim risposta As Integer = 0
+        'Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
 
-        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+        'fmsP.SetLayout("webEquiparazioniRichiestaMolti")
 
-        Dim RequestP = fmsP.CreateEditRequest(record_ID)
-        RequestP.AddField("Codice_Status", "119")
+        'Dim RequestP = fmsP.CreateEditRequest(record_ID)
+        'RequestP.AddField("Codice_Status", "119")
 
-        Try
-            risposta = RequestP.Execute()
-            AsiModel.LogIn.LogCambioStatus(codiceEquiparazione, "119", Session("WebUserEnte"), "equiparazione", record_ID)
-            '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
-            Session("annullaEquiparazione") = "ok"
+        'Try
+        '    risposta = RequestP.Execute()
+        '    AsiModel.LogIn.LogCambioStatus(codiceEquiparazione, "119", Session("WebUserEnte"), "equiparazione", record_ID)
+        '    '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
+        '    Session("annullaEquiparazione") = "ok"
 
-        Catch ex As Exception
+        'Catch ex As Exception
 
-        End Try
-
-
+        'End Try
 
 
 
-        Response.Redirect("dashboardEqui2.aspx")
+
+
+        Response.Redirect("dashboardEqui2.aspx?open=" & codiceEquiparazione)
     End Sub
 
 End Class

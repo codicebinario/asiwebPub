@@ -257,7 +257,7 @@ Public Class DashboardEqui2
                     End If
 
 
-                    phDash.Controls.Add(New LiteralControl("Richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDEquiparazioneM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " : [<strong>" & Data.FixNull(dr("Equi_Sport_Interessato")) & " - " & Data.FixNull(dr("Equi_Disciplina_Interessata")) & togliND(Data.FixNull(dr("Equi_Specialita"))) & "</strong>] - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;"))
+                    phDash.Controls.Add(New LiteralControl("Richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDEquiparazioneM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " : [<strong>" & Data.FixNull(dr("Equi_Sport_Interessato")) & " - " & Data.FixNull(dr("Equi_Disciplina_Interessata")) & Left(togliND(Data.FixNull(dr("Equi_Specialita"))), 20) & "</strong>] - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;"))
                     phDash.Controls.Add(New LiteralControl("</button>"))
                     phDash.Controls.Add(New LiteralControl("</h2>"))
                     If Data.FixNull(dr("IDEquiparazioneM")) = open Then
