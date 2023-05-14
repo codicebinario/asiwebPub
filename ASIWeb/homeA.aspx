@@ -59,7 +59,7 @@
   <div class="container text-center">
     
    <%-- <a class="btn btn-lg btn-custom" href="Equiparazioni/DashboardEqui.aspx" role="button" accesskey="q"><i class="bi bi-code-slash"> </i>Equiparazioni</a>--%>
-      <asp:LinkButton CssClass="btn btn-lg btn-custom" ID="LinkButton2" runat="server"><i class="bi bi-wrench-adjustable-circle"> </i>Equiparazioni 2.0</asp:LinkButton>
+      <asp:LinkButton CssClass="btn btn-lg btn-custom" ID="LinkButton2" runat="server"><i class="bi bi-wrench-adjustable-circle"> </i>Equiparazioni</asp:LinkButton>
 
 
   </div>
@@ -78,7 +78,7 @@
   
 <%--  <a class="btn btn-lg btn-custom" href="Rinnovi/DashboardRinnovi.aspx" role="button" accesskey="R"><i class="bi bi-wrench-adjustable-circle"> </i>Rinnovi</a>
 --%>
-      <asp:LinkButton CssClass="btn btn-lg btn-custom" ID="LinkButton1" runat="server"><i class="bi bi-wrench-adjustable-circle"> </i>Rinnovi 2.0</asp:LinkButton>
+      <asp:LinkButton CssClass="btn btn-lg btn-custom" ID="LinkButton1" runat="server"><i class="bi bi-wrench-adjustable-circle"> </i>Rinnovi</asp:LinkButton>
 
   </div>
 </div> 

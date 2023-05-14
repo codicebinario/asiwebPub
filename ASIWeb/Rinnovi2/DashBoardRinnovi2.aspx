@@ -54,7 +54,39 @@
       font-size:small;
   }
     </style>
-<%--    <script>
+    <script>
+        function myConfirm() {
+
+            let text = "Andando avanti non si potranno più caricare \n foto di questo corso?";
+            if (confirm(text) == true) {
+                return true;
+                //  text = "You pressed OK!";
+            } else {
+                return false;
+                //    text = "You canceled!";
+            }
+        }
+
+        function myAnnulla() {
+
+            let text = "Sei sicuro di voler annullare questa richiesta?";
+            if (confirm(text) == true) {
+                return true;
+                //  text = "You pressed OK!";
+            } else {
+                return false;
+                //    text = "You canceled!";
+            }
+        }
+
+
+        //alertify.confirm('Confirm Title', 'Confirm Message', function () { alertify.success('Ok') }
+        //    , function () { alertify.error('Cancel') });
+      
+
+    </script>
+
+    <%--    <script>
         function js_onload_code() {
 
             alert(" Hello, you are learning onload event in JavaScript");

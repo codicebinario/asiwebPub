@@ -284,6 +284,15 @@ Partial Public Class richiestaCorsoF2
     Protected WithEvents rqDataFine As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
+    '''pnlDataEmissione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlDataEmissione As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''txtDataEmissione control.
     '''</summary>
     '''<remarks>

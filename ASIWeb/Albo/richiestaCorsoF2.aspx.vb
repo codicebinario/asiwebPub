@@ -59,7 +59,7 @@ Public Class richiestaCorsoF2
         dataInizio = "01-01-" & annoCorrente
         dataFine = "31-12-" & annoCorrente
         Calendar3.DateMin = dataInizio
-        Calendar3.DateMax = dataFine
+        ' Calendar3.DateMax = dataFine
 
 
         'DateFirstMonth = "2022-08-26"
@@ -114,6 +114,11 @@ Public Class richiestaCorsoF2
         Else
             ' lblnomef.Text = "Documento " & nomef & " caricato con successo"
             lblnomef.Text = "Documento caricato con successo"
+        End If
+        If Session("CorsoModificaDataEmissione") = "S" Then
+            pnlDataEmissione.Visible = True
+        Else
+            pnlDataEmissione.Visible = False
         End If
 
         If Not String.IsNullOrEmpty(codR) Then
@@ -225,42 +230,25 @@ Public Class richiestaCorsoF2
         anno = oDateA.Year
         mese = oDateA.Month
         Dim annoattuale As Integer = Now.Year
+        Dim dataEmissioneTutti As String = mese & "/" & giorno & "/" & anno
+        Request.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
 
         If Session("CorsoModificaDataEmissione") = "S" Then
-            If mese = 12 Then
-                Request.AddField("Svolgimento_A_Data", "01/01/" & annoattuale + 1)
-            Else
-                'Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
-                Request.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
+            Dim dataEmissione = txtDataEmissione.Text
+
+            If Not String.IsNullOrEmpty(dataEmissione) Then
+                Dim oDateEmissione As DateTime = DateTime.Parse(dataEmissione)
+                giorno = oDateEmissione.Day
+                anno = oDateEmissione.Year
+                mese = oDateEmissione.Month
+
+                Request.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
+
             End If
+
         Else
+            Request.AddField("Data_Emissione", dataEmissioneTutti)
 
-            If mese = 12 Then
-                Request.AddField("Svolgimento_A_Data", "01/01/" & annoattuale + 1)
-            Else
-                'Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
-                Request.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
-            End If
-
-        End If
-
-
-        Dim dataEmissione = txtDataEmissione.Text
-
-        If Not String.IsNullOrEmpty(dataEmissione) Then
-
-
-            Dim oDateEmissione As DateTime = DateTime.Parse(dataEmissione)
-            giorno = oDateEmissione.Day
-            anno = oDateEmissione.Year
-            mese = oDateEmissione.Month
-
-
-
-
-
-
-            Request.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
         End If
 
 
@@ -383,41 +371,42 @@ Public Class richiestaCorsoF2
 
     Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
 
-        Dim dataFine As Date = txtDataFine.Text
+        Dim dataInizio As Date = txtDataInizio.Text
         Dim dataEmissione As Date = txtDataEmissione.Text
+        Dim dataFine As Date = txtDataFine.Text
 
-        If dataEmissione < dataFine Then
-            If Session("CorsoModificaDataEmissione") = "S" Then
-                args.IsValid = True
-            Else
-                args.IsValid = False
-                CustomValidator1.ErrorMessage = "La data emissione deve essere successiva alla data fine corso"
-            End If
+        Dim annoInizio As Integer = dataInizio.Year
+        Dim annoFine As Integer = dataFine.Year
+        Dim annoEmissione As Integer = dataEmissione.Year
+
+        If dataEmissione < dataInizio Then
+
+            args.IsValid = False
+            CustomValidator1.ErrorMessage = "La data emissione deve essere successiva alla data inizio corso"
 
 
 
         Else
-            Dim annoCorrente = Now.Year()
-            Dim annoInserito = Right(txtDataFine.Text, 4)
 
-            If annoCorrente = annoInserito Then
+            If annoFine > annoInizio Then
 
-                args.IsValid = True
-
-
-
-            Else
-                If Session("CorsoModificaDataEmissione") = "S" Then
+                If annoEmissione = annoFine Then
                     args.IsValid = True
                 Else
-
                     args.IsValid = False
-                    CustomValidator1.ErrorMessage = "Inserire una data dell'anno corrente"
+                    CustomValidator1.ErrorMessage = "Inserire una data dell'anno di fine corso"
+
                 End If
 
 
-                '    avvisoData.Text = "Inserire data anno corrente"
             End If
+
+
+
+
+
+
+
 
 
         End If

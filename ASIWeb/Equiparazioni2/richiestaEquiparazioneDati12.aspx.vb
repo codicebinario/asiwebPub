@@ -395,6 +395,11 @@ Public Class richiestaEquiparazioneDati12
             If chkStampaDiploma.Checked = True Then
                 Request.AddField("Equi_StampaDiploma", "si")
             End If
+
+        Else
+            If chkStampaDiploma.Checked = True Then
+                Request.AddField("Equi_StampaDiploma", "si")
+            End If
         End If
 
 

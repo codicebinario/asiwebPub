@@ -107,65 +107,104 @@ Public Class UpCorsista
 
         End If
     End Sub
-    Protected Sub BtnUp_Click(sender As Object, e As EventArgs) Handles BtnUp.Click
-        Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
-        If inputfile.PostedFile.ContentLength > MassimoPeso Then
-            results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
+    Protected Sub cvCaricaLaFoto_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If inputfile.PostedFile.ContentLength > 0 Then
 
 
-            ' controllo del tipo di file
-        ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
-            results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
-
-
-
-        ElseIf img.Width < minimaLarghezza OrElse img.Height < minimaAltezza Then
-
-            results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
-
-
-        ElseIf img.Width > img.Height Then
-            results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
-
-
-        ElseIf img.Width > massinalarghezza OrElse img.Height > massimaaltezza Then
-            'Response.Write(maggiore)
-            results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+            args.IsValid = True
         Else
-
-            Dim rapporto As Integer
-            rapporto = img.Height / 140
-            Dim img2 As Drawing.Bitmap
-            img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
-
-            Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-            nomecaricato = record_ID & "_" & tokenZ & ".jpg"
-
-            '   Response.Write(Server.MapPath("..\corsisti\"))
-            img2.Save(Server.MapPath("..\corsisti\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
-            inputfile.SaveAs(Server.MapPath("..\corsisti\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
+            results.InnerHtml = "carica la tua foto<br>"
+            results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
 
 
-            img.Dispose()
+            args.IsValid = False
+        End If
+    End Sub
+
+    Protected Sub cvTipoFile_ServerValidate(source As Object, args As ServerValidateEventArgs)
+
+        Dim fileExtensions As String() = {".jpg", ".jpeg", ".JPG", ".JPEG"}
+        Dim pippo As String = inputfile.PostedFile.ContentType
+        For i As Integer = 0 To fileExtensions.Length - 1
+            If inputfile.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                args.IsValid = True
+
+                Exit For
+            Else
+                args.IsValid = False
+
+                results.InnerHtml = "il file deve essere in formato jpg or jpeg<br>"
+                results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+
+            End If
+        Next
 
 
-            Dim tokenx As String = ""
-            Dim id_att As String = ""
-            Dim tuttoRitorno As String = ""
+    End Sub
 
-            tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
+    Protected Sub BtnUp_Click(sender As Object, e As EventArgs) Handles BtnUp.Click
+        If Page.IsValid Then
 
-            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-            tokenx = arrKeywords(1)
-            id_att = arrKeywords(0)
-            CaricaSuFM(tokenx, id_att, nomecaricato)
 
-            Response.Redirect("corsisti.aspx?skip=" & skip & "&pag=" & pag & "&codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+
+            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
+            If inputfile.PostedFile.ContentLength > MassimoPeso Then
+                results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
+
+
+                ' controllo del tipo di file
+            ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
+                results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
+
+
+
+            ElseIf img.Width < minimaLarghezza OrElse img.Height < minimaAltezza Then
+
+                results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+
+
+            ElseIf img.Width > img.Height Then
+                results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
+
+
+            ElseIf img.Width > massinalarghezza OrElse img.Height > massimaaltezza Then
+                'Response.Write(maggiore)
+                results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+            Else
+
+                Dim rapporto As Integer
+                rapporto = img.Height / 140
+                Dim img2 As Drawing.Bitmap
+                img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
+
+                Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                nomecaricato = record_ID & "_" & tokenZ & ".jpg"
+
+                '   Response.Write(Server.MapPath("..\corsisti\"))
+                img2.Save(Server.MapPath("..\corsisti\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
+                inputfile.SaveAs(Server.MapPath("..\corsisti\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
+
+
+                img.Dispose()
+
+
+                Dim tokenx As String = ""
+                Dim id_att As String = ""
+                Dim tuttoRitorno As String = ""
+
+                tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
+
+                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                tokenx = arrKeywords(1)
+                id_att = arrKeywords(0)
+                CaricaSuFM(tokenx, id_att, nomecaricato)
+
+                Response.Redirect("corsisti.aspx?skip=" & skip & "&pag=" & pag & "&codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+
+            End If
+
 
         End If
-
-
-
 
 
     End Sub

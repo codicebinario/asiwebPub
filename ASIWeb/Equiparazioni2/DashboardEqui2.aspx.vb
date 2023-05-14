@@ -49,6 +49,12 @@ Public Class DashboardEqui2
                     ElseIf ris = "erroreGen" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Equiparazione non caricata nel sistema<br />Errore di Connessione!' ).set('resizable', true).resizeTo('20%', 200);", True)
                         Session("equiparazioneaggiunta") = Nothing
+                    ElseIf ris = "cfInEqui" Then
+                        Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Questo codice fiscale è già presente in questa richiesta' ).set('resizable', true).resizeTo('20%', 200);", True)
+                        Session("equiparazioneaggiunta") = Nothing
+
+
+
 
                     ElseIf ris = "ko" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Equiparazione non caricata nel sistema ' ).set('resizable', true).resizeTo('20%', 200);", True)
@@ -143,6 +149,21 @@ Public Class DashboardEqui2
                     counter2 += 1
 
 
+                    Dim AnnRichiesta As New LinkButton
+
+                    AnnRichiesta.ID = "annRI_" & counter2
+                    AnnRichiesta.Attributes.Add("runat", "server")
+                    AnnRichiesta.Text = "<i class=""bi bi-file-earmark-x""> </i>Cancella questa richiesta"
+                    AnnRichiesta.PostBackUrl = "annullaRichiesta.aspx?record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
+                    AnnRichiesta.CssClass = "btn btn-danger btn-sm btn-tre btn-custom mb-1  ml-1"
+                    AnnRichiesta.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
+                    If Data.FixNull(dr("CodiceStatus")) <= 101 Then
+                        AnnRichiesta.Visible = True
+                    Else
+                        AnnRichiesta.Visible = False
+                    End If
+
+
 
                     Dim hpUPPag As New LinkButton
 
@@ -199,7 +220,7 @@ Public Class DashboardEqui2
                     Dim Chiudi As New LinkButton
                     Chiudi.ID = "Clo_" & counter2
                     Chiudi.Attributes.Add("runat", "server")
-                    Chiudi.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Termina questo gruppo"
+                    Chiudi.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Termina questa richiesta"
 
                     Chiudi.PostBackUrl = "closeEquiparazione2.aspx?idrecord=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("idrecord")))) & "&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))))
                     ' fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & Data.FixNull(dr("IDRinnovo")) & "&record_ID=" & dr("id_record")
@@ -275,7 +296,7 @@ Public Class DashboardEqui2
 
 
                         phDash.Controls.Add(Chiudi)
-
+                        phDash.Controls.Add(AnnRichiesta)
 
 
 
@@ -374,7 +395,7 @@ Public Class DashboardEqui2
 
 
                             'accordion card
-                            If Data.FixNull(dr1("Codice_Status") = 104) Then
+                            If Data.FixNull(dr1("Codice_Status")) = "104" Or Data.FixNull(dr1("Codice_Status")) = "104,5" Then
                                 phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded bg-danger"">"))
                             Else
                                 phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded "">"))
@@ -391,7 +412,7 @@ Public Class DashboardEqui2
 
                             phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
-                            If Data.FixNull(dr1("Codice_Status") = 104) Then
+                            If Data.FixNull(dr1("Codice_Status")) = "104" Or Data.FixNull(dr1("Codice_Status")) = "104,5" Then
                                 phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo text-white"">"))
 
                             Else
@@ -419,7 +440,7 @@ Public Class DashboardEqui2
 
                             phDash.Controls.Add(New LiteralControl("</div>"))
 
-                            If Data.FixNull(dr1("Codice_Status") = 104) Then
+                            If Data.FixNull(dr1("Codice_Status")) = "104" Or Data.FixNull(dr1("Codice_Status")) = "104,5" Then
                                 phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo text-white"">"))
 
                             Else
@@ -439,7 +460,7 @@ Public Class DashboardEqui2
 
                             phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr1("Codice_Status"))) & ">" & Data.FixNull(dr1("Descrizione_StatusWeb")) & "</small>"))
 
-                            If Data.FixNull(dr1("Codice_Status") = 104) Then
+                            If Data.FixNull(dr1("Codice_Status")) = "104" Or Data.FixNull(dr1("Codice_Status")) = "104,5" Then
 
                                 phDash.Controls.Add(New LiteralControl("<br />Motivo: " & Data.FixNull(dr1("NoteValutazioneDT"))))
 
@@ -512,7 +533,7 @@ Public Class DashboardEqui2
                             phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
 
-                            If Data.FixNull(dr1("Codice_Status") = 104) Then
+                            If Data.FixNull(dr1("Codice_Status")) = "104" Or Data.FixNull(dr1("Codice_Status")) = "104,5" Then
                                 phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left moltopiccolo text-white"">"))
 
                             Else

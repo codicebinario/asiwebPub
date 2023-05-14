@@ -138,8 +138,13 @@ function ServerException(mess) {
 
 
       <div class="custom-file">
-        <input type="file" name="myFile1" class="custom-file-input" id="customFileInput" aria-describedby="customFileInput"  required>
-        <label class="custom-file-label" for="customFileInput">Carica il documento</label>
+       <%-- <input type="file" name="myFile1" class="custom-file-input" id="customFileInput" aria-describedby="customFileInput"  required>
+        <label class="custom-file-label" for="customFileInput">Carica il documento</label>--%>
+
+          <label for="customFileInput" class="form-label"></label>
+          <input class="form-control" name="myFile1" type="file" id="customFileInput" required>
+      
+      
       </div>
   <%--    <div class="input-group-append">--%>
        <%-- <button class="btn btn-primary" type="button" id="customFileInput1">Upload</button>--%>

@@ -166,6 +166,20 @@ Public Class DashBoardRinnovi2
 
                 counter2 += 1
 
+                Dim AnnRichiesta As New LinkButton
+
+                AnnRichiesta.ID = "annRI_" & counter2
+                AnnRichiesta.Attributes.Add("runat", "server")
+                AnnRichiesta.Text = "<i class=""bi bi-file-earmark-x""> </i>Cancella questa richiesta"
+                AnnRichiesta.PostBackUrl = "annullaRichiestaR.aspx?record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
+                AnnRichiesta.CssClass = "btn btn-danger btn-sm btn-tre btn-custom mb-1  ml-1"
+                AnnRichiesta.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
+                If Data.FixNull(dr("CodiceStatus")) = 150 Or Data.FixNull(dr("CodiceStatus")) = 152 Then
+                    AnnRichiesta.Visible = True
+                Else
+                    AnnRichiesta.Visible = False
+                End If
+
 
                 Dim hpUPPag As New LinkButton
 
@@ -224,7 +238,7 @@ Public Class DashBoardRinnovi2
                 Dim Chiudi As New LinkButton
                 Chiudi.ID = "Clo_" & counter2
                 Chiudi.Attributes.Add("runat", "server")
-                Chiudi.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Termina questo gruppo"
+                Chiudi.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Termina questa richiesta"
 
                 Chiudi.PostBackUrl = "closeRinnovo.aspx?idrecord=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("idrecord")))) & "&codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovoM"))))
                 ' fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & Data.FixNull(dr("IDRinnovo")) & "&record_ID=" & dr("id_record")
@@ -302,6 +316,7 @@ Public Class DashBoardRinnovi2
                     phDash.Controls.Add(addRinnovo)
                     '   If quantiPerProgetto >= 1 And quantiPerProgettoEA < 1 Then
                     phDash.Controls.Add(Chiudi)
+                    phDash.Controls.Add(AnnRichiesta)
                     '   End If
 
 
@@ -442,6 +457,9 @@ Public Class DashBoardRinnovi2
                                 spedizione = " Spedizione: residenza - Rinnovo:" & Data.FixNull(dr1("Rin_CostoRinnovo")) & " Euro</small>"
 
                             End If
+                        ElseIf Data.FixNull(dr1("Rin_StampaCartaceo")) = "No" Then
+                            spedizione = " Rinnovo:" & Data.FixNull(dr1("Rin_CostoRinnovo")) & " Euro</small>"
+
                         End If
                         phDash.Controls.Add(New LiteralControl(spedizione))
 

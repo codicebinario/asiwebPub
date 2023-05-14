@@ -161,8 +161,9 @@ Public Class checkTesseramento2
 
             If Not String.IsNullOrEmpty(codR) Then
 
+                Dim CFCheck As Boolean
 
-
+                CFCheck = AsiModel.controllaCodiceFiscaleEquipazione(Trim(txtCodiceFiscale.Text), codR)
 
                 Dim risultatoCheck As Integer
                 Dim dataOggi As Date = Today.Date
@@ -177,7 +178,16 @@ Public Class checkTesseramento2
                 '3 tessera non trovata
                 '4 errore generico di connessione
                 DettaglioEquiparazione = AsiModel.Equiparazione.CaricaDatiTesseramento(txtCodiceFiscale.Text)
+
                 Session("visto") = "ok"
+
+                If CFCheck = True Then
+
+                    Response.Redirect("DashboardEqui2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("cfInEqui"))
+
+
+                End If
+
                 If risultatoCheck = 1 Then
 
                     '   Response.Write("ok")

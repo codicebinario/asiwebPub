@@ -4,6 +4,8 @@
           <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
+   <%-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  --%>  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
        <style>
     .custom-file-input.selected:lang(en)::after {
       content: "" !important;
@@ -56,9 +58,9 @@
  }
 
   </style>
-  
-      
 
+
+    <link href="../Css/output.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <asp:UpdateProgress ID="UpdateProgress1" runat="server"
@@ -110,26 +112,25 @@
           </div>
       </div>
 
-  
-      
-       <div class="col-sm-12">
 
-         	<asp:label id="Label3" runat="server"><b>Carica la foto del corsista</b></asp:label>
-				
-           <div class="custom-file mb-3">
-       <asp:FileUpload ID="inputfile" class="custom-file-input" runat="server" name="filename"/>
-      <label class="custom-file-label" for="inputfile">Scegli la foto</label>
-    </div>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" 
-                            ErrorMessage="carica la foto" 
-                            ControlToValidate="inputfile" CssClass="errore"></asp:RequiredFieldValidator>
-<div class="errore" id="results"  runat="server"><br /></div>
-             <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"  ControlToValidate="inputfile"
-            ErrorMessage="il file deve essere in formato jpg" 
-            ValidationExpression="(.*?)\.(jpg|JPG|jpeg|JPEG)$" Display="Dynamic" CssClass="errore"></asp:RegularExpressionValidator>
-     </div>
-    <br />
-    	
+
+    <div class="col-sm-12">
+        <output class="mt-5 mb-2"></output>
+
+
+        <div class="mb-3">
+            <label for="inputfile" class="form-label"><b>Carica la foto del corsista</b></label>
+            <asp:FileUpload ID="inputfile" accept="image/jpeg, image/jpg" type="file" class="form-control" runat="server" name="filename" />
+
+        </div>
+        <div class="mb-3">
+            <asp:CustomValidator ID="cvCaricaLaFoto" runat="server" ErrorMessage="" OnServerValidate="cvCaricaLaFoto_ServerValidate"></asp:CustomValidator>
+            <asp:CustomValidator ID="cvTipoFile" runat="server" ErrorMessage="" OnServerValidate="cvTipoFile_ServerValidate"></asp:CustomValidator>
+
+
+        </div>
+        <div id="results" runat="server"></div>
+
         <br />
  <div class="col-sm-12">
     
@@ -175,6 +176,82 @@
 
          </div>
 
- 
+        <script>
+
+           const input = document.querySelector('#<%=inputfile.ClientID %>')
+               const carica = document.querySelector('#<%=BtnUp.ClientID%>')
+     const output = document.querySelector("output")
+     const messaggioErrore = document.querySelector('#<%=results.ClientID %>')
+     const messaggioCaricaLaFoto = document.querySelector(".form-label")
+     let imagesArray = []
+           
+     input.addEventListener("change", () => {
+         messaggioErrore.innerHTML = "";
+         messaggioErrore.removeAttribute("style") 
+     /*    output.style.display = (output.style.display == 'none') ? defaultDisplay : 'none'*/
+
+          imagesArray.forEach((image, index) => {
+              /*   deleteImage(index)*/
+           
+             
+          })
+         const file = input.files
+        
+         imagesArray.push(file[0])
+         displayImages()
+          carica.addEventListener("click", () => {
+              console.log("ciao")
+              if (validateFile()) {
+                //  avviso.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                  console.log("hello")
+                  messaggioErrore.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                  messaggioErrore.innerHTML = "immagine in caricamento";
+              }
+         
+        
+         })
+     })
+          
+            function validateFile() {
+                var allowedExtension = ['jpeg', 'jpg'];
+         var fileInput = document.querySelector('#<%=inputfile.ClientID %>')
+         var fileName = fileInput.files[0].name;
+         var fileExtension = fileName.split('.').pop().toLowerCase();
+         var isValidFile = false;
+         for (var index in allowedExtension) {
+                       if (fileExtension === allowedExtension[index]) {
+             isValidFile = true;
+         messaggioErrore.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+         messaggioErrore.innerHTML = "immagine in caricamento";
+
+         break;
+                       }
+                   }
+         if (!isValidFile) {
+             isValidFile = false;
+
+         console.log('Allowed file types are jpeg and jpg.');
+                   }
+               }
+         function displayImages() {
+             let images = ""
+                   imagesArray.forEach((image, index) => {
+             images += `<div class="image">
+                <img src="${URL.createObjectURL(image)}" alt="image">
+                <span onclick="deleteImage(${index})">&times;</span>
+              </div>`
+         })
+         output.innerHTML = images
+               }
+         function deleteImage(index) {
+             imagesArray.splice(index, 1)
+                   messaggioErrore.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+         messaggioErrore.innerHTML = "Scegli la tua foto"
+         input.value = ""
+         /*    output.innerHTML = ""*/
+         imagesArray = []
+         displayImages()
+               }
+        </script>
     
 </asp:Content>

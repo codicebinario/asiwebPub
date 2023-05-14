@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class richiestaEquiparazioneFoto2
 
     '''<summary>
-    '''UpdateProgress1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
-
-    '''<summary>
     '''lblIntestazioneEquiparazione control.
     '''</summary>
     '''<remarks>
@@ -59,15 +50,6 @@ Partial Public Class richiestaEquiparazioneFoto2
     Protected WithEvents chkSalta As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''Label3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''inputfile control.
     '''</summary>
     '''<remarks>
@@ -77,13 +59,22 @@ Partial Public Class richiestaEquiparazioneFoto2
     Protected WithEvents inputfile As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-    '''lnkButton1 control.
+    '''cvCaricaLaFoto control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents cvCaricaLaFoto As Global.System.Web.UI.WebControls.CustomValidator
+
+    '''<summary>
+    '''cvTipoFile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cvTipoFile As Global.System.Web.UI.WebControls.CustomValidator
 
     '''<summary>
     '''results control.
@@ -95,22 +86,13 @@ Partial Public Class richiestaEquiparazioneFoto2
     Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
-    '''RequiredFieldValidator1 control.
+    '''lnkButton1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''RegularExpressionValidator1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
+    Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''Label1 control.

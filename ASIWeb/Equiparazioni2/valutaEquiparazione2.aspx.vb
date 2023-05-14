@@ -49,6 +49,7 @@ Public Class valutaEquiparazione2
             Response.Redirect("../login.aspx")
         End If
 
+        pnlDirittiSegreteria.Visible = False
         cultureFormat.NumberFormat.CurrencySymbol = "€"
         cultureFormat.NumberFormat.CurrencyDecimalDigits = 2
         cultureFormat.NumberFormat.CurrencyGroupSeparator = String.Empty
@@ -128,7 +129,18 @@ Public Class valutaEquiparazione2
             Dim Request = fmsP.CreateEditRequest(Session("id_record"))
 
             Dim valutazione As String = ddlValutazione.SelectedItem.Value
-            Dim dirittiSegreteria As String = ddlDirittiSegreteria.SelectedItem.Value
+            Dim dirittiSegreteria As String = "0"
+            If ddlDirittiSegreteria.SelectedValue = "##" Then
+
+            Else
+
+                dirittiSegreteria = ddlDirittiSegreteria.SelectedItem.Value
+            End If
+
+
+
+
+
 
             If valutazione = "S" Then
                 Request.AddField("Codice_Status", "106")
@@ -136,7 +148,7 @@ Public Class valutaEquiparazione2
                 Request.AddField("Codice_Status", "107")
 
             End If
-
+            Request.AddField("Valutata", "S")
             Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
             Request.AddField("Equi_DirittiSegreteria", dirittiSegreteria)
             'Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
@@ -156,11 +168,11 @@ Public Class valutaEquiparazione2
 
             If quantiValutazioni105 = 0 Then
 
-                If quantiEsitoKo >= 1 Then
-                    ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 107)
-                    '  AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione", Session("id_record"))
-                Else
-                    ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 106)
+                 If quantiEsitoKo >= 1 Then
+                ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 107)
+                '  AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+            Else
+                ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 106)
                     ' AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione", Session("id_record"))
                 End If
             Else
@@ -171,9 +183,9 @@ Public Class valutaEquiparazione2
 
 
             If valutazione = "S" Then
-                AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+                AsiModel.LogIn.LogCambioStatus(idEquiparazioneM, "106", Session("WebUserEnte"), "equiparazione", codR)
             ElseIf valutazione = "N" Then
-                AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+                AsiModel.LogIn.LogCambioStatus(idEquiparazioneM, "107", Session("WebUserEnte"), "equiparazione", codR)
 
             End If
 
@@ -184,5 +196,14 @@ Public Class valutaEquiparazione2
 
     Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click
         Response.Redirect("dashboardV2.aspx#" & codR)
+    End Sub
+
+    Protected Sub ddlValutazione_SelectedIndexChanged(sender As Object, e As EventArgs)
+        If ddlValutazione.SelectedValue = "##" Or ddlValutazione.SelectedValue = "N" Then
+            pnlDirittiSegreteria.Visible = False
+        Else
+            pnlDirittiSegreteria.Visible = True
+
+        End If
     End Sub
 End Class

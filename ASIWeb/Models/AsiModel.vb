@@ -618,6 +618,45 @@ Public Class AsiModel
         Return ritorno
     End Function
 
+    Public Shared Function controllaCodiceFiscaleEquipazione(codiceFiscale As String, codr As String) As Boolean
+        Dim fms As FMSAxml = Nothing
+        Dim ds As DataSet = Nothing
+        Dim ritorno As Boolean = False
+
+        fms = Conn.Connect()
+
+        fms.SetLayout("webEquiparazioniRichiestaMolti")
+        Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+        RequestA.AddSearchField("Equi_CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
+        RequestA.AddSearchField("IDEquiparazioneM", codr, Enumerations.SearchOption.equals)
+
+
+        Try
+
+            ds = RequestA.Execute()
+
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    ritorno = True
+
+
+                Next
+
+
+
+            End If
+
+
+
+
+        Catch ex As Exception
+
+            ritorno = False
+        End Try
+        Return ritorno
+    End Function
 
 
 

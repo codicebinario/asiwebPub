@@ -369,7 +369,7 @@ Public Class AsiMasterPageEqui2
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Equi_Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("Codice_Status", "106...107")
+        RequestP.AddSearchField("Valutata", "S")
         '    RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         '   RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
 

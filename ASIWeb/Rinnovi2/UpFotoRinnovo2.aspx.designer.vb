@@ -50,15 +50,6 @@ Partial Public Class UpFotoRinnovo2
     Protected WithEvents HiddenIDRinnovo As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''Label3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''inputfile control.
     '''</summary>
     '''<remarks>
@@ -68,13 +59,22 @@ Partial Public Class UpFotoRinnovo2
     Protected WithEvents inputfile As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-    '''RequiredFieldValidator1 control.
+    '''cvCaricaLaFoto control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents cvCaricaLaFoto As Global.System.Web.UI.WebControls.CustomValidator
+
+    '''<summary>
+    '''cvTipoFile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cvTipoFile As Global.System.Web.UI.WebControls.CustomValidator
 
     '''<summary>
     '''results control.
@@ -84,15 +84,6 @@ Partial Public Class UpFotoRinnovo2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''RegularExpressionValidator1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
 
     '''<summary>
     '''lnkButton1 control.

@@ -228,8 +228,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Css\customEquiparazione.css" />
     <Content Include="Css\jquery-confirm.min.css" />
+    <Content Include="Css\output.css" />
     <Content Include="Equiparazioni2\annullaEquiparazione2.aspx" />
     <Content Include="Equiparazioni2\annullaEquiparazioneMotivo2.aspx" />
+    <Content Include="Equiparazioni2\annullaRichiesta.aspx" />
     <Content Include="Equiparazioni2\archivioEquiValutati2.aspx" />
     <Content Include="Equiparazioni2\checkTesseramento2.aspx" />
     <Content Include="Equiparazioni2\closeEquiparazione2.aspx" />
@@ -425,6 +427,7 @@
     <Content Include="PageNotFound.aspx" />
     <Content Include="passM.aspx" />
     <Content Include="richiestaTessere.aspx" />
+    <Content Include="Rinnovi2\annullaRichiestaR.aspx" />
     <Content Include="Rinnovi2\CancellaGruppo.aspx" />
     <Content Include="Rinnovi2\CancellaRiga.aspx" />
     <Content Include="Rinnovi2\closeRinnovo.aspx" />
@@ -586,6 +589,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="sendFirstEmail.aspx" />
+    <Content Include="styles.css" />
     <Content Include="test1.aspx" />
     <Content Include="up.aspx" />
     <Content Include="upc.aspx" />
@@ -600,6 +604,7 @@
     <Content Include="WebForm14.aspx" />
     <Content Include="WebForm16.aspx" />
     <Content Include="WebForm17.aspx" />
+    <Content Include="WebForm18.aspx" />
     <Content Include="WebForm2.aspx" />
     <Content Include="WebForm3.aspx" />
     <Content Include="WebForm4.aspx" />
@@ -779,6 +784,13 @@
     </Compile>
     <Compile Include="Equiparazioni2\annullaEquiparazioneMotivo2.aspx.vb">
       <DependentUpon>annullaEquiparazioneMotivo2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\annullaRichiesta.aspx.designer.vb">
+      <DependentUpon>annullaRichiesta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\annullaRichiesta.aspx.vb">
+      <DependentUpon>annullaRichiesta.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni2\archivioEquiValutati2.aspx.designer.vb">
@@ -1314,6 +1326,13 @@
       <DependentUpon>richiestaTessere.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi2\annullaRichiestaR.aspx.designer.vb">
+      <DependentUpon>annullaRichiestaR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\annullaRichiestaR.aspx.vb">
+      <DependentUpon>annullaRichiestaR.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi2\CancellaGruppo.aspx.designer.vb">
       <DependentUpon>CancellaGruppo.aspx</DependentUpon>
     </Compile>
@@ -1574,6 +1593,13 @@
     </Compile>
     <Compile Include="WebForm17.aspx.vb">
       <DependentUpon>WebForm17.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="WebForm18.aspx.designer.vb">
+      <DependentUpon>WebForm18.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm18.aspx.vb">
+      <DependentUpon>WebForm18.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="WebForm2.aspx.designer.vb">

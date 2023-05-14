@@ -452,7 +452,7 @@
 							</div>
 						</div>
     
-
+            <asp:Panel ID="pnlDataEmissione"  runat="server" >
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-6">
@@ -511,7 +511,7 @@
             </div>
         </div>
     </div>
-
+            </asp:Panel>
         </ContentTemplate>
 
     </asp:UpdatePanel>

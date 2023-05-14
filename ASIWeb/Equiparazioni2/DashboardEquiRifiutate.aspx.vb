@@ -122,7 +122,7 @@ Public Class DashboardRifiutate
         RequestP1.AddSearchField("Codice_Ente_Richiedente", Session("codice"))
         RequestP1.AddSearchField("Codice_Status", "104")
         RequestP1.SetMax(10)
-        RequestP1.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+        RequestP1.AddSortField("IDEquiparazioneM", Enumerations.Sort.Descend)
         'RequestP1.AddSortField("IDRecord", Enumerations.Sort.Descend)
 
 
@@ -168,7 +168,7 @@ Public Class DashboardRifiutate
                         VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Diploma e Foto"
                         VediDocumentazione.PostBackUrl = "vediDocumentazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr1("IDEquiparazioneM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr1("idrecord")))
                         VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
-
+                VediDocumentazione.Visible = False
 
                 ' If Data.FixNull(dr1("Codice_Status") <= 114) Then
                 'umentazione.Visible = True
@@ -471,6 +471,7 @@ Public Class DashboardRifiutate
                         VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Documentazione Presentata"
                         VediDocumentazione.PostBackUrl = "vediDocumentazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
                         VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
+                        VediDocumentazione.Visible = False
                         '  Annulla.OnClientClick = "return confirm(""ciappa"");"
                         'VediDocumentazione.Attributes.Add("OnClick", "if(!myConfirm())return false;")
                         '   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")

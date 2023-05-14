@@ -70,6 +70,7 @@ Public Class archivioAlboValutati
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Settore_Approvazione_ID", Session("codice"), Enumerations.SearchOption.equals)
+        RequestP.AddSearchField("Valutato", "S", Enumerations.SearchOption.equals)
         RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
         RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
 
@@ -89,11 +90,10 @@ Public Class archivioAlboValutati
             'Dim totale As Decimal = 0
             For Each dr In ds.Tables("main").Rows
 
-                If Data.FixNull(dr("Codice_Status")) = "64" Or Data.FixNull(dr("Codice_Status")) = "65" _
-                  Then
 
 
-                    counter1 += 1
+
+                counter1 += 1
 
 
 
@@ -559,7 +559,7 @@ Public Class archivioAlboValutati
 
                     phDash.Controls.Add(New LiteralControl("</div>"))
                     phDash.Controls.Add(New LiteralControl("</div>"))
-                End If
+
             Next
 
         End If

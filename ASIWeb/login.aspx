@@ -62,14 +62,14 @@
     oninput="this.setCustomValidity('')"></asp:TextBox>
  <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtPassword" ErrorMessage=""></asp:RequiredFieldValidator>
    <asp:Button class="btn btn-lg btn-custom btn-block mt-4" ID="btnLogIn" runat="server" Text="Log in" />
-            <asp:Literal ID="ltlerrore" runat="server" Visible="false">
-                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
+<asp:Literal ID="ltlerrore" runat="server" Visible="false">
+   <div class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>Attenzione!</strong><br /> database in manutenzione, riprova tra qualche minuto!
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-                </asp:Literal>
+ </asp:Literal>
  <asp:Literal ID="ltlAvviso" runat="server" Visible="false">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>Attenzione!</strong><br /> Accesso non consentito!

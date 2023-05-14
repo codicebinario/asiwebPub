@@ -98,7 +98,7 @@ Public Class DashboardEquiEvasi2
         '  RequestP.AddSearchField("Codice_Status", "119", Enumerations.SearchOption.equals)
         RequestP.SetMax(10)
 
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Descend)
+        RequestP.AddSortField("IdEquiparazioneM", Enumerations.Sort.Descend)
 
 
 

@@ -21,7 +21,7 @@ Public Class dashboardB
         Dim dbb As String = ConfigurationManager.AppSettings("dbb")
         Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
         Dim deEnco As New Ed()
-
+        Dim annoCorrente As Integer = Now.Year
         Dim ris As String = Request.QueryString("ris")
 
         If Not Page.IsPostBack Then
@@ -95,6 +95,12 @@ Public Class dashboardB
             Dim counter1 As Integer = 0
             'Dim totale As Decimal = 0
             For Each dr In ds.Tables("main").Rows
+
+
+
+
+
+
                 Dim oldStatus As String = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
                 If Not Data.FixNull(dr("Codice_Status")) = "84" Then
 
@@ -241,6 +247,20 @@ Public Class dashboardB
                         Duplica.Visible = False
                     End If
 
+                    Dim Verb As New LinkButton
+                    Dim dataInizioCorso As Date
+                    Dim dataFineCorso As Date
+                    Dim annoInizioCorso As Integer
+                    Dim annoFineCorso As Integer
+                    Dim annoCorrente As Integer
+                    If Not String.IsNullOrEmpty(Data.FixNull(dr("Svolgimento_Da_Data"))) And
+                        Not String.IsNullOrEmpty(Data.FixNull(dr("Svolgimento_A_Data"))) Then
+                        dataInizioCorso = Date.Parse(Data.FixNull(dr("Svolgimento_Da_Data")))
+                        dataFineCorso = Date.Parse(Data.FixNull(dr("Svolgimento_A_Data")))
+                        annoInizioCorso = dataInizioCorso.Year
+                        annoFineCorso = dataFineCorso.Year
+                        annoCorrente = Now.Year
+                    End If
 
 
 
@@ -254,10 +274,26 @@ Public Class dashboardB
                         "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
                     hpUP.CssClass = "btn btn-success btn-sm btn-cinque btn-custom mb-2"
                     If ((Data.FixNull(dr("Codice_Status")) = "66" Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "57") And Data.FixNull(dr("CheckVerbale")) = "1" And Data.FixNull(dr("fase")) = "3") Then
-                        hpUP.Visible = True
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("Svolgimento_Da_Data"))) And
+                        Not String.IsNullOrEmpty(Data.FixNull(dr("Svolgimento_A_Data"))) Then
+                            If annoFineCorso > annoInizioCorso Then
+                                If annoFineCorso = annoCorrente Then
+                                    hpUP.Visible = True
+                                Else
+                                    hpUP.Visible = False
+                                End If
+
+                            End If
+
+
+                        End If
                     Else
                         hpUP.Visible = False
                     End If
+
+
+
+
 
                     Dim hpUPx As New LinkButton
 
@@ -291,610 +327,201 @@ Public Class dashboardB
                         CorsistiDoc.Visible = False
                     End If
 
-                    Dim Verb As New LinkButton
+
+
+
 
                     Verb.ID = "verb_" & counter1
-                    Verb.Attributes.Add("runat", "server")
-                    Verb.Text = "<i class=""bi bi-border-style""> </i>Invia Verbale"
-                    Verb.PostBackUrl = "upVerbale.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        Verb.Attributes.Add("runat", "server")
+                        Verb.Text = "<i class=""bi bi-border-style""> </i>Invia Verbale"
+                        Verb.PostBackUrl = "upVerbale.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
                         "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
-                    Verb.CssClass = "btn btn-success btn-sm btn-sei btn-custom mb-2"
-                    If ((Data.FixNull(dr("Codice_Status")) = "66" Or Data.FixNull(dr("Codice_Status")) = "57") And Data.FixNull(dr("CheckVerbale")) = "0" And Data.FixNull(dr("fase")) = "3") Then
-                        Verb.Visible = True
-                    Else
-                        Verb.Visible = False
-                    End If
+                        Verb.CssClass = "btn btn-success btn-sm btn-sei btn-custom mb-2"
+                        If ((Data.FixNull(dr("Codice_Status")) = "66" Or Data.FixNull(dr("Codice_Status")) = "67" Or Data.FixNull(dr("Codice_Status")) = "57") And Data.FixNull(dr("CheckVerbale")) = "0" And Data.FixNull(dr("fase")) = "3") Then
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("Svolgimento_Da_Data"))) And
+                        Not String.IsNullOrEmpty(Data.FixNull(dr("Svolgimento_A_Data"))) Then
+                            If annoFineCorso > annoInizioCorso Then
+                                If annoFineCorso = annoCorrente Then
+                                    Verb.Visible = True
+                                Else
+                                    Verb.Visible = False
+                                End If
 
-
-
-
-
-
-                    Dim hpUPPag As New LinkButton
-
-                    hpUPPag.ID = "hpPag_" & counter1
-                    hpUPPag.Attributes.Add("runat", "server")
-                    hpUPPag.Text = "<i class=""bi bi-wallet2""> </i>Invia Pagamento di " & Data.FixNull(dr("TotaleCosti")) & " Euro"
-                    hpUPPag.PostBackUrl = "upLegCorsi.aspx?s=0&codR=" &
-                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
-                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
-                    hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom mb-2"
-                    If (Data.FixNull(dr("Codice_Status")) = "75" And Data.FixNull(dr("fase")) = "3") Then
-                        hpUPPag.Visible = True
-                    Else
-                        hpUPPag.Visible = False
-                    End If
-
-                    Dim hpUPPag82 As New LinkButton
-
-                    hpUPPag82.ID = "hpPag_" & counter1
-                    hpUPPag82.Attributes.Add("runat", "server")
-                    hpUPPag82.Text = "<i class=""bi bi-wallet2""> </i>Invia Pagamento di " & Data.FixNull(dr("TotaleCosti")) & " €"
-                    hpUPPag82.PostBackUrl = "upLegCorsi.aspx?s=82&codR=" &
-                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
-                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
-                    hpUPPag82.CssClass = "btn btn-success btn-sm btn-sette btn-custom mb-2"
-                    If (Data.FixNull(dr("Codice_Status")) = "82") And Data.FixNull(dr("fase")) = "3" Then
-                        hpUPPag82.Visible = True
-                    Else
-                        hpUPPag82.Visible = False
-                    End If
-
-
-                    Dim fotoCorsisti As New LinkButton
-
-                    fotoCorsisti.ID = "Fot_" & counter1
-                    fotoCorsisti.Attributes.Add("runat", "server")
-                    fotoCorsisti.Text = "<i class=""bi bi-pip""> </i>Foto Corsisti"
-                    fotoCorsisti.PostBackUrl = "corsisti.aspx?codR=" &
-                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
-                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
-                    fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
-                    If (Data.FixNull(dr("Codice_Status")) = "69" And Data.FixNull(dr("fase")) = "3") Then
-                        fotoCorsisti.Visible = True
-                    Else
-                        fotoCorsisti.Visible = False
-                    End If
-
-
-                    Dim StopFoto As New LinkButton
-                    StopFoto.ID = "StopFoto_" & counter1
-                    StopFoto.Attributes.Add("runat", "server")
-                    StopFoto.Text = "<i class=""bi bi-sign-stop""> </i>Termina Caricamento"
-                    StopFoto.PostBackUrl = "stopFoto.aspx?codR=" &
-                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
-                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
-                    StopFoto.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
-                    '  Annulla.OnClientClick = "return confirm(""ciappa"");"
-                    StopFoto.Attributes.Add("OnClick", "if(!myConfirm())return false;")
-                    '   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")
-
-
-
-                    If (Data.FixNull(dr("Codice_Status")) = "69" And Data.FixNull(dr("fase")) = "3") Then
-                        StopFoto.Visible = True
-                    Else
-                        StopFoto.Visible = False
-                    End If
-
-
-                    phDash.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
-                    'accordion card
-                    If Data.FixNull(dr("Codice_Status") = 60) Then
-                        phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded bg-danger moltopiccolo text-white"">"))
-                    Else
-                        phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded "">"))
-
-                    End If
-
-
-
-
-                    'accordion heder
-                    phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
-
-                    phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
-
-                    ' inizio prima riga
-                    If Data.FixNull(dr("Codice_Status") = 60) Then
-                        phDash.Controls.Add(New LiteralControl("<div Class=""row moltopiccolo text-white"">"))
-                    Else
-                        phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                    End If
-
-                    If Data.FixNull(dr("Codice_Status") = 60) Then
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo text-white"">"))
-
-                    Else
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
-
-                    End If
-                    '  phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-5 text-left"">"))
-
-                    phDash.Controls.Add(New LiteralControl("Corso:  "))
-
-                    phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
-                    phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDCorso")) & ">" & Data.FixNull(dr("IDCorso")) & "</a>"))
-                    phDash.Controls.Add(New LiteralControl())
-                    phDash.Controls.Add(New LiteralControl("</span>"))
-                    phDash.Controls.Add(New LiteralControl(" - Dupl.: <span>" & Data.FixNull(dr("CorsoDuplicato"))))
-                    If Data.FixNull(dr("CorsoPadre")) <> 0 Then
-                        phDash.Controls.Add(New LiteralControl(" - Cor. Orig.: " & Data.FixNull(dr("CorsoPadre"))))
-                    End If
-                    phDash.Controls.Add(New LiteralControl("</span>"))
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-
-                    If Data.FixNull(dr("Codice_Status") = 60) Then
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left moltopiccolo text-white"">"))
-
-                    Else
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left moltopiccolo"">"))
-
-                    End If
-
-                    '  phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3  text-left"">"))
-
-                    phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
-
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                    phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
-                    phDash.Controls.Add(AnnPrimaFase)
-                    phDash.Controls.Add(Ann)
-                    phDash.Controls.Add(btnFase2)
-                    phDash.Controls.Add(btnFase3)
-                    phDash.Controls.Add(hpUP)
-                    phDash.Controls.Add(Verb)
-                    phDash.Controls.Add(fotoCorsisti)
-                    phDash.Controls.Add(fotoCorsistiKO)
-                    phDash.Controls.Add(hpUPx)
-                    phDash.Controls.Add(CorsistiDoc)
-                    phDash.Controls.Add(Duplica)
-
-
-                    phDash.Controls.Add(StopFoto)
-                    phDash.Controls.Add(hpUPPag)
-                    phDash.Controls.Add(hpUPPag82)
-
-                    If Data.FixNull(dr("Codice_Status")) = "72" Then
-
-                        phDash.Controls.Add(New LiteralControl("<br />"))
-
-                        phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo text-left""><br />Note Corsisti KO: <span><br />"))
-                        phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Motivo_Corsisti_KO"))))
-
-                        phDash.Controls.Add(New LiteralControl("</small></h6></span>"))
-
-
-
-
-
-
-                    End If
-
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-
-
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-
-
-
-
-
-
-
-
-
-                    ' fine primma riga
-
-
-
-                    If Data.FixNull(dr("fase")) <> "1" Then
-
-                        'inizio seconda riga
-
-                        ' <h5>h5 heading <small>secondary text</small></h5>
-
-                        phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
-
-                        If Data.FixNull(dr("Codice_Status") = 60) Then
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left moltopiccolo text-white"">"))
-
-                        Else
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left moltopiccolo"">"))
-
-                        End If
-
-                        phDash.Controls.Add(New LiteralControl("<h6>Nome Corso: <span><small>" & Data.FixNull(dr("Titolo_Corso")) & "</small></h6><span />"))
-
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-5 text-left"">"))
-
-
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                        'intermezzo
-                        phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                        phDash.Controls.Add(New LiteralControl("<hr>"))
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        'fine seconda riga
-
-
-                        'inizio seconda riga bis
-
-                        phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
-
-                        If Data.FixNull(dr("Codice_Status") = 60) Then
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-8 text-left moltopiccolo text-white"">"))
-
-                        Else
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-8 text-left moltopiccolo"">"))
-
-                        End If
-
-                        phDash.Controls.Add(New LiteralControl("<h6>Indirizzo: <span><small> " & Data.FixNull(dr("Indirizzo_Svolgimento")) & " " & Data.FixNull(dr("Cap_Svolgimento")) & " " & Data.FixNull(dr("Comune_Svolgimento")) & " " & Data.FixNull(dr("PR_Svolgimento")) & "</small></h6><span />"))
-
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                        '    'fine seconda riga bis
-
-
-
-
-                        'inizio terza riga
-
-
-
-                        phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
-
-                        phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Da: <span><small> " & SonoDieci(Data.FixNull(dr("Svolgimento_da_Data"))) & "</small></h6><span />"))
-
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
-
-                        phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">A: <span><small> " & SonoDieci(Data.FixNull(dr("Svolgimento_a_Data"))) & "</small></h6><span />"))
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
-
-                        phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Data Richiesta: <span><small> " & Data.FixNull(dr("IndicatoreDataOraCreazione")) & "</small></h6><span />"))
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
-
-                        phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Data Emissione: <span><small> " & SonoDieci(Data.FixNull(dr("Data_Emissione"))) & "</small></h6><span />"))
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-                        phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-
-
-                        'fine terza riga
-
-                        If Data.FixNull(dr("fase")) = "3" Then
-                            'inizio quarta riga
-
-
-
-                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Sport: <span><small> " & Data.FixNull(dr("Sport_Interessato")) & "</small></h6><span />"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Disciplina: <span><small> " & Data.FixNull(dr("Disciplina_interessata")) & "</small></h6><span />"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Specialità: <span><small> " & Data.FixNull(dr("Specialita")) & "</small></h6><span />"))
-
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-
-
-                            'fine quarta riga
-
-                            'inizio quinta riga
-
-
-
-                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Qualifica: <span><small> " & Data.FixNull(dr("Qualifica_Tecnica_Da_Rilasciare")) & "</small></h6><span />"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Livello: <span><small> " & Data.FixNull(dr("Livello")) & "</small></h6><span />"))
-
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-                            Dim quota As Decimal
-                            If String.IsNullOrEmpty(Data.FixNull(dr("Quota_Partecipazione"))) Then
-                                quota = 0
-                            Else
-                                quota = Data.FixNull(dr("Quota_Partecipazione"))
                             End If
 
 
+                        End If
+
+
+
+
+                    Else
+                            Verb.Visible = False
+                        End If
 
 
 
 
 
 
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
+                        Dim hpUPPag As New LinkButton
 
-                            '    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Quota: <span><small> " & quota.ToString("C2", New Globalization.CultureInfo("it-IT")) & "</small></h6><span />"))
+                        hpUPPag.ID = "hpPag_" & counter1
+                        hpUPPag.Attributes.Add("runat", "server")
+                        hpUPPag.Text = "<i class=""bi bi-wallet2""> </i>Invia Pagamento di " & Data.FixNull(dr("TotaleCosti")) & " Euro"
+                        hpUPPag.PostBackUrl = "upLegCorsi.aspx?s=0&codR=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                        hpUPPag.CssClass = "btn btn-success btn-sm btn-sette btn-custom mb-2"
+                        If (Data.FixNull(dr("Codice_Status")) = "75" And Data.FixNull(dr("fase")) = "3") Then
+                            hpUPPag.Visible = True
+                        Else
+                            hpUPPag.Visible = False
+                        End If
 
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Quota: <span><small> " & quota.ToString("N2") & "</small></h6><span />"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
+                        Dim hpUPPag82 As New LinkButton
 
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-                            '     phDash.Controls.Add(New LiteralControl("</div>"))
+                        hpUPPag82.ID = "hpPag_" & counter1
+                        hpUPPag82.Attributes.Add("runat", "server")
+                        hpUPPag82.Text = "<i class=""bi bi-wallet2""> </i>Invia Pagamento di " & Data.FixNull(dr("TotaleCosti")) & " €"
+                        hpUPPag82.PostBackUrl = "upLegCorsi.aspx?s=82&codR=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                        hpUPPag82.CssClass = "btn btn-success btn-sm btn-sette btn-custom mb-2"
+                        If (Data.FixNull(dr("Codice_Status")) = "82") And Data.FixNull(dr("fase")) = "3" Then
+                            hpUPPag82.Visible = True
+                        Else
+                            hpUPPag82.Visible = False
+                        End If
+
+
+                        Dim fotoCorsisti As New LinkButton
+
+                        fotoCorsisti.ID = "Fot_" & counter1
+                        fotoCorsisti.Attributes.Add("runat", "server")
+                        fotoCorsisti.Text = "<i class=""bi bi-pip""> </i>Foto Corsisti"
+                        fotoCorsisti.PostBackUrl = "corsisti.aspx?codR=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                        fotoCorsisti.CssClass = "btn btn-success btn-sm btn-otto btn-custom mb-2"
+                        If (Data.FixNull(dr("Codice_Status")) = "69" And Data.FixNull(dr("fase")) = "3") Then
+                            fotoCorsisti.Visible = True
+                        Else
+                            fotoCorsisti.Visible = False
+                        End If
+
+
+                        Dim StopFoto As New LinkButton
+                        StopFoto.ID = "StopFoto_" & counter1
+                        StopFoto.Attributes.Add("runat", "server")
+                        StopFoto.Text = "<i class=""bi bi-sign-stop""> </i>Termina Caricamento"
+                        StopFoto.PostBackUrl = "stopFoto.aspx?codR=" &
+                        WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
+                        "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
+                        StopFoto.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
+                        '  Annulla.OnClientClick = "return confirm(""ciappa"");"
+                        StopFoto.Attributes.Add("OnClick", "if(!myConfirm())return false;")
+                        '   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")
 
 
 
-                            'fine quinta riga
+                        If (Data.FixNull(dr("Codice_Status")) = "69" And Data.FixNull(dr("fase")) = "3") Then
+                            StopFoto.Visible = True
+                        Else
+                            StopFoto.Visible = False
+                        End If
 
-                            'fine quinta riga
 
-                            ' inizio sesta riga 
+                        phDash.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
+                        'accordion card
+                        If Data.FixNull(dr("Codice_Status") = 60) Then
+                            phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded bg-danger moltopiccolo text-white"">"))
+                        Else
+                            phDash.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded "">"))
 
-                            ' inizio sesta riga 
+                        End If
 
+
+
+
+                        'accordion heder
+                        phDash.Controls.Add(New LiteralControl("<div class=""card-header"">"))
+
+                        phDash.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
+
+                        ' inizio prima riga
+                        If Data.FixNull(dr("Codice_Status") = 60) Then
+                            phDash.Controls.Add(New LiteralControl("<div Class=""row moltopiccolo text-white"">"))
+                        Else
                             phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
 
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                        End If
 
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                        If Data.FixNull(dr("Codice_Status") = 60) Then
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo text-white"">"))
 
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                        Else
 
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Docenti: <span>"))
-                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Elenco_Docenti"))))
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
 
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+                        End If
+                        '  phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-5 text-left"">"))
 
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+                        phDash.Controls.Add(New LiteralControl("Corso:  "))
 
+                        phDash.Controls.Add(New LiteralControl("<span  " & Utility.statusColorCorsi(Data.FixNull(dr("Codice_Status"))) & ">"))
+                        phDash.Controls.Add(New LiteralControl("<a name=" & Data.FixNull(dr("IDCorso")) & ">" & Data.FixNull(dr("IDCorso")) & "</a>"))
+                        phDash.Controls.Add(New LiteralControl())
+                        phDash.Controls.Add(New LiteralControl("</span>"))
+                        phDash.Controls.Add(New LiteralControl(" - Dupl.: <span>" & Data.FixNull(dr("CorsoDuplicato"))))
+                        If Data.FixNull(dr("CorsoPadre")) <> 0 Then
+                            phDash.Controls.Add(New LiteralControl(" - Cor. Orig.: " & Data.FixNull(dr("CorsoPadre"))))
+                        End If
+                        phDash.Controls.Add(New LiteralControl("</span>"))
+                        phDash.Controls.Add(New LiteralControl("</div>"))
 
-                            phDash.Controls.Add(New LiteralControl("</div>"))
+                        If Data.FixNull(dr("Codice_Status") = 60) Then
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left moltopiccolo text-white"">"))
 
-                            phDash.Controls.Add(New LiteralControl("</div>"))
+                        Else
 
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left moltopiccolo"">"))
 
-                            'fine sesta riga sottosezione
+                        End If
 
-                            ' inizio sesta riga 
+                        '  phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3  text-left"">"))
 
-                            ' inizio sesta riga 
+                        phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
 
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                        phDash.Controls.Add(New LiteralControl("</div>"))
 
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
 
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                        phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
+                        phDash.Controls.Add(AnnPrimaFase)
+                        ' phDash.Controls.Add(Ann)
+                        phDash.Controls.Add(btnFase2)
+                        phDash.Controls.Add(btnFase3)
+                        phDash.Controls.Add(hpUP)
+                        phDash.Controls.Add(Verb)
+                        phDash.Controls.Add(fotoCorsisti)
+                        phDash.Controls.Add(fotoCorsistiKO)
+                        phDash.Controls.Add(hpUPx)
+                        phDash.Controls.Add(CorsistiDoc)
+                        phDash.Controls.Add(Duplica)
 
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Commissione: <span>"))
-                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Elenco_Componenti_Commissione"))))
 
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+                        phDash.Controls.Add(StopFoto)
+                        phDash.Controls.Add(hpUPPag)
+                        phDash.Controls.Add(hpUPPag82)
 
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+                        If Data.FixNull(dr("Codice_Status")) = "72" Then
 
+                            phDash.Controls.Add(New LiteralControl("<br />"))
 
-                            phDash.Controls.Add(New LiteralControl("</div>"))
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo text-left""><br />Note Corsisti KO: <span><br />"))
+                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Motivo_Corsisti_KO"))))
 
-                            ' intermezzo
-                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-                            phDash.Controls.Add(New LiteralControl("<hr>"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            'fine sesta riga sottosezione
-
-                            'fine sesta riga sottosezione
-
-                            ' inizio sesta riga 
-
-                            ' inizio sesta riga 
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Piano Corso: <span>"))
-                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteUploadDocumentoCorso"))))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                            'fine sesta riga sottosezione
-
-                            'fine sesta riga sottosezione
-
-                            ' inizio settima riga 
-
-                            ' inizio settima riga 
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Elenco Partecipanti: <span>"))
-                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteUploadElencoCorso"))))
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                            'fine settima riga sottosezione
-
-                            'fine settima riga sottosezione
-
-                            ' inizio ottava riga 
-
-                            ' inizio ottava riga 
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Pagamento: <span>"))
-                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteUploadPagamento"))))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                            'fine ottava riga sottosezione
-
-                            'fine ottava riga sottosezione
-
-
-                            ' inizio ottava riga 
-
-                            ' inizio ottava riga 
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Verbale: <span>"))
-                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteUploadVerbale"))))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-
-                            'fine ottava riga sottosezione
-                            'fine ottava riga sottosezione
-                            ' inizio ottava riga 
-
-                            'fine ottava riga sottosezione
-                            'fine ottava riga sottosezione
-                            ' inizio ottava riga 
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-                            phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Valutazione DT: <span>"))
-                            phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneDT"))))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-                            phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-                            phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            ' inizio ottava riga 
-
-                            ' inizio ottava riga 
-
-                            'phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            'phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
-
-                            'phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            'phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-
-                            'phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Annullamento: <span>"))
-                            'phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteAnnullamentoCorso"))))
-
-                            'phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-                            'phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
-
-
-                            'phDash.Controls.Add(New LiteralControl("</div>"))
-
-                            'phDash.Controls.Add(New LiteralControl("</div>"))
-
-
+                            phDash.Controls.Add(New LiteralControl("</small></h6></span>"))
 
 
 
@@ -903,16 +530,443 @@ Public Class dashboardB
 
                         End If
 
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+
+
+
+
+
+
+
+                        ' fine primma riga
+
+
+
+                        If Data.FixNull(dr("fase")) <> "1" Then
+
+                            'inizio seconda riga
+
+                            ' <h5>h5 heading <small>secondary text</small></h5>
+
+                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+                            If Data.FixNull(dr("Codice_Status") = 60) Then
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left moltopiccolo text-white"">"))
+
+                            Else
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-7 text-left moltopiccolo"">"))
+
+                            End If
+
+                            phDash.Controls.Add(New LiteralControl("<h6>Nome Corso: <span><small>" & Data.FixNull(dr("Titolo_Corso")) & "</small></h6><span />"))
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-5 text-left"">"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                            'intermezzo
+                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<hr>"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            'fine seconda riga
+
+
+                            'inizio seconda riga bis
+
+                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+                            If Data.FixNull(dr("Codice_Status") = 60) Then
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-8 text-left moltopiccolo text-white"">"))
+
+                            Else
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-8 text-left moltopiccolo"">"))
+
+                            End If
+
+                            phDash.Controls.Add(New LiteralControl("<h6>Indirizzo: <span><small> " & Data.FixNull(dr("Indirizzo_Svolgimento")) & " " & Data.FixNull(dr("Cap_Svolgimento")) & " " & Data.FixNull(dr("Comune_Svolgimento")) & " " & Data.FixNull(dr("PR_Svolgimento")) & "</small></h6><span />"))
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                            '    'fine seconda riga bis
+
+
+
+
+                            'inizio terza riga
+
+
+
+                            phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Da: <span><small> " & SonoDieci(Data.FixNull(dr("Svolgimento_da_Data"))) & "</small></h6><span />"))
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">A: <span><small> " & SonoDieci(Data.FixNull(dr("Svolgimento_a_Data"))) & "</small></h6><span />"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Data Richiesta: <span><small> " & Data.FixNull(dr("IndicatoreDataOraCreazione")) & "</small></h6><span />"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
+
+                            phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Data Emissione: <span><small> " & SonoDieci(Data.FixNull(dr("Data_Emissione"))) & "</small></h6><span />"))
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+                            'fine terza riga
+
+                            If Data.FixNull(dr("fase")) = "3" Then
+                                'inizio quarta riga
+
+
+
+                                phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Sport: <span><small> " & Data.FixNull(dr("Sport_Interessato")) & "</small></h6><span />"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Disciplina: <span><small> " & Data.FixNull(dr("Disciplina_interessata")) & "</small></h6><span />"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Specialità: <span><small> " & Data.FixNull(dr("Specialita")) & "</small></h6><span />"))
+
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+                                'fine quarta riga
+
+                                'inizio quinta riga
+
+
+
+                                phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Qualifica: <span><small> " & Data.FixNull(dr("Qualifica_Tecnica_Da_Rilasciare")) & "</small></h6><span />"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-3 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Livello: <span><small> " & Data.FixNull(dr("Livello")) & "</small></h6><span />"))
+
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+                                Dim quota As Decimal
+                                If String.IsNullOrEmpty(Data.FixNull(dr("Quota_Partecipazione"))) Then
+                                    quota = 0
+                                Else
+                                    quota = Data.FixNull(dr("Quota_Partecipazione"))
+                                End If
+
+
+
+
+
+
+
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-6 text-left"">"))
+
+                                '    phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Quota: <span><small> " & quota.ToString("C2", New Globalization.CultureInfo("it-IT")) & "</small></h6><span />"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Quota: <span><small> " & quota.ToString("N2") & "</small></h6><span />"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+                                '     phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+                                'fine quinta riga
+
+                                'fine quinta riga
+
+                                ' inizio sesta riga 
+
+                                ' inizio sesta riga 
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Docenti: <span>"))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Elenco_Docenti"))))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                                'fine sesta riga sottosezione
+
+                                ' inizio sesta riga 
+
+                                ' inizio sesta riga 
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Commissione: <span>"))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Elenco_Componenti_Commissione"))))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                ' intermezzo
+                                phDash.Controls.Add(New LiteralControl("<div class=""row"">"))
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                                phDash.Controls.Add(New LiteralControl("<hr>"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                'fine sesta riga sottosezione
+
+                                'fine sesta riga sottosezione
+
+                                ' inizio sesta riga 
+
+                                ' inizio sesta riga 
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Piano Corso: <span>"))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteUploadDocumentoCorso"))))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                                'fine sesta riga sottosezione
+
+                                'fine sesta riga sottosezione
+
+                                ' inizio settima riga 
+
+                                ' inizio settima riga 
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Elenco Partecipanti: <span>"))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteUploadElencoCorso"))))
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                                'fine settima riga sottosezione
+
+                                'fine settima riga sottosezione
+
+                                ' inizio ottava riga 
+
+                                ' inizio ottava riga 
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Pagamento: <span>"))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteUploadPagamento"))))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                                'fine ottava riga sottosezione
+
+                                'fine ottava riga sottosezione
+
+
+                                ' inizio ottava riga 
+
+                                ' inizio ottava riga 
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Verbale: <span>"))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteUploadVerbale"))))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+                                'fine ottava riga sottosezione
+                                'fine ottava riga sottosezione
+                                ' inizio ottava riga 
+
+                                'fine ottava riga sottosezione
+                                'fine ottava riga sottosezione
+                                ' inizio ottava riga 
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                                phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                                phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Valutazione DT: <span>"))
+                                phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneDT"))))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+                                phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+                                phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                ' inizio ottava riga 
+
+                                ' inizio ottava riga 
+
+                                'phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                'phDash.Controls.Add(New LiteralControl("<div Class=""row"">"))
+
+                                'phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                'phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+
+                                'phDash.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Annullamento: <span>"))
+                                'phDash.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteAnnullamentoCorso"))))
+
+                                'phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+                                'phDash.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+
+
+                                'phDash.Controls.Add(New LiteralControl("</div>"))
+
+                                'phDash.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+
+
+
+
+                            End If
+
+                        End If
+
+                        counter1 += 1
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+
+                        phDash.Controls.Add(New LiteralControl("</div>"))
+                        phDash.Controls.Add(New LiteralControl("</div>"))
                     End If
-
-                    counter1 += 1
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-                    phDash.Controls.Add(New LiteralControl("</div>"))
-                End If
             Next
 
         End If

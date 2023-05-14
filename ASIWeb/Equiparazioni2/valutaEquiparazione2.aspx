@@ -118,7 +118,7 @@ $(document).ready(function(){
 								<div class="form-group">
 									<label for="txtCognome">Valutazione [*]</label>
                                 
-					 <asp:dropdownlist id="ddlValutazione" runat="server" Cssclass="form-control input-sm">
+                                    <asp:DropDownList ID="ddlValutazione" runat="server" CssClass="form-control input-sm" AutoPostBack="true" OnSelectedIndexChanged="ddlValutazione_SelectedIndexChanged">
                           <asp:ListItem Value="##">##</asp:ListItem>
                          <asp:ListItem Value="S">positivo</asp:ListItem>
                         <asp:ListItem Value="N">negativo</asp:ListItem>
@@ -163,7 +163,15 @@ $(document).ready(function(){
                         </div>
                              
                 </div>
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
+        <Triggers>
 
+            <asp:AsyncPostBackTrigger ControlID="ddlValutazione" />
+            <%--	  	 <asp:AsyncPostBackTrigger  ControlID="ddlProvinciaConsegna"/>--%>
+            <%--  <asp:PostBackTrigger  ControlID="ddlProvincia"  />--%>
+        </Triggers>
+        <ContentTemplate>
+            <asp:Panel ID="pnlDirittiSegreteria" runat="server">
 
       <div class="col-sm-12">
 						<div class="row">
@@ -216,7 +224,7 @@ $(document).ready(function(){
                              
                 </div>
 
-
+                </asp:Panel></ContentTemplate></asp:UpdatePanel>
      <div class="col-sm-12">
 						<div class="row">
 							<div class="col-sm-12">

@@ -38,6 +38,11 @@
 
 
     }
+      .avvisocarimento {
+     width: 100%;
+    padding: 16px;
+    border-radius: 5px;
+    }
     .Progress
  {
   position: fixed;
@@ -79,18 +84,10 @@
        
 
     </style>
+    <link href="../Css/output.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   <asp:UpdateProgress ID="UpdateProgress1" runat="server"
-					 DynamicLayout="false">
-	<ProgressTemplate>
-	  <div class="Progress">
-		 <div class="btn">loading...</div>
-		
-		</div>
-	</ProgressTemplate>
-</asp:UpdateProgress>
-    
+  
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
     <h3 class="display-5"></h3>
@@ -100,9 +97,7 @@
  
      
     <p class="lead">
-  <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
-          <%--      <a href="dashboardEqui.aspx" class="btn btn-success btn-sm btn-due"><i class="bi bi-sign-stop-fill"> </i>Interrompi il caricamento corso.</a>       --%>
-    </p>
+     </p>
     
   </div></div>
       <div class="col-sm-12">
@@ -117,18 +112,7 @@
 							
 				</div></div>
     
-   <%-- <div class="col-sm-12">
-          <div class="row">
-              <div class="col-sm-12">
-                  <div class="form-group">
-                       <h5>Fase 2: <asp:Label ID="lblnomef" runat="server" Text=""></asp:Label></h5>
-                      <hr />
-                  </div>
-              </div>
-
-          </div>
-      </div>
-    <br /><br />--%>
+  
 
     <div class="col-sm-12">
         <div class="row">
@@ -167,40 +151,31 @@
           </div>
       </div>
 
-  
-      
-       <div class="col-sm-12">
-           <div class="row">
-               <div class="col-sm-8">
-         	<asp:label id="Label3" runat="server"><b>Carica la foto della persona per l'equiparazione</b></asp:label>
-				
-           <div class="custom-file mb-3">
-       <asp:FileUpload ID="inputfile" class="custom-file-input" runat="server" name="filename"/>
-          
-      <label class="custom-file-label" for="inputfile">Scegli la foto</label>
-   
-               
+
+    <div class="col-sm-12">
+        <output class="mt-5 mb-2"></output>
+    
+
+        <div class="mb-3">
+            <label for="inputfile" class="form-label"><b>Carica la tua foto</b></label>
+            <asp:FileUpload ID="inputfile" accept="image/jpeg, image/jpg" type="file" class="form-control" runat="server" name="filename" />
+            
+        </div>
+        <div class="mb-3">
+            <asp:CustomValidator ID="cvCaricaLaFoto" runat="server" ErrorMessage="" OnServerValidate="cvCaricaLaFoto_ServerValidate"></asp:CustomValidator>
+            <asp:CustomValidator ID="cvTipoFile" runat="server" ErrorMessage="" OnServerValidate="cvTipoFile_ServerValidate"></asp:CustomValidator>
+
+         
+        </div>
+               <div id="results" runat="server"></div>
+
+        <br />
+        <div class="col-sm-12">
+
+            <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true" runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>
+
+
            </div>
-<div class="col-sm-4">
-     <asp:LinkButton ID="lnkButton1" class="btn btn-primary" Visible="true"  runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>                       
-
-
-    </div>
-                   </div></div>
- 
-        
-
-
-   <div class="col-sm-12 errore" id="results" runat="server"><br /></div>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" 
-                            ErrorMessage="carica la foto" 
-                            ControlToValidate="inputfile" CssClass="errore"></asp:RequiredFieldValidator>
-
-             <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"  ControlToValidate="inputfile"
-            ErrorMessage="il file deve essere in formato jpg" 
-            ValidationExpression="(.*?)\.(jpg|JPG)$" Display="Dynamic" CssClass="errore"></asp:RegularExpressionValidator>
-     </div>
-      
 
 
 
@@ -240,5 +215,83 @@
 </ul>
 
          </div>
+   </div>
+    <script>
 
+           const input = document.querySelector('#<%=inputfile.ClientID %>')
+               const carica = document.querySelector('#<%=lnkButton1.ClientID%>')
+     const output = document.querySelector("output")
+     const messaggioErrore = document.querySelector('#<%=results.ClientID %>')
+     const messaggioCaricaLaFoto = document.querySelector(".form-label")
+     let imagesArray = []
+           
+     input.addEventListener("change", () => {
+         messaggioErrore.innerHTML = "";
+         messaggioErrore.removeAttribute("style") 
+     /*    output.style.display = (output.style.display == 'none') ? defaultDisplay : 'none'*/
+
+          imagesArray.forEach((image, index) => {
+              /*   deleteImage(index)*/
+           
+             
+          })
+         const file = input.files
+        
+         imagesArray.push(file[0])
+         displayImages()
+          carica.addEventListener("click", () => {
+              console.log("ciao")
+              if (validateFile()) {
+                //  avviso.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                  console.log("hello")
+                  messaggioErrore.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                  messaggioErrore.innerHTML = "immagine in caricamento";
+              }
+         
+        
+         })
+     })
+          
+            function validateFile() {
+                var allowedExtension = ['jpeg', 'jpg'];
+         var fileInput = document.querySelector('#<%=inputfile.ClientID %>')
+         var fileName = fileInput.files[0].name;
+         var fileExtension = fileName.split('.').pop().toLowerCase();
+         var isValidFile = false;
+         for (var index in allowedExtension) {
+                       if (fileExtension === allowedExtension[index]) {
+             isValidFile = true;
+         messaggioErrore.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+         messaggioErrore.innerHTML = "immagine in caricamento";
+
+         break;
+                       }
+                   }
+         if (!isValidFile) {
+             isValidFile = false;
+
+         console.log('Allowed file types are jpeg and jpg.');
+                   }
+               }
+         function displayImages() {
+             let images = ""
+                   imagesArray.forEach((image, index) => {
+             images += `<div class="image">
+                <img src="${URL.createObjectURL(image)}" alt="image">
+                <span onclick="deleteImage(${index})">&times;</span>
+              </div>`
+         })
+         output.innerHTML = images
+               }
+         function deleteImage(index) {
+             imagesArray.splice(index, 1)
+                   messaggioErrore.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+         messaggioErrore.innerHTML = "Scegli la tua foto"
+         input.value = ""
+         /*    output.innerHTML = ""*/
+         imagesArray = []
+         displayImages()
+               }
+    </script>
+          
 </asp:Content>

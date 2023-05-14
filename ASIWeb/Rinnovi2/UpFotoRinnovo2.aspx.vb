@@ -124,7 +124,40 @@ Public Class UpFotoRinnovo2
 
 
     End Sub
+    Protected Sub cvCaricaLaFoto_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If inputfile.PostedFile.ContentLength > 0 Then
 
+
+            args.IsValid = True
+        Else
+            results.InnerHtml = "carica la tua foto<br>"
+            results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+
+
+            args.IsValid = False
+        End If
+    End Sub
+
+    Protected Sub cvTipoFile_ServerValidate(source As Object, args As ServerValidateEventArgs)
+
+        Dim fileExtensions As String() = {".jpg", ".jpeg", ".JPG", ".JPEG"}
+        Dim pippo As String = inputfile.PostedFile.ContentType
+        For i As Integer = 0 To fileExtensions.Length - 1
+            If inputfile.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                args.IsValid = True
+
+                Exit For
+            Else
+                args.IsValid = False
+
+                results.InnerHtml = "il file deve essere in formato jpg or jpeg<br>"
+                results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+
+            End If
+        Next
+
+
+    End Sub
     Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String) As Boolean
 
         Dim host As String = HttpContext.Current.Request.Url.Host.ToLower()
@@ -237,66 +270,71 @@ Public Class UpFotoRinnovo2
     End Function
 
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
-        Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
 
-        If inputfile.PostedFile.ContentLength > MassimoPeso Then
-            results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
+        If Page.IsValid Then
+            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(inputfile.PostedFile.InputStream)
 
+            If inputfile.PostedFile.ContentLength > MassimoPeso Then
+                results.InnerHtml = "Il file è troppo grande. Massimo " & MassimoPeso / 1024 & " kb.<br>"
+                results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
 
-            ' controllo del tipo di file
-        ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
-            results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
-
-
-
-        ElseIf img.Width < minimaLarghezza OrElse img.Height < minimaAltezza Then
-
-
-            results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+                ' controllo del tipo di file
+            ElseIf Not inputfile.PostedFile.ContentType.StartsWith("image") Then
+                results.InnerHtml = "Il file non è valido. Deve essere un'immagine.<br>"
+                results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
 
 
-        ElseIf img.Width > img.Height Then
-            results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
+            ElseIf img.Width < minimaLarghezza OrElse img.Height < minimaAltezza Then
 
 
-        ElseIf img.Width > massinalarghezza OrElse img.Height > massimaaltezza Then
-            'Response.Write(maggiore)
-            results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+                results.InnerHtml = "Immagine con larghezza e/o altezza troppo piccole.<br>"
+                results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
 
-        Else
-            Dim rapporto As Integer
-            rapporto = img.Height / 140
-            Dim img2 As Drawing.Bitmap
-            img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
+            ElseIf img.Width > img.Height Then
+                results.InnerHtml = "l'altezza deve essere maggiore della larghezza.<br>"
+                results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
 
-            Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-            nomecaricato = record_ID & "_" & tokenZ & ".jpg"
+            ElseIf img.Width > massinalarghezza OrElse img.Height > massimaaltezza Then
+                'Response.Write(maggiore)
+                results.InnerHtml = "Immagine con dimensioni superiori a quelle consentite"
+                results.Attributes.Add("style", "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+            Else
+                'results.InnerHtml = "imagine in caricamento...."
+                Dim rapporto As Integer
+                rapporto = img.Height / 140
+                Dim img2 As Drawing.Bitmap
+                img2 = New Drawing.Bitmap(img, New Drawing.Size(Math.Ceiling(img.Width / rapporto), 140))
 
-            '   Response.Write(Server.MapPath("..\corsisti\"))
-            img2.Save(Server.MapPath("..\fotoRinnovo\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
-            inputfile.SaveAs(Server.MapPath("..\fotoRinnovo\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
+                Dim tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                nomecaricato = record_ID & "_" & tokenZ & ".jpg"
 
-
-
-
-            img.Dispose()
-
-
-            Dim tokenx As String = ""
-            Dim id_att As String = ""
-            Dim tuttoRitorno As String = ""
-
-            tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
-
-            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-            tokenx = arrKeywords(1)
-            id_att = arrKeywords(0)
-            CaricaSuFM(tokenx, id_att, nomecaricato)
-            Session("visto") = "ok"
-            ' Response.Redirect("DashboardRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
-            Response.Redirect("DashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("fo"))
+                '   Response.Write(Server.MapPath("..\corsisti\"))
+                img2.Save(Server.MapPath("..\fotoRinnovo\") & nomecaricato, System.Drawing.Imaging.ImageFormat.Jpeg)
+                inputfile.SaveAs(Server.MapPath("..\fotoRinnovo\") & record_ID & "_" & tokenZ & "_originale" & ".jpg")
 
 
+
+
+                img.Dispose()
+
+
+                Dim tokenx As String = ""
+                Dim id_att As String = ""
+                Dim tuttoRitorno As String = ""
+
+                tuttoRitorno = CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
+
+                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                tokenx = arrKeywords(1)
+                id_att = arrKeywords(0)
+                CaricaSuFM(tokenx, id_att, nomecaricato)
+                Session("visto") = "ok"
+                ' Response.Redirect("DashboardRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+                Response.Redirect("DashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("fo"))
+
+
+
+            End If
 
         End If
     End Sub
