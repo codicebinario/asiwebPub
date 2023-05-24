@@ -43,8 +43,19 @@ Public Class duplica
     Dim codiceCorso As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        Calendar3.DateMin = Now.Year() & "/01/01"
-        Calendar3.DateMax = Now.Year & "/12/31"
+        Dim giorno As Integer = Now.Day()
+        Dim mese As Integer = Now.Month()
+        Dim anno As Integer = Now.Year()
+
+        Dim dataCorrente As Date = Now.ToShortDateString
+        Dim annoCorrente As Integer = Now.Year
+        Dim meseCorrente As Integer = Now.Month
+        Dim giornoCorrente As Integer = Now.Day
+        Dim dataInizio As Date
+        Dim dataFine As Date
+        dataInizio = "01-01-" & annoCorrente
+        dataFine = "31-12-" & annoCorrente
+        Calendar3.DateMin = dataInizio
         Dim fase As String = Request.QueryString("fase")
         'If Not String.IsNullOrEmpty(fase) Then
         '    fase = deEnco.QueryStringDecode(Request.QueryString("fase"))
@@ -61,6 +72,13 @@ Public Class duplica
         If IsNothing(Session("codice")) Then
             Response.Redirect("../login.aspx")
         End If
+
+        If Session("CorsoModificaDataEmissione") = "S" Then
+            pnlDataEmissione.Visible = True
+        Else
+            pnlDataEmissione.Visible = False
+        End If
+
 
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
@@ -245,21 +263,26 @@ Public Class duplica
             giorno = oDateA.Day
             anno = oDateA.Year
             mese = oDateA.Month
-
+            Dim annoattuale As Integer = Now.Year
+            Dim dataEmissioneTutti As String = mese & "/" & giorno & "/" & anno
             Requesty.AddField("Svolgimento_A_Data", mese & "/" & giorno & "/" & anno)
 
-            Dim dataEmissione = txtDataEmissione.Text
-            If Not String.IsNullOrEmpty(dataEmissione) Then
+            If Session("CorsoModificaDataEmissione") = "S" Then
+                Dim dataEmissione = txtDataEmissione.Text
 
+                If Not String.IsNullOrEmpty(dataEmissione) Then
+                    Dim oDateEmissione As DateTime = DateTime.Parse(dataEmissione)
+                    giorno = oDateEmissione.Day
+                    anno = oDateEmissione.Year
+                    mese = oDateEmissione.Month
 
-                Dim oDateEmissione As DateTime = DateTime.Parse(dataEmissione)
-                giorno = oDateEmissione.Day
-                anno = oDateEmissione.Year
-                mese = oDateEmissione.Month
+                    Requesty.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
 
+                End If
 
+            Else
+                Requesty.AddField("Data_Emissione", dataEmissioneTutti)
 
-                Requesty.AddField("Data_Emissione", mese & "/" & giorno & "/" & anno)
             End If
 
 

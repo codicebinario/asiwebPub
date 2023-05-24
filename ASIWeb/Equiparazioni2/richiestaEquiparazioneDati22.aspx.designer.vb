@@ -120,4 +120,13 @@ Partial Public Class richiestaEquiparazioneDati22
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''results control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 End Class

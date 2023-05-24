@@ -22,6 +22,8 @@ Imports System.Net.Security
 Imports System.Net
 Imports System.Web.Services.Description
 Imports System.EnterpriseServices.CompensatingResourceManager
+Imports DocumentFormat.OpenXml.Wordprocessing
+
 Public Class richiestaEquiparazione2
     Inherits System.Web.UI.Page
     Dim webserver As String = ConfigurationManager.AppSettings("webserver")
@@ -310,87 +312,97 @@ Public Class richiestaEquiparazione2
 
 
     End Function
-    'Protected Sub btnFase2_Click(sender As Object, e As EventArgs) Handles btnFase2.Click
-    '    Session("fase") = "2"
-    '    Response.Redirect("richiestaEquiparazioneFoto2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
-    'End Sub
+    Protected Sub cvCaricaDiploma_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If FileUpload1.PostedFile.ContentLength > 0 Then
 
+
+            args.IsValid = True
+        Else
+            results.InnerHtml = "carica il tuo diploma<br>"
+            results.Attributes.Add("style", "width: 100%; margin-top: 6px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+
+
+            args.IsValid = False
+        End If
+    End Sub
+
+    Protected Sub cvTipoFile_ServerValidate(source As Object, args As ServerValidateEventArgs)
+
+        Dim fileExtensions As String() = {".pdf", ".PDF"}
+        Dim pippo As String = FileUpload1.PostedFile.ContentType
+        For i As Integer = 0 To fileExtensions.Length - 1
+            If FileUpload1.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                args.IsValid = True
+
+                Exit For
+            Else
+                args.IsValid = False
+
+                results.InnerHtml = "il file deve essere in formato pdf<br>"
+                results.Attributes.Add("style", "width: 100%; margin-top: 6px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+
+            End If
+        Next
+
+
+    End Sub
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
-        If uploadProgress.Files.Count > 0 Then
+        If Page.IsValid Then
 
-            '****************************************************
-            Dim files As OboutFileCollection = uploadProgress.Files
-            Dim i As Integer
+            Dim stileavviso As String = "width: 100%; margin-top: 4px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
 
-            uploadedFiles.Text = ""
-            Try
+            'Threading.Thread.Sleep(5000)
+            Dim whereToSave As String = "../file_storage_equi/"
+            Dim fileUpload As HttpPostedFile = FileUpload1.PostedFile
 
-                For i = 0 To files.Count - 1 Step 1
-                    Dim file As OboutPostedFile = files(i)
+            If Not FileUpload1.PostedFile Is Nothing And FileUpload1.PostedFile.ContentLength > 0 Then
 
-
-
-                    Dim whereToSave As String = "../file_storage_equi/"
+                If FileUpload1.PostedFile.ContentLength > MassimoPeso Then
+                    results.InnerHtml = "Il file è troppo grande. Massimo 3 mb<br>"
+                    results.Attributes.Add("style", stileavviso)
+                ElseIf FileUpload1.PostedFile.ContentLength <= MassimoPeso Then
 
                     tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                    ext = Path.GetExtension((file.FileName))
-                    nomefileReale = Path.GetFileName(file.FileName)
+                    ext = Path.GetExtension((fileUpload.FileName))
+                    nomefileReale = Path.GetFileName(fileUpload.FileName)
                     nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+                    fileUpload.SaveAs(MapPath(whereToSave + nomecaricato))
+                    uploadedFiles.Text = ""
+
+                    results.InnerHtml = "<b>Diploma caricato con successo: " & nomecaricato & "</b><br/>"
+                    results.Attributes.Add("style", stileavviso)
 
 
+                    Dim tokenx As String = ""
+                    Dim id_att As String = ""
+                    Dim tuttoRitorno As String = ""
+
+                    tuttoRitorno = CaricaDatiDiplomaEquiparazione(HiddenIdRecord.Value, HiddenIDEquiparazione.Value, nomecaricato)
+                    txtNote.Text = ""
+                    Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                    tokenx = arrKeywords(1)
+                    id_att = arrKeywords(0)
+                    Try
+                        CaricaSuFM(tokenx, id_att, nomecaricato)
+                        'pnlFase1.Visible = False
+                        'btnFase2.Visible = True
+                        'deleteFile(nomecaricato)
+                        Session("fase") = "2"
+                        Response.Redirect("richiestaEquiparazioneFoto2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(2))
+
+                    Catch ex As Exception
+
+                        results.InnerHtml = "<b>Diploma non caricato: </b><br/>"
+                        results.Attributes.Add("style", stileavviso)
 
 
+                    End Try
 
-                    '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
-
-                    file.SaveAs(MapPath(whereToSave + nomecaricato))
-
-
-
-
-                    If uploadedFiles.Text.Length = 0 Then
-
-
-                        lnkButton1.Enabled = False
-                        uploadedFiles.Text = ""
-
-                        uploadedFiles.Text = "<b>Diploma caricato con successo: " & nomecaricato & "</b><br/>"
-
-
-
-
-                    End If
-
-
-
-                Next
-
-                Dim tokenx As String = ""
-                Dim id_att As String = ""
-                Dim tuttoRitorno As String = ""
-
-                tuttoRitorno = CaricaDatiDiplomaEquiparazione(HiddenIdRecord.Value, HiddenIDEquiparazione.Value, nomecaricato)
-                txtNote.Text = ""
-                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-                tokenx = arrKeywords(1)
-                id_att = arrKeywords(0)
-
-                CaricaSuFM(tokenx, id_att, nomecaricato)
-                '   pnlFase1.Visible = False
-                ' btnFase2.Visible = True
-                'deleteFile(nomecaricato)
-                ' Session("fase") = "2"
-                Response.Redirect("richiestaEquiparazioneFoto2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato & "&fase=" & deEnco.QueryStringEncode(2))
-
-            Catch ex As Exception
-
-                uploadedFiles.Text = "<b>Diploma non caricato: </b><br/>"
-
-
-            End Try
-
-        Else
-            uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
+                Else
+                    results.InnerHtml = "<b>Carica il tuo Diploma </b><br/>"
+                    results.Attributes.Add("style", stileavviso)
+                End If
+            End If
         End If
     End Sub
 End Class

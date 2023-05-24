@@ -34,7 +34,7 @@ Public Class closeRinnovo
         AsiModel.Rinnovi.AggiornaStatusMoltia155(codR)
 
 
-
+        Session("AnnullaREqui") = "closeRin"
         Response.Redirect("DashBoardRinnovi2.aspx?open=" & codR)
     End Sub
 

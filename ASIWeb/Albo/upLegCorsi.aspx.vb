@@ -41,6 +41,7 @@ Public Class upLegCorsi
     Dim codR As String = ""
     Dim cultureFormat As System.Globalization.CultureInfo = New System.Globalization.CultureInfo("it-IT")
     Dim s As Integer = 0 'pagamento da status 82
+    Dim stileavviso As String = "width: 100%; margin-top: 4px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
 
 
 
@@ -106,10 +107,16 @@ Public Class upLegCorsi
 
         If QuantiAllegati(HiddenIDCorso.Value) = "no" Then
 
-            Button1.Enabled = False
             uploadedFiles.Text = ""
 
-            uploadedFiles.Text = "<b>non è possibile caricare ulteriori documenti </b>"
+
+            results.InnerHtml = "<b>non è possibile caricare ulteriori documenti </b>"
+            results.Attributes.Add("style", stileavviso)
+        Else
+
+            results.InnerHtml = "<b>E' possibile caricare fino a 3 documenti </b>"
+            results.Attributes.Add("style", stileavviso)
+
 
         End If
 
@@ -120,7 +127,38 @@ Public Class upLegCorsi
 
 
     End Sub
+    Protected Sub cvCaricaDiploma_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If FileUpload1.PostedFile.ContentLength > 0 Then
 
+
+            args.IsValid = True
+        Else
+            results.InnerHtml = "carica la documentazione<br>"
+            results.Attributes.Add("style", stileavviso)
+
+            args.IsValid = False
+        End If
+    End Sub
+
+    Protected Sub cvTipoFile_ServerValidate(source As Object, args As ServerValidateEventArgs)
+
+        Dim fileExtensions As String() = {".pdf", ".PDF", ".jpg", ".JPG", ".jpeg", ".JPEG", ".PNG", ".png"}
+        Dim pippo As String = FileUpload1.PostedFile.ContentType
+        For i As Integer = 0 To fileExtensions.Length - 1
+            If FileUpload1.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                args.IsValid = True
+
+                Exit For
+            Else
+                args.IsValid = False
+
+                results.InnerHtml = "il file deve essere in formato pdf, jpg oppure png<br>"
+                results.Attributes.Add("style", stileavviso)
+            End If
+        Next
+
+
+    End Sub
     Public Function QuantiAllegati(codR As String) As String
         Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         Dim ds As DataSet
@@ -202,14 +240,15 @@ Public Class upLegCorsi
 
 
         If QuantiAllegati(HiddenIDCorso.Value) = "no" Then
-            Button1.Enabled = False
-            uploadedFiles.Text = ""
+            results.InnerHtml = ""
 
-            uploadedFiles.Text = "<b>File caricato con successo.</b><br/><b>non è possibile caricare ulteriori documenti. </b>"
+            results.InnerHtml = "<b>Documento caricato con successo: non è possibile caricare ulteriori documenti </b>"
+            results.Attributes.Add("style", stileavviso)
         Else
-
-            uploadedFiles.Text += "<b>File caricato con successo.</b><br/><b>è possibile caricare ulteriori documenti. </b>"
+            results.InnerHtml = "<b>Documento caricato con successo: è possibile caricare ulteriori documenti </b>"
+            results.Attributes.Add("style", stileavviso)
         End If
+
 
 
 
@@ -335,109 +374,82 @@ Public Class upLegCorsi
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
 
-        If QuantiAllegati(HiddenIDCorso.Value) = "no" Then
+        If Page.IsValid Then
+            Dim whereToSave As String = "../file_storage/"
+            Dim fileUpload As HttpPostedFile = FileUpload1.PostedFile
 
-            Button1.Enabled = False
-            uploadedFiles.Text = ""
+            If QuantiAllegati(HiddenIDCorso.Value) = "no" Then
 
-            uploadedFiles.Text = "<b>non è possibile caricare ulteriori documenti </b>"
-
-
-        Else
-
-
-
-
-            If uploadProgress.Files.Count > 0 Then
-
-
-
-
-
-                '****************************************************
-                Dim files As OboutFileCollection = uploadProgress.Files
-                Dim i As Integer
-
+                Button1.Enabled = False
+                Button1.Text = ""
                 uploadedFiles.Text = ""
-
-                For i = 0 To files.Count - 1 Step 1
-                    Dim file As OboutPostedFile = files(i)
-
-
-
-                    Dim whereToSave As String = "../file_storage/"
-
-                    tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                    ext = Path.GetExtension((file.FileName))
-                    nomefileReale = Path.GetFileName(file.FileName)
-                    nomecaricato = HiddenIDCorso.Value & "_" + tokenZ + ext
+                Session("pagNo") = "no"
+                results.InnerHtml = "<b>non è possibile caricare ulteriori documenti </b><br/>"
+                results.Attributes.Add("style", stileavviso)
 
 
+            Else
+                If Not FileUpload1.PostedFile Is Nothing And FileUpload1.PostedFile.ContentLength > 0 Then
 
+                    If FileUpload1.PostedFile.ContentLength > MassimoPeso Then
+                        results.InnerHtml = "Il file è troppo grande. Massimo 3 mb<br>"
+                        results.Attributes.Add("style", stileavviso)
+                    ElseIf FileUpload1.PostedFile.ContentLength <= MassimoPeso Then
 
+                        tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                        ext = Path.GetExtension((fileUpload.FileName))
+                        nomefileReale = Path.GetFileName(fileUpload.FileName)
+                        nomecaricato = HiddenIDCorso.Value & "_" + tokenZ + ext
+                        fileUpload.SaveAs(MapPath(whereToSave + nomecaricato))
 
-                    '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
+                        results.InnerHtml = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
+                        results.Attributes.Add("style", stileavviso)
 
-                    file.SaveAs(MapPath(whereToSave + nomecaricato))
+                        Dim tokenx As String = ""
+                        Dim id_att As String = ""
+                        Dim tuttoRitorno As String = ""
 
+                        tuttoRitorno = NuovaRichiestaAllegato(HiddenIDCorso.Value, nomecaricato)
+                        txtNote.Text = ""
+                        Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                        tokenx = arrKeywords(1)
+                        id_att = arrKeywords(0)
+                        Try
+                            CaricaSuFM(tokenx, id_att, nomecaricato)
+                        Catch ex As Exception
 
+                            results.InnerHtml = "<b>Documento non caricato: </b><br/>"
+                            results.Attributes.Add("style", stileavviso)
+                        End Try
 
+                    Else
 
-                    If uploadedFiles.Text.Length = 0 Then
-
-                        'If QuantiAllegati(HiddenIDCorso.Value) = "no" Then
-                        '    Button1.Enabled = False
-                        '    uploadedFiles.Text = ""
-
-                        '    uploadedFiles.Text = "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>non è possibile caricare ulteriori documenti </b>"
-                        'Else
-
-                        '    uploadedFiles.Text += "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>è possibile caricare ulteriori documenti </b>"
-                        'End If
-
-
-
+                        results.InnerHtml = "<b>Carica il documento </b><br/>"
+                        results.Attributes.Add("style", stileavviso)
 
                     End If
 
-                    '        file.SaveAs(MapPath(whereToSave + Path.GetFileName(file.FileName)))
-
-                    'If uploadedFiles.Text.Length = 0 Then
-                    '    '        uploadedFiles.Text += "<b>File loaded:</b><table border=0 cellspacing=0>"
-
-                    'Else
-
-                    'End If
-
-                    'uploadedFiles.Text += "<tr>"
-                    'uploadedFiles.Text += "<td class='option2'>" + Path.GetFileName(file.FileName) + "</td>"
-                    'uploadedFiles.Text += "<td style='font:11px Verdana;'>&nbsp;&nbsp;" + file.ContentLength.ToString() + " bytes </td>"
-                    'uploadedFiles.Text += "<td class='option2'>&nbsp;&nbsp;(" + file.ContentType + ")</td>"
-                    'uploadedFiles.Text += "<td style='font:11px Verdana;'>&nbsp;&nbsp;<b>a</b>: " + whereToSave + "</td>"
-                    'uploadedFiles.Text += "</tr>"
+                End If
 
 
 
-                Next
-
-                Dim tokenx As String = ""
-                Dim id_att As String = ""
-                Dim tuttoRitorno As String = ""
-
-                tuttoRitorno = NuovaRichiestaAllegato(HiddenIDCorso.Value, nomecaricato)
-                txtNote.Text = ""
-                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-                tokenx = arrKeywords(1)
-                id_att = arrKeywords(0)
-                CaricaSuFM(tokenx, id_att, nomecaricato)
-
-                '   deleteFile(nomecaricato)
 
             End If
 
-        End If
-        'Else
-        'End If
+
+
+            End If
+
+
+
+
+
+
+
+
+
+
+
     End Sub
     Private Function deleteFile(nomecaricato As String) As Boolean
         Dim FileToDelete As String
@@ -478,6 +490,13 @@ Public Class upLegCorsi
     End Function
 
     Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
+
+        If Session("pagNo") = "no" Then
+            Session("AnnullaREqui") = "pagamentoCorsiNo"
+        Else
+            Session("AnnullaREqui") = "pagamentoCorsi"
+        End If
+
         Response.Redirect("dashboardB.aspx#" & codR)
     End Sub
 

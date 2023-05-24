@@ -27,26 +27,26 @@ Public Class AsiMasterPageAlbo
             End If
 
             If quantiCorsiAttivi >= 1 Then
-                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light""> " & quantiCorsiAttivi & cisonocorsiRespinti & "</span>"
+                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light text-dark""> " & quantiCorsiAttivi & cisonocorsiRespinti & "</span>"
             Else
-                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light"">0" & cisonocorsiRespinti & "</span>"
+                lnkAttivi.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Attivi <span class=""badge badge-light text-dark"">0" & cisonocorsiRespinti & "</span>"
 
             End If
 
             If quantiCorsiEvasi >= 1 Then
-                LinkArchivio.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Evasi <span class=""badge badge-light""> " & quantiCorsiEvasi & "</span>"
+                LinkArchivio.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Evasi <span class=""badge badge-light text-dark""> " & quantiCorsiEvasi & "</span>"
             Else
-                LinkArchivio.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Evasi <span class=""badge badge-light"">0</span>"
+                LinkArchivio.Text = "<i class=""bi bi-arrow-up-circle""> </i>Corsi Evasi <span class=""badge badge-light text-dark"">0</span>"
 
             End If
 
 
             If quantiVal >= 1 Then
                 LinkSettore.Visible = True
-                LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Corsi da Valutare <span class=""badge badge-light""> " & quantiVal & "</span>"
+                LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Corsi da Valutare <span class=""badge badge-light text-dark""> " & quantiVal & "</span>"
             Else
 
-                LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Corsi da Valutare <span class=""badge badge-light"">0</span>"
+                LinkSettore.Text = "<i class=""bi bi-arrows-angle-contract""> </i>Corsi da Valutare <span class=""badge badge-light text-dark"">0</span>"
 
                 LinkSettore.Visible = False
             End If
@@ -54,7 +54,7 @@ Public Class AsiMasterPageAlbo
 
 
             If quantiValutati >= 1 Then
-                LinkSettoreValutati.Text = "<i class=""bi bi-arrows-angle-expand""> </i>Corsi Valutati <span class=""badge badge-light""> " & quantiValutati & "</span>"
+                LinkSettoreValutati.Text = "<i class=""bi bi-arrows-angle-expand""> </i>Corsi Valutati <span class=""badge badge-light text-dark""> " & quantiValutati & "</span>"
 
                 LinkSettoreValutati.Visible = True
             Else

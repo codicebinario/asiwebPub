@@ -44,6 +44,8 @@ Public Class upLegEquiparazioni2
     Dim CodiceEnteRichiedente As String = ""
     Dim codicefiscale As String = ""
     Dim s As String
+    Dim stileavviso As String = "width: 100%; margin-top: 4px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
@@ -66,17 +68,7 @@ Public Class upLegEquiparazioni2
             Response.Redirect("../login.aspx")
         End If
         s = Request.QueryString("s")
-        'Dim record_ID As String = ""
-        'record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        'If Not String.IsNullOrEmpty(record_ID) Then
 
-        '    Session("id_record") = record_ID
-
-        'End If
-
-        'If IsNothing(Session("id_record")) Then
-        '    Response.Redirect("../login.aspx")
-        'End If
 
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
         If Not String.IsNullOrEmpty(codR) Then
@@ -84,50 +76,63 @@ Public Class upLegEquiparazioni2
 
         End If
 
-        'If Not String.IsNullOrEmpty(codR) Then
 
-
-        '    Session("IDEquiparazione") = codR
-        '    Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
-
-        '    DettaglioEquiparazione = Equiparazione.PrendiValoriNuovaEquiparazione2(Session("IDEquiparazione"))
-        '    Dim IDEquiparazione As String = DettaglioEquiparazione.IDEquiparazione
-        '    Dim CodiceEnteRichiedente As String = DettaglioEquiparazione.CodiceEnteRichiedente
-        '    Dim DescrizioneEnteRichiedente As String = DettaglioEquiparazione.DescrizioneEnteRichiedente
-        '    Dim TipoEnte As String = DettaglioEquiparazione.TipoEnte
-        '    Dim CodiceStatus As String = DettaglioEquiparazione.CodiceStatus
-        '    '    Session("codiceStatus") = DettaglioCorso.CodiceStatus
-        '    Dim DescrizioneStatus As String = DettaglioEquiparazione.DescrizioneStatus
-        '    'Dim indirizzoSvolgimento As String = DettaglioCorso.IndirizzoSvolgimento & " - " & DettaglioCorso.LocalitaSvolgimento _
-        '    '     & DettaglioCorso.CapSvolgimento & " - " & DettaglioCorso.PRSvolgimento & " - " & DettaglioCorso.RegioneSvolgimento
-        '    Dim nominativo As String = DettaglioEquiparazione.Nome & " " & DettaglioEquiparazione.Cognome
-        '    Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
-        '    Dim codiceTessera As String = DettaglioEquiparazione.CodiceTessera
-        '    Dim dataScadenza As String = DettaglioEquiparazione.DataScadenza
-        '    Dim pagamento As Decimal = DettaglioEquiparazione.PagamentoTotale
-        '    idEqui = DettaglioEquiparazione.IDEquiparazione
-        '    HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
         HiddenIdRecord.Value = Session("codR")
 
-        '    lblIntestazioneEquiparazioni.Text = "<strong>ID Equiparazione: </strong>" & IDEquiparazione & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente & "<br />" &
-        '         "<strong>Nominativo: </strong>" & nominativo & "<br />" &
-        '         "<strong>Codice Fiscale: </strong>" & codiceFiscale & " <strongTessera ASI: </strong>" & codiceTessera &
-        '         " <strong>Data Scadenza: </strong>" & dataScadenza & " <strong>Pagamento: </strong>" & pagamento & "€"
-
-        'End If
 
 
 
 
-        If QuantiAllegati(Session("codR")) = "no" Then
 
-            Button1.Enabled = False
+        If QuantiAllegati(codR) = "no" Then
+
+            'lnkButton1.Enabled = False
             uploadedFiles.Text = ""
 
-            uploadedFiles.Text = "<b>non è possibile caricare ulteriori documenti </b>"
+
+                results.InnerHtml = "<b>non è possibile caricare ulteriori documenti </b>"
+                results.Attributes.Add("style", stileavviso)
+            Else
+
+            results.InnerHtml = "<b>E' possibile caricare fino a 3 documenti </b>"
+            results.Attributes.Add("style", stileavviso)
 
         End If
 
+
+
+
+
+    End Sub
+    Protected Sub cvCaricaDiploma_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If FileUpload1.PostedFile.ContentLength > 0 Then
+
+
+            args.IsValid = True
+        Else
+            results.InnerHtml = "carica la documentazione<br>"
+            results.Attributes.Add("style", stileavviso)
+
+            args.IsValid = False
+        End If
+    End Sub
+
+    Protected Sub cvTipoFile_ServerValidate(source As Object, args As ServerValidateEventArgs)
+
+        Dim fileExtensions As String() = {".pdf", ".PDF", ".jpg", ".JPG", ".jpeg", ".JPEG", ".PNG", ".png"}
+        Dim pippo As String = FileUpload1.PostedFile.ContentType
+        For i As Integer = 0 To fileExtensions.Length - 1
+            If FileUpload1.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                args.IsValid = True
+
+                Exit For
+            Else
+                args.IsValid = False
+
+                results.InnerHtml = "il file deve essere in formato pdf, jpg oppure png<br>"
+                results.Attributes.Add("style", stileavviso)
+            End If
+        Next
 
 
     End Sub
@@ -248,13 +253,16 @@ Public Class upLegEquiparazioni2
 
 
         If QuantiAllegati2(Session("codR")) = "no" Then
-            Button1.Enabled = False
-            uploadedFiles.Text = ""
+            'lnkButton1.Enabled = False
+            results.InnerHtml = ""
 
-            uploadedFiles.Text = "<b>File caricato con successo: </b><br/><b>non è possibile caricare ulteriori documenti </b>"
+            results.InnerHtml = "<b>Documento caricato con successo: non è possibile caricare ulteriori documenti </b>"
+            results.Attributes.Add("style", stileavviso)
+
         Else
 
-            uploadedFiles.Text += "<b>File caricato con successo: </b><br/><b>è possibile caricare ulteriori documenti </b>"
+            results.InnerHtml = "<b>Documento caricato con successo: è possibile caricare ulteriori documenti </b>"
+            results.Attributes.Add("style", stileavviso)
         End If
 
 
@@ -381,113 +389,72 @@ Public Class upLegEquiparazioni2
 
     End Function
 
-    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+    Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
+        If Page.IsValid Then
+
+            Dim whereToSave As String = "../file_storage_equiPag/"
+            Dim fileUpload As HttpPostedFile = FileUpload1.PostedFile
+
+            If QuantiAllegati2(Session("codR")) = "no" Then
+
+                lnkButton1.Enabled = False
 
 
-        If QuantiAllegati2(Session("codR")) = "no" Then
+                results.InnerHtml = "<b>non è possibile caricare ulteriori documenti </b><br/>"
+                results.Attributes.Add("style", stileavviso)
 
-            Button1.Enabled = False
-            uploadedFiles.Text = ""
+            Else
 
-            uploadedFiles.Text = "<b>non è possibile caricare ulteriori documenti </b>"
-
-
-        Else
+                If Not FileUpload1.PostedFile Is Nothing And FileUpload1.PostedFile.ContentLength > 0 Then
 
 
+                    If FileUpload1.PostedFile.ContentLength > MassimoPeso Then
+                        results.InnerHtml = "Il file è troppo grande. Massimo 3 mb<br>"
+                        results.Attributes.Add("style", stileavviso)
+                    ElseIf FileUpload1.PostedFile.ContentLength <= MassimoPeso Then
 
+                        tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                        ext = Path.GetExtension((fileUpload.FileName))
+                        nomefileReale = Path.GetFileName(fileUpload.FileName)
+                        nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+                        fileUpload.SaveAs(MapPath(whereToSave + nomecaricato))
+                        uploadedFiles.Text = ""
 
-            If uploadProgress.Files.Count > 0 Then
+                        results.InnerHtml = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
+                        results.Attributes.Add("style", stileavviso)
 
+                        Dim tokenx As String = ""
+                        Dim id_att As String = ""
+                        Dim tuttoRitorno As String = ""
 
+                        tuttoRitorno = NuovaRichiestaAllegato(Session("codR"), nomecaricato)
+                        txtNote.Text = ""
+                        Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                        tokenx = arrKeywords(1)
+                        id_att = arrKeywords(0)
+                        Try
+                            CaricaSuFM(tokenx, id_att, nomecaricato)
+                        Catch ex As Exception
+                            results.InnerHtml = "<b>Documento non caricato: </b><br/>"
+                            results.Attributes.Add("style", stileavviso)
+                        End Try
 
-
-
-                '****************************************************
-                Dim files As OboutFileCollection = uploadProgress.Files
-                Dim i As Integer
-
-                uploadedFiles.Text = ""
-
-                For i = 0 To files.Count - 1 Step 1
-                    Dim file As OboutPostedFile = files(i)
-
-
-
-                    Dim whereToSave As String = "../file_storage_equiPag/"
-
-                    tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                    ext = Path.GetExtension((file.FileName))
-                    nomefileReale = Path.GetFileName(file.FileName)
-                    nomecaricato = Session("codR") & "_" + tokenZ + ext
-
-
-
-
-
-                    '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
-
-                    file.SaveAs(MapPath(whereToSave + nomecaricato))
-
-
-
-
-                    If uploadedFiles.Text.Length = 0 Then
-
-                        'If QuantiAllegati(HiddenIDCorso.Value) = "no" Then
-                        '    Button1.Enabled = False
-                        '    uploadedFiles.Text = ""
-
-                        '    uploadedFiles.Text = "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>non è possibile caricare ulteriori documenti </b>"
-                        'Else
-
-                        '    uploadedFiles.Text += "<b>File caricato con successo: " & nomecaricato & "</b><br/><b>è possibile caricare ulteriori documenti </b>"
-                        'End If
-
-
-
+                    Else
+                        results.InnerHtml = "<b>Carica il documento </b><br/>"
+                        results.Attributes.Add("style", stileavviso)
 
                     End If
 
-                    '        file.SaveAs(MapPath(whereToSave + Path.GetFileName(file.FileName)))
 
-                    'If uploadedFiles.Text.Length = 0 Then
-                    '    '        uploadedFiles.Text += "<b>File loaded:</b><table border=0 cellspacing=0>"
-
-                    'Else
-
-                    'End If
-
-                    'uploadedFiles.Text += "<tr>"
-                    'uploadedFiles.Text += "<td class='option2'>" + Path.GetFileName(file.FileName) + "</td>"
-                    'uploadedFiles.Text += "<td style='font:11px Verdana;'>&nbsp;&nbsp;" + file.ContentLength.ToString() + " bytes </td>"
-                    'uploadedFiles.Text += "<td class='option2'>&nbsp;&nbsp;(" + file.ContentType + ")</td>"
-                    'uploadedFiles.Text += "<td style='font:11px Verdana;'>&nbsp;&nbsp;<b>a</b>: " + whereToSave + "</td>"
-                    'uploadedFiles.Text += "</tr>"
-
-
-
-                Next
-
-                Dim tokenx As String = ""
-                Dim id_att As String = ""
-                Dim tuttoRitorno As String = ""
-
-                tuttoRitorno = NuovaRichiestaAllegato(Session("codR"), nomecaricato)
-                txtNote.Text = ""
-                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-                tokenx = arrKeywords(1)
-                id_att = arrKeywords(0)
-                CaricaSuFM(tokenx, id_att, nomecaricato)
-
-
-
+                End If
             End If
-
         End If
-        'Else
-        'End If
+
+
     End Sub
+
+
     Private Function deleteFile(nomecaricato As String) As Boolean
         Dim FileToDelete As String
         Dim ritorno As Boolean = False
@@ -527,6 +494,7 @@ Public Class upLegEquiparazioni2
     End Function
 
     Protected Sub lnkDashboard_Click(sender As Object, e As EventArgs) Handles lnkDashboard.Click
+        Session("AnnullaREqui") = "pagamentoEqui"
         Response.Redirect("dashboardEqui2.aspx?open=" & Session("codR"))
     End Sub
 End Class

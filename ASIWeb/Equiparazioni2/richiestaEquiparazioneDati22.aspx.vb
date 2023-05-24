@@ -281,6 +281,7 @@ Public Class richiestaEquiparazioneDati22
 
         Request.AddField("Equi_Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
         Request.AddField("Equi_Livello", ddlLivello.SelectedItem.Text)
+        Request.AddField("Equi_Fase", "2")
         If chkDaFederazione.Checked = True Then
             Request.AddField("Equi_DaFederazione", "si")
         End If
@@ -289,8 +290,6 @@ Public Class richiestaEquiparazioneDati22
         Session("visto") = "ok"
 
 
-        ' Request.AddField("Equi_Fase", "4")
-        'ìRequest.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
         '   Try
         risposta = Request.Execute()
@@ -299,22 +298,12 @@ Public Class richiestaEquiparazioneDati22
 
         AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "101", Session("WebUserEnte"), "equiparazione")
 
-        'Dim fmsPP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        ''  Dim ds As DataSet
-        'Dim rispostaP As String = ""
-        'fmsPP.SetLayout("webEquiparazioniMaster")
-        'Dim RequestPP = fmsPP.CreateEditRequest(IDEquiparazione)
 
 
 
-        'RequestPP.AddField("CodiceStatus", 101)
 
 
-
-        ''   Try
-        'risposta = RequestPP.Execute()
-
-
+        Session("AnnullaREqui") = "newEqui"
         Response.Redirect("dashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ok") & "&open=" & codR)
         'Catch ex As Exception
 

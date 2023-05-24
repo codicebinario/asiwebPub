@@ -59,6 +59,15 @@ Partial Public Class richiestaEquiparazione2
     Protected WithEvents chkSaltaDiploma As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''resultsSalta control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents resultsSalta As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''pnlFase1 control.
     '''</summary>
     '''<remarks>
@@ -77,6 +86,15 @@ Partial Public Class richiestaEquiparazione2
     Protected WithEvents txtNote As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''FileUpload1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
     '''lnkButton1 control.
     '''</summary>
     '''<remarks>
@@ -86,13 +104,31 @@ Partial Public Class richiestaEquiparazione2
     Protected WithEvents lnkButton1 As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''uploadProgress control.
+    '''cvCaricaDiploma control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents uploadProgress As Global.OboutInc.FileUpload.FileUploadProgress
+    Protected WithEvents cvCaricaDiploma As Global.System.Web.UI.WebControls.CustomValidator
+
+    '''<summary>
+    '''cvTipoFile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cvTipoFile As Global.System.Web.UI.WebControls.CustomValidator
+
+    '''<summary>
+    '''results control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''uploadedFiles control.

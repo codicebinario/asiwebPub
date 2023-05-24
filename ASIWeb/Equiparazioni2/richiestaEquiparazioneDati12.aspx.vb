@@ -85,14 +85,7 @@ Public Class richiestaEquiparazioneDati12
         Calendar1.DateMax = dataFine
 
 
-        'If IsNothing(Session("codiceFiscale")) Then
-        '    Response.Redirect("../login.aspx")
-        'End If
-        'If Session("procedi") <> "OK" Then
 
-        '    Response.Redirect("checkTesseramento.aspx")
-
-        'End If
 
         '  Dim newCulture As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CurrentUICulture.Clone()
         cultureFormat.NumberFormat.CurrencySymbol = "€"
@@ -101,9 +94,6 @@ Public Class richiestaEquiparazioneDati12
         cultureFormat.NumberFormat.CurrencyDecimalSeparator = ","
         System.Threading.Thread.CurrentThread.CurrentCulture = cultureFormat
         System.Threading.Thread.CurrentThread.CurrentUICulture = cultureFormat
-
-        'pag = Request.QueryString("pag")
-        'skip = Request.QueryString("skip")
 
 
 
@@ -243,39 +233,7 @@ Public Class richiestaEquiparazioneDati12
 
     End Sub
 
-    'Protected Sub ddlProvinciaConsegna_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlProvinciaConsegna.SelectedIndexChanged
-    '    Dim selezionato As String = ddlProvinciaConsegna.SelectedItem.Value
-    '    Dim ds2 As DataSet
 
-    '    Dim fmsP1 As FMSAxml = AsiModel.Conn.Connect()
-    '    fmsP1.SetLayout("webComuniItaliani")
-    '    Dim RequestP2 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
-    '    RequestP2.AddSearchField("sigla", selezionato, Enumerations.SearchOption.equals)
-    '    RequestP2.AddSortField("descrizioneComune", Enumerations.Sort.Ascend)
-
-    '    ds2 = RequestP2.Execute()
-
-    '    If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
-
-    '        'For Each dr In ds.Tables("main").Rows
-
-    '        '    Response.Write("Sport: " & dr("Sport") & " - Disciplina: " & dr("Disciplina") & " - Specialità: " & dr("Specialita") & "<br />")
-
-
-    '        Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
-
-    '        ddlComuneConsegna.DataSource = comuni
-
-    '        ddlComuneConsegna.DataTextField = "descrizioneComune"
-    '        ddlComuneConsegna.DataValueField = "descrizioneComune"
-
-    '        ddlComuneConsegna.DataBind()
-
-    '        ddlComuneConsegna.Items.Insert(0, New ListItem("##", "##"))
-    '        ' ddlProvincia.Items.Clear()
-
-    '    End If
-    'End Sub
 
     Protected Sub ddlProvinciaResidenza_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlProvinciaResidenza.SelectedIndexChanged
         Dim selezionato As String = ddlProvinciaResidenza.SelectedItem.Value
@@ -311,16 +269,7 @@ Public Class richiestaEquiparazioneDati12
         End If
     End Sub
 
-    'Protected Sub btnFase3_Click(sender As Object, e As EventArgs) Handles btnFase3.Click
-    '    If Page.IsValid Then
 
-    '        CaricaDatiDocumentoCorso(Session("IDEquiparazione"), Session("id_record"))
-
-    '        Session("fase") = "3"
-    '        Response.Redirect("richiestaEquiparazioneDati2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&fase=" & deEnco.QueryStringEncode(3))
-
-    '    End If
-    'End Sub
 
     Public Function CaricaDatiDocumentoCorso(codR As String, IDEquiparazione As String) As Boolean
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
@@ -450,10 +399,10 @@ Public Class richiestaEquiparazioneDati12
 
 
             txtIndirizzoConsegna.Text = txtIndirizzoResidenza.Text
-            If ddlProvinciaResidenza.SelectedIndex > 1 Then
+            If ddlProvinciaResidenza.SelectedIndex > 0 Then
                 txtProvinciaConsegna.Text = ddlProvinciaResidenza.SelectedItem.Text
             End If
-            If ddlComuneResidenza.SelectedIndex > 1 Then
+            If ddlComuneResidenza.SelectedIndex > 0 Then
                 txtComuneConsegna.Text = ddlComuneResidenza.SelectedItem.Text
 
             End If

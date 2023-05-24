@@ -50,6 +50,24 @@ Partial Public Class duplica
     Protected WithEvents lblnomef As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''UpdatePanel2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UpdatePanel2 As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
+    '''pnlDataEmissione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlDataEmissione As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''txtDataEmissione control.
     '''</summary>
     '''<remarks>
@@ -75,6 +93,15 @@ Partial Public Class duplica
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents MaskedEditExtender2 As Global.AjaxControlToolkit.MaskedEditExtender
+
+    '''<summary>
+    '''RequiredFieldValidator5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator5 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
     '''CustomValidator1 control.

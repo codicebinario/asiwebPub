@@ -32,11 +32,17 @@ Public Class CancellaRiga
 
             Catch ex As Exception
             End Try
-            Session("visto") = "ok"
-            Response.Redirect("DashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("casi"))
+            'Session("visto") = "ok"
+            Session("AnnullaREqui") = "annullataRin"
+            ' Response.Redirect("DashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("casi"))
+            Response.Redirect("DashboardRinnovi2.aspx?open=" & codiceRinnovoM)
+
         Else
-            Session("visto") = "ok"
-            Response.Redirect("dashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("cano"))
+            'Session("visto") = "ok"
+            Session("AnnullaREqui") = "annullataRinKO"
+            Response.Redirect("dashboardRinnovi2.aspx?open=" & codiceRinnovoM)
+
+            '   Response.Redirect("dashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("cano"))
 
         End If
 

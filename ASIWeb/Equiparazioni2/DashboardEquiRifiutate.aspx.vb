@@ -136,14 +136,15 @@ Public Class DashboardRifiutate
             Dim rompiStatus As Integer
             Dim cambiato As String
             Dim counter1 As Integer = 0
+            Dim motivo As String = ""
 
-                    For Each dr1 In ds1.Tables("main").Rows
+            For Each dr1 In ds1.Tables("main").Rows
                 If rompiStatus = Data.FixNull(dr1("IDEquiparazioneM")) Then
                     cambiato = ""
                 Else
                     cambiato = "ok"
                 End If
-
+                motivo = Equiparazione.GetMotivoRespintoEqui(Data.FixNull(dr1("IDEquiparazioneM")))
                 counter1 += 1
 
 
@@ -182,7 +183,7 @@ Public Class DashboardRifiutate
 
 
                     phDash.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
-                    phDash.Controls.Add(New LiteralControl("<span>Richiesta " & Data.FixNull(dr1("IDEquiparazioneM")) & "</span>"))
+                    phDash.Controls.Add(New LiteralControl("<span>Richiesta: " & Data.FixNull(dr1("IDEquiparazioneM")) & " - Motivo: " & motivo & "</span>"))
                     phDash.Controls.Add(New LiteralControl("</div>"))
                 End If
 
@@ -434,7 +435,7 @@ Public Class DashboardRifiutate
 
             RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
             RequestP.AddSearchField("Codice_Status", "104")
-
+            RequestP.AddSortField("IDEquiparazioneM", Enumerations.Sort.Descend)
 
 
 
@@ -451,7 +452,16 @@ Public Class DashboardRifiutate
                     Dim tessera As String
                     Dim nominativo As String
                     Dim diploma As String
+                    Dim motivo As String
+                    Dim rompiStatus As Integer
+                    Dim cambiato As String
                     For Each dr In ds.Tables("main").Rows
+                        If rompiStatus = Data.FixNull(dr("IDEquiparazioneM")) Then
+                            cambiato = ""
+                        Else
+                            cambiato = "ok"
+                        End If
+                        motivo = Equiparazione.GetMotivoRespintoEqui(Data.FixNull(dr("IDEquiparazioneM")))
                         If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaAsiText"))) Then
                             diploma = "..\img\noPdf.jpg"
                         Else
@@ -472,22 +482,7 @@ Public Class DashboardRifiutate
                         VediDocumentazione.PostBackUrl = "vediDocumentazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
                         VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
                         VediDocumentazione.Visible = False
-                        '  Annulla.OnClientClick = "return confirm(""ciappa"");"
-                        'VediDocumentazione.Attributes.Add("OnClick", "if(!myConfirm())return false;")
-                        '   StopFoto.Attributes.Add("OnClick", "if(!alertify.confirm)return false;")
 
-
-
-                        ' If Data.FixNull(dr("Codice_Status")) = "115" Then
-                        ' VediDocumentazione.Visible = True
-                        '  Else
-                        ' VediDocumentazione.Visible = False
-                        'end if
-
-
-
-                        '     If Data.FixNull(dr("Codice_Status")) = "115" Or Data.FixNull(dr("Codice_Status")) = "119" Then
-                        'If counter1 <= 10 Then
 
 
 
@@ -495,9 +490,13 @@ Public Class DashboardRifiutate
 
 
                         phDash10.Visible = True
+                        If cambiato = "ok" Then
 
 
-
+                            phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
+                            phDash10.Controls.Add(New LiteralControl("<span>Richiesta: " & Data.FixNull(dr("IDEquiparazioneM")) & " - Motivo: " & motivo & "</span>"))
+                            phDash10.Controls.Add(New LiteralControl("</div>"))
+                        End If
                         phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0 text-white"">"))
 
 
@@ -668,7 +667,7 @@ Public Class DashboardRifiutate
                         phDash10.Controls.Add(New LiteralControl("</div>"))
                         phDash10.Controls.Add(New LiteralControl("</div>"))
 
-
+                        rompiStatus = Data.FixNull(dr("IDEquiparazioneM"))
                         ' End If
 
                     Next

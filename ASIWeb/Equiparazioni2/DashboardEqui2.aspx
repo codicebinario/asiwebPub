@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="../css/themes/default.min.css" />
     <script type="text/javascript" src="../Scripts/alertify.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
            .accordion-button{
@@ -54,9 +55,10 @@
         function myConfirm() {
 
             let text = "Andando avanti non si potranno più caricare \n foto di questo corso?";
+        
             if (confirm(text) == true) {
-                return true;
-                //  text = "You pressed OK!";
+             
+                  return true;//  text = "You pressed OK!";
             } else {
                 return false;
                 //    text = "You canceled!";
@@ -78,7 +80,7 @@
 
         //alertify.confirm('Confirm Title', 'Confirm Message', function () { alertify.success('Ok') }
         //    , function () { alertify.error('Cancel') });
-      
+
 
         </script>
   
@@ -143,6 +145,7 @@
          
     <div class="row">
         <div class="col-sm-12 mb-3 mb-md-0">
+         
             <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
                 <div class="container">
                     <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Equiparazioni Attive (info)
@@ -157,7 +160,9 @@
     </div>
 
  <div class="row d-flex justify-content-center">
-   
+
+
+    
 
      <asp:PlaceHolder ID="phDash" runat="server" Visible="false"></asp:PlaceHolder>
 
@@ -174,8 +179,25 @@
 
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
+ 
     <script>
+        function showToast(value) {
+            toastr.options = {
+                closeButton: true,
+                positionClass: 'toast-top-right',
+                timeOut: 5000,
+             
+                showDuration: 1000
+            };
+
+            if (value == "tesserino")
+                toastr.success('Tesserino tecnico in download', 'ASI');
+            if (value == "diploma")
+                toastr.success('Diploma in download', 'ASI');
+            if (value == "zip")
+                toastr.success('Tessere (file zip) in download', 'ASI');
+        }
+
         if (location.hash !== null && location.hash !== "") {
             //alert("ciao");
             //alert(location.hash);

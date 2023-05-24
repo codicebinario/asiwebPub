@@ -112,7 +112,13 @@ Public Class corsistiDoc
         Dim codR As String = ""
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
         If Not String.IsNullOrEmpty(codR) Then
+            Dim nominativo As String = ""
 
+            Dim esisteZip As Boolean = False
+            Dim fileZip As String = ""
+            Dim nomeZip As String = ""
+            Dim idrecordMaster As Integer = 0
+            Dim ArrayZip As Array = Nothing
 
             Session("IDCorso") = codR
             Dim DettaglioCorso As New DatiNuovoCorso
@@ -128,6 +134,27 @@ Public Class corsistiDoc
             HiddenIdRecord.Value = DettaglioCorso.IdRecord
             HiddenIDCorso.Value = DettaglioCorso.IDCorso
             lblIntestazioneCorso.Text = "<strong>ID Corso: </strong>" & IDCorso & " - " & TitoloCorso & "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+            esisteZip = AsiModel.Corso.EsisteZipCorsi(Data.FixNull(Session("IDCorso")))
+            If esisteZip Then
+                nomeZip = AsiModel.Corso.NomeZipCorsi(Data.FixNull(Session("IDCorso")))
+                ArrayZip = nomeZip.Split(".")
+                idrecordMaster = DettaglioCorso.IdRecord
+                ' idrecordMaster = AsiModel.Corso.GetIdRecordCorsi(Data.FixNull(Session("IDCorso")))
+            End If
+
+
+            If esisteZip Then
+                idMassivo.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-customZip mb-2 ml-2"" onclick=""showToast('zip');"" target=""_blank"" href='scaricaZipCorsi.aspx?codR=" _
+                 & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(idrecordMaster) & "&nomeFilePC=" _
+                 & deEnco.QueryStringEncode(ArrayZip(0)) & "'><i class=""bi bi-person-badge""> </i>" & "Richiesta " & Data.FixNull(Session("IDCorso")) & " - Scarica tutte le tessere e Diplomi</a>"))
+            Else
+                idMassivo.Controls.Add(New LiteralControl("Richiesta " & Data.FixNull(Session("IDCorso"))))
+
+            End If
+
+
+
+
         End If
 
         If Not Page.IsPostBack Then
@@ -175,6 +202,7 @@ Public Class corsistiDoc
         Dim quantePagine As Decimal = 0
         Dim pagina As Integer = 0
         Dim codiceIscrizione As String = ""
+
         fmsP.SetLayout("webCorsisti")
 
         Dim RequestPTot = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
@@ -282,7 +310,7 @@ Public Class corsistiDoc
                     plTabellaCorsisti.Controls.Add(New LiteralControl("<td>"))
                     '   plTabellaCorsisti.Controls.Add(ScaricaTessera)
 
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaTessera.aspx?play=" & deEnco.QueryStringEncode(codiceIscrizione) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "'>Tess.Tecnico</a>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" onclick=""showToast('tesserino');"" target=""_blank"" href='scaricaTessera.aspx?play=" & deEnco.QueryStringEncode(codiceIscrizione) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "'>Tess.Tecnico</a>"))
                     plTabellaCorsisti.Controls.Add(New LiteralControl("</td>"))
                     'Dim myImage As Image = FotoS(foto)
                     'Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
@@ -299,7 +327,7 @@ Public Class corsistiDoc
                 Else
                     plTabellaCorsisti.Controls.Add(New LiteralControl("<td>"))
                     'plTabellaCorsisti.Controls.Add(ScaricaDiploma)
-                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaDiploma.aspx?play=" & deEnco.QueryStringEncode(codiceIscrizione) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaNomeFile"))) & "'>Diploma</a>"))
+                    plTabellaCorsisti.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiploma.aspx?play=" & deEnco.QueryStringEncode(codiceIscrizione) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso"))) & "&record_ID=" & deEnco.QueryStringEncode(recordId) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaNomeFile"))) & "'>Diploma</a>"))
 
                     plTabellaCorsisti.Controls.Add(New LiteralControl("</td>"))
                     'Dim myImage As Image = FotoS(foto)

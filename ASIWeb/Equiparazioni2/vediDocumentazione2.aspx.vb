@@ -230,7 +230,7 @@ Public Class vediDocumentazione2
                 Else
                     plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>"))
 
-                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" target=""_blank"" href='scaricaDiplomaEqui2.aspx?nominativo=" & deEnco.QueryStringEncode(cognome & "_" & nome) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDrecord"))) & "&record_ID=" & deEnco.QueryStringEncode(recordid) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileFotoFS"))) & "'>Diploma</a>"))
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiplomaEqui2.aspx?nominativo=" & deEnco.QueryStringEncode(cognome & "_" & nome) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDrecord"))) & "&record_ID=" & deEnco.QueryStringEncode(recordid) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileFotoFS"))) & "'>Diploma</a>"))
 
                     plTabellaEquiparazione.Controls.Add(New LiteralControl("</td>"))
 
@@ -260,7 +260,8 @@ Public Class vediDocumentazione2
 
     End Function
 
-    'Protected Sub lnkTorna_Click(sender As Object, e As EventArgs) Handles lnkTorna.Click
-    '    Response.Redirect("dashboardEqui2.aspx?open=" & codR)
-    'End Sub
+    Protected Sub lnkTorna_Click(sender As Object, e As EventArgs) Handles lnkTorna.Click
+        Session("AnnullaREqui") = Nothing
+        Response.Redirect("dashboardEqui2.aspx?open=" & codR)
+    End Sub
 End Class

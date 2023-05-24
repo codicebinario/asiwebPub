@@ -31,7 +31,7 @@ Public Class annullaRichiestaR
 
         End If
 
-
+        Session("AnnullaREqui") = "toa"
 
         Response.Redirect("dashboardRinnovi2.aspx")
     End Sub

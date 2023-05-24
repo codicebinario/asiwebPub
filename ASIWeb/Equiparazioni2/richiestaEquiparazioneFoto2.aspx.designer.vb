@@ -50,6 +50,15 @@ Partial Public Class richiestaEquiparazioneFoto2
     Protected WithEvents chkSalta As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''resultsSalta control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents resultsSalta As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''inputfile control.
     '''</summary>
     '''<remarks>

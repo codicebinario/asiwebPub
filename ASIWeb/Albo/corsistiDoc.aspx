@@ -1,6 +1,10 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageAlbo.Master" CodeBehind="corsistiDoc.aspx.vb" Inherits="ASIWeb.corsistiDoc" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <link rel="stylesheet" href="../css/alertify.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
  
@@ -18,7 +22,9 @@
 
     </script>
     <style>
-
+         .fs-5{
+               color:white;
+           }
         .photo-img:hover {
     transform:scale(2);
 
@@ -36,7 +42,7 @@
         
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Lista Partecipanti al Corso - Documenti</h3>
+    <h6 class="fs-5">Lista Partecipanti al Corso - Documenti</h6>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
        
@@ -54,6 +60,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
                                     <asp:Label ID="lblIntestazioneCorso" runat="server" Text=""></asp:Label>
+                                    <asp:PlaceHolder ID="idMassivo" runat="server"></asp:PlaceHolder>
                                     <asp:HiddenField ID="HiddenIdRecord" runat="server" />
                                       <asp:HiddenField ID="HiddenIDCorso" runat="server" />
 						           
@@ -96,5 +103,22 @@
 
      </ContentTemplate>
        </asp:UpdatePanel>
+    <script>
+        function showToast(value) {
+            toastr.options = {
+                closeButton: true,
+                positionClass: 'toast-top-right',
+                timeOut: 5000,
 
+                showDuration: 1000
+            };
+
+            if (value == "tesserino")
+                toastr.success('Tesserino tecnico in download', 'ASI');
+            if (value == "diploma")
+                toastr.success('Diploma in download', 'ASI');
+            if (value == "zip")
+                toastr.success('Tessere e Diplomi (file zip) in download', 'ASI');
+        }
+    </script>
 </asp:Content>

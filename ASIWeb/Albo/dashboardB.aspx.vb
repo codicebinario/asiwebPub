@@ -23,9 +23,64 @@ Public Class dashboardB
         Dim deEnco As New Ed()
         Dim annoCorrente As Integer = Now.Year
         Dim ris As String = Request.QueryString("ris")
-
+        Dim showScript As String = ""
+        Dim customizeScript As String = " 
+            toastr.options = {
+              'closeButton': true,
+              'debug': false,
+              'newestOnTop': false,
+              'progressBar': false,
+              'positionClass': 'toast-top-right',
+              'preventDuplicates': true,   
+              'onclick': null,
+              'timeOut': 5000,
+              'showDuration': 1000,
+              'hideDuration': 1000,
+              'extendedTimeOut': 1000,
+              'showEasing': 'swing',
+              'hideEasing': 'linear',
+              'showMethod': 'fadeIn',
+              'hideMethod': 'fadeOut'
+        };
+        "
         If Not Page.IsPostBack Then
+            If Not Session("AnnullaREqui") Is Nothing Then
+                Select Case Session("AnnullaREqui")
+                    Case "annullatoCorso"
+                        showScript = "toastr.success('Il corso è stato annullato', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "newCorso"
 
+                        showScript = "toastr.success('Nuovo corso aggiunto', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "NOnewCorso"
+                        showScript = "toastr.success('Corso non aggiunto', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "verbale"
+                        showScript = "toastr.success('Il verbale è stato caricato', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "pagamentoCorsiNo"
+                        showScript = "toastr.error('Non è stato possibile caricare ulteriori documenti di pagamento', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "annullataRinKO"
+                        showScript = "toastr.success('Il rinnovo non è stato eliminato', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "closeRin"
+                        showScript = "toastr.success('Richiesta terminata', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "fotoTesseraRin"
+                        showScript = "toastr.success('Foto tessera caricata', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "pagamentoCorsi"
+                        showScript = "toastr.success('Documento pagamento inviato', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                End Select
+
+                Page.ClientScript.RegisterStartupScript(Me.GetType(), "showSuccess", customizeScript & showScript, True)
+
+
+
+            End If
 
             If Not String.IsNullOrEmpty(ris) Then
                 If Session("visto") = "ok" Then

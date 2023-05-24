@@ -24,10 +24,46 @@ Public Class DashboardAlbo
 
 
         Dim ris As String = Request.QueryString("ris")
+        Dim showScript As String = ""
+        Dim customizeScript As String = " 
+            toastr.options = {
+              'closeButton': true,
+              'debug': false,
+              'newestOnTop': false,
+              'progressBar': false,
+              'positionClass': 'toast-top-right',
+              'preventDuplicates': true,   
+              'onclick': null,
+              'timeOut': 5000,
+              'showDuration': 1000,
+              'hideDuration': 1000,
+              'extendedTimeOut': 1000,
+              'showEasing': 'swing',
+              'hideEasing': 'linear',
+              'showMethod': 'fadeIn',
+              'hideMethod': 'fadeOut'
+        };
+        "
 
         If Not Page.IsPostBack Then
 
+            If Not Session("AnnullaREqui") Is Nothing Then
 
+
+                Select Case Session("AnnullaREqui")
+                    Case "OKTessereAttive"
+                        showScript = "toastr.success('Albo tessere attive scaricato', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+
+                    Case "KOTessereAttive"
+                        showScript = "toastr.error('Albo tessere attive vuoto', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                End Select
+
+
+
+                Page.ClientScript.RegisterStartupScript(Me.GetType(), "showSuccess", customizeScript & showScript, True)
+            End If
             If Not String.IsNullOrEmpty(ris) Then
                 ' If Session("visto") = "ok" Then
 
@@ -94,7 +130,7 @@ Public Class DashboardAlbo
             Response.Redirect("scaricaTessere.aspx?IDEnte=" & deEnco.QueryStringEncode(Session("codice")))
         Else
             lblAvviso.Visible = True
-
+            Session("AnnullaREqui") = "KOTessereAttive"
             lblAvviso.Text = "Non ci sono tessere attive"
 
         End If
@@ -478,9 +514,9 @@ Public Class DashboardAlbo
 
 
                     Else
-                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom "" target=""_blank"" href='scaricaTesseraAlbo.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom "" onclick=""showToast('tesserino');"" target=""_blank"" href='scaricaTesseraAlbo.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraNomeFile"))) & "&nominativo=" _
-                             & deEnco.QueryStringEncode(Data.FixNull(dr("Cognome")) & "_" & Data.FixNull(dr("Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("Cognome")) & "_" & Data.FixNull(dr("Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))
 
 
                     End If

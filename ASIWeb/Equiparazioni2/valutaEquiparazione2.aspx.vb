@@ -183,15 +183,17 @@ Public Class valutaEquiparazione2
 
 
             If valutazione = "S" Then
+                Session("AnnullaREqui") = "valSettoreS"
                 AsiModel.LogIn.LogCambioStatus(idEquiparazioneM, "106", Session("WebUserEnte"), "equiparazione", codR)
             ElseIf valutazione = "N" Then
+                Session("AnnullaREqui") = "valSettoreN"
                 AsiModel.LogIn.LogCambioStatus(idEquiparazioneM, "107", Session("WebUserEnte"), "equiparazione", codR)
 
             End If
 
-                Response.Redirect("archivioEquiValutati2.aspx#" & codR)
+            Response.Redirect("dashboardV2.aspx")
 
-            End If
+        End If
     End Sub
 
     Protected Sub lnkDashboardTorna_Click(sender As Object, e As EventArgs) Handles lnkDashboardTorna.Click

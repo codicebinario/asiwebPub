@@ -47,6 +47,7 @@ Public Class login
                 Session("EquiparazioneSaltaDiploma") = AsiModel.LogIn.EquiparazioneSaltaDiploma()
                 Session("idRecordLogin") = AsiModel.LogIn.IdRecord()
                 Session("EquiparazioneModificaDataEmissione") = AsiModel.LogIn.EquiparazioneModificaDataEmissione()
+                Session("RinnovoModificaDataEmissione") = AsiModel.LogIn.RinnovoModificaDataEmissione()
                 Session("CorsoModificaDataEmissione") = AsiModel.LogIn.CorsoModificaDataEmissione()
 
                 AsiModel.AnnullaRichiesteSenzaRighe(Session("codice"))

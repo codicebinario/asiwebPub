@@ -36,7 +36,7 @@ Public Class closeEquiparazione2
         AsiModel.Rinnovi.AggiornaStatusEquiparazioniMoltia102(codR)
 
 
-
+        Session("AnnullaREqui") = "closeEqui"
         Response.Redirect("DashBoardEqui2.aspx?open=" & codR)
     End Sub
 

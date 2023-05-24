@@ -116,7 +116,20 @@ Public Class DashboardEquiEvasi2
             Dim diploma As String
             Dim rompiStatus As Integer
             Dim cambiato As String
+            Dim esisteZip As Boolean
+            Dim fileZip As String
+            Dim nomeZip As String = ""
+            Dim idrecordMaster As Integer = 0
+            Dim ArrayZip As Array = Nothing
             For Each dr In ds.Tables("main").Rows
+
+                esisteZip = AsiModel.Equiparazioni.EsisteZipEquiparazioni(Data.FixNull(dr("IdEquiparazioneM")))
+                If esisteZip Then
+                    nomeZip = AsiModel.Equiparazioni.NomeZipRinnovi(Data.FixNull(dr("IdEquiparazioneM")))
+                    ArrayZip = nomeZip.Split(".")
+
+                    idrecordMaster = AsiModel.Equiparazioni.GetIdRecordEquiparazioni(Data.FixNull(dr("IdEquiparazioneM")))
+                End If
 
                 If rompiStatus = Data.FixNull(dr("IDEquiparazioneM")) Then
                     cambiato = ""
@@ -157,6 +170,25 @@ Public Class DashboardEquiEvasi2
 
                 phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
                 If cambiato = "ok" Then
+
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
+                    phDash10.Controls.Add(New LiteralControl("<span>"))
+
+
+                    If esisteZip Then
+                        phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-customZip mb-2"" onclick=""showToast('zip');"" target=""_blank"" href='scaricaZipEquiparazione.aspx?codR=" _
+                             & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))) & "&record_ID=" & deEnco.QueryStringEncode(idrecordMaster) & "&nomeFilePC=" _
+                             & deEnco.QueryStringEncode(ArrayZip(0)) & "'><i class=""bi bi-person-badge""> </i>" & "Richiesta " & Data.FixNull(dr("IDEquiparazioneM")) & " - Scarica tutte le tessere</a>"))
+                    Else
+                        phDash10.Controls.Add(New LiteralControl("Richiesta " & Data.FixNull(dr("IDEquiparazioneM"))))
+
+                    End If
+                    phDash10.Controls.Add(New LiteralControl("</span>"))
+
+
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+
+
 
 
                     phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
@@ -201,7 +233,7 @@ Public Class DashboardEquiEvasi2
 
 
                 Else
-                    phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" target=""_blank"" href='scaricaTesseraEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+                    phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" onclick=""showToast('tesserino');"" target=""_blank"" href='scaricaTesseraEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
 & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraEquiparazioneText"))) & "&nominativo=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))
                 End If
@@ -215,7 +247,7 @@ Public Class DashboardEquiEvasi2
                         If Data.FixNull(dr("Equi_StampaDiploma")) = "no" Then
 
                         Else
-                            phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+                            phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiplomaEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
 & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaAsiText"))) & "&nominativo=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
                         End If
@@ -337,6 +369,11 @@ Public Class DashboardEquiEvasi2
             Dim codiceFiscaleInserito As String
             Dim numeroRichiestaInserita As Integer
             Dim tipoInserito As String
+            Dim esisteZip As Boolean
+            Dim fileZip As String
+            Dim nomeZip As String = ""
+            Dim idrecordMaster As Integer = 0
+            Dim ArrayZip As Array = Nothing
             If Integer.TryParse(Trim(txtCodiceFiscale.Text), vbNull) Then
                 numeroRichiestaInserita = Trim(txtCodiceFiscale.Text)
                 tipoInserito = "nR"
@@ -381,6 +418,14 @@ Public Class DashboardEquiEvasi2
                     Dim nominativo As String
                     Dim diploma As String
                     For Each dr In ds.Tables("main").Rows
+                        Dim numerorecord = ds.Tables("main").Rows.IndexOf(dr)
+                        esisteZip = AsiModel.Equiparazioni.EsisteZipEquiparazioni(Data.FixNull(dr("IDEquiparazioneM")))
+                        If esisteZip Then
+                            nomeZip = AsiModel.Equiparazioni.NomeZipRinnovi(Data.FixNull(dr("IDEquiparazioneM")))
+                            ArrayZip = nomeZip.Split(".")
+
+                            idrecordMaster = AsiModel.Equiparazioni.GetIdRecordEquiparazioni(Data.FixNull(dr("IDEquiparazioneM")))
+                        End If
                         If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaAsiText"))) Then
                             diploma = "..\img\noPdf.jpg"
                         Else
@@ -427,6 +472,27 @@ Public Class DashboardEquiEvasi2
 
 
                         phDash.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
+                        If numerorecord = 0 And tipoInserito = "nR" Then
+
+                            phDash.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
+                            phDash.Controls.Add(New LiteralControl("<span>"))
+
+                            '****zip
+                            If esisteZip Then
+                                phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-customZip mb-2"" onclick=""showToast('zip');"" target=""_blank"" href='scaricaZipEquiparazione.aspx?codR=" _
+                                 & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))) & "&record_ID=" & deEnco.QueryStringEncode(idrecordMaster) & "&nomeFilePC=" _
+                                 & deEnco.QueryStringEncode(ArrayZip(0)) & "'><i class=""bi bi-person-badge""> </i>" & "Richiesta " & Data.FixNull(dr("IDEquiparazioneM")) & " - Scarica tutte le tessere</a>"))
+                            Else
+                                phDash.Controls.Add(New LiteralControl("Richiesta " & Data.FixNull(dr("IDRinnovoM"))))
+
+                            End If
+                            phDash.Controls.Add(New LiteralControl("</span>"))
+
+
+                            phDash.Controls.Add(New LiteralControl("</div>"))
+
+                            '***
+                        End If
 
 
 
@@ -494,7 +560,7 @@ Public Class DashboardEquiEvasi2
 
 
                         Else
-                            phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" target=""_blank"" href='scaricaTesseraEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+                            phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" onclick=""showToast('tesserino');"" target=""_blank"" href='scaricaTesseraEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
                      & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraEquiparazioneText"))) & "&nominativo=" _
                      & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tessera</a>"))
 
@@ -507,7 +573,7 @@ Public Class DashboardEquiEvasi2
 
 
                         Else
-                            phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+                            phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiplomaEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
                      & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaAsiText"))) & "&nominativo=" _
                      & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
 

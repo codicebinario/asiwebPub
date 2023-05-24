@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageRinnovi2.Master" CodeBehind="RichiestaRinnovo12.aspx.vb" Inherits="ASIWeb.RichiestaRinnovo12" %>
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="ajaxToolkit" %>
+
+<%@ Register Assembly="obout_Calendar2_Net" Namespace="OboutInc.Calendar2" TagPrefix="obout" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <script type="text/javascript" src="../Scripts/alertify.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -108,7 +111,116 @@
 						</div>
 							</div>
 							
-				</div></div>	
+				</div></div>
+
+    <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Always">
+
+
+        <ContentTemplate>
+            <asp:Panel ID="pnlModificaDataEmissione" runat="server">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h5>Data Emissione</h5>
+                                <hr />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                                <label for="txtNome">Data Emissione - [dd-MM-yyyy] &nbsp;</label>
+                                <asp:TextBox ID="txtDataEmissioneM" CssClass="form-control" runat="server" MaxLength="250"></asp:TextBox>
+                                <asp:Label ID="avvisoData" runat="server"></asp:Label>
+
+
+                                <obout:Calendar ID="Calendar1" runat="server"
+                                    TextBoxId="txtDataEmissioneM" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif"
+                                    DatePickerMode="True" MonthWidth="200" MonthHeight="140"
+                                    Visible="true" StyleFolder="../calendar/styles/default">
+                                </obout:Calendar>
+                                <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender2"
+                                    MaskType="Date"
+                                    runat="server"
+                                    CultureName="it-IT"
+                                    Mask="99/99/9999"
+                                    MessageValidatorTip="true"
+                                    UserDateFormat="DayMonthYear"
+                                    OnFocusCssClass="MaskedEditFocus"
+                                    OnInvalidCssClass="MaskedEditError"
+                                    ErrorTooltipEnabled="True"
+                                    TargetControlID="txtDataEmissioneM" />
+
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                                <div class="form-group">
+
+                                    <asp:RequiredFieldValidator ID="rqDataInizio" runat="server" ControlToValidate="txtDataEmissioneM" ErrorMessage="Data Emissione" Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
+                                    <asp:CustomValidator ID="validator33" runat="server" CssClass="errore" ControlToValidate="txtDataEmissioneM"></asp:CustomValidator>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </asp:Panel>
+            <asp:Panel ID="pnlDataEmissione" runat="server">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="txtNome">Data Emissione </label>
+
+
+
+                                <asp:TextBox ID="txtDataEmissione" CssClass="form-control" runat="server" MaxLength="250" ReadOnly="true" BackColor="#FFCCCC"></asp:TextBox>
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </asp:Panel>
+        </ContentTemplate>
+        </asp:UpdatePanel>
+
+
+
+
+
        <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
@@ -660,5 +772,29 @@
 						</div>
 							</div>
 							
-				</div></div>	
+				</div></div>
+
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="results" runat="server"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const messaggioAggiunto = document.querySelector('#<%=results.ClientID %>')
+        const carica = document.querySelector('#<%=lnkConcludi.ClientID%>')
+        carica.addEventListener('click', function () {
+        
+            
+           
+            messaggioAggiunto.style.cssText = "width: 100%;  margin-top: 3px; margin-down: 4px;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+            messaggioAggiunto.innerHTML = "Rinnovo in caricamento...";
+           
+
+
+        });
+    </script>
 </asp:Content>

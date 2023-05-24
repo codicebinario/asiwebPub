@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
 
@@ -14,7 +15,13 @@
 
        a {color: #005a7c;}
         a:hover {color: darkred;}
-   
+       .btn-customZip {
+         width:270px;
+          
+      /*  font-size: xx-small;*/
+
+
+        }
          .btn-custom {
          width:220px;
           
@@ -73,7 +80,7 @@
 
         function myAnnulla() {
 
-            let text = "Sei sicuro di voler annullare questa Equiparazione?";
+            let text = "Sei sicuro di voler annullare questo Rinnovo?";
             if (confirm(text) == true) {
                 return true;
                 //  text = "You pressed OK!";
@@ -123,7 +130,7 @@
  <div class="col-sm-12 mb-3 mb-md-0">
        <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
   <div class="container">
-      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Rinnovi Evasi (info)
+      <h6 class="fs-5 text-white text-decoration-none"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Rinnovi Evasi (info)
       </a></h6>
 
       <p class="lead">
@@ -232,4 +239,22 @@
      
 
 </div>
+    <script>
+        function showToast(value) {
+            toastr.options = {
+                closeButton: true,
+                positionClass: 'toast-top-right',
+                timeOut: 5000,
+
+                showDuration: 1000
+            };
+
+            if (value == "tesserino")
+                toastr.success('Tesserino tecnico in download', 'ASI');
+            if (value == "diploma")
+                toastr.success('Diploma in download', 'ASI');
+            if (value == "zip")
+                toastr.success('Tessere (file zip) in download', 'ASI');
+        }
+    </script>
 </asp:Content>

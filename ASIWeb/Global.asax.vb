@@ -36,9 +36,9 @@ Public Class Global_asax
 
         Dim ex As Exception = Server.GetLastError()
 
-        If TypeOf ex Is HttpRequestValidationException Then
-            Response.Redirect("FriendlyMessage.aspx", True)
-        End If
+        'If TypeOf ex Is HttpRequestValidationException Then
+        '  Response.Redirect("FriendlyMessage.aspx", True)
+        '  End If
 
     End Sub
 

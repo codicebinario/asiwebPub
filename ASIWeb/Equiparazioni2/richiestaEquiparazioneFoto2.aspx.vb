@@ -288,6 +288,9 @@ Public Class richiestaEquiparazioneFoto2
             'RegularExpressionValidator1.Enabled = False
             nomecaricato = "caricamento saltato"
             CaricaDatiDocumentoCorso(record_ID, codR, nomecaricato)
+            'resultsSalta.InnerHtml = "Attendi con pazienza....<br>"
+            'resultsSalta.Attributes.Add("style", "width: 100%; margin-top: 4px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+
             Response.Redirect("richiestaEquiparazioneDati12.aspx?codR=" & deEnco.QueryStringEncode(Session("IDEquiparazione")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
         End If
     End Sub

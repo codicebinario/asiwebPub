@@ -4,7 +4,10 @@
           <link rel="stylesheet" href="../css/alertify.min.css" />
      <link rel="stylesheet" href="../css/themes/default.min.css" />
       <script type="text/javascript" src="../Scripts/alertify.js"></script>
-       <style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <style>
     .custom-file-input.selected:lang(en)::after {
       content: "" !important;
     }
@@ -61,82 +64,15 @@
  }
 
   </style>
-     <script type="text/JavaScript">
-
-         function Clear() {
-             document.getElementById("<%= uploadedFiles.ClientID %>").innerHTML = "";
-         }
-
-        
-
-         function ClearedFiles(fileNames) {
-             document.getElementById("<%= uploadedFiles.ClientID %>").innerHTML = "questo file è di un tipo non autorizzato  " + fileNames;
-
-         }
-
-     <%--  function Rejected(fileName, size, maxSize) {
-
-             document.getElementById("<%= uploadedFiles.ClientID %>").innerHTML = "il file " + fileName + " è stato respinto in quanto la sua dimensione (" + size + " bytes) supera i " + maxSize + " bytes / the file " ;
-
-         }--%>
-         function Rejected(fileName, size, maxSize) {
-             alert("File " + fileName + " è rifiutato dal sistema \nLa sua dimensione (" + size + " bytes) supera i " + maxSize + " bytes");
-         }
-
-function Cancel() {
-    <%= uploadProgress.ClientID %>_obj.CancelRequest();
-}
-
-function ServerException(mess) {
-    document.getElementById("<%= uploadedFiles.ClientID %>").innerHTML = mess;
-
-         }
-        
-         //$('#customFileInput').on('change', function () {
-         //    var numb = $(this)[0].files[0].size / 1024 / 1024;
-         //    numb = numb.toFixed(2);
-         //    if (numb > 2) {
-         //        alert('to big, maximum is 2MiB. You file size is: ' + numb + ' MiB');
-         //    } else {
-         //        alert('it okey, your file has ' + numb + 'MiB')
-         //    }
-         //});
-         //function Upload() {
-         //    var fileUpload = document.getElementById("customFileInput");
-         //    if (typeof (fileUpload.files) != "undefined") {
-         //        var size = parseFloat(fileUpload.files[0].size / 1024).toFixed(2);
-         //        alert(size + " KB.");
-         //        if (size > 52000000) {
-         //            return true;
-         //        }
-         //        else {
-
-         //            return false;
-         //        }
-
-         //    } else {
-         //        alert("This browser does not support HTML5.");
-         //    }
-         //}
-
-
-     </script>
+    
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <asp:UpdateProgress ID="UpdateProgress1" runat="server"
-					 DynamicLayout="false">
-	<ProgressTemplate>
-	  <div class="Progress">
-		 <div class="btn">loading...</div>
-		
-		</div>
-	</ProgressTemplate>
-</asp:UpdateProgress>
-    
+        
+	
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Invio del Verbale Corso</h3>
+    <h6 class="fs-5 text-white text-decoration-none">Invio del Verbale Corso</h6>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>
         <asp:LinkButton class="btn btn-success btn-sm btn-due" ID="lnkDashboard" CausesValidation="false" runat="server">Torna a Corsi Attivi</asp:LinkButton>
@@ -164,7 +100,9 @@ function ServerException(mess) {
                       <h5>Caricamento Verbale Corso</h5>
                       <hr />
                       <div class="alert alert-danger" role="alert">
-                          Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.
+                          Dopo aver iniziato il caricamento attendi la fine della procedura per poter andare avanti.<br />
+                          Caricare Verbale ed eventuali altri documenti. [formato PDF, ed if formati word (DOC e DOCX)].
+                          I documenti 2 e 3 non sono obbligatori.
                       </div>
                   </div>
               </div>
@@ -178,82 +116,74 @@ function ServerException(mess) {
 
     <asp:Panel ID="pnlFase1" runat="server">
     
-       <div class="col-sm-12">
-          <div class="row">
-              <div class="col-sm-12">
-                  <div class="form-group">
-                      <label for="z" class="titoletto">
-                          Caricare Verbale ed eventuali altri documenti. [formato PDF, ed if formati word (DOC e DOCX)].
-                          I documenti 2 e 3 non sono obbligatori.</label>
-                    
-                  </div>
-              </div>
-
-          </div>
-      </div>
+       
  <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
     <div class="form-control-plaintext"> <label class="form-check-label" for="txtNote">Note</label>
         <asp:TextBox ID="txtNote" CssClass="form-control" runat="server"></asp:TextBox>
-    </div>
-          
+    </div></div>
+          </div>
+ </div>
+
+                 <%-- <div class="input-group">--%>
+        <div class="col-sm-12">
+            <div class="row">
+                      <div class="custom-file mb-4">
+
+                         <label for="FileUpload1" class="form-label mr-2 errore">[1 - obbligatorio]</label>
+                          <asp:FileUpload ID="FileUpload1" runat="server"  class="form-control mb-" name="myFile1" /><br />
+                      
+                      </div>
+               </div></div>          
+        <div class="col-sm-12">
+            <div class="row">
+                      <div class="custom-file mb-4 mt-4">
+
+                          <label for="FileUpload2" class="form-label mr-2">[2 - facoltativo]</label>
+                          <asp:FileUpload ID="FileUpload2" runat="server" placeholder="facoltativo" class="form-control" name="myFile2" />
+
+                      </div>
+                        
+                  </div></div>
+        <div class="col-sm-12">
+            <div class="row">
+                      <div class="custom-file mb-4 mt-4">
+
+                          <label for="customFileInput" class="form-label mr-2">[3 - facoltativo]</label>
+                          <asp:FileUpload ID="FileUpload3" runat="server" placeholder="facoltativo" class="form-control" name="myFile3" />
+
+                      </div>
+                 </div></div>
+
+        <div class="col-sm-12">
+            <div class="row">
+                      <div class="mt-4">
+                          <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true" class="btn btn-primary ml-2" />
+                          <%--      <asp:LinkButton ID="lnkButton1" class="btn btn-primary ml-2" Visible="true" runat="server"><i class="bi bi-upload"> </i>Carica</asp:LinkButton>
+                          --%>
+                      </div>
+
+                      <div class="mb-3">
+                          <asp:CustomValidator ID="cvCaricaDiploma" runat="server" ErrorMessage="" OnServerValidate="cvCaricaDiploma_ServerValidate"></asp:CustomValidator>
+                          <asp:CustomValidator ID="cvTipoFile" runat="server" ErrorMessage="" OnServerValidate="cvTipoFile_ServerValidate"></asp:CustomValidator>
+                          <asp:CustomValidator ID="cvTipoFile2" runat="server" ErrorMessage="" OnServerValidate="cvTipoFile2_ServerValidate"></asp:CustomValidator>
+                          <asp:CustomValidator ID="cvTipoFile3" runat="server" ErrorMessage="" OnServerValidate="cvTipoFile3_ServerValidate"></asp:CustomValidator>
 
 
+                      </div>
+                      <div id="results" runat="server"></div>
 
-                 <div class="custom-file mb-2">
+              <%--    </div>--%>
 
+   </div></div>
 
-                     <input type="file" name="myFile1" class="custom-file-input" id="customFileInput" aria-describedby="customFileInput" required>
-                     <label class="custom-file-label" for="customFileInput">Carica il verbale (obbligatorio)</label>
-
-                 </div>
-                 <div class="custom-file mb-2">
-
-
-                     <input type="file" name="myFile2" class="custom-file-input" id="customFileInput2" aria-describedby="customFileInput2">
-                     <label class="custom-file-label" for="customFileInput2">Carica un secondo documento (facoltativo)</label>
-                 </div>
-                 <div class="custom-file mb-2">
-
-
-                     <input type="file" name="myFile3" class="custom-file-input " id="customFileInput3" aria-describedby="customFileInput3">
-                     <label class="custom-file-label" for="customFileInput3">Carica un terzo documento (facoltativo)</label>
-                 </div>
-                
-
-         <asp:Button ID="Button1" runat="server" Text="Carica" Visible="true"    class="btn btn-primary ml-2 mt-2"/>
-
-        <%--  <input type="submit" id="summ" runat="server" OnClick="Upload" value="Carica" name="mySubmit" />--%>
-   <%--   </div>--%>
-
-
-</div></div></div>
     <br />
               
       <%--   <ASP:LinkButton ID="LinkButton1" runat="server" text="Cancella il caricamento" onClientClick="Cancel();" /><br/>--%>
   <br/>
     <div><div>
-  <fup:FileUploadProgress
-    ID="uploadProgress"
-      ShowUploadedFiles="true"
-      InnerFiles="true"
-      OnClientProgressStarted="Clear"
-     OnClientFileRejected="Rejected"
-     runat="server"
-     OnClientServerException="ServerException"
-     OnClientFileCleared = "ClearedFiles"
-   LocalizationFile="">
-    <AllowedFileFormats>
-        
-      
-          <fup:Format Ext="pdf" MaxByteSize="5240000"/>
-        <fup:Format Ext="doc" MaxByteSize="5240000" />
-        <fup:Format Ext="docx" MaxByteSize="5240000" />
-                 
-       
-     </AllowedFileFormats>
-  </fup:FileUploadProgress>
+  
    <div class="col-sm-12">
           <div class="row">
               <div class="col-sm-12">
@@ -286,26 +216,94 @@ function ServerException(mess) {
 						</div>
 							</div>
 							
-				</div></div>	
+				</div></div>
 
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
 
 
-        $('#customFileInput').on('change', function () {
-            var numb = $(this)[0].files[0].size / 1024 / 1024;
-            numb = numb.toFixed(2);
-            if (numb > 2) {
-                alertify.alert('ASI', 'Il file non deve superare i 2 mb di dimensione! ').set('resizable', true).resizeTo('20%', 200);
 
+        const carica = document.querySelector('#<%=Button1.ClientID%>')
+        const messaggioErrore = document.querySelector('#<%=results.ClientID %>')
+        const inputFile1 = document.querySelector('#<%=FileUpload1.ClientID %>')
+        const inputFile2 = document.querySelector('#<%=FileUpload2.ClientID %>')
+        const inputFile3 = document.querySelector('#<%=FileUpload3.ClientID %>')
 
+        carica.addEventListener('click', function () {
 
-                /*   alert('to big, maximum is 2MiB. You file size is: ' + numb + ' MiB');*/
-                document.getElementById('customFileInput').value = "";
+            if (inputFile1.files.length > 0) {
+                const selectedFile = inputFile1.files[0];
+                console.log(selectedFile.name);
+                if (validateFile(selectedFile.name)) {
+
+                    messaggioErrore.style.cssText = "width: 100%;  margin-top: 4px;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                    messaggioErrore.innerHTML = "documento in caricamento...";
+                }
+               
             } else {
-                //  alert('it okey, your file has ' + numb + 'MiB')
+                console.log("No file selected.");
             }
+
+            if (inputFile2.files.length > 0) {
+                const selectedFile = inputFile2.files[0];
+                console.log(selectedFile.name);
+                if (validateFile(selectedFile.name)) {
+
+                    messaggioErrore.style.cssText = "width: 100%;  margin-top: 4px;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                    messaggioErrore.innerHTML = "documento in caricamento...";
+                }
+
+            } else {
+                console.log("No file selected.");
+            }
+
+            if (inputFile3.files.length > 0) {
+                const selectedFile = inputFile3.files[0];
+                console.log(selectedFile.name);
+                if (validateFile(selectedFile.name)) {
+
+                    messaggioErrore.style.cssText = "width: 100%;  margin-top: 4px;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                    messaggioErrore.innerHTML = "documento in caricamento...";
+                }
+
+            } else {
+                console.log("No file selected.");
+            }
+
+
+
+
         });
+
+        function validateFile(fileName) {
+            var allowedExtensions = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX'];
+            var fileExtension = fileName.split('.').pop().toLowerCase();
+            var isValidFile = false;
+
+            console.log(fileExtension);
+
+            for (var index in allowedExtensions) {
+                if (fileExtension === allowedExtensions[index]) {
+                    isValidFile = true;
+                    console.log(isValidFile)
+                    // Handle valid file case here
+                    messaggioErrore.style.cssText = "width: 100%;  margin-top: 6px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                    messaggioErrore.innerHTML = "documento in caricamento...";
+                    break;
+                }
+            }
+
+            if (!isValidFile) {
+                console.log(isValidFile)
+                isValidFile = false;
+                // Handle invalid file case here
+                console.log('Allowed file type is pdf, doc, docx');
+            }
+        }
+
+
+
     </script>
 </asp:Content>

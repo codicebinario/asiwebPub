@@ -23,6 +23,15 @@ Partial Public Class corsistiDoc
     Protected WithEvents lblIntestazioneCorso As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''idMassivo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents idMassivo As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
     '''HiddenIdRecord control.
     '''</summary>
     '''<remarks>

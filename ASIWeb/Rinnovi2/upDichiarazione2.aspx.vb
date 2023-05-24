@@ -130,7 +130,40 @@ Public Class upDichiarazione2
 
         End If
     End Sub
+    Protected Sub cvCaricaDiploma_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If FileUpload1.PostedFile.ContentLength > 0 Then
 
+
+            args.IsValid = True
+        Else
+            results.InnerHtml = "carica il tuo diploma<br>"
+            results.Attributes.Add("style", "width: 100%; margin-top: 6px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+
+
+            args.IsValid = False
+        End If
+    End Sub
+
+    Protected Sub cvTipoFile_ServerValidate(source As Object, args As ServerValidateEventArgs)
+
+        Dim fileExtensions As String() = {".pdf", ".PDF"}
+        Dim pippo As String = FileUpload1.PostedFile.ContentType
+        For i As Integer = 0 To fileExtensions.Length - 1
+            If FileUpload1.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                args.IsValid = True
+
+                Exit For
+            Else
+                args.IsValid = False
+
+                results.InnerHtml = "il file deve essere in formato pdf<br>"
+                results.Attributes.Add("style", "width: 100%; margin-top: 6px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c")
+
+            End If
+        Next
+
+
+    End Sub
 
     Public Function CaricaSuFM(tokenx As String, id As String, nomecaricato As String) As Boolean
 
@@ -160,11 +193,7 @@ Public Class upDichiarazione2
         Requestx.AddHeader("Content-Type", "multipart/form-data")
         Requestx.AddHeader("Authorization", "bearer " & tokenx.ToString())
         Requestx.AddParameter("modId", "1")
-        'If host = "localhost" Then
-        '    Requestx.AddParameter("upload", "D:\Soft\c#\webUP\webUP\file_storage\" & nomecaricato & "")
-        'Else
-        '    Requestx.AddParameter("upload", "D:\Soft\c#\webUP\webUP\file_storage\" & nomecaricato & "")
-        'End If
+
 
         '  Dim filePath As String = Server.MapPath(ResolveUrl("~/file_storage/"))
         Requestx.AddParameter("upload", Server.MapPath(ResolveUrl("~/file_storage_dichiarazioni/")) & nomecaricato & "")
@@ -256,79 +285,64 @@ Public Class upDichiarazione2
     End Sub
 
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
-        If uploadProgress.Files.Count > 0 Then
+
+        If Page.IsValid Then
+            Dim stileavviso As String = "width: 100%; margin-top: 4px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+
+            'Threading.Thread.Sleep(5000)
+            Dim whereToSave As String = "../file_storage_dichiarazioni/"
+            Dim fileUpload As HttpPostedFile = FileUpload1.PostedFile
+
+            If Not FileUpload1.PostedFile Is Nothing And FileUpload1.PostedFile.ContentLength > 0 Then
+                If FileUpload1.PostedFile.ContentLength > MassimoPeso Then
+                    results.InnerHtml = "Il file è troppo grande. Massimo 3 mb<br>"
+                    results.Attributes.Add("style", stileavviso)
+                ElseIf FileUpload1.PostedFile.ContentLength <= MassimoPeso Then
+
+                    tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                    ext = Path.GetExtension((fileUpload.FileName))
+                    nomefileReale = Path.GetFileName(fileUpload.FileName)
+                    nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+                    fileUpload.SaveAs(MapPath(whereToSave + nomecaricato))
+
+                    results.InnerHtml = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
+                    results.Attributes.Add("style", stileavviso)
+
+                    Dim tokenx As String = ""
+                    Dim id_att As String = ""
+                    Dim tuttoRitorno As String = ""
+
+                    tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDRinnovo.Value, nomecaricato)
+                    txtNote.Text = ""
+                    Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                    tokenx = arrKeywords(1)
+                    id_att = arrKeywords(0)
+                    Try
+                        CaricaSuFM(tokenx, id_att, nomecaricato)
+                        Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idSelected")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
 
 
-
-
-
-
-
-            '****************************************************
-            Dim files As OboutFileCollection = uploadProgress.Files
-            Dim i As Integer
-
-            uploadedFiles.Text = ""
-            '   Try
-
-            For i = 0 To files.Count - 1 Step 1
-                Dim file As OboutPostedFile = files(i)
-
-
-
-                Dim whereToSave As String = "../file_storage_dichiarazioni/"
-
-                tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                ext = Path.GetExtension((file.FileName))
-                nomefileReale = Path.GetFileName(file.FileName)
-                nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
-
-
-
-
-
-                '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
-
-                file.SaveAs(MapPath(whereToSave + nomecaricato))
-
-
-
-
-                If uploadedFiles.Text.Length = 0 Then
-
-
-                    lnkButton1.Enabled = False
-                    uploadedFiles.Text = ""
-
-                    uploadedFiles.Text = "<b>Documento caricato con successo: " & nomecaricato & "</b><br/>"
-
-
-
-
+                    Catch ex As Exception
+                        results.InnerHtml = "<b>Documento non caricato: </b><br/>"
+                        results.Attributes.Add("style", stileavviso)
+                    End Try
+                Else
+                    results.InnerHtml = "<b>Carica il Documento </b><br/>"
+                    results.Attributes.Add("style", stileavviso)
                 End If
 
 
+        End If
 
-            Next
 
-            Dim tokenx As String = ""
-            Dim id_att As String = ""
-            Dim tuttoRitorno As String = ""
 
-            tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDRinnovo.Value, nomecaricato)
-            txtNote.Text = ""
-            Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-            tokenx = arrKeywords(1)
-            id_att = arrKeywords(0)
-            CaricaSuFM(tokenx, id_att, nomecaricato)
+
             '   pnlFase1.Visible = False
             ' btnFase2.Visible = True
             'deleteFile(nomecaricato)
             '  Session("fase") = "2"
             '  Response.Redirect("dashboardB.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
             ' Response.Redirect("dashboardRinnovi2.aspx#" & Session("IDRinnovo"))
-            Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idSelected")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")))
-
 
 
 

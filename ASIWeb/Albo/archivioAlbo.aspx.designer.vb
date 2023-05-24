@@ -23,6 +23,42 @@ Partial Public Class archivioAlbo
     Protected WithEvents litDenominazioneJumboDash As Global.System.Web.UI.WebControls.Literal
 
     '''<summary>
+    '''txtNumeroCorso control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtNumeroCorso As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''LinkButton1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkButton1 As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''lnkLast10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lnkLast10 As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''RequiredFieldValidator10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator10 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
     '''phDash control.
     '''</summary>
     '''<remarks>

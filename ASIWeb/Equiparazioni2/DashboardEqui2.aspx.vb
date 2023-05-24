@@ -26,8 +26,64 @@ Public Class DashboardEqui2
 
 
         Dim ris As String = Request.QueryString("ris")
+        Dim showScript As String = ""
+        Dim customizeScript As String = " 
+            toastr.options = {
+              'closeButton': true,
+              'debug': false,
+              'newestOnTop': false,
+              'progressBar': false,
+              'positionClass': 'toast-top-right',
+              'preventDuplicates': true,   
+              'onclick': null,
+              'timeOut': 5000,
+              'showDuration': 1000,
+              'hideDuration': 1000,
+              'extendedTimeOut': 1000,
+              'showEasing': 'swing',
+              'hideEasing': 'linear',
+              'showMethod': 'fadeIn',
+              'hideMethod': 'fadeOut'
+        };
+        "
+
+
 
         If Not Page.IsPostBack Then
+
+            If Not Session("AnnullaREqui") Is Nothing Then
+
+
+                Select Case Session("AnnullaREqui")
+                    Case "toa"
+                        Session("AnnullaREqui") = Nothing
+                        showScript = "toastr.success('La richiesta è stata eliminata', 'ASI');"
+
+                    Case "newEqui"
+                        Session("AnnullaREqui") = Nothing
+                        showScript = "toastr.success('Equiparazione inserita', 'ASI');"
+
+                    Case = "closeEqui"
+                        Session("AnnullaREqui") = Nothing
+                        showScript = "toastr.success('Richiesta terminata', 'ASI');"
+
+                    Case "annullataEqui"
+                        Session("AnnullaREqui") = Nothing
+                        showScript = "toastr.success('Equiparazione annullata', 'ASI');"
+                    Case "pagamentoEqui"
+                        Session("AnnullaREqui") = Nothing
+                        showScript = "toastr.success('Documento pagamento inviato', 'ASI');"
+                    Case "TesserinoEqui"
+                        Session("AnnullaREqui") = Nothing
+                        showScript = "toastr.success('Tesserino tecnico in download', 'ASI');"
+
+                End Select
+
+
+                Page.ClientScript.RegisterStartupScript(Me.GetType(), "showSuccess", customizeScript & showScript, True)
+                '  ShowToastr(Page, "Message Here", "Title Here", "Info", False, "toast-bottom-full-width", True)
+
+            End If
 
 
             If Not String.IsNullOrEmpty(ris) Then
@@ -92,6 +148,7 @@ Public Class DashboardEqui2
         End If
 
     End Sub
+
     Function togliND(valore As String) As String
         Dim ritorno As String = ""
         If valore = "ND" Then
@@ -107,12 +164,19 @@ Public Class DashboardEqui2
 
 
 
+
+
         Dim deEnco As New Ed()
         Dim heading As String = "heading"
         Dim collapse As String = "collapse"
         Dim quantiPerGruppo As Integer = 0
         Dim ds As DataSet
         Dim diploma As String
+        Dim esisteZip As Boolean = False
+        Dim nomeZip As String = ""
+        Dim ArrayZip As Array = Nothing
+        Dim idrecordMaster As Integer = 0
+        Dim stringaZip As String = ""
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
         fmsP.SetLayout("webEquiparazioniMaster")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
@@ -156,6 +220,7 @@ Public Class DashboardEqui2
                     AnnRichiesta.Text = "<i class=""bi bi-file-earmark-x""> </i>Cancella questa richiesta"
                     AnnRichiesta.PostBackUrl = "annullaRichiesta.aspx?record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
                     AnnRichiesta.CssClass = "btn btn-danger btn-sm btn-tre btn-custom mb-1  ml-1"
+                    'AnnRichiesta.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
                     AnnRichiesta.Attributes.Add("OnClick", "if(!myAnnulla())return false;")
                     If Data.FixNull(dr("CodiceStatus")) <= 101 Then
                         AnnRichiesta.Visible = True
@@ -277,6 +342,18 @@ Public Class DashboardEqui2
                         prezzoDaPagare = ""
                     End If
 
+                    If Data.FixNull(dr("CodiceStatus")) = 114 Or Data.FixNull(dr("CodiceStatus")) = 114.5 Then
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZIPMaster"))) Then
+                            nomeZip = AsiModel.Equiparazioni.NomeZipRinnovi(Data.FixNull(dr("ZIPMasterContent")))
+                            ArrayZip = nomeZip.Split(".")
+                            idrecordMaster = Data.FixNull(dr("idRecord"))
+                            stringaZip = "<a class=""btn btn-success btn-sm btn-due btn-customZip mb-2"" onclick=""showToast('zip');"" target=""_blank"" href='scaricaZipEquiparazione.aspx?codR=" _
+                                     & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))) & "&record_ID=" & deEnco.QueryStringEncode(idrecordMaster) & "&nomeFilePC=" _
+                                     & deEnco.QueryStringEncode(ArrayZip(0)) & "'><i class=""bi bi-person-badge""> </i>" & "Scarica tutte le tessere</a>"
+                        End If
+
+                    End If
+
 
                     phDash.Controls.Add(New LiteralControl("Richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDEquiparazioneM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " : [<strong>" & Data.FixNull(dr("Equi_Sport_Interessato")) & " - " & Data.FixNull(dr("Equi_Disciplina_Interessata")) & Left(togliND(Data.FixNull(dr("Equi_Specialita"))), 20) & "</strong>] - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;"))
                     phDash.Controls.Add(New LiteralControl("</button>"))
@@ -308,7 +385,7 @@ Public Class DashboardEqui2
                     ' If (Data.FixNull(dr("CodiceStatus")) = "111") Then
                     phDash.Controls.Add(hpUPPag)
                     phDash.Controls.Add(hpUPPag1145)
-                    phDash.Controls.Add(New LiteralControl("<span class=""moltopiccolo""> - " & prezzoDaPagare & "</span>"))
+                    phDash.Controls.Add(New LiteralControl("<span class=""moltopiccolo""> - " & prezzoDaPagare & " - " & stringaZip & "</span>"))
 
                     'End If
                     phDash.Controls.Add(New LiteralControl("</p>"))
@@ -321,6 +398,7 @@ Public Class DashboardEqui2
                     ' RequestP.AddSearchField("pre_stato_web", "1")
                     RequestP1.AddSearchField("IDEquiparazioneM", Data.FixNull(dr("IDEquiparazioneM")), Enumerations.SearchOption.equals)
                     RequestP1.AddSearchField("Codice_Status", "101...114.5")
+                    RequestP1.AddSearchField("Equi_Fase", "2", Enumerations.SearchOption.equals)
                     RequestP1.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
                     RequestP1.AddSortField("IDRecord", Enumerations.Sort.Descend)
 
@@ -343,7 +421,7 @@ Public Class DashboardEqui2
                             If String.IsNullOrWhiteSpace(Data.FixNull(dr1("DiplomaAsiText"))) Then
                                 diploma = "..\img\noPdf.jpg"
                             Else
-                                diploma = "https://93.63.195.98" & Data.FixNull(dr1("DiplomaAsiText"))
+                                diploma = "https: //93.63.195.98" & Data.FixNull(dr1("DiplomaAsiText"))
                             End If
 
 
@@ -383,7 +461,7 @@ Public Class DashboardEqui2
                             VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
 
 
-                            If Data.FixNull(dr1("Codice_Status") <= 114) Then
+                            If Data.FixNull(dr1("Codice_Status") < 115) Then
                                 VediDocumentazione.Visible = True
                             Else
                                 VediDocumentazione.Visible = False
@@ -433,6 +511,24 @@ Public Class DashboardEqui2
                             phDash.Controls.Add(New LiteralControl("Stampa Diploma: <small>" & Data.FixNull(dr1("Equi_StampaDiploma")) & "</small><br />"))
                             phDash.Controls.Add(New LiteralControl("Invio EA: <small>" & ControlloEA(Data.FixNull(dr1("Equi_inviaA"))) & "</small><br />"))
                             phDash.Controls.Add(New LiteralControl("Da Federazione: <small>" & Data.FixNull(dr1("Equi_DaFederazione")) & "</small><br />"))
+                            Dim spedizione As String = ""
+
+                            If Data.FixNull(dr1("Equi_StampaCartaceo")) = "si" Then
+                                If Data.FixNull(dr1("Equi_InviaA")) = "EA" Then
+                                    spedizione = " Spedizione:<small class=""text-uppercase""> EA - Equiparazione:" & Data.FixNull(dr1("Quota_Calc_Equiparazione")) & " Euro</small><br />"
+                                Else
+                                    spedizione = " Spedizione: residenza - Equiparazione:" & Data.FixNull(dr1("Quota_Calc_Equiparazione")) & " Euro</small><br />"
+
+
+
+                                End If
+                            ElseIf Data.FixNull(dr1("Equi_StampaCartaceo")) = "no" Then
+                                spedizione = " Equiparazione:" & Data.FixNull(dr1("Quota_Calc_Equiparazione")) & " Euro</small><br />"
+
+
+                            End If
+                            phDash.Controls.Add(New LiteralControl(spedizione))
+                            phDash.Controls.Add(New LiteralControl("Diritti Segreteria: <small>" & Data.FixNull(dr1("Equi_DirittiSegreteria")) & "</small><br />"))
 
                             phDash.Controls.Add(New LiteralControl())
 
@@ -448,14 +544,6 @@ Public Class DashboardEqui2
                                 phDash.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
 
                             End If
-
-
-
-
-
-
-
-
 
 
                             phDash.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr1("Codice_Status"))) & ">" & Data.FixNull(dr1("Descrizione_StatusWeb")) & "</small>"))
@@ -495,8 +583,8 @@ Public Class DashboardEqui2
 
 
                                 Else
-                                    phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" target=""_blank"" href='scaricaTesseraEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr1("idrecord")) & "&nomeFilePC=" _
-    & deEnco.QueryStringEncode(Data.FixNull(dr1("TesseraEquiparazioneText"))) & "&nominativo=" _
+                                    phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 ""  onclick=""showToast('tesserino');""  target=""_blank"" href='scaricaTesseraEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr1("idrecord")) & "&nomeFilePC=" _
+                                 & deEnco.QueryStringEncode(Data.FixNull(dr1("TesseraEquiparazioneText"))) & "&nominativo=" _
                                  & deEnco.QueryStringEncode(Data.FixNull(dr1("Equi_Cognome")) & "_" & Data.FixNull(dr1("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))
                                 End If
                                 If diploma = "..\img\noPdf.jpg" Then
@@ -507,7 +595,7 @@ Public Class DashboardEqui2
                                     If Data.FixNull(dr1("Equi_StampaDiploma")) = "no" Then
                                     Else
 
-                                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr1("idrecord")) & "&nomeFilePC=" _
+                                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiplomaEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr1("idrecord")) & "&nomeFilePC=" _
                                         & deEnco.QueryStringEncode(Data.FixNull(dr1("DiplomaAsiText"))) & "&nominativo=" _
                                         & deEnco.QueryStringEncode(Data.FixNull(dr1("Equi_Cognome")) & "_" & Data.FixNull(dr1("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
 

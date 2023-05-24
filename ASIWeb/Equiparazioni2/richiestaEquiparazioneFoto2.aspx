@@ -124,7 +124,7 @@
                         <strong>Salta il caricamento foto: </strong>se si vuole procedere senza caricare la foto, metti il check-box ed attendi. 
   
                     </div>
-
+                    <div id="resultsSalta" runat="server"></div>
 
 
                 </div>
@@ -217,13 +217,29 @@
          </div>
    </div>
     <script>
-
+        const checkbox = document.querySelector('#<%=chkSalta.ClientID %>')
+        const messaggioSalta = document.querySelector('#<%=resultsSalta.ClientID %>')
            const input = document.querySelector('#<%=inputfile.ClientID %>')
                const carica = document.querySelector('#<%=lnkButton1.ClientID%>')
      const output = document.querySelector("output")
      const messaggioErrore = document.querySelector('#<%=results.ClientID %>')
      const messaggioCaricaLaFoto = document.querySelector(".form-label")
-     let imagesArray = []
+        let imagesArray = []
+        console.log(checkbox)
+        checkbox.addEventListener("click", () => {
+            // Handle the click event here
+            if (checkbox.checked) {
+                console.log('Checkbox is checked');
+                messaggioSalta.style.cssText = "width: 100%;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+                messaggioSalta.innerHTML = "attendi....";
+            }
+            else {
+                console.log('Checkbox is unchecked');
+                // Perform some action when the checkbox is unchecked
+                messaggioSalta.removeAttribute("style") 
+                messaggioSalta.innerHTML = "";
+            }
+        })
            
      input.addEventListener("change", () => {
          messaggioErrore.innerHTML = "";

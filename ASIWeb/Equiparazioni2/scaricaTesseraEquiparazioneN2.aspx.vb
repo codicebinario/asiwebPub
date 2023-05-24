@@ -35,7 +35,6 @@ Public Class scaricaTesseraEquiparazioneN2
         End If
 
 
-
         Dim deEnco As New Ed
         Dim pdf As String
         record_ID = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
@@ -66,9 +65,11 @@ Public Class scaricaTesseraEquiparazioneN2
             Response.Cache.SetCacheability(HttpCacheability.NoCache)
             Response.ContentType = "application/pdf"
             Response.AddHeader("content-disposition", "attachment;filename=" & record_ID & "_" & nominativo & "_tessera.pdf")
+
             Response.BinaryWrite(bytes)
             Response.Flush()
             Response.End()
+
 
 
         End Using

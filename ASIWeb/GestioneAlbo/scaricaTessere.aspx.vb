@@ -181,7 +181,7 @@ Public Class scaricaTessere
 
             Else
 
-
+                Session("AnnullaREqui") = "KOTessereAttive"
                 Response.Redirect("DashboardAlbo.aspx")
 
             End If

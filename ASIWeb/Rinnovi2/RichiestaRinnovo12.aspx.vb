@@ -59,9 +59,24 @@ Public Class RichiestaRinnovo12
             Response.Redirect("../login.aspx")
         End If
 
-        'If IsNothing(Session("IdRecordMaster")) Then
-        '    Response.Redirect("../login.aspx")
-        'End If
+        If Session("RinnovoModificaDataEmissione") = "S" Then
+
+            pnlModificaDataEmissione.Visible = True
+            pnlDataEmissione.Visible = False
+        Else
+            pnlModificaDataEmissione.Visible = False
+            pnlDataEmissione.Visible = True
+        End If
+        Dim dataCorrente As Date = Now.ToShortDateString
+        Dim annoCorrente As Integer = Now.Year
+        Dim meseCorrente As Integer = Now.Month
+        Dim giornoCorrente As Integer = Now.Day
+        Dim dataInizio As Date
+        Dim dataFine As Date
+        dataInizio = "01-01-" & annoCorrente
+        dataFine = "31-12-" & annoCorrente
+        Calendar1.DateMin = dataInizio
+        Calendar1.DateMax = dataFine
 
         lnkConcludi.Attributes.Add("OnClick", String.Format("this.disabled = true; {0};", ClientScript.GetPostBackEventReference(lnkConcludi, Nothing)))
 
@@ -149,6 +164,28 @@ Public Class RichiestaRinnovo12
         End If
 
     End Sub
+    Protected Sub validator33_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles validator33.ServerValidate
+
+        If String.IsNullOrEmpty(txtDataEmissioneM.Text) Then
+            args.IsValid = False
+
+        Else
+            Dim annoCorrente = Now.Year()
+            Dim annoInserito = Right(txtDataEmissioneM.Text, 4)
+
+            If annoCorrente = annoInserito Then
+                args.IsValid = True
+                avvisoData.Text = ""
+            Else
+                args.IsValid = False
+                validator33.ErrorMessage = "Inserire una data dell'anno corrente"
+                '    avvisoData.Text = "Inserire data anno corrente"
+            End If
+
+
+        End If
+
+    End Sub
     Sub Province()
 
         Dim ds As DataSet
@@ -221,7 +258,7 @@ Public Class RichiestaRinnovo12
         txtSpecialita.Text = datiCodiceFiscale.Specialita
         txtLivello.Text = datiCodiceFiscale.Livello
         txtQualifica.Text = datiCodiceFiscale.qualifica
-
+        txtDataEmissione.Text = Now.ToShortDateString
         Dim siglaProvincia As String = getSiglaProvincia(datiCodiceFiscale.Provincia)
 
         Dim itemProvinciaResidenza As ListItem = ddlProvinciaResidenza.Items.FindByText(siglaProvincia)
@@ -326,10 +363,10 @@ Public Class RichiestaRinnovo12
 
 
             txtIndirizzoConsegna.Text = txtIndirizzoResidenza.Text
-            If ddlProvinciaResidenza.SelectedIndex > 1 Then
+            If ddlProvinciaResidenza.SelectedIndex > 0 Then
                 txtProvinciaConsegna.Text = ddlProvinciaResidenza.SelectedItem.Text
             End If
-            If ddlComuneResidenza.SelectedIndex > 1 Then
+            If ddlComuneResidenza.SelectedIndex > 0 Then
                 txtComuneConsegna.Text = ddlComuneResidenza.SelectedItem.Text
 
             End If
@@ -408,6 +445,34 @@ Public Class RichiestaRinnovo12
         Request.AddField("Rin_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
         Request.AddField("Rin_ComuneResidenza", ddlComuneResidenza.SelectedItem.Text)
         Request.AddField("Rin_ProvinciaResidenza", ddlProvinciaResidenza.SelectedItem.Text)
+
+        If Session("RinnovoModificaDataEmissione") = "S" Then
+            Dim dataSelezionata As Date = txtDataEmissioneM.Text
+            Dim annoAttuale As Integer = Now.Year
+            Dim mese As Integer = dataSelezionata.Month
+            Dim anno As Integer = dataSelezionata.Year
+            If mese = 12 Then
+                Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+            Else
+                Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
+            End If
+
+
+        Else
+            Dim dataSelezionata As Date = txtDataEmissione.Text
+            Dim annoAttuale As Integer = Now.Year
+            Dim mese As Integer = dataSelezionata.Month
+            Dim anno As Integer = dataSelezionata.Year
+            If mese = 12 Then
+                Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+            Else
+                Request.AddField("Data_Emissione", Data.SistemaDataUK(txtDataEmissione.Text))
+            End If
+        End If
+
+
+
+
         If chkStampaCartacea.Checked = True Then
 
             Request.AddField("Rin_StampaCartaceo", "Si")
@@ -507,13 +572,17 @@ Public Class RichiestaRinnovo12
             ritorno = CaricaDatiDaSceltaRinnovo(Session("IDRinnovo"), Session("id_record"), Session("idScelto"))
 
             If ritorno = True Then
-                Session("visto") = "ok"
-                Session("rinnovoAggiunto") = "OK"
+                'Session("visto") = "ok"
+                'Session("rinnovoAggiunto") = "OK"
+                Session("AnnullaREqui") = "newRin"
+                Response.Redirect("dashboardRinnovi2.aspx?open=" & Session("IDRinnovo"))
 
-                Response.Redirect("dashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("ok"))
+                '    Response.Redirect("dashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("ok"))
             ElseIf ritorno = False Then
-                Response.Redirect("dashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode("pr"))
-                Session("visto") = "ok"
+                Session("AnnullaREqui") = "newRinKO"
+                Response.Redirect("dashboardRinnovi2.aspx")
+                'Response.Redirect("dashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode("pr"))
+                'Session("visto") = "ok"
             End If
 
         End If

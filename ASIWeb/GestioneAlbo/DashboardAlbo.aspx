@@ -1,7 +1,13 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/AsiMasterPageGestioneAlbo.Master" CodeBehind="DashboardAlbo.aspx.vb" Inherits="ASIWeb.DashboardAlbo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-      <style>
+    <link rel="stylesheet" href="../css/alertify.min.css" />
+    <link rel="stylesheet" href="../css/themes/default.min.css" />
+    <script type="text/javascript" src="../Scripts/alertify.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
 
         .card-title{
     font-size:0.8rem;
@@ -19,6 +25,9 @@
 
 
         }
+            .fs-5{
+               color:white;
+           }
         .piccolo{
 
  font-size: small;
@@ -78,19 +87,17 @@
 
 
     
-    <link rel="stylesheet" href="../css/alertify.min.css" />
-     <link rel="stylesheet" href="../css/themes/default.min.css" />
-      <script type="text/javascript" src="../Scripts/alertify.js"></script>
+ 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
  <div class="col-sm-12 mb-3 mb-md-0">
        <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
   <div class="container">
-    <h3 class="display-5">Consulta Albo</h3>
+    <h6 class="fs-5">Consulta Albo</h6>
     <p class="lead">
-    <asp:LinkButton  ID="lnkAttive" class="btn btn-success btn-sm btn-tre" CausesValidation="false" runat="server"><i class="bi bi-cloud-arrow-down"> </i>Scarica Albo Attivi</asp:LinkButton>
-    <asp:LinkButton  ID="lnkScadute" class="btn btn-success btn-sm btn-tre" CausesValidation="false" runat="server"><i class="bi bi-cloud-arrow-down-fill"> </i>Scarica Albo Scaduti</asp:LinkButton>
+    <asp:LinkButton ID="lnkAttive" OnClientClick="showToast('OKTessereAttive');" class="btn btn-success btn-sm btn-tre" CausesValidation="false" runat="server"><i class="bi bi-cloud-arrow-down"> </i>Scarica Albo Attivi</asp:LinkButton>
+    <asp:LinkButton ID="lnkScadute" OnClientClick="showToast('ScaduteTessereAttive');" class="btn btn-success btn-sm btn-tre" CausesValidation="false" runat="server"><i class="bi bi-cloud-arrow-down-fill"> </i>Scarica Albo Scaduti</asp:LinkButton>
         <asp:Label ID="lblAvviso" runat="server" Text="" Visible="true"></asp:Label>
         <br />
         <br />
@@ -206,11 +213,44 @@
    <asp:PlaceHolder ID="phDash" runat="server" Visible="false"></asp:PlaceHolder>
 
 
-  
 
-   
 
-     
 
-</div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    </div>
+        <script>
+        function showToast(value) {
+            toastr.options = {
+                closeButton: true,
+                positionClass: 'toast-top-right',
+                timeOut: 5000,
+             
+                showDuration: 1000
+            };
+
+            if (value == "OKTessereAttive")
+                toastr.success('Albo tessere attive in download', 'ASI');
+            if (value == "tesserino")
+                toastr.success('Tesserino tecnico in download', 'ASI');
+            if (value == "ScaduteTessereAttive")
+                toastr.success('Albo tessere scadute in download', 'ASI');
+        }
+
+        if (location.hash !== null && location.hash !== "") {
+            //alert("ciao");
+            //alert(location.hash);
+            //  $(location.hash + ".collapse").collapse("show");
+            //$(".collapse44").collapse("show");
+            //$(".collapse44").collapse("toggle");
+            //$(".collapse44").addClass("show");
+            document.addEventListener("DOMContentLoaded", function (event) {
+                var home_link = document.getElementById('collapse44');
+                home_link.className = home_link.className + ' active';
+            });
+        };
+        
+        </script>
 </asp:Content>

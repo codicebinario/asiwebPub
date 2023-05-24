@@ -674,26 +674,29 @@ Public Class richiestaCorsoF3
             Request.AddField("Codice_status", "54")
             ' Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
             ' Request.AddScript("PreparaMailInvioDT", Session("IDCorso"))
-            Request.AddScript("RunWebMailInvioDT", Session("IDCorso"))
+            Request.AddScript("RunWebMailInvioDTCorsi", Session("IDCorso"))
 
             Session("visto") = "ok"
             Try
 
                 Request.Execute()
                 AsiModel.LogIn.LogCambioStatus(Session("IDCorso"), "54", Session("WebUserEnte"), "corso")
-                Session("corsoaggiunto") = "OK"
-                Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ok"))
+                'Session("corsoaggiunto") = "OK"
+                Session("AnnullaREqui") = "newCorso"
 
+                '   Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ok"))
                 '   Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ko"))
 
 
 
             Catch ex As Exception
-
+                Session("AnnullaREqui") = "NOnewCorso"
+                Session("ErrorMessage") = ex.Message
+                Response.Redirect("dashboardB.aspx")
             End Try
 
 
-
+            Response.Redirect("dashboardB.aspx")
 
 
         End If

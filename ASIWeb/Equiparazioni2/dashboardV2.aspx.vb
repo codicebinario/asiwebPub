@@ -23,12 +23,45 @@ Public Class dashboardV2
 
         Dim ris As String = Request.QueryString("ris")
 
+        Dim showScript As String = ""
+        Dim customizeScript As String = " 
+            toastr.options = {
+              'closeButton': true,
+              'debug': false,
+              'newestOnTop': false,
+              'progressBar': false,
+              'positionClass': 'toast-top-right',
+              'preventDuplicates': true,   
+              'onclick': null,
+              'timeOut': 5000,
+              'showDuration': 1000,
+              'hideDuration': 1000,
+              'extendedTimeOut': 1000,
+              'showEasing': 'swing',
+              'hideEasing': 'linear',
+              'showMethod': 'fadeIn',
+              'hideMethod': 'fadeOut'
+        };
+        "
         If Not Page.IsPostBack Then
 
+            If Not Session("AnnullaREqui") Is Nothing Then
+
+                If Session("AnnullaREqui") = "valSettoreS" Then
+
+                    showScript = "toastr.success('Valutazione positiva effettuata', 'ASI');"
+                    Session("AnnullaREqui") = Nothing
+                ElseIf Session("AnnullaREqui") = "valSettoreN" Then
+                    showScript = "toastr.success('Valutazione negativa effettuata', 'ASI');"
+                    Session("AnnullaREqui") = Nothing
+                End If
+
+                    Page.ClientScript.RegisterStartupScript(Me.GetType(), "showSuccess", customizeScript & showScript, True)
 
 
-        End If
-        If Not Page.IsPostBack Then
+            End If
+
+
 
 
             Equiparazioni()
@@ -184,7 +217,7 @@ Public Class dashboardV2
 
 
                     Else
-                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" target=""_blank"" href='scaricaDiplomaEqui2.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRecord"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+                        phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" onclick=""showToast();"" target=""_blank"" href='scaricaDiplomaEqui2.aspx?codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDRecord"))) & "&record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileDiplomaFS"))) & "&nominativo=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Documentazione Presentata</a>"))
 

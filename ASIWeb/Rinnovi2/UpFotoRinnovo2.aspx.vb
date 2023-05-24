@@ -330,7 +330,10 @@ Public Class UpFotoRinnovo2
                 CaricaSuFM(tokenx, id_att, nomecaricato)
                 Session("visto") = "ok"
                 ' Response.Redirect("DashboardRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
-                Response.Redirect("DashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("fo"))
+
+                Session("AnnullaREqui") = "fotoTesseraRin"
+                '   Response.Redirect("DashboardRinnovi2.aspx?open=" & Session("IDRinnovo") & "&ris=" & deEnco.QueryStringEncode("fo"))
+                Response.Redirect("DashboardRinnovi2.aspx?open=" & Session("IDRinnovo"))
 
 
 

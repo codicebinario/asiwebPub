@@ -26,8 +26,65 @@ Public Class DashBoardRinnovi2
         Dim deEnco As New Ed()
 
         Dim ris As String = Request.QueryString("ris")
-
+        Dim showScript As String = ""
+        Dim customizeScript As String = " 
+            toastr.options = {
+              'closeButton': true,
+              'debug': false,
+              'newestOnTop': false,
+              'progressBar': false,
+              'positionClass': 'toast-top-right',
+              'preventDuplicates': true,   
+              'onclick': null,
+              'timeOut': 5000,
+              'showDuration': 1000,
+              'hideDuration': 1000,
+              'extendedTimeOut': 1000,
+              'showEasing': 'swing',
+              'hideEasing': 'linear',
+              'showMethod': 'fadeIn',
+              'hideMethod': 'fadeOut'
+        };
+        "
         If Not Page.IsPostBack Then
+
+            If Not Session("AnnullaREqui") Is Nothing Then
+                Select Case Session("AnnullaREqui")
+                    Case "toa"
+                        showScript = "toastr.success('La richiesta è stata eliminata', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "newRin"
+                        showScript = "toastr.success('Nuovo rinnovo aggiunto', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "newRinKO"
+                        showScript = "toastr.success('Il rinnovo non è stato aggiunto', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "annullataRin"
+                        showScript = "toastr.success('Il rinnovo è stato eliminato', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "annullataRinKO"
+                        showScript = "toastr.success('Il rinnovo non è stato eliminato', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "closeRin"
+                        showScript = "toastr.success('Richiesta terminata', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "fotoTesseraRin"
+                        showScript = "toastr.success('Foto tessera caricata', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                    Case "pagamentoRin"
+                        showScript = "toastr.success('Documento pagamento inviato', 'ASI');"
+                        Session("AnnullaREqui") = Nothing
+                End Select
+
+                Page.ClientScript.RegisterStartupScript(Me.GetType(), "showSuccess", customizeScript & showScript, True)
+
+
+
+            End If
+
+
+
+
 
 
             If Not String.IsNullOrEmpty(ris) Then
@@ -110,24 +167,7 @@ Public Class DashBoardRinnovi2
         open = Request.QueryString("open")
         rinnovi()
     End Sub
-    'Sub rinnovi2()
 
-    '    Dim ds As DataSet
-
-    '    Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-    '    fmsP.SetLayout("webRinnoviRichiesta2")
-    '    Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-    '    ' RequestP.AddSearchField("pre_stato_web", "1")
-    '    RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
-    '    RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-    '    RequestP.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
-    '    ds = RequestP.Execute()
-
-    '    If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-    '        'rpDash.DataSource = ds.Tables("main")
-    '        'rpDash.DataBind()
-    '    End If
-    'End Sub
 
     Sub rinnovi()
 
@@ -136,7 +176,11 @@ Public Class DashBoardRinnovi2
         Dim collapse As String = "collapse"
         Dim quantiPerGruppo As Integer = 0
         Dim ds As DataSet
-
+        Dim esisteZip As Boolean = False
+        Dim nomeZip As String = ""
+        Dim ArrayZip As Array = Nothing
+        Dim idrecordMaster As Integer = 0
+        Dim stringaZip As String = ""
         Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
         fmsP.SetLayout("webRinnoviMaster")
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
@@ -297,6 +341,18 @@ Public Class DashBoardRinnovi2
                     prezzoDaPagare = ""
                 End If
 
+                If Data.FixNull(dr("CodiceStatus")) >= 158 Then
+                    If Not String.IsNullOrEmpty(Data.FixNull(dr("ZIPMaster"))) Then
+                        nomeZip = AsiModel.Rinnovi.NomeZipRinnovi(Data.FixNull(dr("ZIPMasterContent")))
+                        ArrayZip = nomeZip.Split(".")
+                        idrecordMaster = Data.FixNull(dr("idRecord"))
+                        stringaZip = "<a class=""btn btn-success btn-sm btn-due btn-customZip mb-2"" onclick=""showToast('zip');"" target=""_blank"" href='scaricaZipRinnovo.aspx?codR=" _
+                                 & deEnco.QueryStringEncode(Data.FixNull(dr("IDRinnovoM"))) & "&record_ID=" & deEnco.QueryStringEncode(idrecordMaster) & "&nomeFilePC=" _
+                                 & deEnco.QueryStringEncode(ArrayZip(0)) & "'><i class=""bi bi-person-badge""> </i>" & "Scarica tutte le tessere</a>"
+                    End If
+                End If
+
+
 
 
                 phDash.Controls.Add(New LiteralControl("Codice richiesta " & " <b>&nbsp;" & Data.FixNull(dr("IDRinnovoM")) & "&nbsp;</b> del " & Data.FixNull(dr("CreationTimestamp")) & " - <b>&nbsp;" & quantiPerGruppo & "&nbsp;</b>&nbsp;" & leggendaRinnovi & legendaStatus & "&nbsp;-&nbsp;"))
@@ -330,7 +386,7 @@ Public Class DashBoardRinnovi2
                 phDash.Controls.Add(hpUPPag)
                 phDash.Controls.Add(hpUPPag158)
 
-                phDash.Controls.Add(New LiteralControl("<span class=""moltopiccolo""> - " & prezzoDaPagare & "</span>"))
+                phDash.Controls.Add(New LiteralControl("<span class=""moltopiccolo""> - " & prezzoDaPagare & " - " & stringaZip & "</span>"))
 
                 '  End If
                 phDash.Controls.Add(New LiteralControl("</p>"))
@@ -518,7 +574,9 @@ Public Class DashBoardRinnovi2
 
 
 
-                                phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-sei btn-custom  mb-1 "" target=""_blank"" href='scaricaTesseraRinnovo2.aspx?codR=" _
+
+
+                                phDash.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-sei btn-custom  mb-1"" onclick=""showToast('tesserino');"" target=""_blank"" href='scaricaTesseraRinnovo2.aspx?codR=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr1("IDRinnovo"))) & "&record_ID=" & deEnco.QueryStringEncode(dr1("id_record")) & "&nomeFilePC=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr1("StringaNomeFile"))) & "&nominativo=" _
                              & deEnco.QueryStringEncode(Data.FixNull(dr1("Asi_Cognome")) & "_" & Data.FixNull(dr1("Asi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))

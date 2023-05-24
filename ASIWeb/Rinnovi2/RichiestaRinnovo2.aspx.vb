@@ -159,6 +159,8 @@ Public Class RichiestaRinnovo2
         '  RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
         'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
         '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+
+        'nome cognome e datadinascita e rinnovoFlagVar = 1
         Try
 
 
@@ -223,54 +225,58 @@ Public Class RichiestaRinnovo2
         RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
         RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
         '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+        Try
 
-        ds = RequestP.Execute()
 
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+            ds = RequestP.Execute()
 
-            Dim counter1 As Integer = 0
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-            counter1 += 1
-            '  Response.Write("cf: " & Data.FixNull(dr("codice fiscale")) & "<br />")
+                Dim counter1 As Integer = 0
 
-            Dim deEnco As New Ed()
-            ddlCF.Visible = True
-            ddlCF.Font.Size = FontUnit.Small
-            ddlCF.RepeatLayout = RepeatLayout.Table
-            ddlCF.RepeatDirection = RepeatDirection.Vertical
-            ddlCF.DataSource = ds
-            '  ddlCF.DataSourceID = "IDRecord"
-            ddlCF.DataTextField = "descrizione"
-            ddlCF.DataValueField = "IDRecord"
-            ddlCF.DataBind()
+                counter1 += 1
+                '  Response.Write("cf: " & Data.FixNull(dr("codice fiscale")) & "<br />")
 
-            counter1 += 1
-            '  Next
-        Else
-            rispostaCF = TestCf(cf)
-            If rispostaCF = True Then
-                rispostaVar = TestVar(cf)
-                If rispostaVar = True Then
-                    rispostaEA = TestEnteAffiliante(cf)
+                Dim deEnco As New Ed()
+                ddlCF.Visible = True
+                ddlCF.Font.Size = FontUnit.Small
+                ddlCF.RepeatLayout = RepeatLayout.Table
+                ddlCF.RepeatDirection = RepeatDirection.Vertical
+                ddlCF.DataSource = ds
+                '  ddlCF.DataSourceID = "IDRecord"
+                ddlCF.DataTextField = "descrizione"
+                ddlCF.DataValueField = "IDRecord"
+                ddlCF.DataBind()
 
-                    If rispostaEA = False Then
-                        nota = "noEA"
+                counter1 += 1
+                '  Next
+            Else
+                rispostaCF = TestCf(cf)
+                If rispostaCF = True Then
+                    rispostaVar = TestVar(cf)
+                    If rispostaVar = True Then
+                        rispostaEA = TestEnteAffiliante(cf)
+
+                        If rispostaEA = False Then
+                            nota = "noEA"
+                        End If
+                    Else
+                        nota = "toNorma"
                     End If
                 Else
-                    nota = "toNorma"
+                    nota = "noCF"
                 End If
-            Else
-                nota = "noCF"
+
+                risultato = ""
+
+                Session("procedi") = "KO"
+                Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode(nota))
+
+
             End If
-
-            risultato = ""
-
-            Session("procedi") = "KO"
-            Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode(nota))
-
-
-        End If
-
+        Catch ex As Exception
+            Response.Redirect("../FriendlyMessage.aspx")
+        End Try
     End Sub
 
 
@@ -341,6 +347,7 @@ Public Class RichiestaRinnovo2
             Response.Redirect("richiestaRinnovo12.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
 
         Else
+
             Response.Redirect("upDichiarazione2.aspx?idSelected=" & deEnco.QueryStringEncode(Session("idScelto")) & "&codR=" & deEnco.QueryStringEncode(Session("IDRinnovo")) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
 
         End If

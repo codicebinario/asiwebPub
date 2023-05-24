@@ -223,6 +223,7 @@ Public Class AsiModel
         Public Shared Property WebUserEnte As String
         Public Shared Property EquiparazioneSaltaDiploma As String
         Public Shared Property EquiparazioneModificaDataEmissione As String
+        Public Shared Property RinnovoModificaDataEmissione As String
         Public Shared Property CorsoModificaDataEmissione As String
         Public Shared Property IdRecord As String
         Public Shared Property HasToBeChanged As String
@@ -358,6 +359,8 @@ Public Class AsiModel
                         IdRecord = Data.FixNull(dr("Record_ID"))
                         EquiparazioneSaltaDiploma = Data.FixNull(dr("EquiparazioneSaltaDiploma"))
                         EquiparazioneModificaDataEmissione = Data.FixNull(dr("EquiparazioneModificaDataEmissione"))
+                        RinnovoModificaDataEmissione = Data.FixNull(dr("RinnoviModificaDataEmissione"))
+
                         CorsoModificaDataEmissione = Data.FixNull(dr("CorsiModificaDataEmissione"))
                         HasToBeChanged = Data.FixNull(dr("Web_HasToChanged"))
                     Next
@@ -581,6 +584,8 @@ Public Class AsiModel
         Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
         '   RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
+
+        ' nome cognome numerotessera datadinascita
 
 
         Try
@@ -1394,6 +1399,114 @@ Public Class AsiModel
             End Try
 
             Return ritorno
+
+        End Function
+        Public Shared Function GetIdRecordRinnovi(codR As String) As Integer
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim idrecord As Integer = 0
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviMaster")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDRinnovoM", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            idrecord = Data.FixNull(dr("idRecord"))
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return idrecord
+            End Try
+
+            Return idrecord
+
+
+        End Function
+        Public Shared Function NomeZipRinnovi(codR As String) As String
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim nomeZip As String = ""
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviMaster")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDRinnovoM", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            nomeZip = Data.FixNull(dr("ZipMasterContent"))
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return nomeZip
+            End Try
+
+            Return nomeZip
+
+
+        End Function
+        Public Shared Function EsisteZipRinnovi(codR As String) As Boolean
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim esiste As Boolean = False
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webRinnoviMaster")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDRinnovoM", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            esiste = True
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return esiste
+            End Try
+
+            Return esiste
+
 
         End Function
         Public Shared Function quanteRichiestePerGruppo(idRinnovoM As Integer) As Integer
@@ -2273,6 +2386,39 @@ Public Class AsiModel
 
     End Function
     Public Class Equiparazione
+        Public Shared Function GetMotivoRespintoEqui(codR As String) As String
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim motivo As String = ""
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniMaster")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IdEquiparazioneM", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        motivo = Data.FixNull(dr("NoteValutazioneDT"))
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+
+            End Try
+
+            Return motivo
+
+
+        End Function
         Public Shared Function PrendiValoriNuovaEquiparazioneByCF(codiceFiscale As String, codiceEnte As String) As DataSet
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing
@@ -2445,7 +2591,7 @@ Public Class AsiModel
 
             RequestP.AddSearchField("idEquiparazioneM", IdEquiparazioneM, Enumerations.SearchOption.equals)
             '  RequestP.AddSearchField("idRinnovo", idRinnovo, Enumerations.SearchOption.equals)
-            RequestP.AddSearchField("Codice_Status", "1...114")
+            RequestP.AddSearchField("Codice_Status", "1...114.5")
 
             ds = RequestP.Execute()
 
@@ -2573,21 +2719,21 @@ Public Class AsiModel
             ds = RequestA.Execute()
 
 
-                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-                    For Each dr In ds.Tables("main").Rows
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
 
-                        DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
-                        DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                    DatiEquiparazione.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                    DatiEquiparazione.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
                     DatiEquiparazione.IDEquiparazione = Data.FixNull(dr("idrecord"))
                     DatiEquiparazione.DescrizioneStatus = Data.FixNull(dr("Descrizione_StatusWeb"))
-                        DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
-                        DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                    DatiEquiparazione.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                    DatiEquiparazione.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
                     DatiEquiparazione.IdRecord = Data.FixNull(dr("Idrecord"))
                     DatiEquiparazione.EquiCF = Data.FixNull(dr("Equi_CFVerificatoTessera"))
-                        DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
-                        DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
-                        DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
-                        DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
+                    DatiEquiparazione.CodiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
+                    DatiEquiparazione.CodiceTessera = Data.FixNull(dr("Equi_NumeroTessera"))
+                    DatiEquiparazione.Nome = Data.FixNull(dr("Equi_Nome"))
+                    DatiEquiparazione.Cognome = Data.FixNull(dr("Equi_Cognome"))
                     DatiEquiparazione.DataScadenza = Data.FixNull(dr("Equi_DataScadenza"))
                     DatiEquiparazione.Sport = Data.FixNull(dr("Equi_Sport_Interessato"))
                     DatiEquiparazione.Disciplina = Data.FixNull(dr("Equi_Disciplina_Interessata"))
@@ -2599,7 +2745,7 @@ Public Class AsiModel
 
 
 
-                End If
+            End If
 
 
 
@@ -2751,6 +2897,116 @@ Public Class AsiModel
 
     Public Class Corso
 
+        Public Shared Function NomeZipCorsi(codR As String) As String
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim nomeZip As String = ""
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webCorsiRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDCorso", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            nomeZip = Data.FixNull(dr("ZipMasterContent"))
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return nomeZip
+            End Try
+
+            Return nomeZip
+
+
+        End Function
+        Public Shared Function GetIdRecordCorsi(codR As String) As Integer
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim idrecord As Integer = 0
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webCorsiRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDCorso", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            idrecord = Data.FixNull(dr("idRecord"))
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return idrecord
+            End Try
+
+            Return idrecord
+
+
+        End Function
+
+        Public Shared Function EsisteZipCorsi(codR As String) As Boolean
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim esiste As Boolean = False
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webCorsiRichiesta")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDCorso", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            esiste = True
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return esiste
+            End Try
+
+            Return esiste
+
+
+        End Function
+
         Public Shared Function PrendiNominativo(record_id As String) As String
 
             Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
@@ -2867,28 +3123,28 @@ Public Class AsiModel
             ds = RequestA.Execute()
 
 
-                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-                    For Each dr In ds.Tables("main").Rows
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
 
-                        DatiCorso.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
-                        DatiCorso.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
-                        DatiCorso.IDCorso = Data.FixNull(dr("IDCorso"))
-                        DatiCorso.DescrizioneStatus = Data.FixNull(dr("Descrizione_StatusWeb"))
-                        DatiCorso.CodiceStatus = Data.FixNull(dr("Codice_Status"))
-                        DatiCorso.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
-                        DatiCorso.IdRecord = Data.FixNull(dr("Id_record"))
-                        DatiCorso.IndirizzoSvolgimento = Data.FixNull(dr("Indirizzo_Svolgimento"))
-                        DatiCorso.LocalitaSvolgimento = Data.FixNull(dr("Comune_Svolgimento"))
-                        DatiCorso.CapSvolgimento = Data.FixNull(dr("Cap_Svolgimento"))
-                        DatiCorso.PRSvolgimento = Data.FixNull(dr("PR_Svolgimento"))
-                        DatiCorso.RegioneSvolgimento = Data.FixNull(dr("Regione_Svolgimento"))
-                        DatiCorso.SvolgimentoDataDa = Data.FixNull(dr("Svolgimento_Da_Data"))
-                        DatiCorso.SvolgimentoDataA = Data.FixNull(dr("Svolgimento_A_Data"))
-                        'DatiCorso.OraSvolgimentoDa = Data.FixNull(dr("Ora_Svolgimento_Inizio"))
-                        'DatiCorso.OraSvolgimentoA = Data.FixNull(dr("Ora_Svolgimento_Fine"))
-                        DatiCorso.TitoloCorso = Data.FixNull(dr("Titolo_Corso"))
-                        DatiCorso.TotaleOre = Data.FixNull(dr("oreCorso"))
-                        DatiCorso.DataEmissione = Data.FixNull(dr("Data_Emissione"))
+                    DatiCorso.CodiceEnteRichiedente = Data.FixNull(dr("Codice_Ente_Richiedente"))
+                    DatiCorso.DescrizioneEnteRichiedente = Data.FixNull(dr("Descrizione_Ente_Richiedente"))
+                    DatiCorso.IDCorso = Data.FixNull(dr("IDCorso"))
+                    DatiCorso.DescrizioneStatus = Data.FixNull(dr("Descrizione_StatusWeb"))
+                    DatiCorso.CodiceStatus = Data.FixNull(dr("Codice_Status"))
+                    DatiCorso.TipoEnte = Data.FixNull(dr("Tipo_Ente"))
+                    DatiCorso.IdRecord = Data.FixNull(dr("Id_record"))
+                    DatiCorso.IndirizzoSvolgimento = Data.FixNull(dr("Indirizzo_Svolgimento"))
+                    DatiCorso.LocalitaSvolgimento = Data.FixNull(dr("Comune_Svolgimento"))
+                    DatiCorso.CapSvolgimento = Data.FixNull(dr("Cap_Svolgimento"))
+                    DatiCorso.PRSvolgimento = Data.FixNull(dr("PR_Svolgimento"))
+                    DatiCorso.RegioneSvolgimento = Data.FixNull(dr("Regione_Svolgimento"))
+                    DatiCorso.SvolgimentoDataDa = Data.FixNull(dr("Svolgimento_Da_Data"))
+                    DatiCorso.SvolgimentoDataA = Data.FixNull(dr("Svolgimento_A_Data"))
+                    'DatiCorso.OraSvolgimentoDa = Data.FixNull(dr("Ora_Svolgimento_Inizio"))
+                    'DatiCorso.OraSvolgimentoA = Data.FixNull(dr("Ora_Svolgimento_Fine"))
+                    DatiCorso.TitoloCorso = Data.FixNull(dr("Titolo_Corso"))
+                    DatiCorso.TotaleOre = Data.FixNull(dr("oreCorso"))
+                    DatiCorso.DataEmissione = Data.FixNull(dr("Data_Emissione"))
                     DatiCorso.MostraMonteOreFormazione = Data.FixNullInteger(dr("MonteOreFormazioneFlag"))                        '  DatiCorso.StatusPrimaCaricamentoXL = Data.FixNull(dr("StatusPrimaCaricamentoXL"))
 
 
@@ -2896,7 +3152,7 @@ Public Class AsiModel
 
 
 
-                End If
+            End If
 
 
 
@@ -3019,7 +3275,117 @@ Public Class AsiModel
     Public Shared Property NomeArticolo As String
     Public Shared Property IDCorso As String
 
+    Public Class Equiparazioni
+        Public Shared Function NomeZipRinnovi(codR As String) As String
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim nomeZip As String = ""
 
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniMaster")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDEquiparazioneM", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            nomeZip = Data.FixNull(dr("ZipMasterContent"))
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return nomeZip
+            End Try
+
+            Return nomeZip
+
+
+        End Function
+        Public Shared Function GetIdRecordEquiparazioni(codR As String) As Integer
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim idrecord As Integer = 0
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniMaster")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDEquiparazioneM", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            idrecord = Data.FixNull(dr("idRecord"))
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return idrecord
+            End Try
+
+            Return idrecord
+
+
+        End Function
+
+        Public Shared Function EsisteZipEquiparazioni(codR As String) As Boolean
+            Dim fms As FMSAxml = Nothing
+            Dim ds As DataSet = Nothing
+            Dim esiste As Boolean = False
+
+            fms = Conn.Connect()
+
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fms.SetLayout("webEquiparazioniMaster")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("IDEquiparazioneM", codR, Enumerations.SearchOption.equals)
+
+            Try
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+                        If Not String.IsNullOrEmpty(Data.FixNull(dr("ZipMaster"))) Then
+                            esiste = True
+                        End If
+
+                    Next
+                End If
+
+
+
+            Catch ex As Exception
+                Return esiste
+            End Try
+
+            Return esiste
+
+
+        End Function
+    End Class
 
 
     Public Class ContatoriEvasi

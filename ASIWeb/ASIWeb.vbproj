@@ -147,6 +147,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -215,6 +216,7 @@
     <Content Include="Albo\json.aspx" />
     <Content Include="Albo\jsonData.txt" />
     <Content Include="Albo\partecipantiTemplate.aspx" />
+    <Content Include="Albo\scaricaZipCorsi.aspx" />
     <Content Include="Albo\WebForm10.aspx" />
     <Content Include="Albo\WebForm11.aspx" />
     <Content Include="Albo\WebForm8.aspx" />
@@ -229,6 +231,7 @@
     <Content Include="Css\customEquiparazione.css" />
     <Content Include="Css\jquery-confirm.min.css" />
     <Content Include="Css\output.css" />
+    <Content Include="Css\toastr.min.css" />
     <Content Include="Equiparazioni2\annullaEquiparazione2.aspx" />
     <Content Include="Equiparazioni2\annullaEquiparazioneMotivo2.aspx" />
     <Content Include="Equiparazioni2\annullaRichiesta.aspx" />
@@ -246,6 +249,7 @@
     <Content Include="Equiparazioni2\scaricaDiplomaEqui2.aspx" />
     <Content Include="Equiparazioni2\scaricaDiplomaEquiparazioneN2.aspx" />
     <Content Include="Equiparazioni2\scaricaTesseraEquiparazioneN2.aspx" />
+    <Content Include="Equiparazioni2\scaricaZipEquiparazione.aspx" />
     <Content Include="Equiparazioni2\sceltaSport.aspx" />
     <Content Include="Equiparazioni2\upLegEquiparazioni2.aspx" />
     <Content Include="Equiparazioni2\valutaEquiparazione2.aspx" />
@@ -436,6 +440,7 @@
     <Content Include="Rinnovi2\DashboardRinnoviEvasi2.aspx" />
     <Content Include="Rinnovi2\RichiestaRinnovo12.aspx" />
     <Content Include="Rinnovi2\RichiestaRinnovo2.aspx" />
+    <Content Include="Rinnovi2\scaricaZipRinnovo.aspx" />
     <Content Include="Rinnovi2\scaricaTesseraRinnovo2.aspx" />
     <Content Include="Rinnovi2\upDichiarazione2.aspx" />
     <Content Include="Rinnovi2\UpFotoRinnovo2.aspx" />
@@ -511,6 +516,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="AsiErrorMasterPage.Master" />
     <None Include="Scripts\jquery-3.6.4.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.4.js" />
     <Content Include="Scripts\jquery-3.6.4.min.js" />
@@ -584,6 +590,7 @@
     <Content Include="Scripts\src\utils\setAttributes.js" />
     <Content Include="Scripts\src\utils\setStyles.js" />
     <Content Include="Scripts\src\utils\setupEventListeners.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -709,6 +716,13 @@
       <DependentUpon>partecipantiTemplate.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Albo\scaricaZipCorsi.aspx.designer.vb">
+      <DependentUpon>scaricaZipCorsi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Albo\scaricaZipCorsi.aspx.vb">
+      <DependentUpon>scaricaZipCorsi.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Albo\WebForm10.aspx.designer.vb">
       <DependentUpon>WebForm10.aspx</DependentUpon>
     </Compile>
@@ -729,6 +743,13 @@
     <Compile Include="Albo\WebForm8.aspx.vb">
       <DependentUpon>WebForm8.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="AsiErrorMasterPage.Master.designer.vb">
+      <DependentUpon>AsiErrorMasterPage.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AsiErrorMasterPage.Master.vb">
+      <DependentUpon>AsiErrorMasterPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AsiMasterPageEqui.Master.designer.vb">
       <DependentUpon>AsiMasterPageEqui.Master</DependentUpon>
@@ -889,6 +910,13 @@
     </Compile>
     <Compile Include="Equiparazioni2\scaricaTesseraEquiparazioneN2.aspx.vb">
       <DependentUpon>scaricaTesseraEquiparazioneN2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\scaricaZipEquiparazione.aspx.designer.vb">
+      <DependentUpon>scaricaZipEquiparazione.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\scaricaZipEquiparazione.aspx.vb">
+      <DependentUpon>scaricaZipEquiparazione.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni2\sceltaSport.aspx.designer.vb">
@@ -1389,6 +1417,13 @@
       <DependentUpon>RichiestaRinnovo2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi2\scaricaZipRinnovo.aspx.designer.vb">
+      <DependentUpon>scaricaZipRinnovo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\scaricaZipRinnovo.aspx.vb">
+      <DependentUpon>scaricaZipRinnovo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi2\scaricaTesseraRinnovo2.aspx.designer.vb">
       <DependentUpon>scaricaTesseraRinnovo2.aspx</DependentUpon>
     </Compile>
@@ -1681,6 +1716,9 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

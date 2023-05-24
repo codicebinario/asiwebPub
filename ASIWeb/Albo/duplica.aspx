@@ -68,167 +68,168 @@
       </div>
     <br /><br />
 
-    
-	   <div class="col-sm-12">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-								 <label for="txtNome">Data Emissione - [dd-MM-yyyy] &nbsp;</label>
-                                    <asp:textbox id="txtDataEmissione" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
-					
-                                    
-                                 
-			<obout:Calendar ID="Calendar3"  runat="server"  
-									TextBoxId="txtDataEmissione" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif" 
-									 DatePickerMode="True"   MonthWidth="200" MonthHeight="140"
-									
-								 Visible="true" 	StyleFolder="../calendar/styles/default"     >
-															
-								</obout:Calendar>
-								   <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender2"
-                        MaskType="Date"
-                        runat="server"
-                        CultureName="it-IT"
-                        Mask="99/99/9999"
-                        MessageValidatorTip="true"
-                        UserDateFormat="DayMonthYear"
-                        OnFocusCssClass="MaskedEditFocus"
-                        OnInvalidCssClass="MaskedEditError"
-                        ErrorTooltipEnabled="True"
-                        TargetControlID="txtDataEmissione" />           
-                          
-                                </div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									
-								</div>
-							</div>
-						
-                         
-                        
+
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
+        <Triggers>
+
+            <%--   <asp:AsyncPostBackTrigger ControlID="ddlProvinciaResidenza" />--%>
+            <%--	  	 <asp:AsyncPostBackTrigger  ControlID="ddlProvinciaConsegna"/>--%>
+            <%--  <asp:PostBackTrigger  ControlID="ddlProvincia"  />--%>
+        </Triggers>
+        <ContentTemplate>
+            <asp:Panel ID="pnlDataEmissione" runat="server">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtNome">Data Emissione - [dd-MM-yyyy] &nbsp;</label>
+                                <asp:TextBox ID="txtDataEmissione" CssClass="form-control" runat="server" MaxLength="250"></asp:TextBox>
+
+
+
+                                <obout:Calendar ID="Calendar3" runat="server"
+                                    TextBoxId="txtDataEmissione" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif"
+                                    DatePickerMode="True" MonthWidth="200" MonthHeight="140"
+                                    Visible="true" StyleFolder="../calendar/styles/default">
+                                </obout:Calendar>
+                                <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender2"
+                                    MaskType="Date"
+                                    runat="server"
+                                    CultureName="it-IT"
+                                    Mask="99/99/9999"
+                                    MessageValidatorTip="true"
+                                    UserDateFormat="DayMonthYear"
+                                    OnFocusCssClass="MaskedEditFocus"
+                                    OnInvalidCssClass="MaskedEditError"
+                                    ErrorTooltipEnabled="True"
+                                    TargetControlID="txtDataEmissione" />
+
+                            </div>
                         </div>
-                             
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
                 </div>
-	<div class="col-sm-12">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group"> 
-									
-									
-		<asp:CustomValidator ID="CustomValidator1" ControlToValidate="txtDataEmissione" Enabled="true" Display="Dynamic" runat="server" ErrorMessage="Inserire una data dell'anno corrente" CssClass="errore"></asp:CustomValidator>
-								
-             
-	       
-						</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-					  
- 
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtDataEmissione" ErrorMessage="Data Emissione" Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
+
+
+                                <asp:CustomValidator ID="CustomValidator1" ControlToValidate="txtDataEmissione" Enabled="true" Display="Dynamic" runat="server" ErrorMessage="Inserire una data dell'anno corrente" CssClass="errore"></asp:CustomValidator>
 
 
 
-
-					</div>
-								
-								</div>
-							</div>
-						</div>
-           
-
-
-   <div class="col-sm-12">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-								 <label for="txtNome">Data Inizio - [dd-MM-yyyy] &nbsp;[*] </label>
-                                    <asp:textbox id="txtDataInizio" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
-					
-                                    
-                                 
-			<obout:Calendar ID="Calendar1"  runat="server"  
-									TextBoxId="txtDataInizio" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif" 
-									 DatePickerMode="True"   MonthWidth="200" MonthHeight="140"
-									
-								 Visible="true" 	StyleFolder="../calendar/styles/default"     >
-															
-								</obout:Calendar>
-
-
-
-
-
-								   <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender4"
-                        MaskType="Date"
-                        runat="server"
-                        CultureName="it-IT"
-                        Mask="99/99/9999"
-                        MessageValidatorTip="true"
-                        UserDateFormat="DayMonthYear"
-                        OnFocusCssClass="MaskedEditFocus"
-                        OnInvalidCssClass="MaskedEditError"
-                        ErrorTooltipEnabled="True"
-                        TargetControlID="txtDataInizio" />           
-                          
-                                </div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label for="txtCognome">Data Fine - [dd-MM-yyyy] [*]</label>
-                                    	<asp:textbox id="txtDataFine" runat="server" Cssclass="form-control"   maxlength="250" ></asp:textbox>
-						<obout:Calendar ID="Calendar2"  runat="server"   BeginDateCalendarId="Calendar1"
-									 
-									TextBoxId="txtDataFine" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif" 
-									 DatePickerMode="True"   MonthWidth="200" MonthHeight="140"
-									
-									 Visible="true" 	StyleFolder="../calendar/styles/default" >
-															
-								</obout:Calendar>
-								   <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender1"
-                        MaskType="Date"
-                        runat="server"
-                        CultureName="it-IT"
-                        Mask="99/99/9999"
-                        MessageValidatorTip="true"
-                        UserDateFormat="DayMonthYear"
-                        OnFocusCssClass="MaskedEditFocus"
-                        OnInvalidCssClass="MaskedEditError"
-                        ErrorTooltipEnabled="True"
-                        TargetControlID="txtDataFine" />           
-								
-								</div>
-							</div>
-						
-                         
-                        
+                            </div>
                         </div>
-                             
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </asp:Panel>
+
+
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtNome">Data Inizio - [dd-MM-yyyy] &nbsp;[*] </label>
+                            <asp:TextBox ID="txtDataInizio" CssClass="form-control" runat="server" MaxLength="250"></asp:TextBox>
+
+
+
+                            <obout:Calendar ID="Calendar1" runat="server"
+                                TextBoxId="txtDataInizio" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif"
+                                DatePickerMode="True" MonthWidth="200" MonthHeight="140"
+                                Visible="true" StyleFolder="../calendar/styles/default">
+                            </obout:Calendar>
+
+
+
+
+
+                            <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender4"
+                                MaskType="Date"
+                                runat="server"
+                                CultureName="it-IT"
+                                Mask="99/99/9999"
+                                MessageValidatorTip="true"
+                                UserDateFormat="DayMonthYear"
+                                OnFocusCssClass="MaskedEditFocus"
+                                OnInvalidCssClass="MaskedEditError"
+                                ErrorTooltipEnabled="True"
+                                TargetControlID="txtDataInizio" />
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtCognome">Data Fine - [dd-MM-yyyy] [*]</label>
+                            <asp:TextBox ID="txtDataFine" runat="server" CssClass="form-control" MaxLength="250"></asp:TextBox>
+                            <obout:Calendar ID="Calendar2" runat="server" BeginDateCalendarId="Calendar1"
+                                TextBoxId="txtDataFine" CultureName="it-IT" DatePickerImagePath="../img/icon2.gif"
+                                DatePickerMode="True" MonthWidth="200" MonthHeight="140"
+                                Visible="true" StyleFolder="../calendar/styles/default">
+                            </obout:Calendar>
+                            <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender1"
+                                MaskType="Date"
+                                runat="server"
+                                CultureName="it-IT"
+                                Mask="99/99/9999"
+                                MessageValidatorTip="true"
+                                UserDateFormat="DayMonthYear"
+                                OnFocusCssClass="MaskedEditFocus"
+                                OnInvalidCssClass="MaskedEditError"
+                                ErrorTooltipEnabled="True"
+                                TargetControlID="txtDataFine" />
+
+                        </div>
+                    </div>
+
+
+
                 </div>
 
-              <div class="col-sm-12">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">  <asp:RequiredFieldValidator ID="rqDataInizio" runat="server" ControlToValidate="txtDataInizio"  ErrorMessage="Data Inizio"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
-		
-             
-	       
-						</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-					  
-<asp:RequiredFieldValidator ID="rqDataFine" runat="server" ControlToValidate="txtDataFine"  ErrorMessage="Data Fine"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
- 
+            </div>
+
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <asp:RequiredFieldValidator ID="rqDataInizio" runat="server" ControlToValidate="txtDataInizio" ErrorMessage="Data Inizio" Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+
+                            <asp:RequiredFieldValidator ID="rqDataFine" runat="server" ControlToValidate="txtDataFine" ErrorMessage="Data Fine" Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
 
 
 
 
-					</div>
-								
-								</div>
-							</div>
-						</div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </ContentTemplate>
+
+    </asp:UpdatePanel>
 
     
      <div class="col-sm-12">

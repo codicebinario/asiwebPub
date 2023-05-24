@@ -34,7 +34,7 @@ Public Class annullaCorso
 
 
 
-
+        Session("AnnullaREqui") = "annullatoCorso"
 
         Response.Redirect("dashboardB.aspx")
     End Sub

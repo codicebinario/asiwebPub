@@ -300,6 +300,25 @@
 						</div>
 							</div>
 							
-				</div></div>	
+				</div></div>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+    <div id="results" runat="server"></div>
+                </div></div></div>
 
+    <script>
+        const messaggioAggiunto = document.querySelector('#<%=results.ClientID %>')
+        const carica = document.querySelector('#<%=lnkButton1.ClientID%>')
+        carica.addEventListener('click', function () {
+        
+            
+           
+            messaggioAggiunto.style.cssText = "width: 100%;  margin-top: 3px; margin-down: 3px;  padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+            messaggioAggiunto.innerHTML = "Equiparazione in caricamento...";
+           
+
+
+        });
+    </script>
 </asp:Content>

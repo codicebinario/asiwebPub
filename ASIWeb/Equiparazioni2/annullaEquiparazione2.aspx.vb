@@ -9,6 +9,7 @@ Public Class annullaEquiparazione2
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
+
         Dim deEnco As New Ed
 
         Dim codiceEquiparazione As String = deEnco.QueryStringDecode(Request.QueryString("codR"))
@@ -24,51 +25,23 @@ Public Class annullaEquiparazione2
             fmsP.SetLayout("webEquiparazioniRichiestaMolti")
 
             Dim RequestP = fmsP.CreateDeleteRequest(record_ID)
-            '   RequestP.AddField("Codice_Status", "99")
+
 
             Try
                 risposta = RequestP.Execute()
-                '   AsiModel.LogIn.LogCambioStatus(codiceCorso, "99", Session("WebUserEnte"), "corso")
-                '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
-                '   Session("annullaCorso") = "ok"
-
             Catch ex As Exception
             End Try
-            '    Session("visto") = "ok"
-            '    Response.Redirect("DashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("casi"))
-            'Else
-            'Session("visto") = "ok"
-            'Response.Redirect("dashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("cano"))
 
         End If
 
 
 
 
-        '  Dim IDRecord As String = deEnco.QueryStringDecode(Request.QueryString("id"))
-        'Dim risposta As Integer = 0
-        'Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-
-        'fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-
-        'Dim RequestP = fmsP.CreateEditRequest(record_ID)
-        'RequestP.AddField("Codice_Status", "119")
-
-        'Try
-        '    risposta = RequestP.Execute()
-        '    AsiModel.LogIn.LogCambioStatus(codiceEquiparazione, "119", Session("WebUserEnte"), "equiparazione", record_ID)
-        '    '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
-        '    Session("annullaEquiparazione") = "ok"
-
-        'Catch ex As Exception
-
-        'End Try
 
 
+        Session("AnnullaREqui") = "annullataEqui"
 
-
-
-        Response.Redirect("dashboardEqui2.aspx?open=" & codiceEquiparazione)
+        Response.Redirect("dashboardEqui2.aspx?open=" & codiceEquiparazione & "&toa=canc")
     End Sub
 
 End Class

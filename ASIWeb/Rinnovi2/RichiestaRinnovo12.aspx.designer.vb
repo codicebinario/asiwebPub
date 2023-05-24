@@ -41,6 +41,96 @@ Partial Public Class RichiestaRinnovo12
     Protected WithEvents HiddenIDRinnovo As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''UpdatePanel3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UpdatePanel3 As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
+    '''pnlModificaDataEmissione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlModificaDataEmissione As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''txtDataEmissioneM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataEmissioneM As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''avvisoData control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents avvisoData As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Calendar1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Calendar1 As Global.OboutInc.Calendar2.Calendar
+
+    '''<summary>
+    '''MaskedEditExtender2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MaskedEditExtender2 As Global.AjaxControlToolkit.MaskedEditExtender
+
+    '''<summary>
+    '''rqDataInizio control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rqDataInizio As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''validator33 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents validator33 As Global.System.Web.UI.WebControls.CustomValidator
+
+    '''<summary>
+    '''pnlDataEmissione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlDataEmissione As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''txtDataEmissione control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataEmissione As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lblnomef control.
     '''</summary>
     '''<remarks>
@@ -417,4 +507,13 @@ Partial Public Class RichiestaRinnovo12
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lnkConcludi As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''results control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents results As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 End Class
