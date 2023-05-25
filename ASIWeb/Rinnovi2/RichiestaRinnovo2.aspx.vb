@@ -226,6 +226,18 @@ Public Class RichiestaRinnovo2
         RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
         '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
         Try
+            'Dim searchValue As String = "your_search_value"
+            'Dim dataTable As DataTable = ds.Tables("main")
+
+            '' Search for the value in a specific field
+            'Dim foundRows() As DataRow = dataTable.Select("FieldName = '" & searchValue & "'")
+
+            '' Iterate through the found rows
+            'For Each row As DataRow In foundRows
+            '    ' Access the values of other fields in the DataRow
+            '    Dim fieldValue As String = row("FieldName").ToString()
+            '    ' Do something with the found row
+            'Next
 
 
             ds = RequestP.Execute()
@@ -243,10 +255,33 @@ Public Class RichiestaRinnovo2
                 ddlCF.RepeatLayout = RepeatLayout.Table
                 ddlCF.RepeatDirection = RepeatDirection.Vertical
                 ddlCF.DataSource = ds
+
                 '  ddlCF.DataSourceID = "IDRecord"
                 ddlCF.DataTextField = "descrizione"
                 ddlCF.DataValueField = "IDRecord"
                 ddlCF.DataBind()
+                Dim descrizioneValue As String
+                Dim ultimo As String
+
+                'For Each item As ListItem In ddlCF.Items
+
+                '    ' Access the corresponding data row from the datasetim
+                '    Dim dataRow As DataRow = ds.Tables("main").Rows(ddlCF.Items.IndexOf(item))
+                '    descrizioneValue = dataRow("descrizione2").ToString()
+                '    ultimo = Right(descrizioneValue, 1)
+                '    ' item.Attributes("class") = "list-group-item list-group-item-alert"
+
+                '    If ultimo = "0" Then
+                '            item.Enabled = False
+
+
+                '        item.Text += " <br /><span style=""color:red;"">[ATTENZIONE QUALIFICA SCADUTA DA PIU’ DI TRE ANNI, È NECESSARIO PROCEDERE CON UNA NUOVA RICHIESTA DI EQUIPARAZIONE.]</span>"
+                '    End If
+                '    ' Perform your condition to determine if the item should be enabled or disabled
+
+                '    descrizioneValue = ""
+                '    ultimo = ""
+                'Next
 
                 counter1 += 1
                 '  Next

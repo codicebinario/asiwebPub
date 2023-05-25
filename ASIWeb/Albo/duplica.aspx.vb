@@ -56,6 +56,7 @@ Public Class duplica
         dataInizio = "01-01-" & annoCorrente
         dataFine = "31-12-" & annoCorrente
         Calendar3.DateMin = dataInizio
+        Calendar1.DateMin = "01-01-" & annoCorrente
         Dim fase As String = Request.QueryString("fase")
         'If Not String.IsNullOrEmpty(fase) Then
         '    fase = deEnco.QueryStringDecode(Request.QueryString("fase"))

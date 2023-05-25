@@ -66,4 +66,13 @@ Partial Public Class archivioAlbo
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents phDash As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
+    '''phDash10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents phDash10 As Global.System.Web.UI.WebControls.PlaceHolder
 End Class

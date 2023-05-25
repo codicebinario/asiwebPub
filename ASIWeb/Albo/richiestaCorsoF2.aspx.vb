@@ -60,7 +60,7 @@ Public Class richiestaCorsoF2
         dataFine = "31-12-" & annoCorrente
         Calendar3.DateMin = dataInizio
         ' Calendar3.DateMax = dataFine
-
+        Calendar1.DateMin = "01-01-" & annoCorrente
 
         'DateFirstMonth = "2022-08-26"
         'DateMax = "2022-09-13" DateMin="2022-08-26"

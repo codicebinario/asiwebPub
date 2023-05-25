@@ -18,6 +18,10 @@
 
 
         }
+         .errore { color:red;
+
+
+    }
         .piccolo{
 
  font-size: small;
@@ -81,18 +85,15 @@
 
 
                     <%--  <asp:Button ID="btnUltimi5" runat="server" Text="Ultimi 10.."  class="btn btn-primary"    />--%>
-                    <asp:LinkButton ID="lnkLast10" runat="server" CausesValidation="false" CssClass="btn btn-primary"><i class="bi bi-list-task"> </i>Ultimi 10..</asp:LinkButton>
+                    <asp:LinkButton ID="lnkLast10" runat="server"  CausesValidation="false" CssClass="btn btn-primary"><i class="bi bi-list-task"> </i>Ultimi 10..</asp:LinkButton>
 
                 </div>
             </div>
 
         </div>
 
-  
-
-    <div class="col-sm-12">
         <div class="row d-flex justify-content-center">
-            <div class="col-sm-6">
+            <div class="col-sm-10">
                 <div class="form-group">
 
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server"
@@ -101,34 +102,33 @@
 
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                </div>
-            </div>
+       
 
 
 
         </div>
-
-    </div>
-      </div>    
+   </div>    
+  
+   
  <div class="row d-flex justify-content-center">
    
 
      <asp:PlaceHolder ID="phDash" runat="server" Visible="false"></asp:PlaceHolder>
 
-
- 
-  
+     <asp:PlaceHolder ID="phDash10" runat="server" Visible="false"></asp:PlaceHolder>
 
 
 
 
 
 
-     
 
-</div>
+
+
+
+
+
+ </div>
 
 
       

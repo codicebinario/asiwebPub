@@ -59,11 +59,38 @@
   justify-content: center;
   align-items: center;
  }
-
-     input[type="radio"] 
+   
+  /*   input[type="radio"] 
 {
-    margin-right: 2px;
+    margin-right: 10px;
+      margin-left: 20px;
+           display: block;
+      float: left;
+       
 }
+     label {
+         margin-top: -4px;
+     }*/
+   /*  .custom-radio-list label {
+  display: flex;
+  align-items: center;
+}*/
+/*
+.custom-radio-list input[type="radio"] {
+  margin-right: 8px;
+}
+
+.custom-radio-list .custom-radio-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #333;
+}
+
+.custom-radio-list .custom-radio-text {
+  font-size: 14px;
+}*/
+
   </style>
 
 </asp:Content>
@@ -134,11 +161,13 @@
                 <div class="form-check">
   
 
-              <asp:radiobuttonlist ID="ddlCF"  runat="server" Visible="false"></asp:radiobuttonlist>
-                  
+                    <asp:RadioButtonList ID="ddlCF" runat="server" Visible="false" RepeatColumns="1">
+                       
+                    </asp:RadioButtonList>
 
-                    
-</div>
+
+
+                </div>
                </div>
           </div>
              
@@ -215,7 +244,28 @@
 
 
      
+    <script>
 
+        //var radioInputs = document.querySelector('input[type="radio"]');
+        //for (var i = 0; i < radioInputs.length; i++) {
+
+        //}
+        //radioInput.classList.add('form-check-input');
+
+        //var targetFor = 'Conte'; // The value of the 'for' attribute you want to match
+        //var labels = document.getElementsByTagName('label');
+
+        //for (var i = 0; i < labels.length; i++) {
+        //    var label = labels[i];
+        //    var forValue = label.getAttribute('for');
+        //    var firstFiveLetters = forValue.substring(0, 5);
+        //    if (firstFiveLetters === targetFor) {
+        //        label.classList.add('form-check-label');
+        //      //  break; // Exit the loop once the matching label is found (optional)
+        //    }
+        //}
+
+    </script>
 
   
 </asp:Content>
