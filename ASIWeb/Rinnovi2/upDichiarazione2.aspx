@@ -81,7 +81,7 @@
 		<div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
 
-      <h6 class="fs-5 text-white text-decoration-none"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Invio della Dichiarazione Cambio Ente Affiliante (info)
+      <h6 class="fs-5 text-white text-decoration-none"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Invio della Dichiarazione Cambio Ente Affiliante (help)
       </a></h6>
 	<p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>

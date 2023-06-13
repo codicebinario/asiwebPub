@@ -368,6 +368,22 @@ Public Class richiestaCorsoF2
 
         End If
     End Sub
+    Protected Sub CustomValidator2_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator2.ServerValidate
+
+        Dim dataInizio As Date = txtDataInizio.Text
+
+        Dim annoInizio As Integer = dataInizio.Year
+        Dim annoCorrente As Integer = Now.Year
+
+        If annoInizio = annoCorrente Then
+            args.IsValid = True
+        Else
+            args.IsValid = False
+        End If
+    End Sub
+
+
+
 
     Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate
 
@@ -403,12 +419,6 @@ Public Class richiestaCorsoF2
 
 
 
-
-
-
-
-
-
         End If
 
 
@@ -418,5 +428,31 @@ Public Class richiestaCorsoF2
 
     End Sub
 
+    Protected Sub CustomValidator3_ServerValidate(source As Object, args As ServerValidateEventArgs)
 
+        Dim dataInizio As Date = txtDataInizio.Text
+
+        Dim dataFine As Date = txtDataFine.Text
+
+
+        If dataFine < dataInizio Then
+
+            args.IsValid = False
+            CustomValidator1.ErrorMessage = "La data fine corso deve essere uguale o successiva alla data inizio"
+
+
+
+        Else
+
+
+            args.IsValid = True
+
+
+
+        End If
+
+
+
+
+    End Sub
 End Class

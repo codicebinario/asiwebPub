@@ -650,7 +650,7 @@
     </Compile>
     <Compile Include="Albo\archivioAlbo.aspx.vb">
       <DependentUpon>archivioAlbo.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Albo\archivioAlboValutati.aspx.designer.vb">
       <DependentUpon>archivioAlboValutati.aspx</DependentUpon>

@@ -121,16 +121,18 @@ Public Class RichiestaRinnovo2
         Dim risposta As Boolean = False
         Dim ds As DataSet
         Dim codiceAffialiante As String = ""
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("WebAlbo")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
-        'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
-        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
         Try
+
+
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("WebAlbo")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
+            'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
+            '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
 
 
             ds = RequestP.Execute()
@@ -142,6 +144,8 @@ Public Class RichiestaRinnovo2
                 risposta = False
             End If
         Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "RichiestaRinnovo2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
             risposta = False
         End Try
         Return risposta
@@ -150,18 +154,19 @@ Public Class RichiestaRinnovo2
         Dim risposta As Boolean = False
         Dim ds As DataSet
         Dim codiceAffialiante As String = ""
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("WebAlbo")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
-        '  RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
-        'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
-        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
-
-        'nome cognome e datadinascita e rinnovoFlagVar = 1
         Try
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("WebAlbo")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+            '  RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
+            'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
+            '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+
+            'nome cognome e datadinascita e rinnovoFlagVar = 1
+
 
 
             ds = RequestP.Execute()
@@ -173,6 +178,8 @@ Public Class RichiestaRinnovo2
                 risposta = False
             End If
         Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "RichiestaRinnovo2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
             risposta = False
         End Try
         Return risposta
@@ -181,16 +188,17 @@ Public Class RichiestaRinnovo2
         Dim risposta As Boolean = False
         Dim ds As DataSet
         Dim codiceAffialiante As String = ""
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("WebAlbo")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
-        '  RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
-        '  RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
-        'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
-        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
         Try
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("WebAlbo")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
+            '  RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+            '  RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
+            'RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
+            '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
+
 
 
             ds = RequestP.Execute()
@@ -202,6 +210,8 @@ Public Class RichiestaRinnovo2
                 risposta = False
             End If
         Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "RichiestaRinnovo2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
             risposta = False
         End Try
         Return risposta
@@ -216,28 +226,19 @@ Public Class RichiestaRinnovo2
         Dim nota As String = ""
         Dim ds As DataSet
         Dim codiceAffialiante As String = ""
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("WebAlbo")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
-        RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
-        '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
         Try
-            'Dim searchValue As String = "your_search_value"
-            'Dim dataTable As DataTable = ds.Tables("main")
 
-            '' Search for the value in a specific field
-            'Dim foundRows() As DataRow = dataTable.Select("FieldName = '" & searchValue & "'")
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("WebAlbo")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice Fiscale", cf, Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("RinnovoFlagVar", "1", Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("CodiceEnteAffiliante", 0, Enumerations.SearchOption.biggerThan)
+            RequestP.AddSortField("scadenza", Enumerations.Sort.Ascend)
+            '  RequestP.AddSortField("IDEquiparazione", Enumerations.Sort.Descend)
 
-            '' Iterate through the found rows
-            'For Each row As DataRow In foundRows
-            '    ' Access the values of other fields in the DataRow
-            '    Dim fieldValue As String = row("FieldName").ToString()
-            '    ' Do something with the found row
-            'Next
+
 
 
             ds = RequestP.Execute()
@@ -263,25 +264,25 @@ Public Class RichiestaRinnovo2
                 Dim descrizioneValue As String
                 Dim ultimo As String
 
-                'For Each item As ListItem In ddlCF.Items
+                For Each item As ListItem In ddlCF.Items
 
-                '    ' Access the corresponding data row from the datasetim
-                '    Dim dataRow As DataRow = ds.Tables("main").Rows(ddlCF.Items.IndexOf(item))
-                '    descrizioneValue = dataRow("descrizione2").ToString()
-                '    ultimo = Right(descrizioneValue, 1)
-                '    ' item.Attributes("class") = "list-group-item list-group-item-alert"
+                    ' Access the corresponding data row from the datasetim
+                    Dim dataRow As DataRow = ds.Tables("main").Rows(ddlCF.Items.IndexOf(item))
+                    descrizioneValue = dataRow("descrizione").ToString()
+                    ultimo = Right(descrizioneValue, 1)
+                    ' item.Attributes("class") = "list-group-item list-group-item-alert"
 
-                '    If ultimo = "0" Then
-                '            item.Enabled = False
+                    If ultimo = "N" Then
+                        item.Enabled = False
 
 
-                '        item.Text += " <br /><span style=""color:red;"">[ATTENZIONE QUALIFICA SCADUTA DA PIU’ DI TRE ANNI, È NECESSARIO PROCEDERE CON UNA NUOVA RICHIESTA DI EQUIPARAZIONE.]</span>"
-                '    End If
-                '    ' Perform your condition to determine if the item should be enabled or disabled
+                        item.Text += " <br /><span style=""color:red;"">[ATTENZIONE QUALIFICA SCADUTA DA PIÙ DI TRE ANNI, È NECESSARIO PROCEDERE CON UNA NUOVA RICHIESTA DI EQUIPARAZIONE.]</span>"
+                    End If
+                    ' Perform your condition to determine if the item should be enabled or disabled
 
-                '    descrizioneValue = ""
-                '    ultimo = ""
-                'Next
+                    descrizioneValue = ""
+                    ultimo = ""
+                Next
 
                 counter1 += 1
                 '  Next
@@ -305,12 +306,13 @@ Public Class RichiestaRinnovo2
                 risultato = ""
 
                 Session("procedi") = "KO"
-                Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode(nota))
+                Response.Redirect("DashboardRinnovi2.aspx?ris=" & deEnco.QueryStringEncode(nota), False)
 
 
             End If
         Catch ex As Exception
-            Response.Redirect("../FriendlyMessage.aspx")
+            AsiModel.LogIn.LogErrori(ex, "RichiestaRinnovo2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
         End Try
     End Sub
 
@@ -326,38 +328,44 @@ Public Class RichiestaRinnovo2
         Dim DataScadenzaPulita As String
 
         DataScadenzaPulita = DateTime.Parse(Data.SonoDieci(dataScadenza), SettaggioCulture)
+        Try
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As Integer = 0
+            fmsP.SetLayout("webRinnoviRichiesta2")
 
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As Integer = 0
-        fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim Request = fmsP.CreateNewRecordRequest()
 
-        Dim Request = fmsP.CreateNewRecordRequest()
-
-        Request.AddField("IDRinnovoM", codR)
-        Request.AddField("Codice_Status", "0")
-
-
-        Request.AddField("Rin_CFVerificatoTessera", "1")
-        Request.AddField("Codice_Ente_Richiedente", codiceEnte)
-        Request.AddField("Rin_CodiceFiscale", codiceFiscale)
-        Request.AddField("Rin_NumeroTessera", codiceTessera)
-        Request.AddField("Rin_Nome", nome)
-        Request.AddField("Rin_Cognome", cognome)
-        'Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaData(dataScadenza))
-        Dim miaDataScadenza As DateTime
-        Dim miaDataScadenza2 As DateTime
-
-        Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaDataUK(DataScadenzaPulita))
+            Request.AddField("IDRinnovoM", codR)
+            Request.AddField("Codice_Status", "0")
 
 
-        Request.AddField("Rin_ComuneNascita", comuneNascita)
-        Request.AddField("Rin_DataNascita", Data.SonoDieci(datanascita))
+            Request.AddField("Rin_CFVerificatoTessera", "1")
+            Request.AddField("Codice_Ente_Richiedente", codiceEnte)
+            Request.AddField("Rin_CodiceFiscale", codiceFiscale)
+            Request.AddField("Rin_NumeroTessera", codiceTessera)
+            Request.AddField("Rin_Nome", nome)
+            Request.AddField("Rin_Cognome", cognome)
+            'Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaData(dataScadenza))
+            Dim miaDataScadenza As DateTime
+            Dim miaDataScadenza2 As DateTime
 
-        risposta = Request.Execute()
+            Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaDataUK(DataScadenzaPulita))
 
 
-        Return risposta
+            Request.AddField("Rin_ComuneNascita", comuneNascita)
+            Request.AddField("Rin_DataNascita", Data.SonoDieci(datanascita))
+
+
+
+            risposta = Request.Execute()
+
+
+            Return risposta
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "RichiestaRinnovo2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Function
 
     Protected Sub btnConcludi_Click(sender As Object, e As EventArgs) Handles btnConcludi.Click

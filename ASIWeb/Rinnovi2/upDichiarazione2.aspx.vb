@@ -123,12 +123,7 @@ Public Class upDichiarazione2
 
         End If
 
-        If Page.IsPostBack Then
 
-            '  pnlFase1.Visible = False
-
-
-        End If
     End Sub
     Protected Sub cvCaricaDiploma_ServerValidate(source As Object, args As ServerValidateEventArgs)
         If FileUpload1.PostedFile.ContentLength > 0 Then
@@ -218,33 +213,34 @@ Public Class upDichiarazione2
 
         ' Dim ds As DataSet
 
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As String = ""
-        fmsP.SetLayout("webRinnoviRichiesta2")
-        Dim Request = fmsP.CreateEditRequest(codR)
-        Request.AddField("DichiarazioneEAOnFS", nomecaricato)
-        Request.AddField("NoteDichiarazione", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
-        Request.AddField("Codice_Status", "152")
-        Request.AddField("DichiarazioneEAInviata", "s")
-        Request.AddScript("SistemaEncodingNoteDichiarazioneRinnovi", IDRinnovo)
-
-
-
         Try
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim Request = fmsP.CreateEditRequest(codR)
+            Request.AddField("DichiarazioneEAOnFS", nomecaricato)
+            Request.AddField("NoteDichiarazione", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+            Request.AddField("Codice_Status", "152")
+            Request.AddField("DichiarazioneEAInviata", "s")
+            Request.AddScript("SistemaEncodingNoteDichiarazioneRinnovi", IDRinnovo)
+
+
+
+
             risposta = Request.Execute()
 
             AsiModel.LogIn.LogCambioStatus(IDRinnovoM, "152", Session("WebUserEnte"), "rinnovo")
 
+            Dim token = PrendiToken()
+
+            Return codR & "_|_" & token
 
         Catch ex As Exception
-
+            AsiModel.LogIn.LogErrori(ex, "upDichiarazione2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
         End Try
 
-        Dim token = PrendiToken()
-
-        Return codR & "_|_" & token
     End Function
 
     Public Function PrendiToken() As String

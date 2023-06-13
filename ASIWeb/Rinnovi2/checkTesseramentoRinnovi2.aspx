@@ -77,12 +77,15 @@
 				Se il tesserato appartiene ad un altro Ente, sarà richiesto di caricare la documentazione di cambio EA. Se si è
 				a conoscenza di questa evenienza, è meglio preparare il documento (formato PDF) da caricare e poi tornare al processo.
 			</p>
-           
+           <p>
+			   Se il controllo tesseramento non ha esito positivo, appodisi messaggi cercanno di specificare quali possano essere le motivazioni.
+
+           </p>
         </div>
     </div>
 	 <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Controllo Tesseramento (info)
+      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Controllo Tesseramento (help)
       </a></h6>
 	<p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>

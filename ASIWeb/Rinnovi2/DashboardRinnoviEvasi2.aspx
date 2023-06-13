@@ -112,12 +112,16 @@
         </div>
         <div class="offcanvas-body">
             <p>
-               Come si apre la pagina vengono mostrati se ci sono gli ultimi 10 rinnovi richiesti ed evasi.<br />
+               Come si apre la pagina vengono mostrati se ci sono, gli ultimi 10 rinnovi nello status di evaso.<br />
                 Ogni rinnovo è sotto forma di scheda ed possibile scaricare il tesserino in formato PDF.
 
             </p> 
             <p>
-                In alternativa si può cercare un rinnovo per codice fiscale.
+                In alternativa si può cercare un rinnovo per codice fiscale o per numero richiesta.
+            </p>
+
+            <p>
+               In alternativa è possibile scaricare tutte le tessere di ogni richiesta in formato zip.
             </p>
             
         </div>
@@ -130,7 +134,7 @@
  <div class="col-sm-12 mb-3 mb-md-0">
        <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
   <div class="container">
-      <h6 class="fs-5 text-white text-decoration-none"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Rinnovi Evasi (info)
+      <h6 class="fs-5 text-white text-decoration-none"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Rinnovi Evasi (help)
       </a></h6>
 
       <p class="lead">

@@ -105,12 +105,15 @@
                 Se il codice fiscale passa il controllo tesseramento, si arriva alla pagina dove vengono mostrare le tessere 
                 trovare e valide per quel codice fiscale. Si effettua la selezione e si va avanti nel processo.
             </p>
+            <p>
+                Si deve selezionare una delle opzioni proposte. Nel caso di selezione errata si può procedere alla selezione di un altra tessera ed andare avanti.
+            </p>
           
         </div>
     </div>
         <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Nuovo Rinnovo (info)
+      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Nuovo Rinnovo (help)
       </a></h6>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>

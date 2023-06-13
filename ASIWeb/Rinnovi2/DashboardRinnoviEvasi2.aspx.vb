@@ -87,62 +87,60 @@ Public Class DashboardRinnoviEvasi2
     Sub rinnovi()
 
         Dim ds As DataSet
-
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webRinnoviRichiesta2")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("Codice_Status", 160, Enumerations.SearchOption.biggerOrEqualThan)
-        RequestP.SetMax(10)
-        RequestP.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
-        ' RequestP.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
-        ds = RequestP.Execute()
-
+        Try
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Status", 160, Enumerations.SearchOption.biggerOrEqualThan)
+            RequestP.SetMax(10)
+            RequestP.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
+            ' RequestP.AddSortField("IDRinnovo", Enumerations.Sort.Descend)
 
 
 
+            ds = RequestP.Execute()
+
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                'Dim counter As Integer = 0
+                Dim counter1 As Integer = 0
+                Dim totale As Decimal = 0
+                Dim tessera As String
+                Dim nominativo As String
+                Dim rompiStatus As Integer
+                Dim cambiato As String
+                Dim esisteZip As Boolean
+                Dim fileZip As String
+                Dim nomeZip As String = ""
+                Dim idrecordMaster As Integer = 0
+                Dim ArrayZip As Array = Nothing
+                For Each dr In ds.Tables("main").Rows
+
+
+                    esisteZip = AsiModel.Rinnovi.EsisteZipRinnovi(Data.FixNull(dr("IDRinnovoM")))
+                    If esisteZip Then
+                        nomeZip = AsiModel.Rinnovi.NomeZipRinnovi(Data.FixNull(dr("IDRinnovoM")))
+                        ArrayZip = nomeZip.Split(".")
+
+                        idrecordMaster = AsiModel.Rinnovi.GetIdRecordRinnovi(Data.FixNull(dr("IDRinnovoM")))
+                    End If
+
+                    ' Response.Write("esite: " & esisteZip & "<br />")
+
+                    If rompiStatus = Data.FixNull(dr("IDRinnovoM")) Then
+                        cambiato = ""
+                    Else
+                        cambiato = "ok"
+                    End If
 
 
 
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    'If counter1 <= 10 Then
 
-            'Dim counter As Integer = 0
-            Dim counter1 As Integer = 0
-            Dim totale As Decimal = 0
-            Dim tessera As String
-            Dim nominativo As String
-            Dim rompiStatus As Integer
-            Dim cambiato As String
-            Dim esisteZip As Boolean
-            Dim fileZip As String
-            Dim nomeZip As String = ""
-            Dim idrecordMaster As Integer = 0
-            Dim ArrayZip As Array = Nothing
-            For Each dr In ds.Tables("main").Rows
-
-
-                esisteZip = AsiModel.Rinnovi.EsisteZipRinnovi(Data.FixNull(dr("IDRinnovoM")))
-                If esisteZip Then
-                    nomeZip = AsiModel.Rinnovi.NomeZipRinnovi(Data.FixNull(dr("IDRinnovoM")))
-                    ArrayZip = nomeZip.Split(".")
-
-                    idrecordMaster = AsiModel.Rinnovi.GetIdRecordRinnovi(Data.FixNull(dr("IDRinnovoM")))
-                End If
-
-                ' Response.Write("esite: " & esisteZip & "<br />")
-
-                If rompiStatus = Data.FixNull(dr("IDRinnovoM")) Then
-                    cambiato = ""
-                Else
-                    cambiato = "ok"
-                End If
-
-
-
-                'If counter1 <= 10 Then
-
-                phDash10.Visible = True
+                    phDash10.Visible = True
 
                     If String.IsNullOrWhiteSpace(Data.FixNull(dr("tessera"))) Then
                         tessera = "..\img\noPdf.jpg"
@@ -275,10 +273,15 @@ Public Class DashboardRinnoviEvasi2
 
                     ' End If
                     rompiStatus = Data.FixNull(dr("IDRinnovoM"))
-            Next
+                Next
 
-        End If
+            End If
 
+
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "DashBoardRinnoviEvasi2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Sub
 
 
@@ -310,31 +313,31 @@ Public Class DashboardRinnoviEvasi2
             Dim ArrayZip As Array = Nothing
             Dim rompiStatus As Integer
             Dim cambiato As String
-
-            fms = Conn.Connect()
-
-            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
-            '     fmsB.SetDatabase(Database)
-            fms.SetLayout("webRinnoviRichiesta2")
-            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
-
-
-            If tipoInserito = "cF" Then
-                RequestA.AddSearchField("Asi_CodiceFiscale", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
-            Else
-                RequestA.AddSearchField("IDRinnovoM", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
-
-            End If
-
-
-            RequestA.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
-
-
-
-            RequestA.AddSearchField("Codice_Status", 160, Enumerations.SearchOption.biggerOrEqualThan)
-            Dim Counter1 = 0
-
             Try
+
+                fms = Conn.Connect()
+
+                '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+                '     fmsB.SetDatabase(Database)
+                fms.SetLayout("webRinnoviRichiesta2")
+                Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+
+
+                If tipoInserito = "cF" Then
+                    RequestA.AddSearchField("Asi_CodiceFiscale", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
+                Else
+                    RequestA.AddSearchField("IDRinnovoM", Trim(txtCodiceFiscale.Text), Enumerations.SearchOption.equals)
+
+                End If
+
+
+                RequestA.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+
+
+
+                RequestA.AddSearchField("Codice_Status", 160, Enumerations.SearchOption.biggerOrEqualThan)
+                Dim Counter1 = 0
+
 
 
                 ds = RequestA.Execute()
@@ -507,7 +510,8 @@ Public Class DashboardRinnoviEvasi2
                 End If
 
             Catch ex As Exception
-
+                AsiModel.LogIn.LogErrori(ex, "DashBoardRinnoviEvasi2", "rinnovi")
+                Response.Redirect("../FriendlyMessage.aspx", False)
             End Try
         End If
     End Sub

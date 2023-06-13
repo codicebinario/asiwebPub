@@ -687,16 +687,16 @@ Public Class richiestaCorsoF3
                 '   Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ok"))
                 '   Response.Redirect("dashboardB.aspx?ris=" & deEnco.QueryStringEncode("ko"))
 
-
+                Response.Redirect("dashboardB.aspx", False)
 
             Catch ex As Exception
                 Session("AnnullaREqui") = "NOnewCorso"
                 Session("ErrorMessage") = ex.Message
-                Response.Redirect("dashboardB.aspx")
+                Response.Redirect("dashboardB.aspx", False)
             End Try
 
 
-            Response.Redirect("dashboardB.aspx")
+
 
 
         End If

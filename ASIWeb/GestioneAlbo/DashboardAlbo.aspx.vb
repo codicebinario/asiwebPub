@@ -460,6 +460,14 @@ Public Class DashboardAlbo
                 For Each dr In ds.Tables("main").Rows
 
                     phDash.Visible = True
+                    Dim DataGiusta As String
+                    Dim dateValue As DateTime
+                    Dim isValidDate As Boolean = DateTime.TryParse(Data.FixNull(dr("Data di Nascita")), dateValue)
+                    If IsValid = True Then
+                        DataGiusta = Data.SonoDieci(Data.FixNull(dr("Data di Nascita")))
+                    Else
+                        DataGiusta = ""
+                    End If
 
                     If String.IsNullOrWhiteSpace(Data.FixNull(dr("tessera"))) Then
                         tessera = "..\img\noPdf.jpg"
@@ -493,7 +501,7 @@ Public Class DashboardAlbo
                     phDash.Controls.Add(New LiteralControl("Codice Iscrizione: <small>" & Data.FixNull(dr("CODICE ISCRIZIONE")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Email: <small>" & Data.FixNull(dr("Indirizzo mail")) & "</small><br />"))
                     phDash.Controls.Add(New LiteralControl("Comune Nascita: <small>" & Data.FixNull(dr("Comune di Nascita")) & "</small><br />"))
-                    phDash.Controls.Add(New LiteralControl("Data Nascita: <small>" & Data.SonoDieci(Data.FixNull(dr("Data di Nascita"))) & "</small><br />"))
+                    phDash.Controls.Add(New LiteralControl("Data Nascita: <small>" & DataGiusta & "</small><br />"))
 
 
                     phDash.Controls.Add(New LiteralControl())

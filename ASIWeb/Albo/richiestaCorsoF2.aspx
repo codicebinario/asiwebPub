@@ -45,7 +45,66 @@
             }
         }
 
+        function validateDateAnnoInCorso(sender, args) {
 
+            var date1 = document.getElementById('<%=txtDataInizio.ClientID%>').value;
+            var dataInizio = date1.split("/");
+   
+            var newdateInizio = new Date(dataInizio[2], dataInizio[1] - 1, dataInizio[0]);
+
+            var enteredDate = new Date(newdateInizio);
+            
+
+            
+            var enteredYear = enteredDate.getFullYear();
+
+            console.log("entered year: " + enteredYear)
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+
+            console.log("current year: " + currentYear)
+            if (enteredYear !== currentYear) {
+                args.IsValid = false;
+            } else {
+                args.IsValid = true;
+            }
+        }
+
+
+        function validateDateAnnoFinCorso(sender, args) {
+
+            var date1 = document.getElementById('<%=txtDataInizio.ClientID%>').value;
+            var dataInizio = date1.split("/");
+
+            var newdateInizio = new Date(dataInizio[2], dataInizio[1] - 1, dataInizio[0]);
+
+            var enteredDateInizio = new Date(newdateInizio);
+
+            console.log(enteredDateInizio)
+
+            var date2 = document.getElementById('<%=txtDataFine.ClientID%>').value;
+            var dataFine = date2.split("/");
+
+            var newdateFine = new Date(dataFine[2], dataFine[1] - 1, dataFine[0]);
+
+
+            var enteredDateFine = new Date(newdateFine);
+
+            console.log(enteredDateFine)
+
+            if (enteredDateFine < enteredDateInizio) {
+                args.IsValid = false;
+            }
+            else {
+                args.IsValid = true;
+            }
+
+
+        }
+         
+         
+
+      
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -432,21 +491,23 @@
 							<div class="col-sm-6">
 								<div class="form-group"> 
                                     <asp:RequiredFieldValidator ID="rqDataInizio" runat="server" ControlToValidate="txtDataInizio"  ErrorMessage="Data Inizio"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
-		
-             
-	       
-						</div>
+                                    <asp:CustomValidator ID="CustomValidator2" ClientValidationFunction="validateDateAnnoInCorso" ControlToValidate="txtDataInizio" EnableClientScript="true" Enabled="true" Display="Dynamic" runat="server" ErrorMessage="La data inizio corso deve essere nell'anno corrente" CssClass="errore"></asp:CustomValidator>
+
+
+
+                                </div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 					  
 <asp:RequiredFieldValidator ID="rqDataFine" runat="server" ControlToValidate="txtDataFine"  ErrorMessage="Data Fine"  Display="Dynamic" CssClass="errore" EnableClientScript="true"></asp:RequiredFieldValidator>
- 
+                                    <asp:CustomValidator ID="CustomValidator3" ClientValidationFunction="validateDateAnnoFinCorso" ControlToValidate="txtDataFine" EnableClientScript="true" Enabled="true" Display="Dynamic" runat="server" ErrorMessage="La data fine corso deve essere uguale o successiva alla data inizio" CssClass="errore" OnServerValidate="CustomValidator3_ServerValidate"></asp:CustomValidator>
 
 
 
 
-					</div>
+
+                                </div>
 								
 								</div>
 							</div>

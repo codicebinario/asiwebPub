@@ -11,38 +11,31 @@ Public Class CancellaRiga
 
         Dim codiceRinnovoM As String = deEnco.QueryStringDecode(Request.QueryString("codR"))
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("record_ID"))
-        '  Dim IDRecord As String = deEnco.QueryStringDecode(Request.QueryString("id"))
 
         If Not String.IsNullOrEmpty(record_ID) Then
-
-
-            Dim risposta As Integer = 0
-            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-
-            fmsP.SetLayout("webRinnoviRichiesta2")
-
-            Dim RequestP = fmsP.CreateDeleteRequest(record_ID)
-            '   RequestP.AddField("Codice_Status", "99")
-
             Try
-                risposta = RequestP.Execute()
-                '   AsiModel.LogIn.LogCambioStatus(codiceCorso, "99", Session("WebUserEnte"), "corso")
-                '   AsiModel.LogIn.LogCambioStatus(CodiceRichiesta, "10", Session("WebUserEnte"))
-                '   Session("annullaCorso") = "ok"
 
+                Dim risposta As Integer = 0
+                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+
+                fmsP.SetLayout("webRinnoviRichiesta2")
+
+                Dim RequestP = fmsP.CreateDeleteRequest(record_ID)
+
+
+                risposta = RequestP.Execute()
+
+                Session("AnnullaREqui") = "annullataRin"
+                Response.Redirect("DashboardRinnovi2.aspx?open=" & codiceRinnovoM, False)
             Catch ex As Exception
+                AsiModel.LogIn.LogErrori(ex, "CancellaRiga", "rinnovi")
+                Response.Redirect("../FriendlyMessage.aspx", False)
             End Try
-            'Session("visto") = "ok"
-            Session("AnnullaREqui") = "annullataRin"
-            ' Response.Redirect("DashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("casi"))
-            Response.Redirect("DashboardRinnovi2.aspx?open=" & codiceRinnovoM)
 
         Else
-            'Session("visto") = "ok"
-            Session("AnnullaREqui") = "annullataRinKO"
-            Response.Redirect("dashboardRinnovi2.aspx?open=" & codiceRinnovoM)
 
-            '   Response.Redirect("dashboardRinnovi2.aspx?open=" & codiceRinnovoM & "&ris=" & deEnco.QueryStringEncode("cano"))
+            Session("AnnullaREqui") = "annullataRinKO"
+            Response.Redirect("dashboardRinnovi2.aspx?open=" & codiceRinnovoM, False)
 
         End If
 

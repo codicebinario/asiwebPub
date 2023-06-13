@@ -691,10 +691,11 @@ Public Class archivioAlbo
         ' RequestP.AddSearchField("pre_stato_web", "1")
         RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
         RequestP.AddSearchField("Codice_Status", "84")
-
-        RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
-        RequestP.AddSortField("IDCorso", Enumerations.Sort.Descend)
         RequestP.SetMax(10)
+        RequestP.AddSortField("Data_Emissione", Enumerations.Sort.Descend)
+
+        '  RequestP.AddSortField("Codice_Status", Enumerations.Sort.Ascend)
+
 
 
         ds = RequestP.Execute()

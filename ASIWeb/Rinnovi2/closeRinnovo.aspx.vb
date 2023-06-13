@@ -10,32 +10,27 @@ Public Class closeRinnovo
             Response.Redirect("../login.aspx")
         End If
         Dim deEnco As New Ed
-
-
         Dim record_ID As String = deEnco.QueryStringDecode(Request.QueryString("idrecord"))
         Dim codR As String = deEnco.QueryStringDecode(Request.QueryString("codR"))
         Dim risposta As Integer = 0
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-
-        fmsP.SetLayout("webRinnoviMaster")
-
-        Dim RequestP = fmsP.CreateEditRequest(record_ID)
-        RequestP.AddField("CheckWeb", "s")
-        RequestP.AddField("CodiceStatus", "155")
         Try
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webRinnoviMaster")
+            Dim RequestP = fmsP.CreateEditRequest(record_ID)
+            RequestP.AddField("CheckWeb", "s")
+            RequestP.AddField("CodiceStatus", "155")
             risposta = RequestP.Execute()
 
             AsiModel.LogIn.LogCambioStatus(codR, "155", Session("WebUserEnte"), "Rinnovo")
+            AsiModel.Rinnovi.AggiornaStatusMoltia155(codR)
+            Session("AnnullaREqui") = "closeRin"
+            Response.Redirect("DashBoardRinnovi2.aspx?open=" & codR, False)
 
         Catch ex As Exception
-
+            AsiModel.LogIn.LogErrori(ex, "closeRinnovo", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
         End Try
 
-        AsiModel.Rinnovi.AggiornaStatusMoltia155(codR)
-
-
-        Session("AnnullaREqui") = "closeRin"
-        Response.Redirect("DashBoardRinnovi2.aspx?open=" & codR)
     End Sub
 
 End Class

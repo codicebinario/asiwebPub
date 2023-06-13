@@ -86,14 +86,14 @@
 
 			</p>
 			<p>
-				Una volta terminata la procedura si torna alla pagina di partenza con il gruppo relativo aperto. 
+				Una volta terminata la procedura si torna alla pagina di partenza con la richiesta in modalità aperta. 
 			</p>
          
         </div>
     </div>
     <div class="jumbotron jumbotron-fluid rounded">
   <div class="container">
-      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Nuovo Rinnovo (info)
+      <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Nuovo Rinnovo (help)
       </a></h6>
     <p class="lead">
   <%--<asp:Literal ID="litDenominazioneJumbo" runat="server"></asp:Literal>--%>

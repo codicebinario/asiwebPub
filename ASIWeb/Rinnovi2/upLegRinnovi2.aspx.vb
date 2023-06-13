@@ -132,40 +132,35 @@ Public Class upLegRinnovi2
 
     End Sub
     Public Function QuantiAllegati(codR As String) As String
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+
         Dim ds As DataSet
         Dim quanti As Integer = 0
         Dim risposta As String = ""
+        Try
 
-        fmsP.SetLayout("webRinnoviAllegati2")
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            fmsP.SetLayout("webRinnoviAllegati2")
 
-        Dim request = fmsP.CreateFindRequest()
+            Dim request = fmsP.CreateFindRequest()
 
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        RequestP.AddSearchField("Codice_Rinnovo", codR, Enumerations.SearchOption.equals)
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestP.AddSearchField("Codice_Rinnovo", codR, Enumerations.SearchOption.equals)
 
-        ds = RequestP.Execute()
+            ds = RequestP.Execute()
 
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-            quanti = ds.Tables("main").Rows.Count
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                quanti = ds.Tables("main").Rows.Count
 
-            If quanti >= 3 Then
-
-
-                risposta = "no"
-
-
-
-
-
+                If quanti >= 3 Then
+                    risposta = "no"
+                End If
             End If
 
+            Return risposta
+        Catch ex As Exception
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
-
-
-
-        End If
-        Return risposta
     End Function
     Public Function CaricaSuFM(tokenx As String, id_att As String, nomecaricato As String) As Boolean
 
@@ -234,80 +229,82 @@ Public Class upLegRinnovi2
     End Function
     Public Function NuovaRichiestaAllegato(codR As String, nomecaricato As String) As String
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        ' Dim ds As DataSet
-
-
-        fmsP.SetLayout("webRinnoviAllegati2")
-        Dim Request = fmsP.CreateNewRecordRequest()
-
-        Request.AddField("Codice_Rinnovo", codR)
-        Request.AddField("NomeFileOnFS", nomecaricato)
-        Request.AddField("Ricevuta_Pagamento_Descrizione", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+        Dim IdAllegato As String = ""
+        Try
 
 
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+
+            fmsP.SetLayout("webRinnoviAllegati2")
+            Dim Request = fmsP.CreateNewRecordRequest()
+
+            Request.AddField("Codice_Rinnovo", codR)
+            Request.AddField("NomeFileOnFS", nomecaricato)
+            Request.AddField("Ricevuta_Pagamento_Descrizione", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+
+            IdAllegato = Request.Execute() 'per upload
+        Catch ex As Exception
+
+        End Try
+
+        Try
+            If Not String.IsNullOrEmpty(IdAllegato) Then
+
+                Dim fmsP11 As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+                '  Dim ds As DataSet
+
+                fmsP11.SetLayout("webRinnoviAllegati2")
+                Dim Request11 = fmsP11.CreateEditRequest(IdAllegato)
+                Request11.AddScript("SistemaEncodingNoteUpload_PagamentoRinnovo2", IdAllegato)
 
 
-        Dim IdAllegato As String = Request.Execute() 'per upload
+                Request11.Execute()
+            End If
+        Catch ex As Exception
 
-        Dim fmsP11 As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-
-        fmsP11.SetLayout("webRinnoviAllegati2")
-        Dim Request11 = fmsP11.CreateEditRequest(IdAllegato)
-        Request11.AddScript("SistemaEncodingNoteUpload_PagamentoRinnovo2", IdAllegato)
-
-
-        Request11.Execute()
-
-
+        End Try
 
 
 
 
         Dim record_id As String = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDRinnovi2(codR) ' per aggiornare status
-
-        Dim fmsP1 As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As String = ""
-        fmsP1.SetLayout("webRinnoviMaster")
-        Dim Request1 = fmsP1.CreateEditRequest(record_id)
-
-        If s = 158 Then
-            Request1.AddField("CodiceStatus", "159")
-        Else
-            Request1.AddField("CodiceStatus", "157")
-        End If
+        Try
 
 
+            Dim fmsP1 As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            fmsP1.SetLayout("webRinnoviMaster")
+            Dim Request1 = fmsP1.CreateEditRequest(record_id)
 
-        'Try
-        risposta = Request1.Execute()
-
-        If s = 158 Then
-            AsiModel.LogIn.LogCambioStatus(Session("codR"), "159", Session("WebUserEnte"), "rinnovo")
-            AsiModel.Rinnovi.AggiornaStatusMoltia159(Session("codR"))
-
-        Else
-            AsiModel.LogIn.LogCambioStatus(Session("codR"), "157", Session("WebUserEnte"), "rinnovo")
-            AsiModel.Rinnovi.AggiornaStatusMoltia157(Session("codR"))
-        End If
+            If s = 158 Then
+                Request1.AddField("CodiceStatus", "159")
+            Else
+                Request1.AddField("CodiceStatus", "157")
+            End If
 
 
 
+            'Try
+            risposta = Request1.Execute()
+
+            If s = 158 Then
+                AsiModel.LogIn.LogCambioStatus(Session("codR"), "159", Session("WebUserEnte"), "rinnovo")
+                AsiModel.Rinnovi.AggiornaStatusMoltia159(Session("codR"))
+
+            Else
+                AsiModel.LogIn.LogCambioStatus(Session("codR"), "157", Session("WebUserEnte"), "rinnovo")
+                AsiModel.Rinnovi.AggiornaStatusMoltia157(Session("codR"))
+            End If
+            Dim token = PrendiToken()
+            Return IdAllegato & "_|_" & token
+        Catch ex As Exception
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
 
 
-        ' Catch ex As Exception
 
-        ' End Try
-
-        Dim token = PrendiToken()
-
-
-
-        Return IdAllegato & "_|_" & token
     End Function
 
     Public Function PrendiToken() As String

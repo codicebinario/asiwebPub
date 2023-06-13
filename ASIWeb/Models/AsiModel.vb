@@ -412,21 +412,23 @@ Public Class AsiModel
         Public Shared Function LogCambioStatus(CodiceRichiesta As String, Status_ID As String, User As String, tipo As String) As Boolean
             '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
             Dim ritorno As Boolean = False
-            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-            ' Dim ds As DataSet
-
-
-            fmsP.SetLayout("Log_Status_Richiesta")
-            Dim Request = fmsP.CreateNewRecordRequest()
-            Request.AddField("Codice_Richiesta", CodiceRichiesta)
-            Request.AddField("User_Cambio_Status", User)
-
-            Request.AddField("Status_ID", Status_ID)
-
-            Request.AddField("tipo", tipo)
-
-
             Try
+
+                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+                ' Dim ds As DataSet
+
+
+                fmsP.SetLayout("Log_Status_Richiesta")
+                Dim Request = fmsP.CreateNewRecordRequest()
+                Request.AddField("Codice_Richiesta", CodiceRichiesta)
+                Request.AddField("User_Cambio_Status", User)
+
+                Request.AddField("Status_ID", Status_ID)
+
+                Request.AddField("tipo", tipo)
+
+
+
                 Request.Execute()
                 ritorno = True
             Catch ex As Exception
@@ -463,6 +465,34 @@ Public Class AsiModel
             Return ritorno
 
         End Function
+        Public Shared Function LogErrori(exx As Exception, pagina As String, appa As String) As Boolean
+            Dim ritorno As Boolean = False
+            Try
+                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+                ' Dim ds As DataSet
+
+
+                fmsP.SetLayout("logErrors")
+                Dim Request = fmsP.CreateNewRecordRequest()
+
+                Request.AddField("ExceptionMessage", exx.Message)
+                Request.AddField("Source", exx.Source)
+                Request.AddField("tipo", exx.GetType.Name)
+                Request.AddField("WebApp", appa)
+                Request.AddField("pagina", pagina)
+                If exx.InnerException IsNot Nothing Then
+                    Request.AddField("InnerExceptionMessage", exx.InnerException.Message)
+                End If
+
+                Request.Execute()
+                ritorno = True
+            Catch ex As Exception
+                ritorno = False
+            End Try
+
+            Return ritorno
+        End Function
+
         Public Shared Function LogAccessi(CodiceEnte As String, User As String) As Boolean
             '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
             Dim ritorno As Boolean = False
@@ -572,33 +602,22 @@ Public Class AsiModel
         Dim fms As FMSAxml = Nothing
         Dim ds As DataSet = Nothing
         Dim ritorno As Integer = 0
-        Dim dataScadenza As DateTime
-        fms = Conn.Connect()
+        'Dim dataScadenza As DateTime
         Dim it As DateTime = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
-
-        '    it = SistemaData(it)
-
-        '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
-        '     fmsB.SetDatabase(Database)
-        fms.SetLayout("webCheckCF")
-        Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
-        RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
-        '   RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
-
-        ' nome cognome numerotessera datadinascita
-
 
         Try
 
-            ds = RequestA.Execute()
+            fms = Conn.Connect()
 
+            fms.SetLayout("webCheckCF")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
+
+            ds = RequestA.Execute()
 
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                 For Each dr In ds.Tables("main").Rows
 
-                    '   dataScadenza = dr("DataScadenza")
-
-                    'If CDate(it) <= CDate(dr("DataScadenza")) Then
                     If it <= dr("Data Scadenza") Then
                         'tessera valida e non scaduto
                         ritorno = 1
@@ -612,9 +631,6 @@ Public Class AsiModel
                 'tessera non trovata
                 ritorno = 3
             End If
-
-
-
 
         Catch ex As Exception
             'errore generico di connessione
@@ -873,17 +889,17 @@ Public Class AsiModel
         Public Shared Function GetRecord_IDRinnovi2(codR As String) As String
             Dim fms As FMSAxml = Nothing
             Dim ds As DataSet = Nothing
-
-
-            fms = Conn.Connect()
-
-            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
-            '     fmsB.SetDatabase(Database)
-            fms.SetLayout("webRinnoviMaster")
-            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestA.AddSearchField("IdRinnovoM", codR, Enumerations.SearchOption.equals)
-
             Try
+
+                fms = Conn.Connect()
+
+                '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+                '     fmsB.SetDatabase(Database)
+                fms.SetLayout("webRinnoviMaster")
+                Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestA.AddSearchField("IdRinnovoM", codR, Enumerations.SearchOption.equals)
+
+
                 ds = RequestA.Execute()
 
 
@@ -1210,12 +1226,12 @@ Public Class AsiModel
             '    ritorno = "tessera scaduta"
 
             'End If
-
+            Return DatiCodiceFiscale
 
         Catch ex As Exception
 
         End Try
-        Return DatiCodiceFiscale
+
     End Function
 
     Public Shared Function getSiglaProvincia(provincia As String) As String
@@ -1229,29 +1245,31 @@ Public Class AsiModel
         fms.SetLayout("webProvinceRegioni")
         Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestA.AddSearchField("Provincia", provincia, Enumerations.SearchOption.equals)
-        'Try
+        Try
 
-        ds = RequestA.Execute()
+
+
+            ds = RequestA.Execute()
 
 
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                 For Each dr In ds.Tables("main").Rows
 
 
-                ritorno = dr("Sigla")
+                    ritorno = dr("Sigla")
 
 
 
 
 
-            Next
+                Next
 
             Else
                 ritorno = " "
             End If
-        '  Catch ex As Exception
-        'ritorno = " "
-        'End Try
+        Catch ex As Exception
+
+        End Try
         Return ritorno
     End Function
 
@@ -1385,13 +1403,13 @@ Public Class AsiModel
     Public Class Rinnovi
         Shared Function CancellaGruppo(idRecord As Integer)
             Dim ritorno As Boolean = False
-
-            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-            '  Dim ds As DataSet
-
-            fmsP.SetLayout("webRinnoviMaster")
-            Dim Request = fmsP.CreateDeleteRequest(idRecord)
             Try
+                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+                '  Dim ds As DataSet
+
+                fmsP.SetLayout("webRinnoviMaster")
+                Dim Request = fmsP.CreateDeleteRequest(idRecord)
+
                 Request.Execute()
                 ritorno = True
             Catch ex As Exception
@@ -1585,34 +1603,29 @@ Public Class AsiModel
             Dim idrecord As Integer = 0
             Dim risposta As Integer = 0
             Dim ds As DataSet = Nothing
-            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-            '  Dim ds As DataSet
-
-            fmsP.SetLayout("webRinnoviRichiesta2")
-            Dim dsx As DataSet = Nothing
-            Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
-            '  Dim ds As DataSet
-
-            fmsx.SetLayout("webRinnoviRichiesta2")
-
-            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
 
             Try
+                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+                '  Dim ds As DataSet
+
+                fmsP.SetLayout("webRinnoviRichiesta2")
+                Dim dsx As DataSet = Nothing
+                Dim fmsx As FMSAxml = AsiModel.Conn.Connect()
+                '  Dim ds As DataSet
+
+                fmsx.SetLayout("webRinnoviRichiesta2")
+
+                Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
                 ds = RequestA.Execute()
-
-
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                     For Each dr In ds.Tables("main").Rows
-
                         idrecord = dr("id_Record")
-
                         Dim Request1 = fmsx.CreateEditRequest(idrecord)
                         Request1.AddField("codice_status", "155")
                         risposta = Request1.Execute()
                     Next
                 End If
-
             Catch ex As Exception
                 idrecord = 0
             End Try
@@ -1917,17 +1930,14 @@ Public Class AsiModel
             Dim idrecord As Integer = 0
 
             Dim ds As DataSet = Nothing
-            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-            '  Dim ds As DataSet
-
-            fmsP.SetLayout("webRinnoviMaster")
-            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
-
             Try
+
+                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+
+                fmsP.SetLayout("webRinnoviMaster")
+                Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
                 ds = RequestA.Execute()
-
-
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                     For Each dr In ds.Tables("main").Rows
                         idrecord = dr("idRecord")
@@ -2072,8 +2082,10 @@ Public Class AsiModel
             RequestA.AddSearchField("id_record", IdRecord, Enumerations.SearchOption.equals)
 
 
-            '     Try
-            ds = RequestA.Execute()
+            Try
+
+
+                ds = RequestA.Execute()
 
 
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
@@ -2088,8 +2100,8 @@ Public Class AsiModel
                         DatiRinnovo.IdRecord = Data.FixNull(dr("Id_record"))
                         DatiRinnovo.RinnovoCF = Data.FixNull(dr("Rin_CFVerificatoTessera"))
                         DatiRinnovo.CodiceFiscale = Data.FixNull(dr("Rin_CodiceFiscale"))
-                    DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_NumeroTessera"))
-                    DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
+                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Rin_NumeroTessera"))
+                        DatiRinnovo.Nome = Data.FixNull(dr("Rin_Nome"))
                         DatiRinnovo.Cognome = Data.FixNull(dr("Rin_Cognome"))
                         DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
                         DatiRinnovo.IDRinnovoM = Data.FixNull(dr("IDRinnovoM"))
@@ -2098,14 +2110,13 @@ Public Class AsiModel
 
 
                 End If
+                Return DatiRinnovo
+
+            Catch ex As Exception
+
+            End Try
 
 
-
-            '   Catch ex As Exception
-
-            '  End Try
-
-            Return DatiRinnovo
         End Function
 
 
@@ -2245,47 +2256,51 @@ Public Class AsiModel
             RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
             '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
 
-
-
-            ds = RequestA.Execute()
-
-
-            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-                For Each dr In ds.Tables("main").Rows
-
-                    If CDate(it) <= CDate(dr("DataScadenza")) Then
-
-
-                        DatiRinnovo.Cognome = Data.FixNull(dr("Cognome"))
-                        DatiRinnovo.Nome = Data.FixNull(dr("Nome"))
-                        ' DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
-                        DatiRinnovo.DataScadenza = Data.FixNull(dr("DataScadenza"))
-                        DatiRinnovo.CodiceTessera = Data.FixNull(dr("Codice tessera"))
-                        DatiRinnovo.ComuneNascita = Data.FixNull(dr("Luogo nascita"))
-                        DatiRinnovo.DataNascita = Data.FixNull(dr("Data nascita"))
-                        DatiRinnovo.StatoNascita = Data.FixNull(dr("Stato nascita"))
-
-                    End If
+            Try
 
 
 
-                Next
-
-            Else
-
-            End If
+                ds = RequestA.Execute()
 
 
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        If CDate(it) <= CDate(dr("DataScadenza")) Then
+
+
+                            DatiRinnovo.Cognome = Data.FixNull(dr("Cognome"))
+                            DatiRinnovo.Nome = Data.FixNull(dr("Nome"))
+                            ' DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
+                            DatiRinnovo.DataScadenza = Data.FixNull(dr("DataScadenza"))
+                            DatiRinnovo.CodiceTessera = Data.FixNull(dr("Codice tessera"))
+                            DatiRinnovo.ComuneNascita = Data.FixNull(dr("Luogo nascita"))
+                            DatiRinnovo.DataNascita = Data.FixNull(dr("Data nascita"))
+                            DatiRinnovo.StatoNascita = Data.FixNull(dr("Stato nascita"))
+
+                        End If
 
 
 
-            '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+                    Next
+
+                Else
+
+                End If
 
 
 
 
 
-            Return DatiRinnovo
+                '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+                Return DatiRinnovo
+
+            Catch ex As Exception
+
+            End Try
+
+
+
         End Function
 
         Public Shared Function CercaIDRecordRinnovoM(IDRinnovoM As Integer) As Integer
@@ -2299,8 +2314,10 @@ Public Class AsiModel
             fmsP.SetLayout("webRinnoviMaster")
             Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestP.AddSearchField("IDRinnovoM", IDRinnovoM, Enumerations.SearchOption.equals)
+            Try
 
-            ds = RequestP.Execute()
+
+                ds = RequestP.Execute()
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                 For Each dr In ds.Tables("main").Rows
 
@@ -2312,7 +2329,10 @@ Public Class AsiModel
             End If
 
 
-            Return idrecord
+                Return idrecord
+            Catch ex As Exception
+
+            End Try
 
         End Function
         Public Shared Function NuovoRinnovo(codiceEnteRichiedente As Integer) As Integer
@@ -2328,26 +2348,30 @@ Public Class AsiModel
             Request.AddField("CodiceEnteRichiedente", codiceEnteRichiedente)
             Request.AddField("CodiceStatus", "0")
 
-
-            idrecord = Request.Execute()
-
-            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP.AddSearchField("idrecord", idrecord, Enumerations.SearchOption.equals)
-
-            ds = RequestP.Execute()
-            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-                For Each dr In ds.Tables("main").Rows
-
-                    idRinnovoM = Data.FixNull(dr("IDRinnovoM"))
-
-                Next
+            Try
 
 
-            End If
+                idrecord = Request.Execute()
+
+                Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestP.AddSearchField("idrecord", idrecord, Enumerations.SearchOption.equals)
+
+                ds = RequestP.Execute()
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        idRinnovoM = Data.FixNull(dr("IDRinnovoM"))
+
+                    Next
 
 
-            Return idRinnovoM
+                End If
 
+
+                Return idRinnovoM
+            Catch ex As Exception
+
+            End Try
         End Function
 
 

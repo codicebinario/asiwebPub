@@ -64,24 +64,13 @@ Public Class checkTesseramentoRinnovi2
         System.Threading.Thread.CurrentThread.CurrentCulture = cultureFormat
         System.Threading.Thread.CurrentThread.CurrentUICulture = cultureFormat
 
-
-
-
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
             Response.Redirect("../login.aspx")
         End If
 
-
         codR = deEnco.QueryStringDecode(Request.QueryString("codR"))
         t = Request.QueryString("t")
 
-
-        If Page.IsPostBack Then
-
-            '  pnlFase1.Visible = False
-
-
-        End If
     End Sub
 
 
@@ -89,52 +78,53 @@ Public Class checkTesseramentoRinnovi2
                                              nome As String, cognome As String, codiceTessera As String, dataScadenza As String, comuneNascita As String, datanascita As String) As Integer
 
         Dim idRecord As Integer = 0
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
         Dim risposta As Integer = 0
-        fmsP.SetLayout("webRinnoviRichiesta2")
 
-        Dim Request = fmsP.CreateNewRecordRequest()
+        Try
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
 
-        Request.AddField("IDRinnovoM", codR)
-        Request.AddField("Codice_Status", "0")
+            fmsP.SetLayout("webRinnoviRichiesta2")
 
+            Dim Request = fmsP.CreateNewRecordRequest()
 
-        idRecord = Request.Execute()
+            Request.AddField("IDRinnovoM", codR)
+            Request.AddField("Codice_Status", "0")
 
-        Dim RequestE = fmsP.CreateEditRequest(idRecord)
+            idRecord = Request.Execute()
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "checkTesseramentoRinnovi2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
+        Try
 
-        Dim SettaggioCulture As CultureInfo = CultureInfo.CreateSpecificCulture("it-IT")
-        Thread.CurrentThread.CurrentCulture = SettaggioCulture
-        Thread.CurrentThread.CurrentUICulture = SettaggioCulture
-        ' DateTime.Parse(dataScadenza, SettaggioCulture)
-        Dim DataScadenzaPulita As String
+            Dim fmsPP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            Dim RequestE = fmsPP.CreateEditRequest(idRecord)
 
-        DataScadenzaPulita = DateTime.Parse(Data.SonoDieci(dataScadenza), SettaggioCulture)
+            Dim SettaggioCulture As CultureInfo = CultureInfo.CreateSpecificCulture("it-IT")
+            Thread.CurrentThread.CurrentCulture = SettaggioCulture
+            Thread.CurrentThread.CurrentUICulture = SettaggioCulture
 
+            Dim DataScadenzaPulita As String
+            DataScadenzaPulita = DateTime.Parse(Data.SonoDieci(dataScadenza), SettaggioCulture)
 
+            RequestE.AddField("Rin_CFVerificatoTessera", "1")
+            RequestE.AddField("Codice_Ente_Richiedente", codiceEnte)
+            RequestE.AddField("Rin_CodiceFiscale", codiceFiscale)
+            RequestE.AddField("Rin_NumeroTessera", codiceTessera)
+            RequestE.AddField("Rin_Nome", nome)
+            RequestE.AddField("Rin_Cognome", cognome)
+            'Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaData(dataScadenza))
+            RequestE.AddField("Data_ScadenzaTesseraASI", Data.SistemaDataUK(DataScadenzaPulita))
+            RequestE.AddField("Rin_ComuneNascita", comuneNascita)
+            RequestE.AddField("Rin_DataNascita", Data.SonoDieci(datanascita))
 
+            risposta = RequestE.Execute()
 
-        RequestE.AddField("Rin_CFVerificatoTessera", "1")
-        RequestE.AddField("Codice_Ente_Richiedente", codiceEnte)
-        RequestE.AddField("Rin_CodiceFiscale", codiceFiscale)
-        RequestE.AddField("Rin_NumeroTessera", codiceTessera)
-        RequestE.AddField("Rin_Nome", nome)
-        RequestE.AddField("Rin_Cognome", cognome)
-        'Request.AddField("Data_ScadenzaTesseraASI", Data.SistemaData(dataScadenza))
-        Dim miaDataScadenza As DateTime
-        Dim miaDataScadenza2 As DateTime
-
-        RequestE.AddField("Data_ScadenzaTesseraASI", Data.SistemaDataUK(DataScadenzaPulita))
-
-
-        RequestE.AddField("Rin_ComuneNascita", comuneNascita)
-        RequestE.AddField("Rin_DataNascita", Data.SonoDieci(datanascita))
-
-        risposta = RequestE.Execute()
-
-
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "checkTesseramentoRinnovi2", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
         Return idRecord
     End Function
 
@@ -148,8 +138,7 @@ Public Class checkTesseramentoRinnovi2
             Dim dataOggi As Date = Today.Date
             Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
 
-            Dim DettaglioRinnovo As New DatiNuovoRinnovo
-
+            'Dim DettaglioRinnovo As New DatiNuovoRinnovo
 
             risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
             '1 tessera valida e non scaduto 
@@ -157,41 +146,23 @@ Public Class checkTesseramentoRinnovi2
             '3 tessera non trovata
             '4 errore generico di connessione
 
-            '  DettaglioRinnovo = AsiModel.Rinnovi.CaricaDatiTesseramento(txtCodiceFiscale.Text)
             Session("visto") = "ok"
             If risultatoCheck = 1 Then
 
-                '   Response.Write("ok")
                 Session("procedi") = "OK"
                 Session("codiceFiscale") = Trim(txtCodiceFiscale.Text)
-
-
-
-                '   idrecord = CaricaDatiDocumentoRinnovo(codR, Session("codice"), Trim(txtCodiceFiscale.Text),
-                'DettaglioRinnovo.Nome, DettaglioRinnovo.Cognome, DettaglioRinnovo.CodiceTessera, DettaglioRinnovo.DataScadenza, DettaglioRinnovo.ComuneNascita, DettaglioRinnovo.DataNascita)
-
-
-
-                ' Response.Redirect("richiestaRinnovo2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&record_ID=" & deEnco.QueryStringEncode(idrecord))
-
                 Response.Redirect("richiestaRinnovo2.aspx?codR=" & deEnco.QueryStringEncode(codR) & "&cf=" & deEnco.QueryStringEncode(Trim(txtCodiceFiscale.Text)))
-
 
             Else
 
-                'Response.Write("ko")
                 If t = 1 Then
-                    ' cancella il gruppo
+
                     idrecord = AsiModel.Rinnovi.PrendiIDrecordMaster(codR)
                     If idrecord > 0 Then
-
                         AsiModel.Rinnovi.CancellaGruppo(idrecord)
                     End If
 
-
-
                 End If
-
                 Session("procedi") = "KO"
                 '1 tessera valida e non scaduto 
                 '2 tessera valida ma scaduta
@@ -204,10 +175,7 @@ Public Class checkTesseramentoRinnovi2
                         Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("notFound"))
                     Case 4
                         Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("erroreGen"))
-
                 End Select
-                '  Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("ko"))
-
 
             End If
 

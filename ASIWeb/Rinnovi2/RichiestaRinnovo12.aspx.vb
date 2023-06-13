@@ -195,42 +195,47 @@ Public Class RichiestaRinnovo12
         Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
 
         RequestP.AddSortField("Sigla", Enumerations.Sort.Ascend)
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+        Try
 
 
-            Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sigla")
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+
+                Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sigla")
 
 
 
 
-            ddlProvinciaResidenza.DataSource = SingleSport
+                ddlProvinciaResidenza.DataSource = SingleSport
 
 
-            ddlProvinciaResidenza.DataTextField = "sigla"
-            ddlProvinciaResidenza.DataValueField = "sigla"
+                ddlProvinciaResidenza.DataTextField = "sigla"
+                ddlProvinciaResidenza.DataValueField = "sigla"
 
-            ddlProvinciaResidenza.DataBind()
-            'ddlSport.DataValueField = "Sport"
-            ddlProvinciaResidenza.Items.Insert(0, New ListItem("##", "##"))
+                ddlProvinciaResidenza.DataBind()
+                'ddlSport.DataValueField = "Sport"
+                ddlProvinciaResidenza.Items.Insert(0, New ListItem("##", "##"))
 
-            '  LeggiDatiProvincia()
-            'ddlProvinciaConsegna.DataSource = SingleSport
-
-
-            'ddlProvinciaConsegna.DataTextField = "sigla"
-            'ddlProvinciaConsegna.DataValueField = "sigla"
-
-            'ddlProvinciaConsegna.DataBind()
-            ''ddlSport.DataValueField = "Sport"
-            'ddlProvinciaConsegna.Items.Insert(0, New ListItem("##", "##"))
+                '  LeggiDatiProvincia()
+                'ddlProvinciaConsegna.DataSource = SingleSport
 
 
-        End If
+                'ddlProvinciaConsegna.DataTextField = "sigla"
+                'ddlProvinciaConsegna.DataValueField = "sigla"
+
+                'ddlProvinciaConsegna.DataBind()
+                ''ddlSport.DataValueField = "Sport"
+                'ddlProvinciaConsegna.Items.Insert(0, New ListItem("##", "##"))
 
 
+            End If
+
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "RichiestaRinnovo12", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
     End Sub
     Sub leggiDatiEsistenti()
@@ -277,23 +282,28 @@ Public Class RichiestaRinnovo12
         Dim RequestP2 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestP2.AddSearchField("sigla", siglaProvincia, Enumerations.SearchOption.equals)
         RequestP2.AddSortField("descrizioneComune", Enumerations.Sort.Ascend)
-
-        ds2 = RequestP2.Execute()
-        If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
+        Try
 
 
-            Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
+            ds2 = RequestP2.Execute()
+            If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
 
-            ddlComuneResidenza.DataSource = comuni
 
-            ddlComuneResidenza.DataTextField = "descrizioneComune"
-            ddlComuneResidenza.DataValueField = "descrizioneComune"
+                Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
 
-            ddlComuneResidenza.DataBind()
-            ddlComuneResidenza.Items.Insert(0, New ListItem("##", "##"))
-            leggiDatiComune()
-        End If
+                ddlComuneResidenza.DataSource = comuni
 
+                ddlComuneResidenza.DataTextField = "descrizioneComune"
+                ddlComuneResidenza.DataValueField = "descrizioneComune"
+
+                ddlComuneResidenza.DataBind()
+                ddlComuneResidenza.Items.Insert(0, New ListItem("##", "##"))
+                leggiDatiComune()
+            End If
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "RichiestaRinnovo12", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Sub
 
 
@@ -323,29 +333,35 @@ Public Class RichiestaRinnovo12
         Dim RequestP2 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestP2.AddSearchField("sigla", selezionato, Enumerations.SearchOption.equals)
         RequestP2.AddSortField("descrizioneComune", Enumerations.Sort.Ascend)
-
-        ds2 = RequestP2.Execute()
-
-        If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
+        Try
 
 
-            Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
+            ds2 = RequestP2.Execute()
 
-            ddlComuneResidenza.DataSource = comuni
-
-            ddlComuneResidenza.DataTextField = "descrizioneComune"
-            ddlComuneResidenza.DataValueField = "descrizioneComune"
-
-            ddlComuneResidenza.DataBind()
+            If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
 
 
+                Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
+
+                ddlComuneResidenza.DataSource = comuni
+
+                ddlComuneResidenza.DataTextField = "descrizioneComune"
+                ddlComuneResidenza.DataValueField = "descrizioneComune"
+
+                ddlComuneResidenza.DataBind()
 
 
-            ddlComuneResidenza.Items.Insert(0, New ListItem("##", "##"))
-            leggiDatiComune()
-            ' ddlProvincia.Items.Clear()
 
-        End If
+
+                ddlComuneResidenza.Items.Insert(0, New ListItem("##", "##"))
+                leggiDatiComune()
+                ' ddlProvincia.Items.Clear()
+
+            End If
+
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Protected Sub chkStampaCartacea_CheckedChanged(sender As Object, e As EventArgs) Handles chkStampaCartacea.CheckedChanged
@@ -393,172 +409,142 @@ Public Class RichiestaRinnovo12
         datiAlbo = getDatiCodiceFiscaleRinnovi(idScelto)
 
 
+        Try
 
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As String = ""
-        fmsP.SetLayout("webRinnoviRichiesta2")
-        Dim Request = fmsP.CreateEditRequest(idrecord)
-
-
-
-        Request.AddField("Asi_CodiceFiscale", datiAlbo.CodiceFiscale)
-        Request.AddField("Asi_CodiceTessera", datiAlbo.CodiceTessera)
-        Request.AddField("Asi_Nome", datiAlbo.Nome)
-        Request.AddField("Asi_Cognome", datiAlbo.Cognome)
-
-        Dim miaDataScadenza As DateTime
-
-        Dim DataScadenzaPulita As String
-
-        DataScadenzaPulita = DateTime.Parse(Data.SonoDieci(datiAlbo.DataScadenza), SettaggioCulture)
-        'If DateTime.Parse(DataScadenzaPulita) Then
-        Request.AddField("Asi_DataScadenza", Data.SistemaDataUK(DataScadenzaPulita))
-        'miaDataScadenza2 = miaDataScadenza.ToString("MM/dd/yyyy hh:mm:ss")
-        '  Request.AddField("Data_ScadenzaTesseraASI", miaDataScadenza.ToString("dd/MM/yyyy", New CultureInfo("it-IT")))
-        'End If
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim Request = fmsP.CreateEditRequest(idrecord)
 
 
 
-        '  Request.AddField("Asi_DataScadenza", Data.SistemaData(datiAlbo.DataScadenza))
-        Request.AddField("Asi_LuogoNascita", datiAlbo.Comune)
-        Request.AddField("Asi_Datanascita", Data.SistemaData(datiAlbo.DataNascita))
-        Request.AddField("Asi_Email", datiAlbo.Email)
-        Request.AddField("Asi_Telefono", datiAlbo.telefono)
-        Request.AddField("Asi_sport", datiAlbo.Sport)
-        Request.AddField("Asi_specialita", datiAlbo.Specialita)
-        If String.IsNullOrEmpty(datiAlbo.Livello) Then
-            Request.AddField("Asi_livello", "ND")
-        Else
-            Request.AddField("Asi_livello", datiAlbo.Livello)
-        End If
+            Request.AddField("Asi_CodiceFiscale", datiAlbo.CodiceFiscale)
+            Request.AddField("Asi_CodiceTessera", datiAlbo.CodiceTessera)
+            Request.AddField("Asi_Nome", datiAlbo.Nome)
+            Request.AddField("Asi_Cognome", datiAlbo.Cognome)
 
-        Request.AddField("Asi_qualifica", datiAlbo.qualifica)
-        Request.AddField("Asi_CodiceIscrizione", datiAlbo.qualifica)
-        Request.AddField("Asi_Disciplina", datiAlbo.disciplina)
-        Request.AddField("Asi_CodiceIscrizione", datiAlbo.codiceIscrizione)
-        Request.AddField("ASI_CodiceEnteEx", datiAlbo.codiceEnteEx)
-        Request.AddField("ASI_NomeEnteEx", datiAlbo.nomeEnteEx)
-        Request.AddField("Codice_Status", "152")
-        Request.AddField("Rin_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
-        Request.AddField("Rin_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
-        Request.AddField("Rin_ComuneResidenza", ddlComuneResidenza.SelectedItem.Text)
-        Request.AddField("Rin_ProvinciaResidenza", ddlProvinciaResidenza.SelectedItem.Text)
+            Dim miaDataScadenza As DateTime
 
-        If Session("RinnovoModificaDataEmissione") = "S" Then
-            Dim dataSelezionata As Date = txtDataEmissioneM.Text
-            Dim annoAttuale As Integer = Now.Year
-            Dim mese As Integer = dataSelezionata.Month
-            Dim anno As Integer = dataSelezionata.Year
-            If mese = 12 Then
-                Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+            Dim DataScadenzaPulita As String
+
+            DataScadenzaPulita = DateTime.Parse(Data.SonoDieci(datiAlbo.DataScadenza), SettaggioCulture)
+            'If DateTime.Parse(DataScadenzaPulita) Then
+            Request.AddField("Asi_DataScadenza", Data.SistemaDataUK(DataScadenzaPulita))
+            'miaDataScadenza2 = miaDataScadenza.ToString("MM/dd/yyyy hh:mm:ss")
+            '  Request.AddField("Data_ScadenzaTesseraASI", miaDataScadenza.ToString("dd/MM/yyyy", New CultureInfo("it-IT")))
+            'End If
+
+
+
+            '  Request.AddField("Asi_DataScadenza", Data.SistemaData(datiAlbo.DataScadenza))
+            Request.AddField("Asi_LuogoNascita", datiAlbo.Comune)
+            Request.AddField("Asi_Datanascita", Data.SistemaData(datiAlbo.DataNascita))
+            Request.AddField("Asi_Email", datiAlbo.Email)
+            Request.AddField("Asi_Telefono", datiAlbo.telefono)
+            Request.AddField("Asi_sport", datiAlbo.Sport)
+            Request.AddField("Asi_specialita", datiAlbo.Specialita)
+            If String.IsNullOrEmpty(datiAlbo.Livello) Then
+                Request.AddField("Asi_livello", "ND")
             Else
-                Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
+                Request.AddField("Asi_livello", datiAlbo.Livello)
+            End If
+
+            Request.AddField("Asi_qualifica", datiAlbo.qualifica)
+            Request.AddField("Asi_CodiceIscrizione", datiAlbo.qualifica)
+            Request.AddField("Asi_Disciplina", datiAlbo.disciplina)
+            Request.AddField("Asi_CodiceIscrizione", datiAlbo.codiceIscrizione)
+            Request.AddField("ASI_CodiceEnteEx", datiAlbo.codiceEnteEx)
+            Request.AddField("ASI_NomeEnteEx", datiAlbo.nomeEnteEx)
+            Request.AddField("Codice_Status", "152")
+            Request.AddField("Rin_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
+            Request.AddField("Rin_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
+            Request.AddField("Rin_ComuneResidenza", ddlComuneResidenza.SelectedItem.Text)
+            Request.AddField("Rin_ProvinciaResidenza", ddlProvinciaResidenza.SelectedItem.Text)
+
+            If Session("RinnovoModificaDataEmissione") = "S" Then
+                Dim dataSelezionata As Date = txtDataEmissioneM.Text
+                Dim annoAttuale As Integer = Now.Year
+                Dim mese As Integer = dataSelezionata.Month
+                Dim anno As Integer = dataSelezionata.Year
+                If mese = 12 Then
+                    Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+                Else
+                    Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
+                End If
+
+
+            Else
+                Dim dataSelezionata As Date = txtDataEmissione.Text
+                Dim annoAttuale As Integer = Now.Year
+                Dim mese As Integer = dataSelezionata.Month
+                Dim anno As Integer = dataSelezionata.Year
+                If mese = 12 Then
+                    Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+                Else
+                    Request.AddField("Data_Emissione", Data.SistemaDataUK(txtDataEmissione.Text))
+                End If
             End If
 
 
-        Else
-            Dim dataSelezionata As Date = txtDataEmissione.Text
-            Dim annoAttuale As Integer = Now.Year
-            Dim mese As Integer = dataSelezionata.Month
-            Dim anno As Integer = dataSelezionata.Year
-            If mese = 12 Then
-                Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
-            Else
-                Request.AddField("Data_Emissione", Data.SistemaDataUK(txtDataEmissione.Text))
+
+
+            If chkStampaCartacea.Checked = True Then
+
+                Request.AddField("Rin_StampaCartaceo", "Si")
+                Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
+                Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
+                Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
+                Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
+                Request.AddField("Rin_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
             End If
-        End If
-
-
-
-
-        If chkStampaCartacea.Checked = True Then
-
-            Request.AddField("Rin_StampaCartaceo", "Si")
-            Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
-            Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
-            Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
-            Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
-            Request.AddField("Rin_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
-        End If
-        If chkEA.Checked Then
-            Request.AddField("Rin_InviaA", "EA")
-        Else
-            Request.AddField("Rin_InviaA", "T")
-        End If
+            If chkEA.Checked Then
+                Request.AddField("Rin_InviaA", "EA")
+            Else
+                Request.AddField("Rin_InviaA", "T")
+            End If
 
 
 
 
 
 
-        ' Try
-        risposta = Request.Execute()
-
-
-        If Not IsNothing(Session("IdRecordMaster")) Then
 
 
 
-
-            Dim rispostax As Integer
-        Dim fmsPx As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        fmsPx.SetLayout("webRinnoviMaster")
-        '    Dim Requestx = fmsP.CreateDeleteRequest(Session("IdRecordMaster"))
-        Dim Requestx = fmsPx.CreateEditRequest(Session("IdRecordMaster"))
+            risposta = Request.Execute()
 
 
-
-        Requestx.AddField("CodiceStatus", "152")
-            ' Try
-            rispostax = Requestx.Execute()
-            AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
-        End If
-        '  Catch ex As Exception
-
-        ' End Try
-
-        'Dim rispostaY As Integer
-
-        'fmsP.SetLayout("webRinnovoMaster")
-        ''    Dim Requestx = fmsP.CreateDeleteRequest(Session("IdRecordMaster"))
-        'Dim RequestY = fmsP.CreateEditRequest(Session("IdRecordMaster"))
-
-
-
-        'RequestY.AddField("CodiceStatus", "152")
-        'Try
-        '    rispostax = Requestx.Execute()
-        'Catch ex As Exception
-
-        'End Try
+            If Not IsNothing(Session("IdRecordMaster")) Then
 
 
 
 
-        'Session("IdRecordMaster")
-
-
-        ritorno = True
-
-
-
-
-        'Catch ex As Exception
-
-        'End Try
+                Dim rispostax As Integer
+                Dim fmsPx As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+                fmsPx.SetLayout("webRinnoviMaster")
+                '    Dim Requestx = fmsP.CreateDeleteRequest(Session("IdRecordMaster"))
+                Dim Requestx = fmsPx.CreateEditRequest(Session("IdRecordMaster"))
 
 
 
+                Requestx.AddField("CodiceStatus", "152")
+                ' Try
+                rispostax = Requestx.Execute()
+                AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
+            End If
 
 
-        'Else
-        '    AsiModel.LogIn.LogCambioStatus(IDRinnovo, "151", Session("WebUserEnte"), "rinnovo")
-        'End If
+
+            ritorno = True
+
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "RichiestaRinnovo12", "rinnovi")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
 
-        ' occorre scrivere il codice che aggiorna albo con i dati giusti
+
 
         Return ritorno
     End Function

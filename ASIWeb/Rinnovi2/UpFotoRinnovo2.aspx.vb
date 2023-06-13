@@ -214,27 +214,27 @@ Public Class UpFotoRinnovo2
 
 
         ' Dim ds As DataSet
-
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As String = ""
-        fmsP.SetLayout("webRinnoviRichiesta2")
-        Dim Request = fmsP.CreateEditRequest(id)
-        Request.AddField("ASI_FotoOnFS", nomecaricato)
-
         Try
-            risposta = Request.Execute()
 
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            fmsP.SetLayout("webRinnoviRichiesta2")
+            Dim Request = fmsP.CreateEditRequest(id)
+            Request.AddField("ASI_FotoOnFS", nomecaricato)
+
+
+            risposta = Request.Execute()
+            Dim token = PrendiToken()
+
+            Return id & "_|_" & token
 
 
         Catch ex As Exception
-
+            Response.Redirect("../FriendlyMessage.aspx", False)
         End Try
 
-        Dim token = PrendiToken()
 
-        Return id & "_|_" & token
     End Function
 
     Public Function PrendiToken() As String

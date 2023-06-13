@@ -43,6 +43,8 @@ Public Class richiestaCorso
     Dim qualeStatus As String = ""
     Dim nomecaricato As String = ""
     Dim tokenZ As String = ""
+    Dim stileavviso As String = "width: 100%; margin-top: 4px; padding: 16px; border-radius: 5px; background-color:   #f8d7da; color: #b71c1c"
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("auth") = "0" Or IsNothing(Session("auth")) Then
@@ -104,99 +106,271 @@ Public Class richiestaCorso
 
         End If
 
+
+
+    End Sub
+    Protected Sub cvCaricaDiploma_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If FileUpload1.PostedFile.ContentLength > 0 Then
+
+            results.InnerHtml = ""
+            results.Attributes.Remove("style")
+            args.IsValid = True
+        Else
+            results.InnerHtml = "carica la documentazione nel campo [1] obbligatorio<br>"
+            results.Attributes.Add("style", stileavviso)
+
+            args.IsValid = False
+        End If
     End Sub
 
+    Protected Sub cvTipoFile_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If FileUpload1.PostedFile.ContentLength > 0 Then
+            Dim fileExtensions As String() = {".pdf", ".PDF", ".doc", ".docx", ".DOC", ".DOCX"}
+            Dim pippo As String = FileUpload1.PostedFile.ContentType
+            For i As Integer = 0 To fileExtensions.Length - 1
+                If FileUpload1.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                    args.IsValid = True
+                    results.InnerHtml = ""
+                    results.Attributes.Remove("style")
+                    Exit For
+                Else
+                    args.IsValid = False
 
+                    results.InnerHtml = "il documento nel campo [1] deve essere in formato pdf, doc oppure docx"
+                    results.Attributes.Add("style", stileavviso)
+                End If
+            Next
+
+        End If
+    End Sub
+
+    Protected Sub cvTipoFile2_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If FileUpload2.PostedFile.ContentLength > 0 Then
+            Dim fileExtensions As String() = {".pdf", ".PDF", ".doc", ".docx", ".DOC", ".DOCX"}
+            Dim pippo As String = FileUpload2.PostedFile.ContentType
+            For i As Integer = 0 To fileExtensions.Length - 1
+                If FileUpload2.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                    args.IsValid = True
+                    results.InnerHtml = ""
+                    results.Attributes.Remove("style")
+                    Exit For
+                Else
+                    args.IsValid = False
+
+                    results.InnerHtml = "il documento nel campo [2] deve essere in formato pdf, doc oppure docx altrimenti lascialo vuoto"
+                    results.Attributes.Add("style", stileavviso)
+                End If
+            Next
+        End If
+
+    End Sub
+    Protected Sub cvTipoFile3_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        If FileUpload3.PostedFile.ContentLength > 0 Then
+            Dim fileExtensions As String() = {".pdf", ".PDF", ".doc", ".docx", ".DOC", ".DOCX"}
+            Dim pippo As String = FileUpload3.PostedFile.ContentType
+            For i As Integer = 0 To fileExtensions.Length - 1
+                If FileUpload3.PostedFile.FileName.Contains(fileExtensions(i)) Then
+                    args.IsValid = True
+                    results.InnerHtml = ""
+                    results.Attributes.Remove("style")
+
+                    Exit For
+                Else
+                    args.IsValid = False
+
+                    results.InnerHtml = "il documento nel campo [3] deve essere in formato pdf, doc oppure docx altrimenti lascialo vuoto"
+                    results.Attributes.Add("style", stileavviso)
+                End If
+            Next
+
+        End If
+    End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
-        Dim tokenx As String = ""
-        Dim id_att As String = ""
-        Dim tuttoRitorno As String = ""
-
-        If uploadProgress.Files.Count > 0 Then
-
-
-
-
-
-
-
-            '****************************************************
-            Dim files As OboutFileCollection = uploadProgress.Files
-            Dim i As Integer
-            Dim quantisono As Integer
-
-            quantisono = files.Count()
-
-            uploadedFiles.Text = ""
-            '   Try
-
-            For i = 0 To files.Count - 1 Step 1
-                Dim file As OboutPostedFile = files(i)
+        If Page.IsValid Then
+            Dim whereToSave As String = "../file_storage/"
+            Dim fileUpload11 As HttpPostedFile = FileUpload1.PostedFile
+            Dim fileUpload21 As HttpPostedFile = FileUpload2.PostedFile
+            Dim fileUpload31 As HttpPostedFile = FileUpload3.PostedFile
+            Dim documentoGrande1 As Boolean = False
+            Dim documentoGrande2 As Boolean = False
+            Dim documentoGrande3 As Boolean = False
+            Dim primoDocumento As Boolean = False
+            Dim doc1 As Boolean = False
+            Dim doc2 As Boolean = False
+            Dim doc3 As Boolean = False
 
 
+            If Not FileUpload1.PostedFile Is Nothing And FileUpload1.PostedFile.ContentLength > 0 Then
+                doc1 = True
 
-                Dim whereToSave As String = "../file_storage/"
+            End If
 
-                tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
-                ext = Path.GetExtension((file.FileName))
-                nomefileReale = Path.GetFileName(file.FileName)
-                nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
-
-
-
-
-
-                '   nomecaricato = "cv_" + Session("codiceProvvisorio") + ext
-
-                file.SaveAs(MapPath(whereToSave + nomecaricato))
+            If Not FileUpload2.PostedFile Is Nothing And FileUpload2.PostedFile.ContentLength > 0 Then
+                If FileUpload2.PostedFile.ContentLength > MassimoPeso Then
+                    doc2 = True
+                End If
 
 
+            End If
+
+            If Not FileUpload3.PostedFile Is Nothing And FileUpload3.PostedFile.ContentLength > 0 Then
+                If FileUpload3.PostedFile.ContentLength > MassimoPeso Then
+                    doc3 = True
+                End If
+
+            End If
+
+            If Not FileUpload1.PostedFile Is Nothing And FileUpload1.PostedFile.ContentLength > 0 Then
+                If FileUpload1.PostedFile.ContentLength > MassimoPeso Then
+                    documentoGrande1 = True
+                    results.InnerHtml = "Il documento [1] era troppo grande. Massimo 3 mb<br>"
+                    results.Attributes.Add("style", stileavviso)
+                ElseIf (FileUpload1.PostedFile.ContentLength <= MassimoPeso And doc2 = False And doc3 = False) Then
+                    tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                    ext = Path.GetExtension((fileUpload11.FileName))
+                    nomefileReale = Path.GetFileName(fileUpload11.FileName)
+                    nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+                    fileUpload11.SaveAs(MapPath(whereToSave + nomecaricato))
+                    results.InnerHtml = "<b>Documento [1] caricato con successo: " & nomecaricato & "</b><br/>"
+                    results.Attributes.Add("style", stileavviso)
+                    Dim tokenx As String = ""
+                    Dim id_att As String = ""
+                    Dim tuttoRitorno As String = ""
+                    tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato, 0)
+                    Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                    tokenx = arrKeywords(1)
+                    id_att = arrKeywords(0)
+
+                    Try
+                        primoDocumento = CaricaSuFM(tokenx, id_att, nomecaricato, 0)
+                    Catch ex As Exception
+                        results.InnerHtml = "<b>Documento [1] non caricato: </b><br/>"
+                        results.Attributes.Add("style", stileavviso)
+                    End Try
+
+                Else
+                    results.InnerHtml = "<b>Carica il documento [1] </b><br/>"
+                    results.Attributes.Add("style", stileavviso)
 
 
+                End If
 
 
+            End If
 
-                tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato, i)
-                Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
-                '  txtNote.Text = ""
-                tokenx = arrKeywords(1)
-                id_att = arrKeywords(0)
-                CaricaSuFM(tokenx, id_att, nomecaricato, i)
-            Next
+            If documentoGrande1 = False Then
+                If Not FileUpload2.PostedFile Is Nothing And FileUpload2.PostedFile.ContentLength > 0 Then
+                    If FileUpload2.PostedFile.ContentLength > MassimoPeso Then
+                        documentoGrande2 = True
+                        results.InnerHtml = "Il documento [2] era troppo grande. Massimo 3 mb<br>"
+                        results.Attributes.Add("style", stileavviso)
+                    ElseIf FileUpload2.PostedFile.ContentLength <= MassimoPeso Then
+                        tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                        ext = Path.GetExtension((fileUpload21.FileName))
+                        nomefileReale = Path.GetFileName(fileUpload21.FileName)
+                        nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+                        fileUpload21.SaveAs(MapPath(whereToSave + nomecaricato))
+                        results.InnerHtml = "<b>Documento [2] caricato con successo: " & nomecaricato & "</b><br/>"
+                        results.Attributes.Add("style", stileavviso)
+                        Dim tokenx As String = ""
+                        Dim id_att As String = ""
+                        Dim tuttoRitorno As String = ""
+                        tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato, 1)
+                        Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                        tokenx = arrKeywords(1)
+                        id_att = arrKeywords(0)
+
+                        Try
+                            CaricaSuFM(tokenx, id_att, nomecaricato, 1)
+                        Catch ex As Exception
+                            results.InnerHtml = "<b>Documento [2] non caricato: </b><br/>"
+                            results.Attributes.Add("style", stileavviso)
+                        End Try
+
+                    Else
+                        results.InnerHtml = "<b>Carica il documento [2] </b><br/>"
+                        results.Attributes.Add("style", stileavviso)
 
 
+                    End If
 
 
-
-
-
-
-            '   pnlFase1.Visible = False
-            ' btnFase2.Visible = True
-            'deleteFile(nomecaricato)
-            Session("fase") = "2"
-            Response.Redirect("richiestaCorsoF2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
-
-
-            If uploadedFiles.Text.Length = 0 Then
-
-
-                Button1.Enabled = False
-                uploadedFiles.Text = ""
-
-                uploadedFiles.Text = "<b>Documento corso caricato con successo: " & nomecaricato & "</b><br/>"
-
+                End If
 
 
 
             End If
 
+            If documentoGrande1 = False Then
+                If Not FileUpload3.PostedFile Is Nothing And FileUpload3.PostedFile.ContentLength > 0 Then
+                    If FileUpload3.PostedFile.ContentLength > MassimoPeso Then
+                        documentoGrande3 = True
+                        results.InnerHtml = "Il documento [3] era troppo grande. Massimo 3 mb<br>"
+                        results.Attributes.Add("style", stileavviso)
+                    ElseIf FileUpload3.PostedFile.ContentLength <= MassimoPeso Then
+
+                        tokenZ = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()))
+                        ext = Path.GetExtension((fileUpload31.FileName))
+                        nomefileReale = Path.GetFileName(fileUpload31.FileName)
+                        nomecaricato = HiddenIdRecord.Value & "_" + tokenZ + ext
+                        fileUpload31.SaveAs(MapPath(whereToSave + nomecaricato))
+                        results.InnerHtml = "<b>Documento [3] caricato con successo: " & nomecaricato & "</b><br/>"
+                        results.Attributes.Add("style", stileavviso)
+                        Dim tokenx As String = ""
+                        Dim id_att As String = ""
+                        Dim tuttoRitorno As String = ""
+                        tuttoRitorno = CaricaDatiDocumentoCorso(HiddenIdRecord.Value, HiddenIDCorso.Value, nomecaricato, 2)
+                        Dim arrKeywords As String() = Split(tuttoRitorno, "_|_")
+                        tokenx = arrKeywords(1)
+                        id_att = arrKeywords(0)
+
+                        Try
+                            CaricaSuFM(tokenx, id_att, nomecaricato, 2)
+                        Catch ex As Exception
+                            results.InnerHtml = "<b>Documento [3] non caricato: </b><br/>"
+                            results.Attributes.Add("style", stileavviso)
+                        End Try
+
+                    Else
+                        results.InnerHtml = "<b>Carica il documento [3] </b><br/>"
+                        results.Attributes.Add("style", stileavviso)
 
 
-        Else
-            uploadedFiles.Text = "<b>Il Documento non deve superare i 2 mb di dimensione! </b><br/>"
+                    End If
+
+
+
+                End If
+
+
+            End If
+
+            If (documentoGrande1 = False And documentoGrande2 = False And documentoGrande3 = False And primoDocumento = True) Then
+
+
+                Session("fase") = "2"
+                Response.Redirect("richiestaCorsoF2.aspx?codR=" & deEnco.QueryStringEncode(Session("IDCorso")) & "&record_ID=" & deEnco.QueryStringEncode(Session("id_record")) & "&nomef=" & nomecaricato)
+
+
+            End If
+
+            If (documentoGrande1 = False And documentoGrande2 = True And documentoGrande3 = False And primoDocumento = True) Then
+                results.InnerHtml = "Il documento [2] era troppo grande. Massimo 3 mb<br>"
+                results.Attributes.Add("style", stileavviso)
+
+            End If
+
+            If (documentoGrande1 = False And documentoGrande2 = False And documentoGrande3 = True And primoDocumento = True) Then
+                results.InnerHtml = "Il documento [3] era troppo grande. Massimo 3 mb<br>"
+                results.Attributes.Add("style", stileavviso)
+
+            End If
+
+
+
+
         End If
 
 
