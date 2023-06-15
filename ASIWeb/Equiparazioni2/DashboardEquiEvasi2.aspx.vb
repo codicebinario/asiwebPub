@@ -87,232 +87,237 @@ Public Class DashboardEquiEvasi2
     Sub Equiparazioni()
 
         Dim ds As DataSet
+        Try
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            ' RequestP.AddSearchField("pre_stato_web", "1")
+            RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
+            RequestP.AddSearchField("Codice_Status", "115")
+            ' RequestP.AddSearchField("Codice_Status", "115", Enumerations.SearchOption.equals)
+            '  RequestP.AddSearchField("Codice_Status", "119", Enumerations.SearchOption.equals)
+            RequestP.SetMax(10)
 
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        ' RequestP.AddSearchField("pre_stato_web", "1")
-        RequestP.AddSearchField("Codice_Ente_Richiedente", Session("codice"), Enumerations.SearchOption.equals)
-        RequestP.AddSearchField("Codice_Status", "115")
-        ' RequestP.AddSearchField("Codice_Status", "115", Enumerations.SearchOption.equals)
-        '  RequestP.AddSearchField("Codice_Status", "119", Enumerations.SearchOption.equals)
-        RequestP.SetMax(10)
-
-        RequestP.AddSortField("IdEquiparazioneM", Enumerations.Sort.Descend)
-
-
-
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-            'Dim counter As Integer = 0
-            Dim counter1 As Integer = 0
-            Dim totale As Decimal = 0
-
-            Dim tessera As String
-            Dim nominativo As String
-            Dim diploma As String
-            Dim rompiStatus As Integer
-            Dim cambiato As String
-            Dim esisteZip As Boolean
-            Dim fileZip As String
-            Dim nomeZip As String = ""
-            Dim idrecordMaster As Integer = 0
-            Dim ArrayZip As Array = Nothing
-            For Each dr In ds.Tables("main").Rows
-
-                esisteZip = AsiModel.Equiparazioni.EsisteZipEquiparazioni(Data.FixNull(dr("IdEquiparazioneM")))
-                If esisteZip Then
-                    nomeZip = AsiModel.Equiparazioni.NomeZipRinnovi(Data.FixNull(dr("IdEquiparazioneM")))
-                    ArrayZip = nomeZip.Split(".")
-
-                    idrecordMaster = AsiModel.Equiparazioni.GetIdRecordEquiparazioni(Data.FixNull(dr("IdEquiparazioneM")))
-                End If
-
-                If rompiStatus = Data.FixNull(dr("IDEquiparazioneM")) Then
-                    cambiato = ""
-                Else
-                    cambiato = "ok"
-                End If
-
-                If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaAsiText"))) Then
-                    diploma = "..\img\noPdf.jpg"
-                Else
-                    diploma = "https://93.63.195.98" & Data.FixNull(dr("DiplomaAsiText"))
-                End If
-
-                If String.IsNullOrWhiteSpace(Data.FixNull(dr("TesseraEquiparazioneText"))) Then
-                    tessera = "..\img\noPdf.jpg"
-                Else
-                    tessera = "https://93.63.195.98" & Data.FixNull(dr("TesseraEquiparazioneText"))
-                End If
-
-
-                Dim VediDocumentazione As New LinkButton
-                VediDocumentazione.CausesValidation = False
-                VediDocumentazione.ID = "VediDoc_" & counter1
-                VediDocumentazione.Attributes.Add("runat", "server")
-                VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Documentazione Presentata"
-                VediDocumentazione.PostBackUrl = "vediDocumentazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
-                VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
+            RequestP.AddSortField("IdEquiparazioneM", Enumerations.Sort.Descend)
 
 
 
-                If Data.FixNull(dr("Codice_Status")) = "115" Then
-                    VediDocumentazione.Visible = True
-                Else
-                    VediDocumentazione.Visible = False
-                End If
-
-                phDash10.Visible = True
-
-                phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
-                If cambiato = "ok" Then
-
-                    phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
-                    phDash10.Controls.Add(New LiteralControl("<span>"))
 
 
+
+            ds = RequestP.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                'Dim counter As Integer = 0
+                Dim counter1 As Integer = 0
+                Dim totale As Decimal = 0
+
+                Dim tessera As String
+                Dim nominativo As String
+                Dim diploma As String
+                Dim rompiStatus As Integer
+                Dim cambiato As String
+                Dim esisteZip As Boolean
+                Dim fileZip As String
+                Dim nomeZip As String = ""
+                Dim idrecordMaster As Integer = 0
+                Dim ArrayZip As Array = Nothing
+                For Each dr In ds.Tables("main").Rows
+
+                    esisteZip = AsiModel.Equiparazioni.EsisteZipEquiparazioni(Data.FixNull(dr("IdEquiparazioneM")))
                     If esisteZip Then
-                        phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-customZip mb-2"" onclick=""showToast('zip');"" target=""_blank"" href='scaricaZipEquiparazione.aspx?codR=" _
-                             & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))) & "&record_ID=" & deEnco.QueryStringEncode(idrecordMaster) & "&nomeFilePC=" _
-                             & deEnco.QueryStringEncode(ArrayZip(0)) & "'><i class=""bi bi-person-badge""> </i>" & "Richiesta " & Data.FixNull(dr("IDEquiparazioneM")) & " - Scarica tutte le tessere</a>"))
-                    Else
-                        phDash10.Controls.Add(New LiteralControl("Richiesta " & Data.FixNull(dr("IDEquiparazioneM"))))
+                        nomeZip = AsiModel.Equiparazioni.NomeZipRinnovi(Data.FixNull(dr("IdEquiparazioneM")))
+                        ArrayZip = nomeZip.Split(".")
 
+                        idrecordMaster = AsiModel.Equiparazioni.GetIdRecordEquiparazioni(Data.FixNull(dr("IdEquiparazioneM")))
                     End If
-                    phDash10.Controls.Add(New LiteralControl("</span>"))
+
+                    If rompiStatus = Data.FixNull(dr("IDEquiparazioneM")) Then
+                        cambiato = ""
+                    Else
+                        cambiato = "ok"
+                    End If
+
+                    If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaAsiText"))) Then
+                        diploma = "..\img\noPdf.jpg"
+                    Else
+                        diploma = "https://93.63.195.98" & Data.FixNull(dr("DiplomaAsiText"))
+                    End If
+
+                    If String.IsNullOrWhiteSpace(Data.FixNull(dr("TesseraEquiparazioneText"))) Then
+                        tessera = "..\img\noPdf.jpg"
+                    Else
+                        tessera = "https://93.63.195.98" & Data.FixNull(dr("TesseraEquiparazioneText"))
+                    End If
+
+
+                    Dim VediDocumentazione As New LinkButton
+                    VediDocumentazione.CausesValidation = False
+                    VediDocumentazione.ID = "VediDoc_" & counter1
+                    VediDocumentazione.Attributes.Add("runat", "server")
+                    VediDocumentazione.Text = "<i class=""bi bi-file-earmark-pdf""> </i>Documentazione Presentata"
+                    VediDocumentazione.PostBackUrl = "vediDocumentazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("idrecord")))
+                    VediDocumentazione.CssClass = "btn btn-success btn-sm btn-nove btn-custom mb-2"
+
+
+
+                    If Data.FixNull(dr("Codice_Status")) = "115" Then
+                        VediDocumentazione.Visible = True
+                    Else
+                        VediDocumentazione.Visible = False
+                    End If
+
+                    phDash10.Visible = True
+
+                    phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
+                    If cambiato = "ok" Then
+
+                        phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
+                        phDash10.Controls.Add(New LiteralControl("<span>"))
+
+
+                        If esisteZip Then
+                            phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-customZip mb-2"" onclick=""showToast('zip');"" target=""_blank"" href='scaricaZipEquiparazione.aspx?codR=" _
+                                 & deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM"))) & "&record_ID=" & deEnco.QueryStringEncode(idrecordMaster) & "&nomeFilePC=" _
+                                 & deEnco.QueryStringEncode(ArrayZip(0)) & "'><i class=""bi bi-person-badge""> </i>" & "Richiesta " & Data.FixNull(dr("IDEquiparazioneM")) & " - Scarica tutte le tessere</a>"))
+                        Else
+                            phDash10.Controls.Add(New LiteralControl("Richiesta " & Data.FixNull(dr("IDEquiparazioneM"))))
+
+                        End If
+                        phDash10.Controls.Add(New LiteralControl("</span>"))
+
+
+                        phDash10.Controls.Add(New LiteralControl("</div>"))
+
+
+
+
+                        phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
+                        phDash10.Controls.Add(New LiteralControl("<span>Richiesta " & Data.FixNull(dr("IDEquiparazioneM")) & "</span>"))
+                        phDash10.Controls.Add(New LiteralControl("</div>"))
+                    End If
+
+
+
 
 
                     phDash10.Controls.Add(New LiteralControl("</div>"))
 
-
-
-
-                    phDash10.Controls.Add(New LiteralControl("<div Class=""section-divider"">"))
-                    phDash10.Controls.Add(New LiteralControl("<span>Richiesta " & Data.FixNull(dr("IDEquiparazioneM")) & "</span>"))
+                    phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
+                    'accordion card
+                    phDash10.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
+                    'accordion heder
+                    phDash10.Controls.Add(New LiteralControl("<div class=""card-header"">"))
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
+                    ' inizio prima riga
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
+                    phDash10.Controls.Add(New LiteralControl("Codice Richiesta: <small><b>" & Data.FixNull(dr("IDEquiparazioneM")) & "</b></small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Equi_Nome")) & " " & Data.FixNull(dr("Equi_Cognome")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Tessera Ass.: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl())
                     phDash10.Controls.Add(New LiteralControl("</div>"))
-                End If
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left moltopiccolo"">"))
+                    phDash10.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
+
+
+                    phDash10.Controls.Add(VediDocumentazione)
 
 
 
+                    If tessera = "..\img\noPdf.jpg" Then
+                        '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
 
 
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-
-                phDash10.Controls.Add(New LiteralControl("<div class=""col-sm-12 mb-3 mb-md-0"">"))
-                'accordion card
-                phDash10.Controls.Add(New LiteralControl("<div class=""card mb-2 shadow-sm rounded"">"))
-                'accordion heder
-                phDash10.Controls.Add(New LiteralControl("<div class=""card-header"">"))
-                phDash10.Controls.Add(New LiteralControl("<div Class=""container-fluid"">"))
-                ' inizio prima riga
-                phDash10.Controls.Add(New LiteralControl("<div Class=""row"">"))
-                phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
-                phDash10.Controls.Add(New LiteralControl("Codice Richiesta: <small><b>" & Data.FixNull(dr("IDEquiparazioneM")) & "</b></small><br />"))
-                phDash10.Controls.Add(New LiteralControl("Nominativo: <small>" & Data.FixNull(dr("Equi_Nome")) & " " & Data.FixNull(dr("Equi_Cognome")) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl("CF: <small>" & Data.FixNull(dr("Equi_CodiceFiscale")) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl("Tessera Ass.: <small>" & Data.FixNull(dr("Equi_NumeroTessera")) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl("Data Scadenza: <small>" & SonoDieci(Data.FixNull(dr("Equi_DataScadenza"))) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl())
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-                phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4  text-left moltopiccolo"">"))
-                phDash10.Controls.Add(New LiteralControl("</span><small>Status: </small><small " & Utility.statusColorTextCorsi(Data.FixNull(dr("Codice_Status"))) & ">" & Data.FixNull(dr("Descrizione_StatusWeb")) & "</small>"))
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-                phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-right"">"))
+                    Else
+                        phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" onclick=""showToast('tesserino');"" target=""_blank"" href='scaricaTesseraEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+    & deEnco.QueryStringEncode(Data.FixNull(dr("TesseraEquiparazioneText"))) & "&nominativo=" _
+                                 & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))
+                    End If
+                    If diploma = "..\img\noPdf.jpg" Then
+                        '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
 
 
-                phDash10.Controls.Add(VediDocumentazione)
-
-
-
-                If tessera = "..\img\noPdf.jpg" Then
-                    '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
-
-
-                Else
-                    phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2 "" onclick=""showToast('tesserino');"" target=""_blank"" href='scaricaTesseraEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
-& deEnco.QueryStringEncode(Data.FixNull(dr("TesseraEquiparazioneText"))) & "&nominativo=" _
-                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Tess. Tecnico</a>"))
-                End If
-                If diploma = "..\img\noPdf.jpg" Then
-                    '     phDash10.Controls.Add(New LiteralControl("<td><img src='" & tessera & "' height='70' width='70' alt='" & Data.FixNull(dr("Asi_Nome")) & " " & Data.FixNull(dr("Asi_Cognome")) & "'></td>"))
-
-
-                Else
-                    If Data.FixNull(dr("Equi_StampaDiploma")) = "no" Then
                     Else
                         If Data.FixNull(dr("Equi_StampaDiploma")) = "no" Then
-
                         Else
-                            phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiplomaEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
-& deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaAsiText"))) & "&nominativo=" _
-                             & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
+                            If Data.FixNull(dr("Equi_StampaDiploma")) = "no" Then
+
+                            Else
+                                phDash10.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom mb-2"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiplomaEquiparazioneN2.aspx?record_ID=" & deEnco.QueryStringEncode(dr("idrecord")) & "&nomeFilePC=" _
+    & deEnco.QueryStringEncode(Data.FixNull(dr("DiplomaAsiText"))) & "&nominativo=" _
+                                 & deEnco.QueryStringEncode(Data.FixNull(dr("Equi_Cognome")) & "_" & Data.FixNull(dr("Equi_Nome"))) & "'><i class=""bi bi-person-badge""> </i>Scarica Diploma</a>"))
+                            End If
                         End If
                     End If
-                End If
 
 
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-                'phDash10.Controls.Add(New LiteralControl("</div>"))
-                'phDash10.Controls.Add(New LiteralControl("</div>"))
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+                    'phDash10.Controls.Add(New LiteralControl("</div>"))
+                    'phDash10.Controls.Add(New LiteralControl("</div>"))
 
-                If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("Equi_NoteAnnullamentoEquiparazione"))) Then
+                    If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("Equi_NoteAnnullamentoEquiparazione"))) Then
 
+                        phDash10.Controls.Add(New LiteralControl("<div Class=""row"">"))
+                        phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
+                        phDash10.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Annullamento: <span>"))
+                        phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Equi_NoteAnnullamentoEquiparazione"))))
+                        phDash10.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+                        phDash10.Controls.Add(New LiteralControl("</div>"))
+
+                    End If
+
+
+
+                    phDash10.Controls.Add(New LiteralControl("<hr>"))
                     phDash10.Controls.Add(New LiteralControl("<div Class=""row"">"))
-                    phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-12 text-left"">"))
-                    phDash10.Controls.Add(New LiteralControl("<h6 class=""piccolo"">Note Annullamento: <span>"))
-                    phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Equi_NoteAnnullamentoEquiparazione"))))
-                    phDash10.Controls.Add(New LiteralControl("</small></h6></span></div>"))
+                    phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
+                    phDash10.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Equi_Disciplina_Interessata")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
+                    phDash10.Controls.Add(New LiteralControl("Qualifica DT:  "))
+                    phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small><br />"))
+
+
+                    If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("NoteValutazioneSettore"))) Then
+                        phDash10.Controls.Add(New LiteralControl("Note da Settore:  "))
+                        phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneSettore")) & "</small><br />"))
+                    End If
+
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
                     phDash10.Controls.Add(New LiteralControl("</div>"))
 
-                End If
+                    counter1 += 1
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+                    phDash10.Controls.Add(New LiteralControl("</div>"))
+
+
+                    '  End If
+
+                    rompiStatus = Data.FixNull(dr("IDEquiparazioneM"))
+                Next
 
 
 
-                phDash10.Controls.Add(New LiteralControl("<hr>"))
-                phDash10.Controls.Add(New LiteralControl("<div Class=""row"">"))
-                phDash10.Controls.Add(New LiteralControl("<div Class=""col-sm-4 text-left moltopiccolo"">"))
-                phDash10.Controls.Add(New LiteralControl("Sport: <small>" & Data.FixNull(dr("Equi_Sport_Interessato")) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl("Disciplina: <small>" & Data.FixNull(dr("Equi_Disciplina_Interessata")) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl("Specialità: <small>" & Data.FixNull(dr("Equi_Specialita")) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl("Livello: <small>" & Data.FixNull(dr("Equi_Livello")) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl("Qualifica da Rilasciare: <small>" & Data.FixNull(dr("Equi_Qualifica_Tecnica_Da_Rilasciare")) & "</small><br />"))
-                phDash10.Controls.Add(New LiteralControl("Qualifica DT:  "))
-                phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("Dicitura_Qualifica_DT")) & "</small><br />"))
+            End If
 
 
-                If Not String.IsNullOrWhiteSpace(Data.FixNull(dr("NoteValutazioneSettore"))) Then
-                    phDash10.Controls.Add(New LiteralControl("Note da Settore:  "))
-                    phDash10.Controls.Add(New LiteralControl("<small>" & Data.FixNull(dr("NoteValutazioneSettore")) & "</small><br />"))
-                End If
-
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-
-                counter1 += 1
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-                phDash10.Controls.Add(New LiteralControl("</div>"))
-
-
-                '  End If
-
-                rompiStatus = Data.FixNull(dr("IDEquiparazioneM"))
-            Next
-
-
-
-        End If
-
-
-
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "DashboardEquiEvasi2", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
 
     End Sub

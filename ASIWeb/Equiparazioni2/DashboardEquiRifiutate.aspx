@@ -107,55 +107,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasRightLabel">Rinnovi Attivi</h5>
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Equiparazioni Respinte</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body piccolo">
-            <p>
-                I rinnovi vengono organizzati in gruppi. Ogni gruppo può contenere da 1 a n rinnovi. Lo scopo è quello
-                di ottimizzare i costi di spedizione se richiesto il cartaceo.
-            </p>
-            <p>
-                Un nuovo gruppo di rinnovi si crea dal secondo menù orizzontale [Nuovo Gruppo Rinnovi].
-             
-            </p>
-            <p>
-                In questa pagina i gruppi sono rappresentati da voci di gruppo espandibili e comprimibili. 
-                Con un click su una riga di gruppo, apriamo il contenuto disponibile.
-            </p>
-            <p>Si possono effettuare le seguenti azioni:</p>
-            <ol>
-                <li>
-                    <p class="fw-bold">aggiungere una nuova richiesta rinnovo al gruppo </p>
-                    <p>parte il veloce processo per aggiungere una nuova richiesta al gruppo in questione.</p>
-
-                </li>
-                <li>
-                    <p class="fw-bold">terminare il gruppo</p>
-                    <p>
-                        quando abbiamo terminato di aggiungere tutte le richieste desiderate e vogliamo procedere al pagamento
-                il gruppo va terminato. Una volta terminato al gruppo non si potrà aggiungere altre richieste e si
-                potrà procedere al pagamento. Il gruppo mostrerà il prezzo da pagare, diviso in costo rinnovo, costo spedizione
-                e totale.<br />
-                        Apparirà il pulsante per procedure al caricamento del giustificativo pagamento effettuato. I formati accettati sono
-                immagini jpg, png e documenti pdf.
-                    </p>
-                </li>
-                <li>
-                    <p class="fw-bold">cancellare una richiesta rinnovo</p>
-                    <p>
-                        ogni momento, se non ancora terminato il gruppo, si potrà eliminare
-                      una singola richiesta rinnovo.
-                    </p>
-
-                </li>
-                <li>
-                    <p class="fw-bold">caricare una foto per la tessera (opzionale)</p>
-                    <p>è possibile opzionalmente caricare una foto per la tessera.</p>
-                </li>
-            </ol>
-            <p>
-            </p>
+          
+              
         </div>
     </div>
          
@@ -163,7 +120,7 @@
         <div class="col-sm-12 mb-3 mb-md-0">
             <div class="jumbotron jumbotron-custom jumbotron-fluid rounded">
                 <div class="container">
-                    <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Equiparazioni Respinte (info)
+                    <h6 class="fs-5"><a class="text-white text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">Equiparazioni Respinte (help)
                     </a></h6>
                     <p class="lead">
                         <asp:Literal ID="litDenominazioneJumboDash" runat="server"></asp:Literal>

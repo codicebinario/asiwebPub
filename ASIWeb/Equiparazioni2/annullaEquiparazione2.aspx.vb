@@ -20,16 +20,20 @@ Public Class annullaEquiparazione2
 
 
             Dim risposta As Integer = 0
-            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-
-            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-
-            Dim RequestP = fmsP.CreateDeleteRequest(record_ID)
-
 
             Try
+                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+
+                fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+
+                Dim RequestP = fmsP.CreateDeleteRequest(record_ID)
+
+
+
                 risposta = RequestP.Execute()
             Catch ex As Exception
+                AsiModel.LogIn.LogErrori(ex, "annullaEquiparazione2", "equiparazioni")
+                Response.Redirect("../FriendlyMessage.aspx", False)
             End Try
 
         End If

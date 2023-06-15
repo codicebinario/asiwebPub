@@ -79,67 +79,72 @@ Public Class sceltaSport
 
         Dim selezionato As String = ddlSport.SelectedItem.Value
         Dim ds1 As DataSet
-
-        Dim fmsP1 As FMSAxml = AsiModel.Conn.Connect()
-        fmsP1.SetLayout("webDisciplineSportSettoriDNet")
-
-        '
-
-        If Session("tipoEnte") = "Settori" Then
-
-            Dim RequestP1 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP1.AddSearchField("Sport_ID", selezionato, Enumerations.SearchOption.equals)
-            ' RequestP1.AddSearchField("Settore_ID", 0, Enumerations.SearchOption.biggerThan)
-            RequestP1.AddSortField("Disciplina_ID", Enumerations.Sort.Ascend)
-
-            ds1 = RequestP1.Execute()
+        Try
 
 
-            If Not IsNothing(ds1) AndAlso ds1.Tables("main").Rows.Count > 0 Then
+            Dim fmsP1 As FMSAxml = AsiModel.Conn.Connect()
+            fmsP1.SetLayout("webDisciplineSportSettoriDNet")
+
+            '
+
+            If Session("tipoEnte") = "Settori" Then
+
+                Dim RequestP1 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestP1.AddSearchField("Sport_ID", selezionato, Enumerations.SearchOption.equals)
+                ' RequestP1.AddSearchField("Settore_ID", 0, Enumerations.SearchOption.biggerThan)
+                RequestP1.AddSortField("Disciplina_ID", Enumerations.Sort.Ascend)
+
+                ds1 = RequestP1.Execute()
 
 
-                Dim Disciplina As DataTable = ds1.Tables("main").DefaultView.ToTable(True, "Disciplina_ID", "Disciplina")
+                If Not IsNothing(ds1) AndAlso ds1.Tables("main").Rows.Count > 0 Then
 
-                ddlDisciplina.DataSource = Disciplina
 
-                ddlDisciplina.DataTextField = "Disciplina"
-                ddlDisciplina.DataValueField = "Disciplina_ID"
+                    Dim Disciplina As DataTable = ds1.Tables("main").DefaultView.ToTable(True, "Disciplina_ID", "Disciplina")
 
-                ddlDisciplina.DataBind()
-                ddlDisciplina.Items.Remove(0)
-                ddlDisciplina.Items.Insert(0, New ListItem("##", "##"))
-                ddlSpecialita.Items.Clear()
+                    ddlDisciplina.DataSource = Disciplina
+
+                    ddlDisciplina.DataTextField = "Disciplina"
+                    ddlDisciplina.DataValueField = "Disciplina_ID"
+
+                    ddlDisciplina.DataBind()
+                    ddlDisciplina.Items.Remove(0)
+                    ddlDisciplina.Items.Insert(0, New ListItem("##", "##"))
+                    ddlSpecialita.Items.Clear()
+
+                End If
+            Else
+
+                Dim RequestP1 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestP1.AddSearchField("Sport_ID", selezionato, Enumerations.SearchOption.equals)
+
+                RequestP1.AddSortField("Disciplina_ID", Enumerations.Sort.Ascend)
+
+                ds1 = RequestP1.Execute()
+
+                If Not IsNothing(ds1) AndAlso ds1.Tables("main").Rows.Count > 0 Then
+
+
+                    Dim Disciplina As DataTable = ds1.Tables("main").DefaultView.ToTable(True, "Disciplina_ID", "Disciplina")
+
+                    ddlDisciplina.DataSource = Disciplina
+
+                    ddlDisciplina.DataTextField = "Disciplina"
+                    ddlDisciplina.DataValueField = "Disciplina_ID"
+
+                    ddlDisciplina.DataBind()
+                    ddlDisciplina.Items.Remove(0)
+                    ddlDisciplina.Items.Insert(0, New ListItem("##", "##"))
+                    ddlSpecialita.Items.Clear()
+
+                End If
 
             End If
-        Else
 
-            Dim RequestP1 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP1.AddSearchField("Sport_ID", selezionato, Enumerations.SearchOption.equals)
-
-            RequestP1.AddSortField("Disciplina_ID", Enumerations.Sort.Ascend)
-
-            ds1 = RequestP1.Execute()
-
-            If Not IsNothing(ds1) AndAlso ds1.Tables("main").Rows.Count > 0 Then
-
-
-                Dim Disciplina As DataTable = ds1.Tables("main").DefaultView.ToTable(True, "Disciplina_ID", "Disciplina")
-
-                ddlDisciplina.DataSource = Disciplina
-
-                ddlDisciplina.DataTextField = "Disciplina"
-                ddlDisciplina.DataValueField = "Disciplina_ID"
-
-                ddlDisciplina.DataBind()
-                ddlDisciplina.Items.Remove(0)
-                ddlDisciplina.Items.Insert(0, New ListItem("##", "##"))
-                ddlSpecialita.Items.Clear()
-
-            End If
-
-        End If
-
-
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "sceltaSport", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
     End Sub
 
@@ -149,66 +154,73 @@ Public Class sceltaSport
         Dim selezionato As String = ddlDisciplina.SelectedItem.Value
         Dim ds2 As DataSet
         Dim dr As DataRow
-        Dim fmsP2 As FMSAxml = AsiModel.Conn.Connect()
+        Try
+
+
+            Dim fmsP2 As FMSAxml = AsiModel.Conn.Connect()
         fmsP2.SetLayout("webCorsiSport")
 
-        If Session("tipoEnte") = "Settori" Then
+            If Session("tipoEnte") = "Settori" Then
 
-            Dim RequestP2 = fmsP2.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP2.AddSearchField("Disciplina_ID", selezionato, Enumerations.SearchOption.equals)
+                Dim RequestP2 = fmsP2.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestP2.AddSearchField("Disciplina_ID", selezionato, Enumerations.SearchOption.equals)
 
-            RequestP2.AddSortField("Specialita_ID", Enumerations.Sort.Ascend)
+                RequestP2.AddSortField("Specialita_ID", Enumerations.Sort.Ascend)
 
-            ds2 = RequestP2.Execute()
+                ds2 = RequestP2.Execute()
 
-            If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
+                If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
 
-                Dim Specialita As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "Specialita_ID", "Specialita")
-                ddlSpecialita.Enabled = True
-                ddlSpecialita.DataSource = Specialita
+                    Dim Specialita As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "Specialita_ID", "Specialita")
+                    ddlSpecialita.Enabled = True
+                    ddlSpecialita.DataSource = Specialita
 
-                ddlSpecialita.DataTextField = "Specialita"
-                ddlSpecialita.DataValueField = "Specialita_ID"
+                    ddlSpecialita.DataTextField = "Specialita"
+                    ddlSpecialita.DataValueField = "Specialita_ID"
 
-                ddlSpecialita.DataBind()
-                ' ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
-                ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
+                    ddlSpecialita.DataBind()
+                    ' ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
+                    ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
+                Else
+                    ddlSpecialita.Enabled = False
+                End If
+
+                CustomValidator1.Enabled = True
+
+
+
             Else
-                ddlSpecialita.Enabled = False
+                Dim RequestP2 = fmsP2.CreateFindRequest(Enumerations.SearchType.Subset)
+                RequestP2.AddSearchField("Disciplina_ID", selezionato, Enumerations.SearchOption.equals)
+                RequestP2.AddSortField("Specialita_ID", Enumerations.Sort.Ascend)
+
+                ds2 = RequestP2.Execute()
+
+                If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
+
+                    Dim Specialita As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "Specialita_ID", "Specialita")
+                    ddlSpecialita.Enabled = True
+                    ddlSpecialita.DataSource = Specialita
+
+                    ddlSpecialita.DataTextField = "Specialita"
+                    ddlSpecialita.DataValueField = "Specialita_ID"
+
+                    ddlSpecialita.DataBind()
+                    ' ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
+                    ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
+                Else
+                    ddlSpecialita.Enabled = False
+                End If
+
+
+
+
+
             End If
-
-            CustomValidator1.Enabled = True
-
-
-
-        Else
-            Dim RequestP2 = fmsP2.CreateFindRequest(Enumerations.SearchType.Subset)
-            RequestP2.AddSearchField("Disciplina_ID", selezionato, Enumerations.SearchOption.equals)
-            RequestP2.AddSortField("Specialita_ID", Enumerations.Sort.Ascend)
-
-            ds2 = RequestP2.Execute()
-
-            If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
-
-                Dim Specialita As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "Specialita_ID", "Specialita")
-                ddlSpecialita.Enabled = True
-                ddlSpecialita.DataSource = Specialita
-
-                ddlSpecialita.DataTextField = "Specialita"
-                ddlSpecialita.DataValueField = "Specialita_ID"
-
-                ddlSpecialita.DataBind()
-                ' ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
-                ddlSpecialita.Items.Insert(0, New ListItem("##", "##"))
-            Else
-                ddlSpecialita.Enabled = False
-            End If
-
-
-
-
-
-        End If
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "sceltaSport", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Sub
 
     Protected Sub CustomValidator1_ServerValidate(source As Object, args As ServerValidateEventArgs) Handles CustomValidator1.ServerValidate

@@ -449,10 +449,12 @@
                 </div>
 		   <div class="col-sm-12">
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-9">
 								<div class="form-group">
+             <label id="lblStampaDigitale" for="chkStampaDigitale" style="padding-left: 20px">Stampa Digitale</label>
+               <asp:CheckBox ID="chkStampaDigitale" Checked="true" Enabled="false" runat="server" />
 							
-         <label  for="chkStampaCartacea"   style="padding-left:20px">Stampa Cartacea</label>
+         <label  for="chkStampaCartacea"   style="padding-left:20px">Richiesta Stampa Cartacea</label>
          <asp:CheckBox ID="chkStampaCartacea"  runat="server" AutoPostBack="true" />
 	
 								

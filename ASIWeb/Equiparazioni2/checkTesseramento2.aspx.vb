@@ -94,23 +94,30 @@ Public Class checkTesseramento2
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
         Dim idRecord As Integer = 0
         Dim DataScadenzaSistemata As String
-        ' Dim ds As DataSet
-
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
+        Dim fmsP As FMSAxml = Nothing
         Dim risposta As String = ""
-        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+        ' Dim ds As DataSet
+        Try
 
 
-        Dim Request = fmsP.CreateNewRecordRequest()
 
-        Request.AddField("IDEquiparazioneM", codR)
-        Request.AddField("Codice_Status", "0")
-        Request.AddField("Codice_Ente_Richiedente", codiceEnteRichiedente)
+            fmsP = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
 
-        idRecord = Request.Execute()
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
 
+
+            Dim Request = fmsP.CreateNewRecordRequest()
+
+            Request.AddField("IDEquiparazioneM", codR)
+            Request.AddField("Codice_Status", "0")
+            Request.AddField("Codice_Ente_Richiedente", codiceEnteRichiedente)
+
+            idRecord = Request.Execute()
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "checkTesseramento2", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
         Dim SettaggioCulture As CultureInfo = CultureInfo.CreateSpecificCulture("it-IT")
         Thread.CurrentThread.CurrentCulture = SettaggioCulture
@@ -142,18 +149,19 @@ Public Class checkTesseramento2
         RequestE.AddField("Equi_Fase", "0")
         '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
-        '  Try
-        risposta = RequestE.Execute()
+        Try
+            risposta = RequestE.Execute()
+
+
+            Return idRecord
+
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "checkTesseramento2", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
 
 
-        '  Catch ex As Exception
-
-        '  End Try
-
-
-
-        Return idRecord
     End Function
 
     Protected Sub lnkCheck_Click(sender As Object, e As EventArgs) Handles lnkCheck.Click

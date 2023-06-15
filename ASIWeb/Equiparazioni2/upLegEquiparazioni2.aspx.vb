@@ -137,7 +137,10 @@ Public Class upLegEquiparazioni2
 
     End Sub
     Public Function QuantiAllegati2(codR As String) As String
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        Try
+
+
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         Dim ds As DataSet
         Dim quanti As Integer = 0
         Dim risposta As String = ""
@@ -170,10 +173,17 @@ Public Class upLegEquiparazioni2
 
 
         End If
-        Return risposta
+            Return risposta
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "upLegEquiparazione", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Function
     Public Function QuantiAllegati(codR As String) As String
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+        Try
+
+
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         Dim ds As DataSet
         Dim quanti As Integer = 0
         Dim risposta As String = ""
@@ -206,7 +216,11 @@ Public Class upLegEquiparazioni2
 
 
         End If
-        Return risposta
+            Return risposta
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "upLegEquiparazioni2", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Function
     Public Function CaricaSuFM(tokenx As String, id_att As String, nomecaricato As String) As Boolean
 
@@ -277,8 +291,10 @@ Public Class upLegEquiparazioni2
     End Function
     Public Function NuovaRichiestaAllegato(codR As String, nomecaricato As String) As String
         '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
+        Try
 
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         ' Dim ds As DataSet
 
 
@@ -308,7 +324,7 @@ Public Class upLegEquiparazioni2
         Request11.Execute()
 
 
-        Dim record_id As String = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDEquiMaster(codR) ' per aggiornare status
+            Dim record_id As String = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDEquiMaster(codR) ' per aggiornare status
 
         Dim fmsP1 As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
         '  Dim ds As DataSet
@@ -354,7 +370,11 @@ Public Class upLegEquiparazioni2
 
 
 
-        Return IdAllegato & "_|_" & token
+            Return IdAllegato & "_|_" & token
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "upLegEquiparazioni2", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Function
 
     Public Function PrendiToken() As String

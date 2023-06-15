@@ -165,47 +165,52 @@ Public Class richiestaEquiparazioneDati12
     Sub Province()
 
         Dim ds As DataSet
+        Try
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webProvinceRegioni")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
 
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webProvinceRegioni")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
-
-        RequestP.AddSortField("Sigla", Enumerations.Sort.Ascend)
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-
-            Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sigla")
+            RequestP.AddSortField("Sigla", Enumerations.Sort.Ascend)
 
 
 
+            ds = RequestP.Execute()
 
-            ddlProvinciaResidenza.DataSource = SingleSport
-
-
-            ddlProvinciaResidenza.DataTextField = "sigla"
-            ddlProvinciaResidenza.DataValueField = "sigla"
-
-            ddlProvinciaResidenza.DataBind()
-            'ddlSport.DataValueField = "Sport"
-            ddlProvinciaResidenza.Items.Insert(0, New ListItem("##", "##"))
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
 
-            'ddlProvinciaConsegna.DataSource = SingleSport
+                Dim SingleSport As DataTable = ds.Tables("main").DefaultView.ToTable(True, "Sigla")
 
 
-            'ddlProvinciaConsegna.DataTextField = "sigla"
-            'ddlProvinciaConsegna.DataValueField = "sigla"
-
-            'ddlProvinciaConsegna.DataBind()
-            ''ddlSport.DataValueField = "Sport"
-            'ddlProvinciaConsegna.Items.Insert(0, New ListItem("##", "##"))
 
 
-        End If
+                ddlProvinciaResidenza.DataSource = SingleSport
 
+
+                ddlProvinciaResidenza.DataTextField = "sigla"
+                ddlProvinciaResidenza.DataValueField = "sigla"
+
+                ddlProvinciaResidenza.DataBind()
+                'ddlSport.DataValueField = "Sport"
+                ddlProvinciaResidenza.Items.Insert(0, New ListItem("##", "##"))
+
+
+                'ddlProvinciaConsegna.DataSource = SingleSport
+
+
+                'ddlProvinciaConsegna.DataTextField = "sigla"
+                'ddlProvinciaConsegna.DataValueField = "sigla"
+
+                'ddlProvinciaConsegna.DataBind()
+                ''ddlSport.DataValueField = "Sport"
+                'ddlProvinciaConsegna.Items.Insert(0, New ListItem("##", "##"))
+
+
+            End If
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "richiestaEquiparazioneDati12", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
 
     End Sub
@@ -244,29 +249,35 @@ Public Class richiestaEquiparazioneDati12
         Dim RequestP2 = fmsP1.CreateFindRequest(Enumerations.SearchType.Subset)
         RequestP2.AddSearchField("sigla", selezionato, Enumerations.SearchOption.equals)
         RequestP2.AddSortField("descrizioneComune", Enumerations.Sort.Ascend)
-
-        ds2 = RequestP2.Execute()
-
-        If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
-
-            'For Each dr In ds.Tables("main").Rows
-
-            '    Response.Write("Sport: " & dr("Sport") & " - Disciplina: " & dr("Disciplina") & " - Specialità: " & dr("Specialita") & "<br />")
+        Try
 
 
-            Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
+            ds2 = RequestP2.Execute()
 
-            ddlComuneResidenza.DataSource = comuni
+            If Not IsNothing(ds2) AndAlso ds2.Tables("main").Rows.Count > 0 Then
 
-            ddlComuneResidenza.DataTextField = "descrizioneComune"
-            ddlComuneResidenza.DataValueField = "descrizioneComune"
+                'For Each dr In ds.Tables("main").Rows
 
-            ddlComuneResidenza.DataBind()
+                '    Response.Write("Sport: " & dr("Sport") & " - Disciplina: " & dr("Disciplina") & " - Specialità: " & dr("Specialita") & "<br />")
 
-            ddlComuneResidenza.Items.Insert(0, New ListItem("##", "##"))
-            ' ddlProvincia.Items.Clear()
 
-        End If
+                Dim comuni As DataTable = ds2.Tables("main").DefaultView.ToTable(True, "descrizioneComune")
+
+                ddlComuneResidenza.DataSource = comuni
+
+                ddlComuneResidenza.DataTextField = "descrizioneComune"
+                ddlComuneResidenza.DataValueField = "descrizioneComune"
+
+                ddlComuneResidenza.DataBind()
+
+                ddlComuneResidenza.Items.Insert(0, New ListItem("##", "##"))
+                ' ddlProvincia.Items.Clear()
+
+            End If
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "richiestaEquiparazione12", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Sub
 
 
@@ -277,92 +288,97 @@ Public Class richiestaEquiparazioneDati12
 
         ' Dim ds As DataSet
 
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As String = ""
-        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-        Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
+        Try
 
 
-        Request.AddField("Equi_Nome", Data.PrendiStringaT(Server.HtmlEncode(txtNome.Text)))
-        Request.AddField("Equi_Cognome", Data.PrendiStringaT(Server.HtmlEncode(txtCognome.Text)))
-        Request.AddField("Equi_NumeroTessera", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceTessera.Text)))
-        Request.AddField("Equi_CodiceFiscale", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceFiscale.Text)))
-        Request.AddField("Equi_ComuneNascita", Data.PrendiStringaT(Server.HtmlEncode(txtComuneNascita.Text)))
-        Request.AddField("Equi_DataScadenza", Data.SistemaDataUK(txtDataScadenza.Text))
-        Request.AddField("Equi_DataNascita", Data.SistemaData(txtDataNascita.Text))
-        Request.AddField("Equi_IndirizzoEmail", Data.PrendiStringaT(Server.HtmlEncode(txtEmail.Text)))
-        Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefonoCellulare.Text)))
-        Request.AddField("Equi_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
-        Request.AddField("Equi_ProvinciaResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlProvinciaResidenza.SelectedItem.Text)))
-        Request.AddField("Equi_ComuneResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlComuneResidenza.SelectedItem.Text)))
-        Request.AddField("Equi_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
 
-        If Session("EquiparazioneModificaDataEmissione") = "S" Then
-            Dim dataSelezionata As Date = txtDataEmissioneM.Text
-            Dim annoAttuale As Integer = Now.Year
-            Dim mese As Integer = dataSelezionata.Month
-            Dim anno As Integer = dataSelezionata.Year
-            If mese = 12 Then
-                Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+
+            Request.AddField("Equi_Nome", Data.PrendiStringaT(Server.HtmlEncode(txtNome.Text)))
+            Request.AddField("Equi_Cognome", Data.PrendiStringaT(Server.HtmlEncode(txtCognome.Text)))
+            Request.AddField("Equi_NumeroTessera", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceTessera.Text)))
+            Request.AddField("Equi_CodiceFiscale", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceFiscale.Text)))
+            Request.AddField("Equi_ComuneNascita", Data.PrendiStringaT(Server.HtmlEncode(txtComuneNascita.Text)))
+            Request.AddField("Equi_DataScadenza", Data.SistemaDataUK(txtDataScadenza.Text))
+            Request.AddField("Equi_DataNascita", Data.SistemaData(txtDataNascita.Text))
+            Request.AddField("Equi_IndirizzoEmail", Data.PrendiStringaT(Server.HtmlEncode(txtEmail.Text)))
+            Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefonoCellulare.Text)))
+            Request.AddField("Equi_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
+            Request.AddField("Equi_ProvinciaResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlProvinciaResidenza.SelectedItem.Text)))
+            Request.AddField("Equi_ComuneResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlComuneResidenza.SelectedItem.Text)))
+            Request.AddField("Equi_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
+
+            If Session("EquiparazioneModificaDataEmissione") = "S" Then
+                Dim dataSelezionata As Date = txtDataEmissioneM.Text
+                Dim annoAttuale As Integer = Now.Year
+                Dim mese As Integer = dataSelezionata.Month
+                Dim anno As Integer = dataSelezionata.Year
+                If mese = 12 Then
+                    Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+                Else
+                    Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
+                End If
+
+
             Else
-                Request.AddField("Data_Emissione", Data.SistemaDataUK(Data.SonoDieci(dataSelezionata)))
+                Dim dataSelezionata As Date = txtDataEmissione.Text
+                Dim annoAttuale As Integer = Now.Year
+                Dim mese As Integer = dataSelezionata.Month
+                Dim anno As Integer = dataSelezionata.Year
+                If mese = 12 Then
+                    Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+                Else
+                    Request.AddField("Data_Emissione", Data.SistemaDataUK(txtDataEmissione.Text))
+                End If
             End If
 
 
-        Else
-            Dim dataSelezionata As Date = txtDataEmissione.Text
-            Dim annoAttuale As Integer = Now.Year
-            Dim mese As Integer = dataSelezionata.Month
-            Dim anno As Integer = dataSelezionata.Year
-            If mese = 12 Then
-                Request.AddField("Data_Emissione", "01/01/" & annoAttuale + 1)
+
+
+            If chkStampaCartacea.Checked = True Then
+                Request.AddField("Equi_StampaCartaceo", "si")
+                Request.AddField("Equi_IndirizzoConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text))))
+                Request.AddField("Equi_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
+                Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
+                Request.AddField("Equi_CapConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text))))
+                Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
+
+
+
+                If chkEA.Checked Then
+                    Request.AddField("Equi_InviaA", "EA")
+                Else
+                    Request.AddField("Equi_InviaA", "T")
+                End If
+                If chkStampaDiploma.Checked = True Then
+                    Request.AddField("Equi_StampaDiploma", "si")
+                End If
+
             Else
-                Request.AddField("Data_Emissione", Data.SistemaDataUK(txtDataEmissione.Text))
-            End If
-        End If
-
-
-
-
-        If chkStampaCartacea.Checked = True Then
-            Request.AddField("Equi_StampaCartaceo", "si")
-            Request.AddField("Equi_IndirizzoConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text))))
-            Request.AddField("Equi_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
-            Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
-            Request.AddField("Equi_CapConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text))))
-            Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
-
-
-
-            If chkEA.Checked Then
-                Request.AddField("Equi_InviaA", "EA")
-            Else
-                Request.AddField("Equi_InviaA", "T")
-            End If
-            If chkStampaDiploma.Checked = True Then
-                Request.AddField("Equi_StampaDiploma", "si")
+                If chkStampaDiploma.Checked = True Then
+                    Request.AddField("Equi_StampaDiploma", "si")
+                End If
             End If
 
-        Else
-            If chkStampaDiploma.Checked = True Then
-                Request.AddField("Equi_StampaDiploma", "si")
-            End If
-        End If
 
 
 
 
 
+            ' Request.AddField("Equi_Fase", "3")
+            '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
-        ' Request.AddField("Equi_Fase", "3")
-        '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
-
-        '   Try
-        risposta = Request.Execute()
-
-
+            '   Try
+            risposta = Request.Execute()
+            Return True
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "richiestaEquiparazione12", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
         'Catch ex As Exception
 
@@ -370,7 +386,7 @@ Public Class richiestaEquiparazioneDati12
 
 
 
-        Return True
+
     End Function
 
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click

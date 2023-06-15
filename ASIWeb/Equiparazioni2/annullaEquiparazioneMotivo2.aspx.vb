@@ -104,31 +104,34 @@ Public Class annullaEquiparazioneMotivo2
 
     Protected Sub btnValuta_Click(sender As Object, e As EventArgs) Handles btnValuta.Click
         If Page.IsValid Then
-
-            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-            '  Dim ds As DataSet
-            Dim risposta As String = ""
-            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-            Dim Request = fmsP.CreateEditRequest(Session("id_record"))
-
-
-
-
-            Request.AddField("Codice_Status", "119")
-
-
-            Request.AddField("Equi_NoteAnnullamentoEquiparazione", Data.PrendiStringaT(Server.HtmlEncode(txtNoteAnnullamento.Text)))
-            '    Request.AddScript("SistemaEncodingNoteAnnullamento_Corso", Session("id_record"))
-            'script per gestione caratteri speciali da inserire
             Try
+                Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+                '  Dim ds As DataSet
+                Dim risposta As String = ""
+                fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+                Dim Request = fmsP.CreateEditRequest(Session("id_record"))
+
+
+
+
+                Request.AddField("Codice_Status", "119")
+
+
+                Request.AddField("Equi_NoteAnnullamentoEquiparazione", Data.PrendiStringaT(Server.HtmlEncode(txtNoteAnnullamento.Text)))
+                '    Request.AddScript("SistemaEncodingNoteAnnullamento_Corso", Session("id_record"))
+                'script per gestione caratteri speciali da inserire
+
                 risposta = Request.Execute()
                 AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "119", Session("WebUserEnte"), "equiparazione")
-            Catch ex As Exception
+                Response.Redirect("DashboardEquiEvasi2.aspx#" & Session("IDEquiparazioni"), False)
 
+            Catch ex As Exception
+                AsiModel.LogIn.LogErrori(ex, "annullaEquiparazioneMotivo2", "equiparazioni")
+                Response.Redirect("../FriendlyMessage.aspx", False)
             End Try
 
 
-            Response.Redirect("DashboardEquiEvasi2.aspx#" & Session("IDEquiparazioni"))
+
 
         End If
 

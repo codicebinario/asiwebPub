@@ -174,34 +174,39 @@ Public Class richiestaEquiparazioneDati22
     Sub LivelliCorsi()
 
         Dim ds As DataSet
-
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webLivelliCorsi")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
-
-        RequestP.AddSortField("Livello", Enumerations.Sort.Ascend)
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+        Try
 
 
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webLivelliCorsi")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
 
-            ddlLivello.DataSource = ds
+            RequestP.AddSortField("Livello", Enumerations.Sort.Ascend)
 
-            ddlLivello.DataTextField = "Livello"
-            ddlLivello.DataValueField = "Livello"
+            ds = RequestP.Execute()
 
-            ddlLivello.DataBind()
-            'ddlSport.DataValueField = "Sport"
-            ddlLivello.Items.Insert(0, New ListItem("##", "##"))
-
-            'ddlSpecialita.Items.Clear()
-            'ddlDisciplina.Items.Clear()
-            'Next
-        End If
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
 
+
+                ddlLivello.DataSource = ds
+
+                ddlLivello.DataTextField = "Livello"
+                ddlLivello.DataValueField = "Livello"
+
+                ddlLivello.DataBind()
+                'ddlSport.DataValueField = "Sport"
+                ddlLivello.Items.Insert(0, New ListItem("##", "##"))
+
+                'ddlSpecialita.Items.Clear()
+                'ddlDisciplina.Items.Clear()
+                'Next
+            End If
+
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "richiestaEquiparazione22", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Sub
     Protected Overloads Sub setFocus(ByVal ctrl As System.Web.UI.Control)
         Dim s As String = "<SCRIPT language='javascript'>document.getElementById('" + ctrl.ID + "').focus() </SCRIPT>"
@@ -223,33 +228,38 @@ Public Class richiestaEquiparazioneDati22
     Sub QualificheCorsi()
 
         Dim ds As DataSet
-
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        fmsP.SetLayout("webQualificheCorsi")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
-
-        RequestP.AddSortField("Qualifica", Enumerations.Sort.Ascend)
-
-        ds = RequestP.Execute()
-
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+        Try
 
 
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            fmsP.SetLayout("webQualificheCorsi")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.AllRecords)
 
-            ddlQualifica.DataSource = ds
+            RequestP.AddSortField("Qualifica", Enumerations.Sort.Ascend)
 
-            ddlQualifica.DataTextField = "Qualifica"
-            ddlQualifica.DataValueField = "Qualifica"
+            ds = RequestP.Execute()
 
-            ddlQualifica.DataBind()
-            'ddlSport.DataValueField = "Sport"
-            ddlQualifica.Items.Insert(0, New ListItem("##", "##"))
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
 
-            'ddlSpecialita.Items.Clear()
-            'ddlDisciplina.Items.Clear()
-            'Next
-        End If
 
+
+                ddlQualifica.DataSource = ds
+
+                ddlQualifica.DataTextField = "Qualifica"
+                ddlQualifica.DataValueField = "Qualifica"
+
+                ddlQualifica.DataBind()
+                'ddlSport.DataValueField = "Sport"
+                ddlQualifica.Items.Insert(0, New ListItem("##", "##"))
+
+                'ddlSpecialita.Items.Clear()
+                'ddlDisciplina.Items.Clear()
+                'Next
+            End If
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "richiestaEquiparazione22", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
     End Sub
 
@@ -270,48 +280,56 @@ Public Class richiestaEquiparazioneDati22
 
         ' Dim ds As DataSet
 
-
-        Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-        '  Dim ds As DataSet
-        Dim risposta As String = ""
-        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-        Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
+        Try
 
 
-
-        Request.AddField("Equi_Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
-        Request.AddField("Equi_Livello", ddlLivello.SelectedItem.Text)
-        Request.AddField("Equi_Fase", "2")
-        If chkDaFederazione.Checked = True Then
-            Request.AddField("Equi_DaFederazione", "si")
-        End If
-        Request.AddField("Codice_status", "101")
-        'Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
-        Session("visto") = "ok"
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
 
 
 
-        '   Try
-        risposta = Request.Execute()
+            Request.AddField("Equi_Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
+            Request.AddField("Equi_Livello", ddlLivello.SelectedItem.Text)
+            Request.AddField("Equi_Fase", "2")
+            If chkDaFederazione.Checked = True Then
+                Request.AddField("Equi_DaFederazione", "si")
+            End If
+            Request.AddField("Codice_status", "101")
+            'Request.AddScript("SistemaEncodingCorsoFase3", Session("id_record"))
+            Session("visto") = "ok"
 
 
 
-        AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "101", Session("WebUserEnte"), "equiparazione")
+            '   Try
+            risposta = Request.Execute()
+
+
+
+            AsiModel.LogIn.LogCambioStatus(Session("IDEquiparazione"), "101", Session("WebUserEnte"), "equiparazione")
+
+            Session("AnnullaREqui") = "newEqui"
+            Response.Redirect("dashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ok") & "&open=" & codR, False)
+            Return True
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "richiestaEquiparazione22", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
 
 
 
 
 
 
-        Session("AnnullaREqui") = "newEqui"
-        Response.Redirect("dashboardEqui2.aspx?ris=" & deEnco.QueryStringEncode("ok") & "&open=" & codR)
         'Catch ex As Exception
 
         'End Try
 
 
 
-        Return True
+
     End Function
 
     Function SistemaData(valore As String) As String

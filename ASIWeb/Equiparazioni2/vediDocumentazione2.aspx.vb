@@ -155,96 +155,101 @@ Public Class vediDocumentazione2
 
     End Sub
     Sub caricaDiplomaFoto(IDEquiparazione As String)
-
-        Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-        Dim ds As DataSet
-
-        Dim nome As String
-        Dim cognome As String
-        Dim foto As String
-        Dim tessera As String
-        Dim diploma As String
-        Dim email As String
-        Dim codiceFiscale As String
-        Dim recordid As String
-        '    Dim NumeroTesseraAsi As String
-        fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-        Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-        RequestP.AddSearchField("idrecord", IDEquiparazione, Enumerations.SearchOption.equals)
+        Try
 
 
-        ds = RequestP.Execute()
+            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
+            Dim ds As DataSet
+
+            Dim nome As String
+            Dim cognome As String
+            Dim foto As String
+            Dim tessera As String
+            Dim diploma As String
+            Dim email As String
+            Dim codiceFiscale As String
+            Dim recordid As String
+            '    Dim NumeroTesseraAsi As String
+            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+            Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestP.AddSearchField("idrecord", IDEquiparazione, Enumerations.SearchOption.equals)
 
 
-        If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
-
-            For Each dr In ds.Tables("main").Rows
-
-                nome = Data.FixNull(dr("Equi_nome"))
-                cognome = Data.FixNull(dr("Equi_cognome"))
-                tessera = Data.FixNull(dr("Equi_NumeroTessera"))
-                email = Data.FixNull(dr("Equi_IndirizzoEmail"))
-                codiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
-                foto = Data.FixNull(dr("NomeFileFotoFs"))
-                recordid = Data.FixNull(dr("Idrecord"))
-
-                If String.IsNullOrWhiteSpace(Data.FixNull(dr("FotoEquiparazione"))) Then
-                    foto = "..\img\noimg.jpg"
-                Else
-                    foto = "https://93.63.195.98" & Data.FixNull(dr("FotoEquiparazione"))
-                End If
+            ds = RequestP.Execute()
 
 
-                If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaEquiparazione"))) Then
-                    diploma = "..\img\noPdf.jpg"
-                Else
-                    diploma = "https://93.63.195.98" & Data.FixNull(dr("DiplomaEquiparazione"))
-                End If
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+
+                For Each dr In ds.Tables("main").Rows
+
+                    nome = Data.FixNull(dr("Equi_nome"))
+                    cognome = Data.FixNull(dr("Equi_cognome"))
+                    tessera = Data.FixNull(dr("Equi_NumeroTessera"))
+                    email = Data.FixNull(dr("Equi_IndirizzoEmail"))
+                    codiceFiscale = Data.FixNull(dr("Equi_CodiceFiscale"))
+                    foto = Data.FixNull(dr("NomeFileFotoFs"))
+                    recordid = Data.FixNull(dr("Idrecord"))
+
+                    If String.IsNullOrWhiteSpace(Data.FixNull(dr("FotoEquiparazione"))) Then
+                        foto = "..\img\noimg.jpg"
+                    Else
+                        foto = "https://93.63.195.98" & Data.FixNull(dr("FotoEquiparazione"))
+                    End If
 
 
-
-                plTabellaEquiparazione.Controls.Add(New LiteralControl("<tr>"))
-
-                plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & nome & "</td>"))
-                plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & cognome & "</td>"))
-                plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & email & "</td>"))
-                plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & codiceFiscale & "</td>"))
-                plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & tessera & "</td>"))
-
-
-                If foto = "..\img\noimg.jpg" Then
-                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
-
-                Else
-                    Dim myImage As Image = FotoS(foto)
-                    Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
-                    '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
-                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td><img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
-
-                End If
-
-                If diploma = "..\img\noPdf.jpg" Then
-                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td><img src='" & diploma & "' height='70' width='70' alt='" & nome & " " & cognome & "'></td>"))
-
-
-                Else
-                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>"))
-
-                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiplomaEqui2.aspx?nominativo=" & deEnco.QueryStringEncode(cognome & "_" & nome) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDrecord"))) & "&record_ID=" & deEnco.QueryStringEncode(recordid) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileFotoFS"))) & "'>Diploma</a>"))
-
-                    plTabellaEquiparazione.Controls.Add(New LiteralControl("</td>"))
-
-                End If
-
-
-                plTabellaEquiparazione.Controls.Add(New LiteralControl("</tr>"))
-            Next
+                    If String.IsNullOrWhiteSpace(Data.FixNull(dr("DiplomaEquiparazione"))) Then
+                        diploma = "..\img\noPdf.jpg"
+                    Else
+                        diploma = "https://93.63.195.98" & Data.FixNull(dr("DiplomaEquiparazione"))
+                    End If
 
 
 
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<tr>"))
 
-        End If
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & nome & "</td>"))
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & cognome & "</td>"))
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & email & "</td>"))
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & codiceFiscale & "</td>"))
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>" & tessera & "</td>"))
 
+
+                    If foto = "..\img\noimg.jpg" Then
+                        plTabellaEquiparazione.Controls.Add(New LiteralControl("<td><img src='" & foto & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+
+                    Else
+                        Dim myImage As Image = FotoS(foto)
+                        Dim base64 As String = ImageHelper.ImageToBase64String(myImage, ImageFormat.Jpeg)
+                        '  Response.Write("<img alt=""Embedded Image"" src=""data:image/Jpeg;base64," & base64 & """ />")
+                        plTabellaEquiparazione.Controls.Add(New LiteralControl("<td><img src='data:image/Jpeg;base64," & base64 & "' height='70' width='50' alt='" & nome & " " & cognome & "'></td>"))
+
+                    End If
+
+                    If diploma = "..\img\noPdf.jpg" Then
+                        plTabellaEquiparazione.Controls.Add(New LiteralControl("<td><img src='" & diploma & "' height='70' width='70' alt='" & nome & " " & cognome & "'></td>"))
+
+
+                    Else
+                        plTabellaEquiparazione.Controls.Add(New LiteralControl("<td>"))
+
+                        plTabellaEquiparazione.Controls.Add(New LiteralControl("<a class=""btn btn-success btn-sm btn-due btn-custom"" onclick=""showToast('diploma');"" target=""_blank"" href='scaricaDiplomaEqui2.aspx?nominativo=" & deEnco.QueryStringEncode(cognome & "_" & nome) & "&codR=" & deEnco.QueryStringEncode(Data.FixNull(dr("IDrecord"))) & "&record_ID=" & deEnco.QueryStringEncode(recordid) & "&nomeFilePC=" & deEnco.QueryStringEncode(Data.FixNull(dr("NomeFileFotoFS"))) & "'>Diploma</a>"))
+
+                        plTabellaEquiparazione.Controls.Add(New LiteralControl("</td>"))
+
+                    End If
+
+
+                    plTabellaEquiparazione.Controls.Add(New LiteralControl("</tr>"))
+                Next
+
+
+
+
+            End If
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "vediDocumentazione", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Sub
     Public Function FotoS(urlFoto As String)
 

@@ -122,77 +122,84 @@ Public Class valutaEquiparazione2
     Protected Sub lnkButton1_Click(sender As Object, e As EventArgs) Handles lnkButton1.Click
         If Page.IsValid Then
             Dim idEquiparazioneM = DettaglioEquiparazione.IdEquiparazioneM
-            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
-            '  Dim ds As DataSet
-            Dim risposta As String = ""
-            fmsP.SetLayout("webEquiparazioniRichiestaMolti")
-            Dim Request = fmsP.CreateEditRequest(Session("id_record"))
 
-            Dim valutazione As String = ddlValutazione.SelectedItem.Value
-            Dim dirittiSegreteria As String = "0"
-            If ddlDirittiSegreteria.SelectedValue = "##" Then
-
-            Else
-
-                dirittiSegreteria = ddlDirittiSegreteria.SelectedItem.Value
-            End If
+            Try
 
 
+                Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+                '  Dim ds As DataSet
+                Dim risposta As String = ""
+                fmsP.SetLayout("webEquiparazioniRichiestaMolti")
+                Dim Request = fmsP.CreateEditRequest(Session("id_record"))
 
+                Dim valutazione As String = ddlValutazione.SelectedItem.Value
+                Dim dirittiSegreteria As String = "0"
+                If ddlDirittiSegreteria.SelectedValue = "##" Then
 
+                Else
 
-
-            If valutazione = "S" Then
-                Request.AddField("Codice_Status", "106")
-            ElseIf valutazione = "N" Then
-                Request.AddField("Codice_Status", "107")
-
-            End If
-            Request.AddField("Valutata", "S")
-            Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
-            Request.AddField("Equi_DirittiSegreteria", dirittiSegreteria)
-            'Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
-            'script per gestione caratteri speciali da inserire.
-            Dim quantiEsitoRichiesto = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 105)
-
-
-
-            risposta = Request.Execute()
-
-
-            Dim quantiValutazioni105 = AsiModel.Equiparazione.quanteRichiesteValutazione105(idEquiparazioneM, 105)
-            Dim quantiEsitoOk = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 106)
-            Dim quantiEsitoKo = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 107)
-
-            Dim record_id As Integer = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDEquiMaster(idEquiparazioneM) ' per aggiornare status
-
-            If quantiValutazioni105 = 0 Then
-
-                 If quantiEsitoKo >= 1 Then
-                ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 107)
-                '  AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione", Session("id_record"))
-            Else
-                ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 106)
-                    ' AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+                    dirittiSegreteria = ddlDirittiSegreteria.SelectedItem.Value
                 End If
-            Else
-
-            End If
 
 
 
 
-            If valutazione = "S" Then
-                Session("AnnullaREqui") = "valSettoreS"
-                AsiModel.LogIn.LogCambioStatus(idEquiparazioneM, "106", Session("WebUserEnte"), "equiparazione", codR)
-            ElseIf valutazione = "N" Then
-                Session("AnnullaREqui") = "valSettoreN"
-                AsiModel.LogIn.LogCambioStatus(idEquiparazioneM, "107", Session("WebUserEnte"), "equiparazione", codR)
 
-            End If
 
-            Response.Redirect("dashboardV2.aspx")
+                If valutazione = "S" Then
+                    Request.AddField("Codice_Status", "106")
+                ElseIf valutazione = "N" Then
+                    Request.AddField("Codice_Status", "107")
 
+                End If
+                Request.AddField("Valutata", "S")
+                Request.AddField("NoteValutazioneSettore", Data.PrendiStringaT(Server.HtmlEncode(txtNote.Text)))
+                Request.AddField("Equi_DirittiSegreteria", dirittiSegreteria)
+                'Request.AddScript("SistemaEncodingNoteValuta_PianoCorso", Session("id_record"))
+                'script per gestione caratteri speciali da inserire.
+                Dim quantiEsitoRichiesto = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 105)
+
+
+
+                risposta = Request.Execute()
+
+
+                Dim quantiValutazioni105 = AsiModel.Equiparazione.quanteRichiesteValutazione105(idEquiparazioneM, 105)
+                Dim quantiEsitoOk = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 106)
+                Dim quantiEsitoKo = AsiModel.Equiparazione.quanteRichiesteValutazioneEsito(idEquiparazioneM, 107)
+
+                Dim record_id As Integer = ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.GetRecord_IDEquiMaster(idEquiparazioneM) ' per aggiornare status
+
+                If quantiValutazioni105 = 0 Then
+
+                    If quantiEsitoKo >= 1 Then
+                        ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 107)
+                        '  AsiModel.LogIn.LogCambioStatus(codR, "107", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+                    Else
+                        ASIWeb.AsiModel.GetRecord_IDbyCodREquiparazione.AggiornaStatusMasterEquiparazine(record_id, 106)
+                        ' AsiModel.LogIn.LogCambioStatus(codR, "106", Session("WebUserEnte"), "equiparazione", Session("id_record"))
+                    End If
+                Else
+
+                End If
+
+
+
+
+                If valutazione = "S" Then
+                    Session("AnnullaREqui") = "valSettoreS"
+                    AsiModel.LogIn.LogCambioStatus(idEquiparazioneM, "106", Session("WebUserEnte"), "equiparazione", codR)
+                ElseIf valutazione = "N" Then
+                    Session("AnnullaREqui") = "valSettoreN"
+                    AsiModel.LogIn.LogCambioStatus(idEquiparazioneM, "107", Session("WebUserEnte"), "equiparazione", codR)
+
+                End If
+
+                Response.Redirect("dashboardV2.aspx", False)
+            Catch ex As Exception
+                AsiModel.LogIn.LogErrori(ex, "valutaEquiparazione", "equiparazioni")
+                Response.Redirect("../FriendlyMessage.aspx", False)
+            End Try
         End If
     End Sub
 

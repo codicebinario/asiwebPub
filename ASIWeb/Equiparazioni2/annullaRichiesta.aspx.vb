@@ -16,24 +16,27 @@ Public Class annullaRichiesta
 
         If Not String.IsNullOrEmpty(record_ID) Then
             Dim risposta As Integer = 0
-            Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
-
-            fmsP.SetLayout("webEquiparazioniMaster")
-
-            Dim RequestP = fmsP.CreateDeleteRequest(record_ID)
-
             Try
-                risposta = RequestP.Execute()
+                Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
 
+                fmsP.SetLayout("webEquiparazioniMaster")
+
+                Dim RequestP = fmsP.CreateDeleteRequest(record_ID)
+
+
+                risposta = RequestP.Execute()
+                Session("AnnullaREqui") = "toa"
+
+                Response.Redirect("dashboardEqui2.aspx")
 
             Catch ex As Exception
+                AsiModel.LogIn.LogErrori(ex, "annullaRichiesta", "equiparazioni")
+                Response.Redirect("../FriendlyMessage.aspx", False)
             End Try
 
         End If
 
-        Session("AnnullaREqui") = "toa"
 
-        Response.Redirect("dashboardEqui2.aspx")
     End Sub
 
 End Class

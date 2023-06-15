@@ -175,14 +175,20 @@ Public Class richiestaEquiparazione2
         Request.AddField("Equi_Fase", "1")
         Request.AddField("Codice_Status", "101")
         Request.AddScript("SistemaEncodingNoteUpload_DiplomaEqui2", record_ID)
+        Try
 
-        risposta = Request.Execute()
+
+            risposta = Request.Execute()
         AsiModel.LogIn.LogCambioStatus(record_ID, "101", Session("WebUserEnte"), "equiparazione")
 
 
         Dim token = PrendiToken()
 
-        Return codR & "_|_" & token
+            Return codR & "_|_" & token
+        Catch ex As Exception
+            AsiModel.LogIn.LogErrori(ex, "richiestaEquiparazione2", "equiparazioni")
+            Response.Redirect("../FriendlyMessage.aspx", False)
+        End Try
     End Function
     Protected Sub chkSaltaDiploma_CheckedChanged(sender As Object, e As EventArgs) Handles chkSaltaDiploma.CheckedChanged
 

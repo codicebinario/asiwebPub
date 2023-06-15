@@ -585,15 +585,20 @@
 
 		<div class="col-sm-6">
 								<div class="form-group">
-								 <div class="col-6">
+								 <div class="col-12">
                             <label for="txtNome"></label>
 								  <div class="form-control-plaintext">
-       
-         <asp:CheckBox ID="chkStampaCartacea"   runat="server" AutoPostBack="true" />
-     <label style="padding-left:20px" for="chkStampaCartacea">Stampa Cartacea</label>
 
+                                      <label id="lblStampaDigitale" for="chkStampaDigitale" style="padding-left: 20px">Stampa Digitale</label>
+                                      <asp:CheckBox ID="chkStampaDigitale" Checked="true" Enabled="false" runat="server" />
+
+                              
+     <label style="padding-left:20px" for="chkStampaCartacea">Richiesta Stampa Cartacea</label>
+
+         <asp:CheckBox ID="chkStampaCartacea"   runat="server" AutoPostBack="true" />
+</div>
            
-   </div></div>
+   </div>
 								</div>
 							</div>
       
@@ -612,9 +617,9 @@
 								 <div class="col-6">
                             <label for="txtNome"></label>
 								  <div class="form-control-plaintext">
-       
+         <label style="padding-left:20px"  for="chkCopia">Copia Dati da Residenza</label>
      <asp:CheckBox ID="chkCopia"  runat="server" AutoPostBack="true" />
-     <label style="padding-left:20px"  for="chkCopia">Copia Dati da Residenza</label>
+   
   <label for="chkEA" style="padding-left: 20px">Spedire a E.A.</label>
   <asp:CheckBox ID="chkEA" runat="server" AutoPostBack="true" />
            
