@@ -241,8 +241,8 @@ Public Class sceltaSport
             Dim idRecordM As Integer
             idEquiparazioneM = AsiModel.Equiparazione.NuovaEquiparazioneFolder(Session("codice"),
                ddlSport.SelectedItem.Value, ddlDisciplina.SelectedItem.Value, ddlSpecialita.SelectedItem.Value)
-
-            Response.Redirect("checkTesseramento2.aspx?codR=" & deEnco.QueryStringEncode(idEquiparazioneM))
+            Response.Redirect("sceltaCheck.aspx?codR=" & deEnco.QueryStringEncode(idEquiparazioneM))
+            '    Response.Redirect("checkTesseramento2.aspx?codR=" & deEnco.QueryStringEncode(idEquiparazioneM))
 
 
         End If

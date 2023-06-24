@@ -137,13 +137,26 @@ Public Class richiestaEquiparazioneDati22
             ddlSport.Text = DettaglioEquiparazione.Sport
             ddlSpecialita.Text = DettaglioEquiparazione.Specialita
             ddlDisciplina.Text = DettaglioEquiparazione.Disciplina
-            Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
+            Dim datiCF As Object
+            If Session("CFEE") = "EE" Then
+
+
+
+
+                datiCF = AsiModel.getDatiCodiceFiscaleEE(Session("nomeEE"), Session("cognomeEE"), Session("codiceTesseraEE"), Session("dataNascitaEE"))
+            Else
+
+
+                datiCF = AsiModel.getDatiCodiceFiscale(Session("cf"))
+                ' End If
+            End If
 
             lblIntestazioneEquiparazione.Text =
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
                 "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
+
 
         End If
         '   If fase = 4 Then

@@ -115,7 +115,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-								 <label for="txtNome">Inserisci un valore [*] </label>
+								 <label for="txtNome">Inserisci un valore [*] (nel caso di cf estero la ricerca può essere fatta solo per cognome</label>
                                     <asp:textbox id="txtValore" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
 							
 					</div>

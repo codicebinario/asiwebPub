@@ -592,7 +592,50 @@ Public Class AsiModel
 
 
     End Function
+    Public Shared Function controllaCodiceFiscaleEE(Nome As String, Cognome As String, dataNascita As Date, numeroTessera As String) As Integer
+        Dim fms As FMSAxml = Nothing
+        Dim ds As DataSet = Nothing
+        Dim ritorno As Integer = 0
+        'Dim dataScadenza As DateTime
+        Dim it As DateTime = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
 
+        Try
+
+            fms = Conn.Connect()
+
+            fms.SetLayout("webCheckCF")
+            Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("Nome", Nome, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Cognome", Cognome, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice tessera", numeroTessera, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Data nascita", Data.SistemaDataUK(Data.SonoDieci(dataNascita)), Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Estero", "EE", Enumerations.SearchOption.equals)
+
+            ds = RequestA.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    If it <= dr("Data Scadenza") Then
+                        'tessera valida e non scaduto
+                        ritorno = 1
+                    Else
+                        'tessera valida ma scaduta
+                        ritorno = 2
+                    End If
+                Next
+
+            Else
+                'tessera non trovata
+                ritorno = 3
+            End If
+
+        Catch ex As Exception
+            'errore generico di connessione
+            ritorno = 4
+        End Try
+        Return ritorno
+    End Function
     ''' <summary>
     ''' controlla il codice fiscale per Equiparazione
     ''' </summary>
@@ -1154,7 +1197,79 @@ Public Class AsiModel
         Public codiceEnteEx As String
         Public nomeEnteEx As String
     End Class
+    Public Shared Function getDatiCodiceFiscaleEE(Nome, Cognome, NumeroTessera, DataNascita) As DatiCodiceFiscale
+        Dim fms As FMSAxml = Nothing
+        Dim ds As DataSet = Nothing
+        Dim ritorno As Boolean = False
+        Dim dataScadenza As Date
+        Dim DatiCodiceFiscale As New DatiCodiceFiscale
 
+        fms = Conn.Connect()
+        Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+        '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+        '     fmsB.SetDatabase(Database)
+        fms.SetLayout("webCheckCF")
+        Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+        RequestA.AddSearchField("Nome", Nome, Enumerations.SearchOption.equals)
+        RequestA.AddSearchField("Cognome", Cognome, Enumerations.SearchOption.equals)
+        RequestA.AddSearchField("Codice tessera", NumeroTessera, Enumerations.SearchOption.equals)
+        RequestA.AddSearchField("Data nascita", Data.SistemaDataUK(DataNascita), Enumerations.SearchOption.equals)
+        RequestA.AddSearchField("Estero", "EE", Enumerations.SearchOption.equals)
+
+        Try
+            ds = RequestA.Execute()
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    If CDate(it) <= CDate(dr("DataScadenza")) Then
+
+                        DatiCodiceFiscale.Nome = ASIWeb.Data.FixNull(dr("nome"))
+                        DatiCodiceFiscale.Cognome = ASIWeb.Data.FixNull(dr("cognome"))
+                        DatiCodiceFiscale.CodiceFiscale = ASIWeb.Data.FixNull(dr("CodiceFiscale"))
+                        DatiCodiceFiscale.DataScadenza = ASIWeb.Data.FixNull(dr("DataScadenza"))
+                        DatiCodiceFiscale.Indirizzo = ASIWeb.Data.FixNull(dr("Indirizzo Residenza"))
+                        DatiCodiceFiscale.Provincia = ASIWeb.Data.FixNull(dr("provincia residenza"))
+                        DatiCodiceFiscale.Comune = ASIWeb.Data.FixNull(dr("comune residenza"))
+                        DatiCodiceFiscale.CodiceTessera = ASIWeb.Data.FixNull(dr("codice tessera"))
+                        DatiCodiceFiscale.Cap = ASIWeb.Data.FixNull(dr("cap residenza"))
+
+                        '*****  da sistemare la data **********
+
+                        'Dim dataInseriraDa = ASIWeb.Data.FixNull(dr("Data Nascita"))
+                        'Dim oDateDa As DateTime = DateTime.Parse(dataInseriraDa)
+                        'Dim giorno = oDateDa.Day
+                        'Dim anno = oDateDa.Year
+                        'Dim mese = oDateDa.Month
+
+                        'DatiCodiceFiscale.DataNascita = mese & "/" & giorno & "/" & anno
+
+                        DatiCodiceFiscale.DataNascita = ASIWeb.Data.FixNull(dr("Data Nascita"))
+                        DatiCodiceFiscale.Email = ASIWeb.Data.FixNull(dr("email"))
+                        DatiCodiceFiscale.LuogoNascita = ASIWeb.Data.FixNull(dr("Luogo nascita"))
+                        DatiCodiceFiscale.StatoNascita = ASIWeb.Data.FixNull(dr("Stato nascita"))
+                    End If
+
+                Next
+
+            Else
+                ritorno = False
+            End If
+
+            'If Today.Date <= dataScadenza Then
+
+            '    ritorno = "tessera valida"
+            'Else
+            '    ritorno = "tessera scaduta"
+
+            'End If
+            Return DatiCodiceFiscale
+
+        Catch ex As Exception
+
+        End Try
+
+    End Function
     Public Shared Function getDatiCodiceFiscale(codiceFiscale As String) As DatiCodiceFiscale
         Dim fms As FMSAxml = Nothing
         Dim ds As DataSet = Nothing
@@ -1361,6 +1476,7 @@ Public Class AsiModel
         Public Nome As String
         Public Cognome As String
         Public DataScadenza As Date
+        Public DataNascita As Date
         Public trovato As Boolean
         Public PagamentoTotale As Decimal
         Public Sport As String
@@ -2235,7 +2351,77 @@ Public Class AsiModel
             Return DatiRinnovo
 
         End Function
+        Public Shared Function CaricaDatiTesseramentoEE(nome As String, cognome As String, dataNascita As Date, numeroTessera As String) As DatiNuovoRinnovo
+            '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
+
+            Dim ds As DataSet
+
+            Dim dataOggi As Date = Today.Date
+            Dim DatiRinnovo As New DatiNuovoRinnovo
+            'Dim dataNascitaOK As Date = Data.SistemaDataUK(dataNascita)
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fmsP.SetLayout("webCheckCF")
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("Nome", nome, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Cognome", cognome, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice tessera", numeroTessera, Enumerations.SearchOption.equals)
+            '   RequestA.AddSearchField("Data nascita", dataNascita, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Data nascita", Data.SistemaDataUK(dataNascita), Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Estero", "EE", Enumerations.SearchOption.equals)
+            '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
+
+            Try
+
+
+
+                ds = RequestA.Execute()
+
+
+                If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                    For Each dr In ds.Tables("main").Rows
+
+                        If CDate(it) <= CDate(dr("DataScadenza")) Then
+
+
+                            DatiRinnovo.Cognome = Data.FixNull(dr("Cognome"))
+                            DatiRinnovo.Nome = Data.FixNull(dr("Nome"))
+                            ' DatiRinnovo.DataScadenza = Data.FixNull(dr("Rin_DataScadenza"))
+                            DatiRinnovo.DataScadenza = Data.FixNull(dr("DataScadenza"))
+                            DatiRinnovo.CodiceTessera = Data.FixNull(dr("Codice tessera"))
+                            DatiRinnovo.ComuneNascita = Data.FixNull(dr("Luogo nascita"))
+                            DatiRinnovo.DataNascita = Data.FixNull(dr("Data nascita"))
+                            DatiRinnovo.StatoNascita = Data.FixNull(dr("Stato nascita"))
+
+                        End If
+
+
+
+                    Next
+
+                Else
+
+                End If
+
+
+
+
+
+                '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+                Return DatiRinnovo
+
+            Catch ex As Exception
+
+            End Try
+
+
+
+        End Function
         Public Shared Function CaricaDatiTesseramento(codiceFiscale As String) As DatiNuovoRinnovo
             '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
@@ -2251,7 +2437,7 @@ Public Class AsiModel
             Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
             '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
             '     fmsB.SetDatabase(Database)
-            fmsP.SetLayout("webCheckCFRinnovi")
+            fmsP.SetLayout("webCheckCF")
             Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
             '  RequestA.AddSearchField("DataScadenza", it, Enumerations.SearchOption.lessOrEqualThan)
@@ -2615,8 +2801,8 @@ Public Class AsiModel
 
             RequestP.AddSearchField("idEquiparazioneM", IdEquiparazioneM, Enumerations.SearchOption.equals)
             '  RequestP.AddSearchField("idRinnovo", idRinnovo, Enumerations.SearchOption.equals)
-            RequestP.AddSearchField("Codice_Status", "1...114.5")
-
+            RequestP.AddSearchField("Codice_Status", "101...114.5")
+            RequestP.AddSearchField("Equi_Fase", "2", Enumerations.SearchOption.equals)
             ds = RequestP.Execute()
 
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
@@ -2780,7 +2966,69 @@ Public Class AsiModel
             Return DatiEquiparazione
 
         End Function
+        Public Shared Function CaricaDatiTesseramentoEE(Nome As String, Cognome As String, dataNascita As Date, numeroTessera As String) As DatiNuovaEquiparazione
+            '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 
+
+            Dim ds As DataSet
+
+            Dim dataOggi As Date = Today.Date
+            Dim DettaglioEquiparazione As New DatiNuovaEquiparazione
+
+            Dim fmsP As FMSAxml = ASIWeb.AsiModel.Conn.Connect()
+            '  Dim ds As DataSet
+            Dim risposta As String = ""
+            Dim it As DateTime = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
+            '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '     fmsB.SetDatabase(Database)
+            fmsP.SetLayout("webCheckCF")
+            Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
+            RequestA.AddSearchField("Nome", Nome, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Cognome", Cognome, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Codice tessera", numeroTessera, Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Data nascita", Data.SistemaDataUK(dataNascita), Enumerations.SearchOption.equals)
+            RequestA.AddSearchField("Estero", "EE", Enumerations.SearchOption.equals)
+
+
+
+
+            ds = RequestA.Execute()
+
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    If it <= dr("Data Scadenza") Then
+
+
+                        DettaglioEquiparazione.Cognome = Data.FixNull(dr("Cognome"))
+                        DettaglioEquiparazione.Nome = Data.FixNull(dr("Nome"))
+                        DettaglioEquiparazione.DataScadenza = Data.FixNull(dr("Data Scadenza"))
+                        DettaglioEquiparazione.CodiceTessera = Data.FixNull(dr("Codice tessera"))
+                        DettaglioEquiparazione.DataNascita = Data.FixNull(dr("Data nascita"))
+
+                    End If
+
+
+
+                Next
+
+            Else
+
+            End If
+
+
+
+
+
+            '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
+
+
+
+
+
+            Return DettaglioEquiparazione
+        End Function
         Public Shared Function CaricaDatiTesseramento(codiceFiscale As String) As DatiNuovaEquiparazione
             '  Dim litNumRichieste As Literal = DirectCast(ContentPlaceHolder1.FindControl("LitNumeroRichiesta"), Literal)
 

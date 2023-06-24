@@ -120,45 +120,59 @@ Public Class richiestaEquiparazione2
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
             Dim codiceFiscale As String = DettaglioEquiparazione.CodiceFiscale
-            Dim datiCF = AsiModel.getDatiCodiceFiscale(Session("cf"))
+
+
+            '    ' Trim(txtNome.Text), Trim(txtCognome.Text), Trim(txtDataNascita.Text), Trim(txtNumeroTessera.Text)
+            '    '    datiCF = AsiModel.getDatiCodiceFiscaleEE(Session("cf"))
+            'Else
+            '
+            Dim datiCF As Object
+            If Session("CFEE") = "EE" Then
+
+
+
+
+                datiCF = AsiModel.getDatiCodiceFiscaleEE(Session("nomeEE"), Session("cognomeEE"), Session("codiceTesseraEE"), Session("dataNascitaEE"))
+            Else
+
+
+                datiCF = AsiModel.getDatiCodiceFiscale(Session("cf"))
+                ' End If
+            End If
 
             lblIntestazioneEquiparazione.Text =
                 "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
                 "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
                 "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
-        End If
 
-        If Not Page.IsPostBack Then
-
-            '  pnlFase1.Visible = False
+            End If
 
 
-        End If
     End Sub
 
 
-    Function leggiDatiEsistenti(cf As String) As DatiCodiceFiscale
+    'Function leggiDatiEsistenti(cf As String) As DatiCodiceFiscale
 
-        Dim datiCodiceFiscale As New DatiCodiceFiscale
+    '    Dim datiCodiceFiscale As New DatiCodiceFiscale
 
-        datiCodiceFiscale = getDatiCodiceFiscale(cf)
+    '    datiCodiceFiscale = getDatiCodiceFiscale(cf)
 
-        'txtCognome.Text = datiCodiceFiscale.Cognome
-        'txtNome.Text = datiCodiceFiscale.Nome
-        'txtCodiceFiscale.Text = datiCodiceFiscale.CodiceFiscale
-        'txtDataNascita.Text = datiCodiceFiscale.DataNascita.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-        'txtComuneNascita.Text = datiCodiceFiscale.LuogoNascita
-        'txtCodiceTessera.Text = datiCodiceFiscale.CodiceTessera
-        'txtDataScadenza.Text = datiCodiceFiscale.DataScadenza.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-
-
+    '    'txtCognome.Text = datiCodiceFiscale.Cognome
+    '    'txtNome.Text = datiCodiceFiscale.Nome
+    '    'txtCodiceFiscale.Text = datiCodiceFiscale.CodiceFiscale
+    '    'txtDataNascita.Text = datiCodiceFiscale.DataNascita.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+    '    'txtComuneNascita.Text = datiCodiceFiscale.LuogoNascita
+    '    'txtCodiceTessera.Text = datiCodiceFiscale.CodiceTessera
+    '    'txtDataScadenza.Text = datiCodiceFiscale.DataScadenza.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
 
 
-        Return datiCodiceFiscale
 
 
-    End Function
+    '    Return datiCodiceFiscale
+
+
+    'End Function
 
 
 
@@ -295,13 +309,9 @@ Public Class richiestaEquiparazione2
         Requestx.AddHeader("Content-Type", "multipart/form-data")
         Requestx.AddHeader("Authorization", "bearer " & tokenx.ToString())
         Requestx.AddParameter("modId", "1")
-        'If host = "localhost" Then
-        '    Requestx.AddParameter("upload", "D:\Soft\c#\webUP\webUP\file_storage\" & nomecaricato & "")
-        'Else
-        '    Requestx.AddParameter("upload", "D:\Soft\c#\webUP\webUP\file_storage\" & nomecaricato & "")
-        'End If
 
-        '  Dim filePath As String = Server.MapPath(ResolveUrl("~/file_storage/"))
+
+
         Requestx.AddParameter("upload", Server.MapPath(ResolveUrl("~/file_storage_equi/")) & nomecaricato & "")
         '  Requestx.AddParameter("upload", "D:\Dropbox\soft\Projects\ASIWeb\ASIWeb\file_storage" & nomecaricato & "")
         '   Requestx.AddParameter("upload", "C:\file_storage\" & nomecaricato & "")
@@ -399,7 +409,7 @@ Public Class richiestaEquiparazione2
                     Catch ex As Exception
 
                         results.InnerHtml = "<b>Diploma non caricato: </b><br/>"
-                        results.Attributes.Add("style", stileavviso)
+                    results.Attributes.Add("style", stileavviso)
 
 
                     End Try

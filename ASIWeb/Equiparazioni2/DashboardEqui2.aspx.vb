@@ -274,7 +274,7 @@ Public Class DashboardEqui2
                         addEquiparazione.Attributes.Add("runat", "server")
                         addEquiparazione.Text = "<i class=""bi bi-emoji-sunglasses""> </i>Aggiungi Equiparazione"
 
-                        addEquiparazione.PostBackUrl = "checkTesseramento2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&type=same"
+                        addEquiparazione.PostBackUrl = "sceltaCheck.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDEquiparazioneM")))) & "&type=same"
                         ' fotoCorsistiLnk.PostBackUrl = "UpFotoRinnovo.aspx?codR=" & Data.FixNull(dr("IDRinnovo")) & "&record_ID=" & dr("id_record")
 
                         addEquiparazione.CssClass = "btn btn-success btn-sm  btn-custom  mb-1  mr-1"

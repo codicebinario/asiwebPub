@@ -152,7 +152,7 @@ Public Class AsiMasterPageRinnovi2
         If idRinnovoM >= 1 Then
             idRecordM = AsiModel.Rinnovi.CercaIDRecordRinnovoM(idRinnovoM)
             Session("IdRecordMaster") = idRecordM
-            Response.Redirect("checkTesseramentoRinnovi2.aspx?codR=" & deEnco.QueryStringEncode(idRinnovoM) & "&t=1")
+            Response.Redirect("checkScelta.aspx?codR=" & deEnco.QueryStringEncode(idRinnovoM) & "&t=1")
         End If
 
     End Sub

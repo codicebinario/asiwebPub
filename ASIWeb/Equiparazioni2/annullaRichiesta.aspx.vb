@@ -27,7 +27,7 @@ Public Class annullaRichiesta
                 risposta = RequestP.Execute()
                 Session("AnnullaREqui") = "toa"
 
-                Response.Redirect("dashboardEqui2.aspx")
+                Response.Redirect("dashboardEqui2.aspx", False)
 
             Catch ex As Exception
                 AsiModel.LogIn.LogErrori(ex, "annullaRichiesta", "equiparazioni")

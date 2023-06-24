@@ -54,6 +54,9 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.9.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\Open-XML-SDK.2.9.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetZip, Version=1.16.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="fmDotNet, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\fmDotNet.1.0.2\lib\fmDotNet.dll</HintPath>
     </Reference>
@@ -236,6 +239,7 @@
     <Content Include="Equiparazioni2\annullaEquiparazioneMotivo2.aspx" />
     <Content Include="Equiparazioni2\annullaRichiesta.aspx" />
     <Content Include="Equiparazioni2\archivioEquiValutati2.aspx" />
+    <Content Include="Equiparazioni2\checkTesseramento3.aspx" />
     <Content Include="Equiparazioni2\checkTesseramento2.aspx" />
     <Content Include="Equiparazioni2\closeEquiparazione2.aspx" />
     <Content Include="Equiparazioni2\DashboardEquiRifiutate.aspx" />
@@ -250,6 +254,7 @@
     <Content Include="Equiparazioni2\scaricaDiplomaEquiparazioneN2.aspx" />
     <Content Include="Equiparazioni2\scaricaTesseraEquiparazioneN2.aspx" />
     <Content Include="Equiparazioni2\scaricaZipEquiparazione.aspx" />
+    <Content Include="Equiparazioni2\sceltaCheck.aspx" />
     <Content Include="Equiparazioni2\sceltaSport.aspx" />
     <Content Include="Equiparazioni2\upLegEquiparazioni2.aspx" />
     <Content Include="Equiparazioni2\valutaEquiparazione2.aspx" />
@@ -434,6 +439,8 @@
     <Content Include="Rinnovi2\annullaRichiestaR.aspx" />
     <Content Include="Rinnovi2\CancellaGruppo.aspx" />
     <Content Include="Rinnovi2\CancellaRiga.aspx" />
+    <Content Include="Rinnovi2\checkScelta.aspx" />
+    <Content Include="Rinnovi2\checkTesseramentoRinnovi3.aspx" />
     <Content Include="Rinnovi2\closeRinnovo.aspx" />
     <Content Include="Rinnovi2\checkTesseramentoRinnovi2.aspx" />
     <Content Include="Rinnovi2\DashBoardRinnovi2.aspx" />
@@ -517,6 +524,10 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="AsiErrorMasterPage.Master" />
+    <Content Include="WebForm1.aspx" />
+    <Content Include="WebForm2.aspx" />
+    <Content Include="WebForm3.aspx" />
+    <Content Include="WebForm4.aspx" />
     <None Include="Scripts\jquery-3.6.4.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.4.js" />
     <Content Include="Scripts\jquery-3.6.4.min.js" />
@@ -605,22 +616,11 @@
     <Content Include="uptest.aspx" />
     <Content Include="Models\HandlerVB.ashx" />
     <Content Include="calendar\styles\Thumbs.db" />
-    <Content Include="WebForm1.aspx" />
-    <Content Include="WebForm12.aspx" />
-    <Content Include="WebForm13.aspx" />
-    <Content Include="WebForm14.aspx" />
-    <Content Include="WebForm16.aspx" />
-    <Content Include="WebForm17.aspx" />
-    <Content Include="WebForm18.aspx" />
-    <Content Include="WebForm2.aspx" />
-    <Content Include="WebForm3.aspx" />
-    <Content Include="WebForm4.aspx" />
     <Content Include="AsiMasterPageAA.Master" />
     <Content Include="AsiMasterPageGestioneAlbo.Master" />
     <Content Include="Albo\json.json" />
     <Content Include="AsiMasterPageRinnovi2.Master" />
     <Content Include="AsiMasterPageEqui2.Master" />
-    <Content Include="test.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -821,6 +821,13 @@
       <DependentUpon>archivioEquiValutati2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Equiparazioni2\checkTesseramento3.aspx.designer.vb">
+      <DependentUpon>checkTesseramento3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\checkTesseramento3.aspx.vb">
+      <DependentUpon>checkTesseramento3.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Equiparazioni2\checkTesseramento2.aspx.designer.vb">
       <DependentUpon>checkTesseramento2.aspx</DependentUpon>
     </Compile>
@@ -917,6 +924,13 @@
     </Compile>
     <Compile Include="Equiparazioni2\scaricaZipEquiparazione.aspx.vb">
       <DependentUpon>scaricaZipEquiparazione.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Equiparazioni2\sceltaCheck.aspx.designer.vb">
+      <DependentUpon>sceltaCheck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Equiparazioni2\sceltaCheck.aspx.vb">
+      <DependentUpon>sceltaCheck.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Equiparazioni2\sceltaSport.aspx.designer.vb">
@@ -1375,6 +1389,20 @@
       <DependentUpon>CancellaRiga.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Rinnovi2\checkScelta.aspx.designer.vb">
+      <DependentUpon>checkScelta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\checkScelta.aspx.vb">
+      <DependentUpon>checkScelta.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Rinnovi2\checkTesseramentoRinnovi3.aspx.designer.vb">
+      <DependentUpon>checkTesseramentoRinnovi3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rinnovi2\checkTesseramentoRinnovi3.aspx.vb">
+      <DependentUpon>checkTesseramentoRinnovi3.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Rinnovi2\closeRinnovo.aspx.designer.vb">
       <DependentUpon>closeRinnovo.aspx</DependentUpon>
     </Compile>
@@ -1536,13 +1564,6 @@
       <DependentUpon>sendFirstEmail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="test.aspx.designer.vb">
-      <DependentUpon>test.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="test.aspx.vb">
-      <DependentUpon>test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="test1.aspx.designer.vb">
       <DependentUpon>test1.aspx</DependentUpon>
     </Compile>
@@ -1593,48 +1614,6 @@
     </Compile>
     <Compile Include="WebForm1.aspx.vb">
       <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="WebForm12.aspx.designer.vb">
-      <DependentUpon>WebForm12.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm12.aspx.vb">
-      <DependentUpon>WebForm12.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="WebForm13.aspx.designer.vb">
-      <DependentUpon>WebForm13.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm13.aspx.vb">
-      <DependentUpon>WebForm13.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="WebForm14.aspx.designer.vb">
-      <DependentUpon>WebForm14.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm14.aspx.vb">
-      <DependentUpon>WebForm14.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="WebForm16.aspx.designer.vb">
-      <DependentUpon>WebForm16.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm16.aspx.vb">
-      <DependentUpon>WebForm16.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="WebForm17.aspx.designer.vb">
-      <DependentUpon>WebForm17.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm17.aspx.vb">
-      <DependentUpon>WebForm17.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="WebForm18.aspx.designer.vb">
-      <DependentUpon>WebForm18.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm18.aspx.vb">
-      <DependentUpon>WebForm18.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="WebForm2.aspx.designer.vb">
@@ -1710,6 +1689,7 @@
     <Folder Include="file_storage_RinnoviPag\" />
     <Folder Include="fotoEquiparazioni\" />
     <Folder Include="fotoRinnovo\" />
+    <Folder Include="provazip\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

@@ -137,14 +137,21 @@ Public Class richiestaEquiparazioneDati12
             HiddenIdRecord.Value = DettaglioEquiparazione.IdRecord
             HiddenIDEquiparazione.Value = DettaglioEquiparazione.IDEquiparazione
             codiceFiscale = DettaglioEquiparazione.CodiceFiscale
-            Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
+            Dim datiCF As Object
+            If Session("CFEE") = "EE" Then
 
+                datiCF = AsiModel.getDatiCodiceFiscaleEE(Session("nomeEE"), Session("cognomeEE"), Session("codiceTesseraEE"), Session("dataNascitaEE"))
+            Else
+
+
+                datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
+                ' End If
+            End If
             lblIntestazioneEquiparazione.Text =
-                "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
-                "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
-                "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
-                "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
-
+           "<strong> - Codice Fiscale: </strong>" & datiCF.CodiceFiscale &
+           "<strong> - Tessera Ass.: </strong>" & datiCF.CodiceTessera & "<br />" &
+           "<strong> - Nominativo: </strong>" & datiCF.Nome & " " & datiCF.Cognome &
+           "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
 
         End If
 
@@ -157,7 +164,10 @@ Public Class richiestaEquiparazioneDati12
         If Not Page.IsPostBack Then
 
             '  pnlFase1.Visible = False
+
             leggiDatiEsistenti()
+
+
             Province()
 
         End If
@@ -218,8 +228,15 @@ Public Class richiestaEquiparazioneDati12
     Sub leggiDatiEsistenti()
 
         Dim datiCodiceFiscale As New DatiCodiceFiscale
+        If Session("CFEE") = "EE" Then
 
-        datiCodiceFiscale = getDatiCodiceFiscale(codiceFiscale)
+            datiCodiceFiscale = getDatiCodiceFiscaleEE(Session("nomeEE"), Session("cognomeEE"), Session("codiceTesseraEE"), Session("dataNascitaEE"))
+        Else
+            datiCodiceFiscale = getDatiCodiceFiscale(codiceFiscale)
+        End If
+
+
+
 
         txtCognome.Text = datiCodiceFiscale.Cognome
         txtNome.Text = datiCodiceFiscale.Nome

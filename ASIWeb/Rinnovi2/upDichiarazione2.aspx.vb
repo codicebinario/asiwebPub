@@ -112,7 +112,18 @@ Public Class upDichiarazione2
             HiddenIdRecord.Value = DettaglioRinnovo.IdRecord
             HiddenIDRinnovo.Value = DettaglioRinnovo.IDRinnovo
             codiceFiscale = DettaglioRinnovo.CodiceFiscale
-            Dim datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
+            Dim datiCF
+            '  getDatiCodiceFiscaleEE
+            If Session("CFEE") = "EE" Then
+
+                datiCF = AsiModel.getDatiCodiceFiscaleEE(Session("nomeEE"), Session("cognomeEE"), Session("codiceTesseraEE"), Session("dataNascitaEE"))
+            Else
+                datiCF = AsiModel.getDatiCodiceFiscale(codiceFiscale)
+            End If
+
+
+
+
 
             lblIntestazioneRinnovo.Text = "" &
                 "<strong> - Codice Fiscale: </strong>" & UCase(datiCF.CodiceFiscale) &
@@ -121,7 +132,7 @@ Public Class upDichiarazione2
                 "<strong> - Ente Richiedente: </strong>" & DescrizioneEnteRichiedente
 
 
-        End If
+            End If
 
 
     End Sub
