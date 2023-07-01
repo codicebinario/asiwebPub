@@ -666,7 +666,8 @@ Public Class richiestaCorsoF3
             Request.AddField("Specialita_ID", ddlSpecialita.SelectedItem.Value)
             Request.AddField("Qualifica_Tecnica_Da_Rilasciare", ddlQualifica.SelectedItem.Text)
             Request.AddField("Livello", ddlLivello.SelectedItem.Text)
-            Request.AddField("Quota_Partecipazione", String.Format("{0:C2}", txtQuota.Text.ToString))
+            '    Request.AddField("Quota_Partecipazione", String.Format("{0:C2}", txtQuota.Text.ToString))
+            Request.AddField("Quota_Partecipazione", String.Format("{0:C2}", Replace(txtQuota.Text.ToString, ",", ".")))
 
             Request.AddField("MonteOreFormazione", txtMonteOreFormazione.Text)
             'Request.AddField("Settore_Approvazione", Data.PrendiStringaT(Server.HtmlEncode(txtSettoreApprovante.Text)))

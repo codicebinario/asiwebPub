@@ -358,7 +358,7 @@ Public Class dashboardB
                     hpUPx.PostBackUrl = "upPartecipanti.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr("IDCorso")))) &
                         "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr("id_record")))
                     hpUPx.CssClass = "btn btn-success btn-sm btn-cinque btn-custom mb-2"
-                    If (Data.FixNull(dr("Codice_Status")) = "69" And Data.FixNull(dr("fase")) = "3") Then
+                    If (Data.FixNull(dr("Codice_Status")) = "69" Or Data.FixNull(dr("Codice_Status")) = "72") And Data.FixNull(dr("fase")) = "3" Then
                         hpUPx.Visible = True
                     Else
                         hpUPx.Visible = False

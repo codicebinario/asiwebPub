@@ -76,7 +76,7 @@ Public Class scaricaTessereS
             RequestP.AddSearchField("valido", "n", Enumerations.SearchOption.equals)
 
 
-            RequestP.AddSortField("Cognome", Enumerations.Sort.Ascend)
+            RequestP.AddSortField("DATA di RILASCIO", Enumerations.Sort.Ascend)
 
             ds = RequestP.Execute()
             If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then

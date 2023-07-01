@@ -193,11 +193,11 @@ Public Class checkTesseramentoRinnovi3
                     'Session("procedi") = "KO"
                     Select Case risultatoCheck
                         Case 2
-                            Response.Redirect("DashboardEqui2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("valScad"))
+                            Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("valScad"))
                         Case 3
-                            Response.Redirect("DashboardEqui2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("notFound"))
+                            Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("notFound"))
                         Case 4
-                            Response.Redirect("DashboardEqui2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("erroreGen"))
+                            Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("erroreGen"))
 
                     End Select
 
