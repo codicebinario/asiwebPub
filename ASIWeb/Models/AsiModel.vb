@@ -191,16 +191,15 @@ Public Class AsiModel
         Public Shared Function Connect()
 
             Dim fmsb As FMSAxml = Nothing
-            Try
-                fmsb = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
+            '    Try
+            fmsb = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
 
                 fmsb.SetDatabase(Database)
 
-
-            Catch ex As Exception
-                Dim errore As String = ex.InnerException.ToString
-                HttpContext.Current.Server.Transfer("login.aspx?err=dbc")
-            End Try
+            '  Catch ex As Exception
+            'Dim errore As String = ex.InnerException.ToString
+            '    HttpContext.Current.Server.Transfer("login.aspx?err=dbc")
+            '    End Try
             Return fmsb
         End Function
 
@@ -333,11 +332,11 @@ Public Class AsiModel
             Dim ds As DataSet = Nothing
             Dim accesso As Boolean = False
             Dim IpAddress As String
-            Try
-                fms = Conn.Connect()
-            Catch ex As Exception
+            ' Try
+            fms = Conn.Connect()
+            '   Catch ex As Exception
 
-            End Try
+            '  End Try
 
 
             '     Dim fmsB = New fmDotNet.FMSAxml(Webserver, Porta, Utente, Password)
@@ -681,7 +680,45 @@ Public Class AsiModel
         End Try
         Return ritorno
     End Function
+    Public Shared Function controllaCodiceFiscaleRinnovo(codiceFiscale As String, codr As String) As Boolean
+        Dim fms As FMSAxml = Nothing
+        Dim ds As DataSet = Nothing
+        Dim ritorno As Boolean = False
 
+        fms = Conn.Connect()
+
+        fms.SetLayout("webRinnoviRichiesta2")
+        Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
+        RequestA.AddSearchField("Rin_CodiceFiscale", codiceFiscale, Enumerations.SearchOption.equals)
+        RequestA.AddSearchField("IDRinnovoM", codr, Enumerations.SearchOption.equals)
+
+
+        Try
+
+            ds = RequestA.Execute()
+
+
+            If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
+                For Each dr In ds.Tables("main").Rows
+
+                    ritorno = True
+
+
+                Next
+
+
+
+            End If
+
+
+
+
+        Catch ex As Exception
+
+            ritorno = False
+        End Try
+        Return ritorno
+    End Function
     Public Shared Function controllaCodiceFiscaleEquipazione(codiceFiscale As String, codr As String) As Boolean
         Dim fms As FMSAxml = Nothing
         Dim ds As DataSet = Nothing
@@ -1690,7 +1727,7 @@ Public Class AsiModel
 
             Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("idEquiparazioneM", IdEquiparazione, Enumerations.SearchOption.equals)
-
+            RequestA.AddSearchField("Equi_Fase", "2", Enumerations.SearchOption.equals)
             Try
                 ds = RequestA.Execute()
 
@@ -1733,6 +1770,7 @@ Public Class AsiModel
 
                 Dim RequestA = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
                 RequestA.AddSearchField("idRinnovoM", IdRinnovo, Enumerations.SearchOption.equals)
+                RequestA.AddSearchField("Rin_Fase", "1")
                 ds = RequestA.Execute()
                 If Not IsNothing(ds) AndAlso ds.Tables("main").Rows.Count > 0 Then
                     For Each dr In ds.Tables("main").Rows
@@ -2283,7 +2321,7 @@ Public Class AsiModel
             Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("IDRinnovoM", IDRinnovoM, Enumerations.SearchOption.equals)
             RequestA.AddSearchField("Codice_Status", "1...159")
-
+            RequestA.AddSearchField("Rin_Fase", "1")
             Try
                 ds = RequestA.Execute()
 
@@ -2835,8 +2873,8 @@ Public Class AsiModel
             fms.SetLayout("webEquiparazioniRichiestaMolti")
             Dim RequestA = fms.CreateFindRequest(Enumerations.SearchType.Subset)
             RequestA.AddSearchField("IDEquiparazioneM", IDEquiparazioneM, Enumerations.SearchOption.equals)
-            RequestA.AddSearchField("Codice_Status", "1...114")
-
+            RequestA.AddSearchField("Codice_Status", "1...114.5")
+            RequestA.AddSearchField("Equi_Fase", "2")
             Try
                 ds = RequestA.Execute()
 

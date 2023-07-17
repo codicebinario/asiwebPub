@@ -128,7 +128,7 @@ $(document).ready(function(){
                          <div class="col-sm-8">
 								<div class="form-group">
 									<label for="txtnote">Note [*]</label>
-                                         <asp:textbox id="txtNote" Cssclass="form-control" runat="server"  maxlength="250" ></asp:textbox>
+                                         <asp:textbox id="txtNote" Cssclass="form-control" runat="server"  maxlength="1000" ></asp:textbox>
 				
 								</div>
 							</div>

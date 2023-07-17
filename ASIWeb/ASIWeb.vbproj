@@ -259,22 +259,6 @@
     <Content Include="Equiparazioni2\upLegEquiparazioni2.aspx" />
     <Content Include="Equiparazioni2\valutaEquiparazione2.aspx" />
     <Content Include="Equiparazioni2\vediDocumentazione2.aspx" />
-    <Content Include="Equiparazioni\annullaEquiparazione.aspx" />
-    <Content Include="Equiparazioni\annullaEquiparazioneMotivo.aspx" />
-    <Content Include="Equiparazioni\archivioEquiValutati.aspx" />
-    <Content Include="Equiparazioni\checkTesseramento.aspx" />
-    <Content Include="Equiparazioni\DashboardEquiEvasi.aspx" />
-    <Content Include="Equiparazioni\dashboardV.aspx" />
-    <Content Include="Equiparazioni\richiestaEquiparazioneDati1.aspx" />
-    <Content Include="Equiparazioni\richiestaEquiparazioneDati2.aspx" />
-    <Content Include="Equiparazioni\richiestaEquiparazioneFoto.aspx" />
-    <Content Include="Equiparazioni\scaricaDiplomaEqui.aspx" />
-    <Content Include="Equiparazioni\scaricaDiplomaEquiparazioneN.aspx" />
-    <Content Include="Equiparazioni\scaricaTesseraEquiparazioneN.aspx" />
-    <Content Include="Equiparazioni\upLegEquiparazioni.aspx" />
-    <Content Include="Equiparazioni\valutaEquiparazione.aspx" />
-    <Content Include="Equiparazioni\vediDocumentazione.aspx" />
-    <Content Include="Equiparazioni\WebForm5.aspx" />
     <Content Include="GestioneAlbo\DashboardAlbo.aspx" />
     <Content Include="GestioneAlbo\ExcelOpenXmlStyles.xml" />
     <Content Include="GestioneAlbo\scaricaTesseraAlbo.aspx" />
@@ -402,8 +386,6 @@
     <Content Include="Css\themes\semantic.rtl.min.css" />
     <Content Include="Css\up.css" />
     <Content Include="Dashboard.aspx" />
-    <Content Include="Equiparazioni\DashboardEqui.aspx" />
-    <Content Include="Equiparazioni\richiestaEquiparazione.aspx" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -453,16 +435,6 @@
     <Content Include="Rinnovi2\UpFotoRinnovo2.aspx" />
     <Content Include="Rinnovi2\upLegRinnovi2.aspx" />
     <Content Include="Rinnovi2\WebForm15.aspx" />
-    <Content Include="Rinnovi\checkTesseramentoRinnovi.aspx" />
-    <Content Include="Rinnovi\DashboardRinnovi.aspx" />
-    <Content Include="Rinnovi\DashboardRinnoviEvasi.aspx" />
-    <Content Include="Rinnovi\RichiestaRinnovo.aspx" />
-    <Content Include="Rinnovi\RichiestaRinnovo1.aspx" />
-    <Content Include="Rinnovi\scaricaTesseraRinnovo.aspx" />
-    <Content Include="Rinnovi\upDichiarazione.aspx" />
-    <Content Include="Rinnovi\UpFotoRinnovo.aspx" />
-    <Content Include="Rinnovi\upLegRinnovi.aspx" />
-    <Content Include="Rinnovi\WebForm9.aspx" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -528,6 +500,7 @@
     <Content Include="WebForm2.aspx" />
     <Content Include="WebForm3.aspx" />
     <Content Include="WebForm4.aspx" />
+    <Content Include="WebForm5.aspx" />
     <None Include="Scripts\jquery-3.6.4.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.4.js" />
     <Content Include="Scripts\jquery-3.6.4.min.js" />
@@ -961,118 +934,6 @@
       <DependentUpon>vediDocumentazione2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Equiparazioni\annullaEquiparazione.aspx.designer.vb">
-      <DependentUpon>annullaEquiparazione.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\annullaEquiparazione.aspx.vb">
-      <DependentUpon>annullaEquiparazione.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\annullaEquiparazioneMotivo.aspx.designer.vb">
-      <DependentUpon>annullaEquiparazioneMotivo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\annullaEquiparazioneMotivo.aspx.vb">
-      <DependentUpon>annullaEquiparazioneMotivo.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\archivioEquiValutati.aspx.designer.vb">
-      <DependentUpon>archivioEquiValutati.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\archivioEquiValutati.aspx.vb">
-      <DependentUpon>archivioEquiValutati.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\checkTesseramento.aspx.designer.vb">
-      <DependentUpon>checkTesseramento.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\checkTesseramento.aspx.vb">
-      <DependentUpon>checkTesseramento.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\DashboardEquiEvasi.aspx.designer.vb">
-      <DependentUpon>DashboardEquiEvasi.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\DashboardEquiEvasi.aspx.vb">
-      <DependentUpon>DashboardEquiEvasi.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\dashboardV.aspx.designer.vb">
-      <DependentUpon>dashboardV.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\dashboardV.aspx.vb">
-      <DependentUpon>dashboardV.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\richiestaEquiparazioneDati1.aspx.designer.vb">
-      <DependentUpon>richiestaEquiparazioneDati1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\richiestaEquiparazioneDati1.aspx.vb">
-      <DependentUpon>richiestaEquiparazioneDati1.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\richiestaEquiparazioneDati2.aspx.designer.vb">
-      <DependentUpon>richiestaEquiparazioneDati2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\richiestaEquiparazioneDati2.aspx.vb">
-      <DependentUpon>richiestaEquiparazioneDati2.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\richiestaEquiparazioneFoto.aspx.designer.vb">
-      <DependentUpon>richiestaEquiparazioneFoto.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\richiestaEquiparazioneFoto.aspx.vb">
-      <DependentUpon>richiestaEquiparazioneFoto.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\scaricaDiplomaEqui.aspx.designer.vb">
-      <DependentUpon>scaricaDiplomaEqui.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\scaricaDiplomaEqui.aspx.vb">
-      <DependentUpon>scaricaDiplomaEqui.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\scaricaDiplomaEquiparazioneN.aspx.designer.vb">
-      <DependentUpon>scaricaDiplomaEquiparazioneN.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\scaricaDiplomaEquiparazioneN.aspx.vb">
-      <DependentUpon>scaricaDiplomaEquiparazioneN.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\scaricaTesseraEquiparazioneN.aspx.designer.vb">
-      <DependentUpon>scaricaTesseraEquiparazioneN.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\scaricaTesseraEquiparazioneN.aspx.vb">
-      <DependentUpon>scaricaTesseraEquiparazioneN.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\upLegEquiparazioni.aspx.designer.vb">
-      <DependentUpon>upLegEquiparazioni.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\upLegEquiparazioni.aspx.vb">
-      <DependentUpon>upLegEquiparazioni.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\valutaEquiparazione.aspx.designer.vb">
-      <DependentUpon>valutaEquiparazione.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\valutaEquiparazione.aspx.vb">
-      <DependentUpon>valutaEquiparazione.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\vediDocumentazione.aspx.designer.vb">
-      <DependentUpon>vediDocumentazione.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\vediDocumentazione.aspx.vb">
-      <DependentUpon>vediDocumentazione.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\WebForm5.aspx.designer.vb">
-      <DependentUpon>WebForm5.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\WebForm5.aspx.vb">
-      <DependentUpon>WebForm5.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="GestioneAlbo\DashboardAlbo.aspx.designer.vb">
       <DependentUpon>DashboardAlbo.aspx</DependentUpon>
     </Compile>
@@ -1269,20 +1130,6 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Equiparazioni\DashboardEqui.aspx.designer.vb">
-      <DependentUpon>DashboardEqui.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\DashboardEqui.aspx.vb">
-      <DependentUpon>DashboardEqui.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Equiparazioni\richiestaEquiparazione.aspx.designer.vb">
-      <DependentUpon>richiestaEquiparazione.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Equiparazioni\richiestaEquiparazione.aspx.vb">
-      <DependentUpon>richiestaEquiparazione.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="ErrorPage.aspx.designer.vb">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
@@ -1422,7 +1269,7 @@
     </Compile>
     <Compile Include="Rinnovi2\DashBoardRinnovi2.aspx.vb">
       <DependentUpon>DashBoardRinnovi2.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Rinnovi2\DashboardRinnoviEvasi2.aspx.designer.vb">
       <DependentUpon>DashboardRinnoviEvasi2.aspx</DependentUpon>
@@ -1486,76 +1333,6 @@
     <Compile Include="Rinnovi2\WebForm15.aspx.vb">
       <DependentUpon>WebForm15.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\checkTesseramentoRinnovi.aspx.designer.vb">
-      <DependentUpon>checkTesseramentoRinnovi.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\checkTesseramentoRinnovi.aspx.vb">
-      <DependentUpon>checkTesseramentoRinnovi.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\DashboardRinnovi.aspx.designer.vb">
-      <DependentUpon>DashboardRinnovi.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\DashboardRinnovi.aspx.vb">
-      <DependentUpon>DashboardRinnovi.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\DashboardRinnoviEvasi.aspx.designer.vb">
-      <DependentUpon>DashboardRinnoviEvasi.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\DashboardRinnoviEvasi.aspx.vb">
-      <DependentUpon>DashboardRinnoviEvasi.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\RichiestaRinnovo.aspx.designer.vb">
-      <DependentUpon>RichiestaRinnovo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\RichiestaRinnovo.aspx.vb">
-      <DependentUpon>RichiestaRinnovo.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\RichiestaRinnovo1.aspx.designer.vb">
-      <DependentUpon>RichiestaRinnovo1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\RichiestaRinnovo1.aspx.vb">
-      <DependentUpon>RichiestaRinnovo1.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\scaricaTesseraRinnovo.aspx.designer.vb">
-      <DependentUpon>scaricaTesseraRinnovo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\scaricaTesseraRinnovo.aspx.vb">
-      <DependentUpon>scaricaTesseraRinnovo.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\upDichiarazione.aspx.designer.vb">
-      <DependentUpon>upDichiarazione.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\upDichiarazione.aspx.vb">
-      <DependentUpon>upDichiarazione.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\UpFotoRinnovo.aspx.designer.vb">
-      <DependentUpon>UpFotoRinnovo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\UpFotoRinnovo.aspx.vb">
-      <DependentUpon>UpFotoRinnovo.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\upLegRinnovi.aspx.designer.vb">
-      <DependentUpon>upLegRinnovi.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\upLegRinnovi.aspx.vb">
-      <DependentUpon>upLegRinnovi.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Rinnovi\WebForm9.aspx.designer.vb">
-      <DependentUpon>WebForm9.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rinnovi\WebForm9.aspx.vb">
-      <DependentUpon>WebForm9.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="sendFirstEmail.aspx.designer.vb">
       <DependentUpon>sendFirstEmail.aspx</DependentUpon>
@@ -1635,6 +1412,13 @@
     </Compile>
     <Compile Include="WebForm4.aspx.vb">
       <DependentUpon>WebForm4.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="WebForm5.aspx.designer.vb">
+      <DependentUpon>WebForm5.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm5.aspx.vb">
+      <DependentUpon>WebForm5.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
   </ItemGroup>

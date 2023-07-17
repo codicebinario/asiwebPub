@@ -457,8 +457,8 @@ Public Class RichiestaRinnovo12
             Request.AddField("ASI_CodiceEnteEx", datiAlbo.codiceEnteEx)
             Request.AddField("ASI_NomeEnteEx", datiAlbo.nomeEnteEx)
             Request.AddField("Codice_Status", "152")
-            Request.AddField("Rin_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
-            Request.AddField("Rin_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
+            Request.AddField("Rin_IndirizzoResidenza", Server.HtmlEncode(txtIndirizzoResidenza.Text).Replace("&", "_|_"))
+            Request.AddField("Rin_CapResidenza", Server.HtmlEncode(txtCapResidenza.Text).Replace("&", "_|_"))
             Request.AddField("Rin_ComuneResidenza", ddlComuneResidenza.SelectedItem.Text)
             Request.AddField("Rin_ProvinciaResidenza", ddlProvinciaResidenza.SelectedItem.Text)
 
@@ -492,11 +492,11 @@ Public Class RichiestaRinnovo12
             If chkStampaCartacea.Checked = True Then
 
                 Request.AddField("Rin_StampaCartaceo", "Si")
-                Request.AddField("Rin_IndirizzoConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text)))
-                Request.AddField("Rin_CapConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text)))
-                Request.AddField("Rin_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
-                Request.AddField("Rin_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
-                Request.AddField("Rin_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
+                Request.AddField("Rin_IndirizzoConsegna", Server.HtmlEncode(txtIndirizzoConsegna.Text).Replace("&", "_|_"))
+                Request.AddField("Rin_CapConsegna", Server.HtmlEncode(txtCapConsegna.Text).Replace("&", "_|_"))
+                Request.AddField("Rin_ComuneConsegna", Server.HtmlEncode(txtComuneConsegna.Text).Replace("&", "_|_"))
+                Request.AddField("Rin_ProvinciaConsegna", Server.HtmlEncode(txtProvinciaConsegna.Text).Replace("&", "_|_"))
+                Request.AddField("Rin_Telefono", Server.HtmlEncode(txtTelefono.Text).Replace("&", "_|_"))
             End If
             If chkEA.Checked Then
                 Request.AddField("Rin_InviaA", "EA")
@@ -507,10 +507,10 @@ Public Class RichiestaRinnovo12
 
 
 
+            Request.AddField("Rin_Fase", "1")
 
 
-
-
+            Request.AddScript("SistemaEncodingRinnovo12", idrecord)
 
             risposta = Request.Execute()
 
@@ -598,10 +598,18 @@ Public Class RichiestaRinnovo12
                 Next
             End If
             chkCopia.Enabled = False
-
+            txtIndirizzoConsegna.ReadOnly = True
+            txtCapConsegna.ReadOnly = True
+            txtComuneConsegna.ReadOnly = True
+            txtProvinciaConsegna.ReadOnly = True
+            txtTelefono.ReadOnly = True
         Else
             chkCopia.Enabled = True
-
+            txtIndirizzoConsegna.ReadOnly = False
+            txtCapConsegna.ReadOnly = False
+            txtComuneConsegna.ReadOnly = False
+            txtProvinciaConsegna.ReadOnly = False
+            txtTelefono.ReadOnly = False
         End If
     End Sub
 End Class

@@ -233,7 +233,7 @@ Public Class richiestaEquiparazione2
         fmsP.SetLayout("webEquiparazioniRichiestaMolti")
         Dim Request = fmsP.CreateEditRequest(id)
         Request.AddField("NomeFileDiplomaFS", nomecaricato)
-        Request.AddField("Equi_Fase", "2")
+        Request.AddField("Equi_Fase", "1")
         'Try    
         risposta = Request.Execute()
 

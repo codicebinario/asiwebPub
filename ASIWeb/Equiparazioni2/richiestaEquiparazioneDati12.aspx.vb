@@ -315,19 +315,19 @@ Public Class richiestaEquiparazioneDati12
             Dim Request = fmsP.CreateEditRequest(IDEquiparazione)
 
 
-            Request.AddField("Equi_Nome", Data.PrendiStringaT(Server.HtmlEncode(txtNome.Text)))
-            Request.AddField("Equi_Cognome", Data.PrendiStringaT(Server.HtmlEncode(txtCognome.Text)))
-            Request.AddField("Equi_NumeroTessera", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceTessera.Text)))
-            Request.AddField("Equi_CodiceFiscale", Data.PrendiStringaT(Server.HtmlEncode(txtCodiceFiscale.Text)))
-            Request.AddField("Equi_ComuneNascita", Data.PrendiStringaT(Server.HtmlEncode(txtComuneNascita.Text)))
+            Request.AddField("Equi_Nome", Server.HtmlEncode(txtNome.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_Cognome", Server.HtmlEncode(txtCognome.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_NumeroTessera", Server.HtmlEncode(txtCodiceTessera.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_CodiceFiscale", Server.HtmlEncode(txtCodiceFiscale.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_ComuneNascita", Server.HtmlEncode(txtComuneNascita.Text).Replace("&", "_|_"))
             Request.AddField("Equi_DataScadenza", Data.SistemaDataUK(txtDataScadenza.Text))
             Request.AddField("Equi_DataNascita", Data.SistemaData(txtDataNascita.Text))
-            Request.AddField("Equi_IndirizzoEmail", Data.PrendiStringaT(Server.HtmlEncode(txtEmail.Text)))
-            Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefonoCellulare.Text)))
-            Request.AddField("Equi_IndirizzoResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoResidenza.Text)))
-            Request.AddField("Equi_ProvinciaResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlProvinciaResidenza.SelectedItem.Text)))
-            Request.AddField("Equi_ComuneResidenza", Data.PrendiStringaT(Server.HtmlEncode(ddlComuneResidenza.SelectedItem.Text)))
-            Request.AddField("Equi_CapResidenza", Data.PrendiStringaT(Server.HtmlEncode(txtCapResidenza.Text)))
+            Request.AddField("Equi_IndirizzoEmail", Server.HtmlEncode(txtEmail.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_Telefono", Server.HtmlEncode(txtTelefonoCellulare.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_IndirizzoResidenza", Server.HtmlEncode(txtIndirizzoResidenza.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_ProvinciaResidenza", Server.HtmlEncode(ddlProvinciaResidenza.SelectedItem.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_ComuneResidenza", Server.HtmlEncode(ddlComuneResidenza.SelectedItem.Text).Replace("&", "_|_"))
+            Request.AddField("Equi_CapResidenza", Server.HtmlEncode(txtCapResidenza.Text).Replace("&", "_|_"))
 
             If Session("EquiparazioneModificaDataEmissione") = "S" Then
                 Dim dataSelezionata As Date = txtDataEmissioneM.Text
@@ -358,12 +358,11 @@ Public Class richiestaEquiparazioneDati12
 
             If chkStampaCartacea.Checked = True Then
                 Request.AddField("Equi_StampaCartaceo", "si")
-                Request.AddField("Equi_IndirizzoConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtIndirizzoConsegna.Text))))
-                Request.AddField("Equi_ProvinciaConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtProvinciaConsegna.Text)))
-                Request.AddField("Equi_ComuneConsegna", Data.PrendiStringaT(Server.HtmlEncode(txtComuneConsegna.Text)))
-                Request.AddField("Equi_CapConsegna", Data.FixNull(Data.PrendiStringaT(Server.HtmlEncode(txtCapConsegna.Text))))
-                Request.AddField("Equi_Telefono", Data.PrendiStringaT(Server.HtmlEncode(txtTelefono.Text)))
-
+                Request.AddField("Equi_IndirizzoConsegna", Server.HtmlEncode(txtIndirizzoConsegna.Text).Replace("&", "_|_"))
+                Request.AddField("Equi_ProvinciaConsegna", Server.HtmlEncode(txtProvinciaConsegna.Text).Replace("&", "_|_"))
+                Request.AddField("Equi_ComuneConsegna", Server.HtmlEncode(txtComuneConsegna.Text).Replace("&", "_|_"))
+                Request.AddField("Equi_CapConsegna", Server.HtmlEncode(txtCapConsegna.Text).Replace("&", "_|_"))
+                Request.AddField("Equi_Telefono", Server.HtmlEncode(txtTelefono.Text).Replace("&", "_|_"))
 
 
                 If chkEA.Checked Then
@@ -390,6 +389,7 @@ Public Class richiestaEquiparazioneDati12
             '    Request.AddScript("SistemaEncodingCorsoFase2", IDCorso)
 
             '   Try
+            Request.AddScript("SistemaEncodingEqui12", IDEquiparazione)
             risposta = Request.Execute()
             Return True
         Catch ex As Exception
@@ -472,10 +472,18 @@ Public Class richiestaEquiparazioneDati12
                 Next
             End If
             chkCopia.Enabled = False
-
+            txtIndirizzoConsegna.ReadOnly = True
+            txtCapConsegna.ReadOnly = True
+            txtComuneConsegna.ReadOnly = True
+            txtProvinciaConsegna.ReadOnly = True
+            txtTelefono.ReadOnly = True
         Else
             chkCopia.Enabled = True
-
+            txtIndirizzoConsegna.ReadOnly = False
+            txtCapConsegna.ReadOnly = False
+            txtComuneConsegna.ReadOnly = False
+            txtProvinciaConsegna.ReadOnly = False
+            txtTelefono.ReadOnly = False
         End If
 
     End Sub

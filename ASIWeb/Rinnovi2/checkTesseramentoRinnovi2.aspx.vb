@@ -138,6 +138,9 @@ Public Class checkTesseramentoRinnovi2
             Dim dataOggi As Date = Today.Date
             Dim it As String = DateTime.Now.Date.ToString("dd/MM/yyyy", New CultureInfo("it-IT"))
 
+            Dim CFCheck As Boolean
+
+            CFCheck = AsiModel.controllaCodiceFiscaleRinnovo(Trim(txtCodiceFiscale.Text), codR)
             'Dim DettaglioRinnovo As New DatiNuovoRinnovo
 
             risultatoCheck = AsiModel.controllaCodiceFiscale(Trim(txtCodiceFiscale.Text), it)
@@ -147,6 +150,12 @@ Public Class checkTesseramentoRinnovi2
             '4 errore generico di connessione
 
             Session("visto") = "ok"
+            If CFCheck = True Then
+
+                Response.Redirect("DashboardRinnovi2.aspx?open=" & codR & "&ris=" & deEnco.QueryStringEncode("cfInRin"))
+
+
+            End If
             If risultatoCheck = 1 Then
 
                 Session("procedi") = "OK"

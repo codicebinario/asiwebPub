@@ -47,7 +47,7 @@ Public Class sceltaSport
                 Dim fmsP As FMSAxml = AsiModel.Conn.Connect()
                 fmsP.SetLayout("webDisciplineSportSettoriDNet")
                 Dim RequestP = fmsP.CreateFindRequest(Enumerations.SearchType.Subset)
-                RequestP.AddSearchField("Settore_Richiedente", Session("denominazione"), Enumerations.SearchOption.equals)
+                RequestP.AddSearchField("Settore_ID", Session("codice"), Enumerations.SearchOption.equals)
 
                 RequestP.AddSortField("Sport", Enumerations.Sort.Ascend)
 

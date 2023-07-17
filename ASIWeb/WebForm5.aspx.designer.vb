@@ -11,41 +11,32 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class vediDocumentazione
+Partial Public Class WebForm5
 
     '''<summary>
-    '''lblIntestazioneEquiparazione control.
+    '''form1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblIntestazioneEquiparazione As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
-    '''HiddenIdRecord control.
+    '''txtNote control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenIdRecord As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents txtNote As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''HiddenIDEquiparazione control.
+    '''Button1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents HiddenIDEquiparazione As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''plTabellaEquiparazione control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents plTabellaEquiparazione As Global.System.Web.UI.WebControls.PlaceHolder
+    Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
 End Class
