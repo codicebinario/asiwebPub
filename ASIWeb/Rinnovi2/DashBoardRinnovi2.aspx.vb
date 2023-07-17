@@ -117,6 +117,7 @@ Public Class DashBoardRinnovi2
                     ElseIf ris = "pr" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Richiesta Rinnovo non caricata nel sistema<br />Si è verificato un problema tecnico durante la procedura! ' ).set('resizable', true).resizeTo('20%', 200);", True)
                         Session("rinnovoAggiunto") = Nothing
+
                     ElseIf ris = "cano" Then
                         Page.ClientScript.RegisterStartupScript(Me.GetType(), "Script", "alertify.alert('ASI', 'Rinnovo non cancellato<br />Si è verificato un problema tecnico durante la procedura! ' ).set('resizable', true).resizeTo('20%', 200);", True)
                         Session("rinnovoAggiunto") = Nothing
