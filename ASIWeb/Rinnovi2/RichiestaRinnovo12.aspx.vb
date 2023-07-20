@@ -530,6 +530,7 @@ Public Class RichiestaRinnovo12
 
                 Requestx.AddField("CodiceStatus", "152")
                 ' Try
+                Request.AddScript("SistemaAnnullaRinnoviAZero", IDRinnovo)
                 rispostax = Requestx.Execute()
                 AsiModel.LogIn.LogCambioStatus(IDRinnovo, "152", Session("WebUserEnte"), "rinnovo")
             End If

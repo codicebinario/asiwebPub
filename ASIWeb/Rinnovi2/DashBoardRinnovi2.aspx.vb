@@ -472,16 +472,16 @@ Public Class DashBoardRinnovi2
                                     Verb.Text = "<i class=""bi bi-file""> </i>Invia cambio E.A."
                                     Verb.PostBackUrl = "upDichiarazione2.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr1("TBL_Rinnovi_Molti::IDRinnovoM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr1("TBL_Rinnovi_Molti::id_record")))
                                     Verb.CssClass = "btn btn-success btn-sm btn-sei btn-custom  mb-1"
-                                    'If Data.FixNull(dr1("TBL_Rinnovi_Molti::Codice_Status")) = "151" Then
-                                    '    Verb.Visible = True
-                                    'Else
-                                    '    Verb.Visible = False
-                                    'End If
+                            'If Data.FixNull(dr1("TBL_Rinnovi_Molti::Codice_Status")) = "151" Then
+                            '    Verb.Visible = True
+                            'Else
+                            '    Verb.Visible = False
+                            'End If
 
 
-                                    Dim Canc As New LinkButton
+                            Dim Canc As New LinkButton
 
-                                    Canc.ID = "verb_" & counter1
+                            Canc.ID = "verb_" & counter1
                                     Canc.Attributes.Add("runat", "server")
                                     Canc.Text = "<i class=""bi bi-file-x-fill""></i> </i>Cancella rinnovo"
                                     Canc.PostBackUrl = "cancellaRiga.aspx?codR=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(Data.FixNull(dr1("TBL_Rinnovi_Molti::IDRinnovoM")))) & "&record_ID=" & WebUtility.UrlEncode(deEnco.QueryStringEncode(dr1("TBL_Rinnovi_Molti::id_record")))
